@@ -1,0 +1,31 @@
+mod.web_layout.BackendLayouts {
+  commune_default {
+    title = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.default
+    icon = EXT:site_commune_rgaa/Resources/Public/Icons/Extension.svg
+    config {
+      backend_layout {
+        colCount = 1
+        rowCount = 2
+        rows {
+          1 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.alert
+                colPos = 100
+                maxitems = 1
+              }
+            }
+          }
+          2 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.main
+                colPos = 0
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

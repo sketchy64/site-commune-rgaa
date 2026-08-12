@@ -1,0 +1,40 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:bk2k="http://typo3.org/ns/BK2K/BootstrapPackage/ViewHelpers"
+      xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:if condition="{records}">
+        <div class="accordion" id="accordion-{data.uid}">
+            <f:for each="{records}" as="record" iteration="iteration">
+                <div class="accordion-item">
+                    <!-- En-tête d'accordéon accessible avec bouton natif et ARIA -->
+                    <h3 class="accordion-header" id="heading-{data.uid}-{record.data.uid}">
+                        <button class="accordion-button {f:if(condition: '{iteration.isFirst} && {data.tx_bootstrappackage_accordion_item_active}', else: 'collapsed')}"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapse-{data.uid}-{record.data.uid}"
+                                aria-expanded="{f:if(condition: '{iteration.isFirst} && {data.tx_bootstrappackage_accordion_item_active}', then: 'true', else: 'false')}"
+                                aria-controls="collapse-{data.uid}-{record.data.uid}">
+                            {record.data.header}
+                        </button>
+                    </h3>
+                    <div id="collapse-{data.uid}-{record.data.uid}"
+                         class="accordion-collapse collapse {f:if(condition: '{iteration.isFirst} && {data.tx_bootstrappackage_accordion_item_active}', then: 'show')}"
+                         aria-labelledby="heading-{data.uid}-{record.data.uid}"
+                         data-bs-parent="{f:if(condition: data.pi_flexform.options.accordion, then: '#accordion-{data.uid}')}">
+                        <div class="accordion-body">
+                            <f:format.html>{record.data.bodytext}</f:format.html>
+                            <f:if condition="{record.media}">
+                                <f:render partial="Media/Gallery" arguments="{files: record.media, data: record.data, settings: settings}" />
+                            </f:if>
+                        </div>
+                    </div>
+                </div>
+            </f:for>
+        </div>
+    </f:if>
+</f:section>
+</html>

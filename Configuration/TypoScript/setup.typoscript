@@ -1,0 +1,235 @@
+# ==============================================================================
+# Setup TypoScript : Site Commune RGAA (Surcouche Bootstrap Package)
+# ==============================================================================
+
+# Configuration de la page HTML
+page {
+  # Balise HTML conforme RGAA avec attributs de langue
+  config {
+    htmlTag_setParams = lang="fr" dir="ltr"
+    doctype = html5
+    metaCharset = utf-8
+    viewport = width=device-width, initial-scale=1, shrink-to-fit=no
+  }
+
+  # Inclusion des feuilles de styles conformes RGAA
+  includeCSS {
+    commune_theme = EXT:site_commune_rgaa/Resources/Public/Css/commune-theme.css
+    commune_accessibility = EXT:site_commune_rgaa/Resources/Public/Css/accessibility.css
+    commune_print = EXT:site_commune_rgaa/Resources/Public/Css/print.css
+    commune_print {
+      media = print
+    }
+  }
+
+  # Inclusion des scripts JavaScript d'accessibilité (Navigation clavier, Toolbar A11y, ARIA)
+  includeJSFooter {
+    commune_a11y_toolbar = EXT:site_commune_rgaa/Resources/Public/JavaScript/accessibility-toolbar.js
+    commune_a11y_toolbar {
+      defer = 1
+    }
+    commune_a11y_nav = EXT:site_commune_rgaa/Resources/Public/JavaScript/navigation-a11y.js
+    commune_a11y_nav {
+      defer = 1
+    }
+    commune_a11y_carousel = EXT:site_commune_rgaa/Resources/Public/JavaScript/carousel-a11y.js
+    commune_a11y_carousel {
+      defer = 1
+    }
+  }
+
+  # Configuration du FluidTemplate pour les gabarits de page
+  10 = PAGE
+  10 {
+    10 = FLUIDTEMPLATE
+    10 {
+      templateName = TEXT
+      templateName {
+        cObject = CASE
+        cObject {
+          key.data = pagelayout
+
+          commune_home = TEXT
+          commune_home.value = Home
+
+          commune_subpage = TEXT
+          commune_subpage.value = Subpage
+
+          default = TEXT
+          default.value = Default
+        }
+      }
+
+      templateRootPaths {
+        10 = EXT:bootstrap_package/Resources/Private/Templates/Page/
+        20 = {$page.theme.templateRootPath}
+      }
+
+      partialRootPaths {
+        10 = EXT:bootstrap_package/Resources/Private/Partials/Page/
+        20 = {$page.theme.partialRootPath}
+      }
+
+      layoutRootPaths {
+        10 = EXT:bootstrap_package/Resources/Private/Layouts/Page/
+        20 = {$page.theme.layoutRootPath}
+      }
+
+      # Variables injectées dans les templates Fluid
+      variables {
+        # Données de la commune
+        communeNom = TEXT
+        communeNom.value = {$commune.nom}
+
+        communeSlogan = TEXT
+        communeSlogan.value = {$commune.slogan}
+
+        communeDepartement = TEXT
+        communeDepartement.value = {$commune.departement}
+
+        communeAdresse = TEXT
+        communeAdresse.value = {$commune.adresse}
+
+        communeTelephone = TEXT
+        communeTelephone.value = {$commune.telephone}
+
+        communeEmail = TEXT
+        communeEmail.value = {$commune.email}
+
+        communeHoraires = TEXT
+        communeHoraires.value = {$commune.horaires}
+
+        communeRgaaStatut = TEXT
+        communeRgaaStatut.value = {$commune.rgaa_statut}
+
+        communeRgaaTaux = TEXT
+        communeRgaaTaux.value = {$commune.rgaa_taux}
+
+        communeRgaaPageUid = TEXT
+        communeRgaaPageUid.value = {$commune.rgaa_page_uid}
+
+        # Menu principal accessible
+        mainNavigation = HMENU
+        mainNavigation {
+          entryLevel = 0
+          1 = TMENU
+          1 {
+            expAll = 1
+            wrap = <ul class="navbar-nav me-auto mb-2 mb-lg-0" role="menubar">|</ul>
+            NO {
+              wrapItemAndSub = <li class="nav-item" role="none">|</li>
+              ATagParams = class="nav-link" role="menuitem"
+            }
+            ACT = 1
+            ACT {
+              wrapItemAndSub = <li class="nav-item active" role="none">|</li>
+              ATagParams = class="nav-link active" role="menuitem" aria-current="page"
+            }
+            IFSUB = 1
+            IFSUB {
+              wrapItemAndSub = <li class="nav-item dropdown" role="none">|</li>
+              ATagParams = class="nav-link dropdown-toggle" role="menuitem" aria-expanded="false" data-bs-toggle="dropdown"
+            }
+            ACTIFSUB = 1
+            ACTIFSUB {
+              wrapItemAndSub = <li class="nav-item dropdown active" role="none">|</li>
+              ATagParams = class="nav-link dropdown-toggle active" role="menuitem" aria-expanded="false" aria-current="true" data-bs-toggle="dropdown"
+            }
+          }
+          2 = TMENU
+          2 {
+            wrap = <ul class="dropdown-menu" role="menu">|</ul>
+            NO {
+              wrapItemAndSub = <li role="none">|</li>
+              ATagParams = class="dropdown-item" role="menuitem"
+            }
+            ACT = 1
+            ACT {
+              wrapItemAndSub = <li role="none">|</li>
+              ATagParams = class="dropdown-item active" role="menuitem" aria-current="page"
+            }
+          }
+        }
+
+        # Menu secondaire / Navigation latérale pour sous-pages
+        subNavigation = HMENU
+        subNavigation {
+          entryLevel = 1
+          1 = TMENU
+          1 {
+            wrap = <ul class="list-group list-group-flush commune-sidebar-menu">|</ul>
+            NO {
+              wrapItemAndSub = <li class="list-group-item">|</li>
+              ATagParams = class="text-decoration-none"
+            }
+            ACT = 1
+            ACT {
+              wrapItemAndSub = <li class="list-group-item active-page" aria-current="page">|</li>
+              ATagParams = class="text-decoration-none fw-bold"
+            }
+          }
+        }
+      }
+
+      # Données de colonnes de contenu (Backend Layouts)
+      dataProcessing {
+        100 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+        100 {
+          table = tt_content
+          orderBy = sorting
+          where = colPos = 100 AND {#deleted} = 0 AND {#hidden} = 0
+          as = emergencyAlertContent
+        }
+
+        110 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+        110 {
+          table = tt_content
+          orderBy = sorting
+          where = colPos = 110 AND {#deleted} = 0 AND {#hidden} = 0
+          as = heroContent
+        }
+
+        120 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+        120 {
+          table = tt_content
+          orderBy = sorting
+          where = colPos = 120 AND {#deleted} = 0 AND {#hidden} = 0
+          as = quickAccessContent
+        }
+
+        0 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+        0 {
+          table = tt_content
+          orderBy = sorting
+          where = colPos = 0 AND {#deleted} = 0 AND {#hidden} = 0
+          as = mainContent
+        }
+
+        130 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+        130 {
+          table = tt_content
+          orderBy = sorting
+          where = colPos = 130 AND {#deleted} = 0 AND {#hidden} = 0
+          as = newsContent
+        }
+
+        200 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+        200 {
+          table = tt_content
+          orderBy = sorting
+          where = colPos = 200 AND {#deleted} = 0 AND {#hidden} = 0
+          as = sidebarLeftContent
+        }
+      }
+    }
+  }
+}
+
+# ------------------------------------------------------------------------------
+# Surcharges des gabarits d'éléments de contenu de bootstrap_package
+# ------------------------------------------------------------------------------
+lib.contentElement {
+  templateRootPaths {
+    100 = EXT:site_commune_rgaa/Resources/Private/OverriddenTemplates/BootstrapPackage/ContentElements/
+  }
+}

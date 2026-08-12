@@ -1,0 +1,23 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <div class="container my-4">
+        <article class="commune-full-page">
+            <h1 class="h2 page-title pb-2 mb-4 border-bottom text-primary-commune">{data.title}</h1>
+
+            <f:if condition="{data.subtitle}">
+                <p class="lead text-muted mb-4">{data.subtitle}</p>
+            </f:if>
+
+            <div class="commune-page-content">
+                <f:for each="{mainContent}" as="record">
+                    <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
+                </f:for>
+            </div>
+        </article>
+    </div>
+</f:section>
+</html>

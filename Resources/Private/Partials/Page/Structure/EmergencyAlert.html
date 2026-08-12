@@ -1,0 +1,21 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<!-- Bandeau d'alerte citoyenne / Urgence (RGAA aria-live="assertive") -->
+<div class="commune-emergency-alert bg-danger text-white py-2 shadow-sm" role="alert" aria-live="assertive">
+    <div class="container d-flex align-items-center gap-3">
+        <div class="flex-shrink-0" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+        </div>
+        <div class="flex-grow-1 font-weight-bold">
+            <f:for each="{emergencyAlertContent}" as="record">
+                <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
+            </f:for>
+        </div>
+    </div>
+</div>
+</html>

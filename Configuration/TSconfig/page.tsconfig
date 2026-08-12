@@ -1,0 +1,24 @@
+# Import des Backend Layouts
+@import './BackendLayouts/commune_home.tsconfig'
+@import './BackendLayouts/commune_subpage.tsconfig'
+@import './BackendLayouts/commune_default.tsconfig'
+
+# Configuration TCEFORM pour conformité RGAA (Critère 9.1 - Hiérarchie des titres)
+TCEFORM.tt_content {
+  header_layout {
+    # 0 = Défaut (H2 pour le contenu), 1 = H1 (réservé pour page sans h1 système), 2 = H2, 3 = H3, 4 = H4, 100 = Caché accessible
+    altLabels {
+      1 = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:tceform.header_layout.h1
+      2 = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:tceform.header_layout.h2
+      3 = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:tceform.header_layout.h3
+      4 = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:tceform.header_layout.h4
+      5 = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:tceform.header_layout.h5
+      100 = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:tceform.header_layout.hidden
+    }
+  }
+}
+
+# Configuration de la prévisualisation et des permissions de layout
+mod.web_layout.BackendLayouts {
+  # Layout par défaut pour les nouvelles sous-pages
+}

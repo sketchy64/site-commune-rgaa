@@ -1,0 +1,152 @@
+/**
+ * Site Commune RGAA - Thème Collectivités & Communes
+ * Conçu pour TYPO3 CMS & Bootstrap Package
+ */
+
+:root {
+  --commune-primary: #003366;
+  --commune-primary-dark: #002244;
+  --commune-primary-light: #4d88ff;
+  --commune-secondary: #005a9c;
+  --commune-accent-red: #c01823;
+  --commune-accent-blue: #002395;
+  --commune-text-main: #1f2937;
+  --commune-bg-light: #f8fafc;
+  --commune-focus-color: #005a9c;
+  --commune-focus-outline: 3px solid var(--commune-focus-color);
+  --commune-focus-offset: 3px;
+}
+
+/* Typographie institutionnelle */
+body {
+  color: var(--commune-text-main);
+  background-color: #ffffff;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* Couleurs personnalisées */
+.bg-primary-commune {
+  background-color: var(--commune-primary) !important;
+}
+
+.text-primary-commune {
+  color: var(--commune-primary) !important;
+}
+
+/* En-tête officiel républicain */
+.commune-brand {
+  transition: transform 0.2s ease-in-out;
+}
+
+.commune-marianne-badge {
+  display: flex;
+  height: 48px;
+  width: 14px;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.commune-marianne-badge .marianne-bar {
+  flex: 1;
+}
+
+.commune-marianne-badge .blue {
+  background-color: #002395;
+}
+
+.commune-marianne-badge .white {
+  background-color: #ffffff;
+}
+
+.commune-marianne-badge .red {
+  background-color: #ed2939;
+}
+
+.commune-title {
+  color: var(--commune-primary);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.commune-slogan {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Menu de navigation */
+#main-navigation .nav-link {
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#main-navigation .nav-link:hover,
+#main-navigation .nav-link:focus,
+#main-navigation .nav-link.active {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+#main-navigation .dropdown-menu {
+  border-radius: 0 0 6px 6px;
+  border-top: 3px solid var(--commune-primary-light);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Navigation latérale sous-pages */
+.commune-sidebar-menu .list-group-item {
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.commune-sidebar-menu .list-group-item.active-page {
+  border-left-color: var(--commune-primary);
+  background-color: var(--commune-bg-light);
+}
+
+.commune-sidebar-menu .list-group-item a {
+  color: var(--commune-text-main);
+  display: block;
+}
+
+/* Cartes et sections */
+.commune-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.commune-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important;
+}
+
+.commune-section-title {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
+.commune-section-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: var(--commune-primary-light);
+}
+
+/* Pied de page institutionnel */
+.commune-footer {
+  border-top: 4px solid var(--commune-primary);
+}
+
+.commune-footer a:hover,
+.commune-footer a:focus {
+  text-decoration: underline !important;
+}

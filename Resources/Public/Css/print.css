@@ -1,0 +1,55 @@
+/**
+ * Site Commune RGAA - Feuille de style pour l'impression
+ */
+
+@media print {
+  /* Masquage des éléments interactifs et non pertinents à l'impression */
+  .skiplinks,
+  .a11y-toolbar,
+  .commune-search-form,
+  .navbar-toggler,
+  #main-navigation,
+  .carousel-control-prev,
+  .carousel-control-next,
+  .carousel-indicators,
+  .carousel-a11y-controls,
+  .btn,
+  .pagination {
+    display: none !important;
+  }
+
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+  }
+
+  a {
+    color: #000000 !important;
+    text-decoration: underline !important;
+  }
+
+  /* Affichage explicite des URLs pour les liens externes */
+  a[href^="http"]:not([href*="notre-commune.fr"])::after {
+    content: " (" attr(href) ")";
+    font-size: 85%;
+  }
+
+  .commune-header {
+    border-bottom: 2px solid #000000 !important;
+    padding-bottom: 10px !important;
+  }
+
+  .commune-footer {
+    background-color: transparent !important;
+    color: #000000 !important;
+    border-top: 2px solid #000000 !important;
+    margin-top: 20px !important;
+    padding-top: 10px !important;
+  }
+
+  .commune-footer a {
+    color: #000000 !important;
+  }
+}

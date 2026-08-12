@@ -1,0 +1,64 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <!-- Titre principal masqué ou visible de premier niveau (Critère 9.1 RGAA - 1 seul H1) -->
+    <h1 class="visually-hidden">Bienvenue sur le portail officiel de la commune de {communeNom}</h1>
+
+    <!-- Section Bannière / Hero / Actualité à la Une (colPos 110) -->
+    <f:if condition="{heroContent}">
+        <section class="commune-hero-section mb-4" aria-label="Actualité à la une">
+            <div class="container">
+                <f:for each="{heroContent}" as="record">
+                    <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
+                </f:for>
+            </div>
+        </section>
+    </f:if>
+
+    <!-- Section Accès rapides démarches citoyennes (colPos 120) -->
+    <f:if condition="{quickAccessContent}">
+        <section class="commune-quickaccess-section py-4 bg-light mb-4" aria-label="Démarches et accès rapides">
+            <div class="container">
+                <h2 class="h3 mb-4 text-center commune-section-title">Mes démarches en ligne</h2>
+                <div class="row g-3">
+                    <f:for each="{quickAccessContent}" as="record">
+                        <div class="col-lg-3 col-sm-6">
+                            <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
+                        </div>
+                    </f:for>
+                </div>
+            </div>
+        </section>
+    </f:if>
+
+    <!-- Section Contenu Principal (colPos 0) -->
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-12">
+                <f:for each="{mainContent}" as="record">
+                    <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
+                </f:for>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Agenda et Actualités (colPos 130) -->
+    <f:if condition="{newsContent}">
+        <section class="commune-news-section py-5 bg-light mt-4" aria-label="Actualités et événements de la ville">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="h3 mb-0 commune-section-title">Actualités municipales</h2>
+                </div>
+                <div class="row g-4">
+                    <f:for each="{newsContent}" as="record">
+                        <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
+                    </f:for>
+                </div>
+            </div>
+        </section>
+    </f:if>
+</f:section>
+</html>

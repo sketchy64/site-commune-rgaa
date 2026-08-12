@@ -1,0 +1,54 @@
+{
+    "name": "commune/site-commune-rgaa",
+    "type": "typo3-cms-extension",
+    "description": "Surcouche accessible et optimisée RGAA 4.1.2 pour bootstrap_package, spécialement conçue pour les sites de communes et collectivités territoriales.",
+    "homepage": "https://github.com/jonathan-auribault/site-commune-rgaa",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Jonathan Auribault",
+            "role": "Developer"
+        }
+    ],
+    "keywords": [
+        "TYPO3 CMS",
+        "extension",
+        "sitepackage",
+        "bootstrap-package",
+        "rgaa",
+        "accessibility",
+        "a11y",
+        "commune",
+        "collectivite-territoriale",
+        "wcag"
+    ],
+    "require": {
+        "php": "^8.1 || ^8.2 || ^8.3",
+        "typo3/cms-core": "^12.4 || ^13.4",
+        "typo3/cms-fluid": "^12.4 || ^13.4",
+        "typo3/cms-frontend": "^12.4 || ^13.4",
+        "bk2k/bootstrap-package": "^14.0 || ^15.0"
+    },
+    "require-dev": {
+        "typo3/coding-standards": "^0.8.0",
+        "phpstan/phpstan": "^1.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Commune\\SiteCommuneRgaa\\": "Classes/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "site_commune_rgaa",
+            "web-dir": ".Build/Web"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
+        },
+        "sort-packages": true
+    }
+}

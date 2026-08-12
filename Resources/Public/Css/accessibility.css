@@ -1,0 +1,205 @@
+/**
+ * Site Commune RGAA - Règles d'Accessibilité Numérique (RGAA 4.1.2 & WCAG 2.1 AA)
+ */
+
+/* ==========================================================================
+   1. Liens d'évitement / Skip Links (Critère 12.7)
+   ========================================================================== */
+.skiplinks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99999;
+  pointer-events: none;
+}
+
+.skiplinks-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.skiplink {
+  position: absolute;
+  top: -999px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #000000;
+  color: #ffff00 !important;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  border: 3px solid #ffff00;
+  border-radius: 0 0 6px 6px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  transition: top 0.15s ease-in-out;
+  pointer-events: auto;
+}
+
+.skiplink:focus {
+  top: 0;
+  outline: 3px solid #00ffff;
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   2. Indicateur de focus renforcé (Critère 10.7)
+   ========================================================================== */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #005a9c !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 5px rgba(0, 90, 156, 0.25) !important;
+}
+
+/* Masquage accessible (Screen Reader Only) */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ==========================================================================
+   3. Ajustement de taille de police (Ergonomie A11y)
+   ========================================================================== */
+body.a11y-font-size-md {
+  font-size: 1.125rem; /* +12.5% */
+}
+
+body.a11y-font-size-lg {
+  font-size: 1.25rem; /* +25% */
+}
+
+body.a11y-font-size-xl {
+  font-size: 1.4rem; /* +40% */
+}
+
+/* ==========================================================================
+   4. Mode Police Dyslexie
+   ========================================================================== */
+body.a11y-dyslexic {
+  font-family: "OpenDyslexic", "Comic Sans MS", "Arial Rounded MT Bold", sans-serif !important;
+  letter-spacing: 0.08em !important;
+  word-spacing: 0.16em !important;
+  line-height: 1.9 !important;
+}
+
+body.a11y-dyslexic p,
+body.a11y-dyslexic li,
+body.a11y-dyslexic a {
+  letter-spacing: 0.08em !important;
+  line-height: 1.9 !important;
+}
+
+/* ==========================================================================
+   5. Mode Contraste Élevé (High Contrast Mode)
+   ========================================================================== */
+body.a11y-high-contrast {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+body.a11y-high-contrast header,
+body.a11y-high-contrast nav,
+body.a11y-high-contrast main,
+body.a11y-high-contrast footer,
+body.a11y-high-contrast section,
+body.a11y-high-contrast article,
+body.a11y-high-contrast aside,
+body.a11y-high-contrast .card,
+body.a11y-high-contrast .bg-light,
+body.a11y-high-contrast .bg-white,
+body.a11y-high-contrast .a11y-toolbar {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+body.a11y-high-contrast a {
+  color: #00ffff !important;
+  text-decoration: underline !important;
+}
+
+body.a11y-high-contrast a:hover,
+body.a11y-high-contrast a:focus {
+  color: #ffff00 !important;
+  background-color: #000000 !important;
+}
+
+body.a11y-high-contrast .btn-primary,
+body.a11y-high-contrast .bg-primary-commune {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border: 2px solid #ffff00 !important;
+}
+
+body.a11y-high-contrast .btn-outline-secondary,
+body.a11y-high-contrast .btn-outline-primary {
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+  background-color: #000000 !important;
+}
+
+body.a11y-high-contrast .btn:hover,
+body.a11y-high-contrast .btn:focus {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+}
+
+body.a11y-high-contrast .commune-title,
+body.a11y-high-contrast .text-primary-commune,
+body.a11y-high-contrast h1,
+body.a11y-high-contrast h2,
+body.a11y-high-contrast h3,
+body.a11y-high-contrast h4 {
+  color: #ffff00 !important;
+}
+
+body.a11y-high-contrast a:focus-visible,
+body.a11y-high-contrast button:focus-visible,
+body.a11y-high-contrast input:focus-visible {
+  outline: 3px solid #ffff00 !important;
+  outline-offset: 3px !important;
+}
+
+/* ==========================================================================
+   6. Contrôles Carrousel Accessible (Critère 13.8)
+   ========================================================================== */
+.commune-accessible-carousel {
+  position: relative;
+}
+
+.carousel-a11y-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+.carousel-play-pause-btn {
+  background-color: rgba(0, 0, 0, 0.85);
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.carousel-play-pause-btn:hover,
+.carousel-play-pause-btn:focus {
+  background-color: #000000;
+  color: #ffff00;
+}

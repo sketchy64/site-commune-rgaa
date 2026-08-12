@@ -1,0 +1,55 @@
+mod.web_layout.BackendLayouts {
+  commune_home {
+    title = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.home
+    icon = EXT:site_commune_rgaa/Resources/Public/Icons/Extension.svg
+    config {
+      backend_layout {
+        colCount = 1
+        rowCount = 5
+        rows {
+          1 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.alert
+                colPos = 100
+                maxitems = 1
+              }
+            }
+          }
+          2 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.hero
+                colPos = 110
+              }
+            }
+          }
+          3 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.quickaccess
+                colPos = 120
+              }
+            }
+          }
+          4 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.main
+                colPos = 0
+              }
+            }
+          }
+          5 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.events_news
+                colPos = 130
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,83 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <div class="container my-4">
+        <article class="commune-accessibility-statement">
+            <h1 class="h2 page-title pb-2 mb-4 border-bottom text-primary-commune">Déclaration d'accessibilité RGAA</h1>
+
+            <p class="lead">
+                La <strong>{communeNom}</strong> s'engage à rendre ses sites internet, intranet, extranet et ses progiciels accessibles (et ses applications mobiles et mobilier urbain numérique) conformément à l'article 47 de la loi n° 2005-102 du 11 février 2005.
+            </p>
+
+            <p>
+                Cette déclaration d'accessibilité s'applique au portail officiel : <strong>{f:uri.page(pageUid: rootLine.0.uid, absolute: 1)}</strong>.
+            </p>
+
+            <div class="card my-4 border-start border-primary border-4 p-3 bg-light">
+                <h2 class="h4 text-primary-commune">État de conformité</h2>
+                <p class="mb-0">
+                    Le site officiel de la commune est <strong>{communeRgaaStatut}</strong> avec le référentiel général d'amélioration de l'accessibilité (RGAA), version 4.1.2 en raison des non-conformités et des dérogations énumérées ci-dessous.
+                </p>
+                <p class="mt-2 mb-0">
+                    <strong>Taux de conformité global constaté :</strong> <span class="badge bg-success fs-6">{communeRgaaTaux}</span>
+                </p>
+            </div>
+
+            <section class="my-4">
+                <h2 class="h4">Résultats des tests</h2>
+                <p>L'audit de conformité réalisé par l'équipe technique révèle que :</p>
+                <ul>
+                    <li>Le site respecte les critères de niveau simple A et double A (WCAG 2.1 / RGAA 4.1.2) sur son gabarit structurel.</li>
+                    <li>Des efforts continus sont apportés sur les documents PDF anciens et les cartes interactives tierces.</li>
+                </ul>
+            </section>
+
+            <section class="my-4">
+                <h2 class="h4">Technologies utilisées pour la réalisation du site</h2>
+                <ul>
+                    <li>HTML5 & WAI-ARIA</li>
+                    <li>CSS3 / SASS</li>
+                    <li>JavaScript (Vanilla)</li>
+                    <li>CMS TYPO3 & extension bootstrap_package</li>
+                </ul>
+            </section>
+
+            <section class="my-4">
+                <h2 class="h4">Retour d'information et contact</h2>
+                <p>
+                    Si vous n'arrivez pas à accéder à un contenu ou à un service, vous pouvez contacter le responsable du site internet pour être orienté vers une alternative accessible ou obtenir le contenu sous une autre forme :
+                </p>
+                <ul>
+                    <li>Courriel : <a href="mailto:{communeEmail}">{communeEmail}</a></li>
+                    <li>Téléphone : <a href="tel:{communeTelephone}">{communeTelephone}</a></li>
+                    <li>Adresse postale : {communeAdresse}</li>
+                </ul>
+            </section>
+
+            <section class="my-4">
+                <h2 class="h4">Voies de recours</h2>
+                <p>
+                    Cette procédure est à utiliser dans le cas suivant : vous avez signalé au responsable du site internet un défaut d'accessibilité qui vous empêche d'accéder à un contenu ou à un des services du portail et vous n'avez pas obtenu de réponse satisfaisante.
+                </p>
+                <p>Vous pouvez :</p>
+                <ul>
+                    <li>Écrire un message au Défenseur des droits (<a href="https://formulaire.defenseurdesdroits.fr/" target="_blank" rel="noopener noreferrer">formulaire de réclamation en ligne ↗</a>)</li>
+                    <li>Contacter le délégué du Défenseur des droits dans votre région</li>
+                    <li>Envoyer un courrier par la poste (gratuit, ne pas mettre de timbre) : Défenseur des droits - Libre réponse 71120 - 75342 Paris CEDEX 07</li>
+                </ul>
+            </section>
+
+            <f:if condition="{mainContent}">
+                <div class="mt-4 pt-3 border-top">
+                    <f:for each="{mainContent}" as="record">
+                        <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
+                    </f:for>
+                </div>
+            </f:if>
+        </article>
+    </div>
+</f:section>
+</html>

@@ -1,0 +1,52 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<!-- Barre d'outils d'accessibilité (Toolbar A11y) -->
+<aside class="a11y-toolbar bg-light border-bottom py-1" aria-label="{f:translate(key: 'a11y.toolbar.title', extensionName: 'site_commune_rgaa')}">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <!-- Raccourcis d'urgence et numéro citoyen -->
+        <div class="a11y-toolbar-info small text-muted d-none d-md-flex align-items-center gap-3">
+            <span><i class="bi bi-geo-alt" aria-hidden="true"></i> {communeNom} ({communeDepartement})</span>
+            <f:if condition="{communeTelephone}">
+                <span>
+                    <i class="bi bi-telephone" aria-hidden="true"></i>
+                    <a href="tel:{communeTelephone}" class="text-decoration-none text-muted fw-semibold">
+                        <span class="visually-hidden">Téléphone de la mairie : </span>{communeTelephone}
+                    </a>
+                </span>
+            </f:if>
+        </div>
+
+        <!-- Contrôles ergonomiques d'accessibilité -->
+        <div class="a11y-toolbar-controls ms-auto d-flex align-items-center gap-2">
+            <!-- Taille de police -->
+            <div class="btn-group btn-group-sm" role="group" aria-label="Ajustement de la taille de texte">
+                <button type="button" id="a11y-font-decrease" class="btn btn-outline-secondary btn-sm" aria-label="{f:translate(key: 'a11y.font_size.decrease', extensionName: 'site_commune_rgaa')}">
+                    <span aria-hidden="true">A-</span>
+                </button>
+                <button type="button" id="a11y-font-reset" class="btn btn-outline-secondary btn-sm" aria-label="{f:translate(key: 'a11y.font_size.reset', extensionName: 'site_commune_rgaa')}">
+                    <span aria-hidden="true">A</span>
+                </button>
+                <button type="button" id="a11y-font-increase" class="btn btn-outline-secondary btn-sm" aria-label="{f:translate(key: 'a11y.font_size.increase', extensionName: 'site_commune_rgaa')}">
+                    <span aria-hidden="true">A+</span>
+                </button>
+            </div>
+
+            <!-- Mode Contraste Renforcé -->
+            <button type="button" id="a11y-toggle-contrast" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1" aria-pressed="false" aria-label="{f:translate(key: 'a11y.contrast.toggle', extensionName: 'site_commune_rgaa')}">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor"></path>
+                </svg>
+                <span class="d-none d-sm-inline">Contraste</span>
+            </button>
+
+            <!-- Mode Police Dyslexie -->
+            <button type="button" id="a11y-toggle-dyslexic" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1" aria-pressed="false" aria-label="{f:translate(key: 'a11y.dyslexic.toggle', extensionName: 'site_commune_rgaa')}">
+                <span aria-hidden="true" class="fw-bold">Dys</span>
+                <span class="d-none d-sm-inline">Police Dys</span>
+            </button>
+        </div>
+    </div>
+</aside>
+</html>

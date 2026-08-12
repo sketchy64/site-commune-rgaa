@@ -1,0 +1,52 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<!-- En-tête institutionnel républicain (Landmark role="banner") -->
+<header id="main-header" class="commune-header bg-white border-bottom shadow-sm" role="banner">
+    <div class="container py-3">
+        <div class="row align-items-center gy-3">
+            <!-- Bloc Marque / Logo & Commune -->
+            <div class="col-lg-6 col-12 d-flex align-items-center gap-3">
+                <f:link.page pageUid="{rootLine.0.uid}" class="text-decoration-none d-flex align-items-center gap-3 text-dark commune-brand" title="Retour à la page d'accueil de {communeNom}">
+                    <div class="commune-logo-wrapper" aria-hidden="true">
+                        <!-- Bloc républicain Marianne ou Armoiries -->
+                        <div class="commune-marianne-badge">
+                            <span class="marianne-bar red"></span>
+                            <span class="marianne-bar white"></span>
+                            <span class="marianne-bar blue"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="h4 mb-0 fw-bold d-block commune-title">{communeNom}</span>
+                        <f:if condition="{communeSlogan}">
+                            <small class="text-muted d-block commune-slogan">{communeSlogan}</small>
+                        </f:if>
+                    </div>
+                </f:link.page>
+            </div>
+
+            <!-- Moteur de recherche accessible (Critère 13.9) -->
+            <div class="col-lg-6 col-12">
+                <form id="main-search" class="commune-search-form ms-lg-auto" role="search" method="get" action="{f:uri.page(pageUid: 999)}">
+                    <div class="input-group">
+                        <label for="search-input" class="visually-hidden">
+                            {f:translate(key: 'nav.search.label', extensionName: 'site_commune_rgaa')}
+                        </label>
+                        <input type="search" id="search-input" name="tx_indexedsearch_pi2[search][sword]" class="form-control" placeholder="{f:translate(key: 'nav.search.label', extensionName: 'site_commune_rgaa')}" aria-label="{f:translate(key: 'nav.search.label', extensionName: 'site_commune_rgaa')}" required>
+                        <button class="btn btn-primary px-3 d-flex align-items-center gap-2" type="submit" aria-label="{f:translate(key: 'nav.search.button', extensionName: 'site_commune_rgaa')}">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <span class="d-none d-sm-inline">{f:translate(key: 'nav.search.button', extensionName: 'site_commune_rgaa')}</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation principale -->
+    <f:render partial="Navigation/MainNavigation" arguments="{_all}" />
+</header>
+</html>

@@ -1,0 +1,33 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<!-- Liens d'évitement / Skip Links obligatoires RGAA 4.1.2 (Critère 12.7) -->
+<f:render partial="Structure/SkipLinks" arguments="{_all}" />
+
+<div id="top" class="site-wrapper d-flex flex-column min-vh-100">
+    <!-- Barre d'outils d'accessibilité (Taille police, Contraste, Police dyslexie) -->
+    <f:render partial="Accessibility/Toolbar" arguments="{_all}" />
+
+    <!-- Bandeau d'alerte citoyenne (si contenu présent dans la colonne colPos 100) -->
+    <f:if condition="{emergencyAlertContent}">
+        <f:render partial="Structure/EmergencyAlert" arguments="{_all}" />
+    </f:if>
+
+    <!-- En-tête institutionnel & navigation principale -->
+    <f:render partial="Structure/Header" arguments="{_all}" />
+
+    <!-- Fil d'Ariane accessible (sauf page d'accueil) -->
+    <f:if condition="{data.uid} != {rootLine.0.uid}">
+        <f:render partial="Navigation/Breadcrumb" arguments="{_all}" />
+    </f:if>
+
+    <!-- Contenu Principal (Landmark role="main") -->
+    <main id="main-content" class="flex-grow-1" role="main" tabindex="-1">
+        <f:render section="Main" />
+    </main>
+
+    <!-- Pied de page officiel avec mentions RGAA obligatoires -->
+    <f:render partial="Structure/Footer" arguments="{_all}" />
+</div>
+</html>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="fr" datatype="plaintext" original="messages" date="2026-08-12T10:00:00Z" product-name="site_commune_rgaa">
+        <header/>
+        <body>
+            <!-- Liens d'évitement / Skip links RGAA -->
+            <trans-unit id="skiplinks.title" xml:space="preserve">
+                <source>Accès rapide / Liens d'évitement</source>
+            </trans-unit>
+            <trans-unit id="skiplinks.to_content" xml:space="preserve">
+                <source>Aller au contenu principal</source>
+            </trans-unit>
+            <trans-unit id="skiplinks.to_navigation" xml:space="preserve">
+                <source>Aller au menu principal</source>
+            </trans-unit>
+            <trans-unit id="skiplinks.to_search" xml:space="preserve">
+                <source>Aller à la recherche</source>
+            </trans-unit>
+            <trans-unit id="skiplinks.to_footer" xml:space="preserve">
+                <source>Aller au pied de page</source>
+            </trans-unit>
+            <trans-unit id="skiplinks.to_accessibility" xml:space="preserve">
+                <source>Déclaration d'accessibilité</source>
+            </trans-unit>
+
+            <!-- Barre d'outils Accessibilité -->
+            <trans-unit id="a11y.toolbar.title" xml:space="preserve">
+                <source>Outils d'accessibilité et de confort de lecture</source>
+            </trans-unit>
+            <trans-unit id="a11y.font_size.decrease" xml:space="preserve">
+                <source>Diminuer la taille du texte</source>
+            </trans-unit>
+            <trans-unit id="a11y.font_size.reset" xml:space="preserve">
+                <source>Réinitialiser la taille du texte</source>
+            </trans-unit>
+            <trans-unit id="a11y.font_size.increase" xml:space="preserve">
+                <source>Agrandir la taille du texte</source>
+            </trans-unit>
+            <trans-unit id="a11y.contrast.toggle" xml:space="preserve">
+                <source>Activer le mode contraste élevé</source>
+            </trans-unit>
+            <trans-unit id="a11y.dyslexic.toggle" xml:space="preserve">
+                <source>Activer la police adaptée à la dyslexie</source>
+            </trans-unit>
+
+            <!-- Navigation & Recherche -->
+            <trans-unit id="nav.main" xml:space="preserve">
+                <source>Menu principal de navigation</source>
+            </trans-unit>
+            <trans-unit id="nav.breadcrumb" xml:space="preserve">
+                <source>Vous êtes ici :</source>
+            </trans-unit>
+            <trans-unit id="nav.search.label" xml:space="preserve">
+                <source>Rechercher sur le site municipal</source>
+            </trans-unit>
+            <trans-unit id="nav.search.button" xml:space="preserve">
+                <source>Lancer la recherche</source>
+            </trans-unit>
+
+            <!-- Pied de page et Mentions Collectivité -->
+            <trans-unit id="footer.contact_title" xml:space="preserve">
+                <source>Contact et Horaires de la Mairie</source>
+            </trans-unit>
+            <trans-unit id="footer.useful_links" xml:space="preserve">
+                <source>Liens utiles et démarches</source>
+            </trans-unit>
+            <trans-unit id="footer.emergency_numbers" xml:space="preserve">
+                <source>Numéros d'urgence</source>
+            </trans-unit>
+            <trans-unit id="footer.rgaa_statement" xml:space="preserve">
+                <source>Accessibilité :</source>
+            </trans-unit>
+            <trans-unit id="footer.legal_notice" xml:space="preserve">
+                <source>Mentions légales</source>
+            </trans-unit>
+            <trans-unit id="footer.privacy_policy" xml:space="preserve">
+                <source>Protection des données (RGPD)</source>
+            </trans-unit>
+            <trans-unit id="footer.sitemap" xml:space="preserve">
+                <source>Plan du site</source>
+            </trans-unit>
+
+            <!-- Éléments interactifs -->
+            <trans-unit id="carousel.pause" xml:space="preserve">
+                <source>Mettre en pause le défilement automatique</source>
+            </trans-unit>
+            <trans-unit id="carousel.play" xml:space="preserve">
+                <source>Reprendre le défilement automatique</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

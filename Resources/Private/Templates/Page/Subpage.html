@@ -1,0 +1,49 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <div class="container my-4">
+        <div class="row">
+            <!-- Barre latérale / Navigation de rubrique (Landmark role="complementary") -->
+            <aside class="col-lg-3 col-md-4 mb-4" role="complementary" aria-label="Navigation de la rubrique">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-primary-commune text-white fw-bold py-2">
+                        Dans cette rubrique
+                    </div>
+                    <div class="card-body p-0">
+                        <f:format.raw>{subNavigation}</f:format.raw>
+                    </div>
+                </div>
+
+                <!-- Contenu additionnel colonne latérale (colPos 200) -->
+                <f:if condition="{sidebarLeftContent}">
+                    <div class="commune-sidebar-extra">
+                        <f:for each="{sidebarLeftContent}" as="record">
+                            <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
+                        </f:for>
+                    </div>
+                </f:if>
+            </aside>
+
+            <!-- Corps de la page (Article principal) -->
+            <article class="col-lg-9 col-md-8">
+                <!-- Titre H1 unique de la page -->
+                <h1 class="h2 page-title pb-2 mb-4 border-bottom text-primary-commune">{data.title}</h1>
+
+                <f:if condition="{data.subtitle}">
+                    <p class="lead text-muted mb-4">{data.subtitle}</p>
+                </f:if>
+
+                <!-- Contenu principal (colPos 0) -->
+                <div class="commune-page-content">
+                    <f:for each="{mainContent}" as="record">
+                        <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
+                    </f:for>
+                </div>
+            </article>
+        </div>
+    </div>
+</f:section>
+</html>

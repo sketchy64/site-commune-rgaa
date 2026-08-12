@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="fr" datatype="plaintext" original="messages" date="2026-08-12T10:00:00Z" product-name="site_commune_rgaa">
+        <header/>
+        <body>
+            <!-- Backend Layouts -->
+            <trans-unit id="backend_layout.home" xml:space="preserve">
+                <source>Commune - Page d'accueil</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.subpage" xml:space="preserve">
+                <source>Commune - Page standard avec menu latéral</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.default" xml:space="preserve">
+                <source>Commune - Pleine largeur</source>
+            </trans-unit>
+
+            <!-- Colonnes -->
+            <trans-unit id="backend_layout.column.alert" xml:space="preserve">
+                <source>Bandeau d'alerte citoyenne (Urgence / Alerte météo)</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.column.hero" xml:space="preserve">
+                <source>Bannière / Actualité à la Une (Hero)</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.column.quickaccess" xml:space="preserve">
+                <source>Accès rapides aux démarches (4 blocs)</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.column.main" xml:space="preserve">
+                <source>Contenu principal</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.column.events_news" xml:space="preserve">
+                <source>Agenda et Actualités municipales</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.column.sidebar_left" xml:space="preserve">
+                <source>Menu latéral et informations pratiques</source>
+            </trans-unit>
+
+            <!-- Niveaux de titres TCEFORM RGAA -->
+            <trans-unit id="tceform.header_layout.h1" xml:space="preserve">
+                <source>Titre H1 (Titre principal de la page)</source>
+            </trans-unit>
+            <trans-unit id="tceform.header_layout.h2" xml:space="preserve">
+                <source>Titre H2 (Section de contenu - Recommandé)</source>
+            </trans-unit>
+            <trans-unit id="tceform.header_layout.h3" xml:space="preserve">
+                <source>Titre H3 (Sous-section)</source>
+            </trans-unit>
+            <trans-unit id="tceform.header_layout.h4" xml:space="preserve">
+                <source>Titre H4 (Sous-sous-section)</source>
+            </trans-unit>
+            <trans-unit id="tceform.header_layout.h5" xml:space="preserve">
+                <source>Titre H5</source>
+            </trans-unit>
+            <trans-unit id="tceform.header_layout.hidden" xml:space="preserve">
+                <source>Titre masqué visuellement (accessible aux lecteurs d'écran)</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

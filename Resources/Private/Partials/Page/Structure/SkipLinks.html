@@ -1,0 +1,36 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<!-- Liens d'évitement / Skip Links RGAA (Critère 12.7) -->
+<nav id="skiplinks" class="skiplinks" aria-label="{f:translate(key: 'skiplinks.title', extensionName: 'site_commune_rgaa')}">
+    <ul class="skiplinks-list">
+        <li>
+            <a href="#main-content" class="skiplink">
+                {f:translate(key: 'skiplinks.to_content', extensionName: 'site_commune_rgaa')}
+            </a>
+        </li>
+        <li>
+            <a href="#main-navigation" class="skiplink">
+                {f:translate(key: 'skiplinks.to_navigation', extensionName: 'site_commune_rgaa')}
+            </a>
+        </li>
+        <li>
+            <a href="#main-search" class="skiplink">
+                {f:translate(key: 'skiplinks.to_search', extensionName: 'site_commune_rgaa')}
+            </a>
+        </li>
+        <li>
+            <a href="#main-footer" class="skiplink">
+                {f:translate(key: 'skiplinks.to_footer', extensionName: 'site_commune_rgaa')}
+            </a>
+        </li>
+        <f:if condition="{communeRgaaPageUid}">
+            <li>
+                <f:link.page pageUid="{communeRgaaPageUid}" class="skiplink">
+                    {f:translate(key: 'skiplinks.to_accessibility', extensionName: 'site_commune_rgaa')}
+                </f:link.page>
+            </li>
+        </f:if>
+    </ul>
+</nav>
+</html>

@@ -1,0 +1,60 @@
+# ==============================================================================
+# Constantes TypoScript : Site Commune RGAA (Surcouche Bootstrap Package)
+# ==============================================================================
+
+page {
+  theme {
+    # Chemins des gabarits de page
+    templateRootPath = EXT:site_commune_rgaa/Resources/Private/Templates/Page/
+    partialRootPath = EXT:site_commune_rgaa/Resources/Private/Partials/Page/
+    layoutRootPath = EXT:site_commune_rgaa/Resources/Private/Layouts/Page/
+
+    # Chemins des éléments de contenu (surcharge de bootstrap_package)
+    content {
+      templateRootPath = EXT:site_commune_rgaa/Resources/Private/OverriddenTemplates/BootstrapPackage/ContentElements/
+      partialRootPath = EXT:bootstrap_package/Resources/Private/Partials/ContentElements/
+      layoutRootPath = EXT:bootstrap_package/Resources/Private/Layouts/ContentElements/
+    }
+  }
+}
+
+# ------------------------------------------------------------------------------
+# Configuration Institutionnelle de la Collectivité / Mairie
+# ------------------------------------------------------------------------------
+commune {
+  # Nom officiel de la commune
+  nom = Mairie de Notre-Commune
+  slogan = République Française - Liberté, Égalité, Fraternité
+  departement = 75 - Paris
+  region = Île-de-France
+
+  # Coordonnées officielles
+  adresse = 1 Place de la République, 75000 Commune
+  telephone = 01 23 45 67 89
+  email = contact@notre-commune.fr
+  horaires = Du Lundi au Vendredi : 8h30 - 12h00 / 13h30 - 17h30 (Samedi matin : 9h00 - 12h00)
+
+  # Numéros utiles et d urgence
+  samu = 15
+  police = 17
+  pompiers = 18
+  urgence_europeenne = 112
+  sourds_malentendants = 114
+
+  # Déclaration d'accessibilité RGAA
+  # 0 = non-conforme, 1 = partiellement conforme, 2 = totalement conforme
+  rgaa_statut = partiellement conforme
+  rgaa_taux = 84%
+  rgaa_page_uid = 10
+  plan_du_site_page_uid = 11
+  mentions_legales_page_uid = 12
+  donnees_personnelles_page_uid = 13
+
+  # Réseaux sociaux institutionnels
+  social {
+    facebook = https://facebook.com/
+    x_twitter = https://x.com/
+    instagram = https://instagram.com/
+    youtube = https://youtube.com/
+  }
+}

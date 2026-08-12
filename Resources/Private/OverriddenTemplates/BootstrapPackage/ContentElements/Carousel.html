@@ -1,0 +1,90 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:bk2k="http://typo3.org/ns/BK2K/BootstrapPackage/ViewHelpers"
+      xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:if condition="{records}">
+        <div id="carousel-{data.uid}"
+             class="carousel slide commune-accessible-carousel"
+             data-bs-ride="false"
+             data-bs-interval="{f:if(condition: data.pi_flexform.interval, then: data.pi_flexform.interval, else: 5000)}"
+             data-bs-wrap="{f:if(condition: data.pi_flexform.wrap, then: 'true', else: 'false')}"
+             role="region"
+             aria-roledescription="carousel"
+             aria-label="{f:if(condition: data.header, then: data.header, else: 'Carrousel d actualités')}">
+
+            <!-- Bouton Pause / Lecture obligatoire RGAA Critère 13.8 -->
+            <div class="carousel-a11y-controls">
+                <button type="button" class="btn btn-sm btn-dark carousel-play-pause-btn" aria-label="Mettre en pause le carrousel" aria-pressed="false" data-carousel-id="carousel-{data.uid}">
+                    <span class="btn-icon" aria-hidden="true">⏸</span>
+                    <span class="btn-text">Pause</span>
+                </button>
+            </div>
+
+            <!-- Indicateurs de diapositives -->
+            <f:if condition="{records -> f:count()} > 1">
+                <div class="carousel-indicators">
+                    <f:for each="{records}" as="record" iteration="iteration">
+                        <button type="button"
+                                data-bs-target="#carousel-{data.uid}"
+                                data-bs-slide-to="{iteration.index}"
+                                class="{f:if(condition: iteration.isFirst, then: 'active')}"
+                                aria-current="{f:if(condition: iteration.isFirst, then: 'true')}"
+                                aria-label="Diapositive {iteration.cycle} sur {records -> f:count()} : {record.data.header}">
+                        </button>
+                    </f:for>
+                </div>
+            </f:if>
+
+            <!-- Éléments du carrousel -->
+            <div class="carousel-inner" aria-live="polite">
+                <f:for each="{records}" as="record" iteration="iteration">
+                    <div class="carousel-item {f:if(condition: iteration.isFirst, then: 'active')}"
+                         role="group"
+                         aria-roledescription="slide"
+                         aria-label="Diapositive {iteration.cycle} sur {records -> f:count()}">
+                        <f:if condition="{record.images.0}">
+                            <f:variable name="image" value="{record.images.0}" />
+                            <f:image image="{image}"
+                                     class="d-block w-100 img-fluid"
+                                     title="{image.title}"
+                                     additionalAttributes="{rgaa:a11y.decorativeImage(alt: image.alternative, isDecorative: false)}" />
+                        </f:if>
+
+                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded p-3 text-start">
+                            <h3 class="h4">{record.data.header}</h3>
+                            <f:if condition="{record.data.subheader}">
+                                <p class="lead mb-2">{record.data.subheader}</p>
+                            </f:if>
+                            <f:if condition="{record.data.bodytext}">
+                                <f:format.html>{record.data.bodytext}</f:format.html>
+                            </f:if>
+                            <f:if condition="{record.data.link}">
+                                <f:link.typolink parameter="{record.data.link}" class="btn btn-primary btn-sm mt-2">
+                                    <f:if condition="{record.data.link_title}">
+                                        <f:then>{record.data.link_title}</f:then>
+                                        <f:else>En savoir plus sur {record.data.header}</f:else>
+                                    </f:if>
+                                </f:link.typolink>
+                            </f:if>
+                        </div>
+                    </div>
+                </f:for>
+            </div>
+
+            <!-- Boutons Précédent / Suivant -->
+            <f:if condition="{records -> f:count()} > 1">
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{data.uid}" data-bs-slide="prev" aria-label="Diapositive précédente">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel-{data.uid}" data-bs-slide="next" aria-label="Diapositive suivante">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </f:if>
+        </div>
+    </f:if>
+</f:section>
+</html>
