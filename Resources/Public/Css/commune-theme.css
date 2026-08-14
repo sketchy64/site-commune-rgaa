@@ -1,0 +1,508 @@
+/**
+ * Site Commune RGAA - Thème Sauveterre
+ * Inspiré de la charte graphique de la Ville de Sauveterre (https://mairiesauveterre.fr/fr)
+ * Couleurs : Vert (#00703A), Or (#F5B21E), Bleu Ciel (#25A1D9)
+ * Conforme RGAA 4.1.2 / WCAG 2.1 AA
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Palette officielle Sauveterre */
+  --sauveterre-green: #00703a;
+  --sauveterre-green-dark: #00552c;
+  --sauveterre-green-light: #e8f5e9;
+  --sauveterre-gold: #f5b21e;
+  --sauveterre-gold-dark: #cf9619;
+  --sauveterre-gold-light: #fef7e6;
+  --sauveterre-blue: #25a1d9;
+  --sauveterre-blue-dark: #1d7daa;
+  --sauveterre-blue-light: #e6f6fd;
+  
+  /* Variables institutionnelles standard */
+  --commune-primary: var(--sauveterre-green);
+  --commune-primary-dark: var(--sauveterre-green-dark);
+  --commune-primary-light: var(--sauveterre-green-light);
+  --commune-secondary: var(--sauveterre-gold);
+  --commune-accent: var(--sauveterre-blue);
+  
+  --commune-text-main: #212529;
+  --commune-text-muted: #595959;
+  --commune-bg-light: #f4f5f7;
+  --commune-border: #e2e8f0;
+  
+  /* Focus accessible renforcé (RGAA 10.7) */
+  --commune-focus-color: #00552c;
+  --commune-focus-outline: 3px solid var(--sauveterre-gold);
+  --commune-focus-offset: 3px;
+
+  /* Typographie */
+  --commune-font-title: 'Montserrat', 'Century Gothic', -apple-system, BlinkMacSystemFont, sans-serif;
+  --commune-font-body: 'Outfit', 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ==============================================================================
+   Typographie & Styles Généraux
+   ============================================================================== */
+body {
+  color: var(--commune-text-main);
+  background-color: #ffffff;
+  font-family: var(--commune-font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--commune-font-title);
+  font-weight: 700;
+  color: var(--commune-text-main);
+  letter-spacing: -0.2px;
+}
+
+/* Liens textuels */
+a {
+  color: var(--commune-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+a:hover, a:focus {
+  color: var(--commune-primary-dark);
+}
+
+/* ==============================================================================
+   En-tête Institutionnel (Header Sauveterre)
+   ============================================================================== */
+.commune-header {
+  background-color: #ffffff;
+  border-bottom: 3px solid var(--sauveterre-green);
+}
+
+.commune-brand {
+  text-decoration: none !important;
+}
+
+.commune-title {
+  color: var(--sauveterre-green);
+  font-family: var(--commune-font-title);
+  font-size: 1.55rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+}
+
+.commune-slogan {
+  color: var(--commune-text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+/* Badge Républicain / Armoiries */
+.commune-marianne-badge {
+  display: inline-flex;
+  height: 46px;
+  width: 14px;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.commune-marianne-badge .marianne-bar {
+  flex: 1;
+}
+
+.commune-marianne-badge .blue {
+  background-color: #002395;
+}
+
+.commune-marianne-badge .white {
+  background-color: #ffffff;
+}
+
+.commune-marianne-badge .red {
+  background-color: #ed2939;
+}
+
+/* Barre de recherche dans l'en-tête */
+.commune-search-form .form-control {
+  border: 2px solid var(--commune-border);
+  border-radius: 6px 0 0 6px;
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+}
+
+.commune-search-form .form-control:focus {
+  border-color: var(--sauveterre-green);
+  box-shadow: 0 0 0 3px rgba(0, 112, 58, 0.2);
+}
+
+.commune-search-form .btn-primary {
+  background-color: var(--sauveterre-green);
+  border-color: var(--sauveterre-green);
+  border-radius: 0 6px 6px 0;
+  font-weight: 600;
+  color: #ffffff;
+  padding: 0.6rem 1.2rem;
+}
+
+.commune-search-form .btn-primary:hover,
+.commune-search-form .btn-primary:focus {
+  background-color: var(--sauveterre-green-dark);
+  border-color: var(--sauveterre-green-dark);
+}
+
+/* ==============================================================================
+   Navigation Principale (Bandeau Vert Sauveterre)
+   ============================================================================== */
+#main-navigation {
+  background-color: var(--sauveterre-green) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+#main-navigation .navbar-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+#main-navigation .nav-link {
+  color: #ffffff !important;
+  font-family: var(--commune-font-title);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.85rem 1.1rem;
+  text-decoration: none !important;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+#main-navigation .nav-link:hover,
+#main-navigation .nav-link:focus {
+  background-color: var(--sauveterre-green-dark);
+  border-bottom-color: var(--sauveterre-gold);
+  color: #ffffff !important;
+}
+
+#main-navigation .nav-link.active,
+#main-navigation .nav-item.active .nav-link {
+  background-color: var(--sauveterre-green-dark);
+  border-bottom-color: var(--sauveterre-gold);
+  color: #ffffff !important;
+}
+
+/* Menus déroulants */
+#main-navigation .dropdown-menu {
+  background-color: #ffffff;
+  border: 1px solid var(--commune-border);
+  border-top: 4px solid var(--sauveterre-green);
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  padding: 0.5rem 0;
+}
+
+#main-navigation .dropdown-item {
+  color: var(--commune-text-main);
+  font-weight: 500;
+  padding: 0.6rem 1.25rem;
+  text-decoration: none !important;
+  transition: all 0.15s ease;
+}
+
+#main-navigation .dropdown-item:hover,
+#main-navigation .dropdown-item:focus {
+  background-color: var(--sauveterre-green-light);
+  color: var(--sauveterre-green-dark);
+  padding-left: 1.5rem;
+}
+
+/* ==============================================================================
+   Boutons & Éléments d'Action (Sauveterre Style)
+   ============================================================================== */
+.btn {
+  font-family: var(--commune-font-title);
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 0.55rem 1.25rem;
+  transition: all 0.2s ease;
+  text-decoration: none !important;
+}
+
+.btn-primary {
+  background-color: var(--sauveterre-green) !important;
+  border-color: var(--sauveterre-green) !important;
+  color: #ffffff !important;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--sauveterre-green-dark) !important;
+  border-color: var(--sauveterre-green-dark) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 112, 58, 0.25);
+}
+
+.btn-secondary,
+.btn-warning {
+  background-color: var(--sauveterre-gold) !important;
+  border-color: var(--sauveterre-gold) !important;
+  color: #212529 !important;
+  font-weight: 700;
+}
+
+.btn-secondary:hover, .btn-secondary:focus,
+.btn-warning:hover, .btn-warning:focus {
+  background-color: var(--sauveterre-gold-dark) !important;
+  border-color: var(--sauveterre-gold-dark) !important;
+  color: #000000 !important;
+}
+
+.btn-info {
+  background-color: var(--sauveterre-blue) !important;
+  border-color: var(--sauveterre-blue) !important;
+  color: #ffffff !important;
+}
+
+.btn-info:hover, .btn-info:focus {
+  background-color: var(--sauveterre-blue-dark) !important;
+  border-color: var(--sauveterre-blue-dark) !important;
+}
+
+.btn-outline-primary {
+  border: 2px solid var(--sauveterre-green) !important;
+  color: var(--sauveterre-green) !important;
+  background-color: transparent;
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:focus {
+  background-color: var(--sauveterre-green) !important;
+  color: #ffffff !important;
+}
+
+/* ==============================================================================
+   Titres de Section & Séparateurs
+   ============================================================================== */
+.commune-section-title {
+  position: relative;
+  display: inline-block;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--commune-text-main);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.commune-section-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 4px;
+  background-color: var(--sauveterre-green);
+  border-radius: 2px;
+}
+
+.commune-section-title::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 55px;
+  width: 12px;
+  height: 4px;
+  background-color: var(--sauveterre-gold);
+  border-radius: 2px;
+}
+
+.text-center .commune-section-title::after {
+  left: 50%;
+  transform: translateX(-35px);
+}
+
+.text-center .commune-section-title::before {
+  left: 50%;
+  transform: translateX(20px);
+}
+
+/* ==============================================================================
+   Accès Rapides / Démarches Citoyennes
+   ============================================================================== */
+.commune-quickaccess-section {
+  background-color: var(--commune-bg-light);
+  border-top: 1px solid var(--commune-border);
+  border-bottom: 1px solid var(--commune-border);
+}
+
+.commune-quickaccess-card {
+  background-color: #ffffff;
+  border: 1px solid var(--commune-border);
+  border-radius: 8px;
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.commune-quickaccess-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--sauveterre-green);
+  box-shadow: 0 10px 20px rgba(0, 112, 58, 0.12);
+}
+
+.commune-quickaccess-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--sauveterre-green-light);
+  color: var(--sauveterre-green);
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  transition: all 0.25s ease;
+}
+
+.commune-quickaccess-card:hover .commune-quickaccess-icon {
+  background-color: var(--sauveterre-green);
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+/* ==============================================================================
+   Cartes Actualités & Événements
+   ============================================================================== */
+.card, .commune-card {
+  border: 1px solid var(--commune-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.25s ease;
+}
+
+.card:hover, .commune-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.09);
+  border-color: #cbd5e1;
+}
+
+.card .badge-category {
+  background-color: var(--sauveterre-green);
+  color: #ffffff;
+  font-family: var(--commune-font-title);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+/* ==============================================================================
+   Navigation Latérale (Sous-pages)
+   ============================================================================== */
+.commune-sidebar-menu {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--commune-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.commune-sidebar-menu .list-group-item {
+  border-left: 4px solid transparent;
+  padding: 0.85rem 1.25rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.commune-sidebar-menu .list-group-item a {
+  color: var(--commune-text-main);
+  text-decoration: none;
+}
+
+.commune-sidebar-menu .list-group-item:hover {
+  background-color: var(--sauveterre-green-light);
+  border-left-color: var(--sauveterre-gold);
+}
+
+.commune-sidebar-menu .list-group-item.active-page {
+  background-color: var(--sauveterre-green-light);
+  border-left-color: var(--sauveterre-green);
+  font-weight: 700;
+}
+
+.commune-sidebar-menu .list-group-item.active-page a {
+  color: var(--sauveterre-green-dark);
+}
+
+/* ==============================================================================
+   Pied de Page Institutionnel (Footer Vert Sauveterre)
+   ============================================================================== */
+.commune-footer {
+  background-color: var(--sauveterre-green-dark) !important;
+  color: #ffffff;
+  border-top: 4px solid var(--sauveterre-gold);
+}
+
+.commune-footer h2,
+.commune-footer .h5 {
+  color: #ffffff;
+  font-family: var(--commune-font-title);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  position: relative;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid rgba(245, 178, 30, 0.4) !important;
+}
+
+.commune-footer a {
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.commune-footer a:hover,
+.commune-footer a:focus {
+  color: var(--sauveterre-gold) !important;
+  text-decoration: underline !important;
+}
+
+.commune-footer .emergency-list li {
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.commune-footer .emergency-list li strong {
+  color: var(--sauveterre-gold);
+  font-size: 1.05rem;
+}
+
+.commune-footer .badge-rgaa {
+  background-color: var(--sauveterre-gold) !important;
+  color: #212529 !important;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 4px;
+}
+
+/* ==============================================================================
+   Accessibilité RGAA & Focus Outline
+   ============================================================================== */
+:focus-visible {
+  outline: 3px solid var(--sauveterre-gold) !important;
+  outline-offset: 3px !important;
+}
+
+.skip-links a {
+  background: var(--sauveterre-green-dark);
+  color: #ffffff;
+  padding: 0.75rem 1.25rem;
+  font-weight: 700;
+  border: 2px solid var(--sauveterre-gold);
+  border-radius: 0 0 6px 6px;
+}

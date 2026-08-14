@@ -1,0 +1,113 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<!-- Pied de page institutionnel (Landmark role="contentinfo") -->
+<footer id="main-footer" class="commune-footer bg-dark text-white pt-5 pb-3 mt-auto" role="contentinfo">
+    <div class="container">
+        <div class="row g-4 mb-4">
+            <!-- Bloc Coordonnées & Horaires de la Mairie -->
+            <div class="col-lg-4 col-md-6">
+                <h2 class="h5 text-uppercase text-primary-light border-bottom pb-2 mb-3">
+                    {f:translate(key: 'footer.contact_title', extensionName: 'site_commune_rgaa')}
+                </h2>
+                <address class="mb-3 text-light-50">
+                    <p class="mb-1"><strong>{communeNom}</strong></p>
+                    <p class="mb-1"><i class="bi bi-geo-alt me-1" aria-hidden="true"></i> {communeAdresse}</p>
+                    <p class="mb-1">
+                        <i class="bi bi-telephone me-1" aria-hidden="true"></i>
+                        <a href="tel:{communeTelephone}" class="text-white text-decoration-none">
+                            <span class="visually-hidden">Téléphoner à la mairie : </span>{communeTelephone}
+                        </a>
+                    </p>
+                    <p class="mb-1">
+                        <i class="bi bi-envelope me-1" aria-hidden="true"></i>
+                        <a href="mailto:{communeEmail}" class="text-white text-decoration-none">
+                            <span class="visually-hidden">Envoyer un courriel à la mairie : </span>{communeEmail}
+                        </a>
+                    </p>
+                </address>
+                <div class="small text-light-50">
+                    <strong>Horaires d'ouverture au public :</strong><br>
+                    {communeHoraires}
+                </div>
+            </div>
+
+            <!-- Numéros d'urgence républicains -->
+            <div class="col-lg-4 col-md-6">
+                <h2 class="h5 text-uppercase text-primary-light border-bottom pb-2 mb-3">
+                    {f:translate(key: 'footer.emergency_numbers', extensionName: 'site_commune_rgaa')}
+                </h2>
+                <ul class="list-unstyled emergency-list">
+                    <li class="mb-2"><strong>15</strong> : SAMU (Urgences médicales)</li>
+                    <li class="mb-2"><strong>17</strong> : Police secours / Gendarmerie</li>
+                    <li class="mb-2"><strong>18</strong> : Sapeurs-Pompiers</li>
+                    <li class="mb-2"><strong>112</strong> : Numéro d'urgence européen</li>
+                    <li class="mb-2"><strong>114</strong> : Numéro d'urgence pour personnes sourdes et malentendantes (SMS/Visio)</li>
+                </ul>
+            </div>
+
+            <!-- Liens utiles et démarches citoyennes -->
+            <div class="col-lg-4 col-12">
+                <h2 class="h5 text-uppercase text-primary-light border-bottom pb-2 mb-3">
+                    {f:translate(key: 'footer.useful_links', extensionName: 'site_commune_rgaa')}
+                </h2>
+                <ul class="list-unstyled commune-footer-links">
+                    <li class="mb-2">
+                        <a href="https://www.service-public.fr/" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none">
+                            Service-Public.fr <span class="visually-hidden">(ouvre une nouvelle fenêtre)</span> ↗
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="https://france-renov.gouv.fr/" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none">
+                            France Rénov' <span class="visually-hidden">(ouvre une nouvelle fenêtre)</span> ↗
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="https://antai.gouv.fr/" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none">
+                            ANTAI (Stationnement et amendes) <span class="visually-hidden">(ouvre une nouvelle fenêtre)</span> ↗
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <hr class="border-secondary my-4">
+
+        <!-- Mentions légales, Déclaration RGAA obligatoire et Copyright -->
+        <div class="row align-items-center small text-light-50 gy-2">
+            <div class="col-md-6 text-center text-md-start">
+                <p class="mb-0">
+                    <strong>{f:translate(key: 'footer.rgaa_statement', extensionName: 'site_commune_rgaa')}</strong> 
+                    <span class="badge badge-rgaa me-1">{communeRgaaStatut} ({communeRgaaTaux})</span>
+                    <f:if condition="{communeRgaaPageUid}">
+                        <f:link.page pageUid="{communeRgaaPageUid}" class="text-white text-decoration-underline ms-1">
+                            Consulter la déclaration d'accessibilité
+                        </f:link.page>
+                    </f:if>
+                </p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item">
+                        <f:link.page pageUid="12" class="text-white-50 text-decoration-none">
+                            {f:translate(key: 'footer.legal_notice', extensionName: 'site_commune_rgaa')}
+                        </f:link.page>
+                    </li>
+                    <li class="list-inline-item">·</li>
+                    <li class="list-inline-item">
+                        <f:link.page pageUid="13" class="text-white-50 text-decoration-none">
+                            {f:translate(key: 'footer.privacy_policy', extensionName: 'site_commune_rgaa')}
+                        </f:link.page>
+                    </li>
+                    <li class="list-inline-item">·</li>
+                    <li class="list-inline-item">
+                        <f:link.page pageUid="11" class="text-white-50 text-decoration-none">
+                            {f:translate(key: 'footer.sitemap', extensionName: 'site_commune_rgaa')}
+                        </f:link.page>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>
