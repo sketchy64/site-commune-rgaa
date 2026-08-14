@@ -1027,6 +1027,7 @@ a.icon-group-item:hover {
 /* ==============================================================================
    Bandeau d'alerte citoyenne & Éléments de contenu "Panel" (Bootstrap Package)
    Adaptation complète à la "Classe du panneau" (danger, warning, info, success, primary, default)
+   et aux fonds de cadre (frame-background-none, primary, secondary, tertiary, quaternary)
    ============================================================================== */
 .commune-emergency-alert-container {
   width: 100%;
@@ -1034,12 +1035,20 @@ a.icon-group-item:hover {
   z-index: 1020;
 }
 
+.commune-emergency-alert-container .frame,
+.commune-emergency-alert-container .frame-type-panel {
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
 .commune-panel,
 .frame-type-panel .panel,
 .frame-type-panel {
   border: 1px solid transparent;
   border-left-width: 6px !important;
-  border-radius: 0 !important;
+  border-radius: 6px !important;
   margin-bottom: 0 !important;
   transition: all 0.25s ease;
 }
@@ -1076,116 +1085,203 @@ a.icon-group-item:hover {
   flex-shrink: 0;
 }
 
-/* 1. Déclinaison : Danger / Alerte Urgence (Rouge républicain) */
-.commune-panel.panel-danger,
-.frame-type-panel .panel-danger,
-.panel-danger {
-  background-color: #FEF2F2 !important;
-  border-color: #FECACA !important;
-  border-left-color: #DC2626 !important;
-  color: #991B1B !important;
+/* ==============================================================================
+   Gestion des fonds de cadre (Frame Backgrounds) avec Transparence du Panneau
+   ============================================================================== */
+
+/* 1. frame-background-none : Gris clair par défaut */
+.commune-emergency-alert-container .frame-background-none,
+.frame-background-none.frame-type-panel,
+.frame-type-panel.frame-background-none {
+  background-color: var(--commune-bg-light) !important;
+  color: var(--commune-text-main) !important;
+  border-bottom: 1px solid var(--commune-border) !important;
 }
 
-.commune-panel.panel-danger .panel-icon-wrapper {
-  background-color: #FEE2E2;
-  color: #DC2626;
+.frame-background-none .commune-panel,
+.frame-background-none .panel {
+  background-color: #ffffff !important;
+  border: 1px solid var(--commune-border) !important;
+  border-left: 6px solid var(--sauveterre-green) !important;
+  color: var(--commune-text-main) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
 }
 
-.commune-panel.panel-danger .panel-title {
-  color: #7F1D1D !important;
+.frame-background-none .commune-panel a,
+.frame-background-none .panel a {
+  color: var(--sauveterre-green) !important;
+  text-decoration: underline !important;
+  font-weight: 700 !important;
 }
 
-/* 2. Déclinaison : Warning / Vigilance Météo (Ambre / Or) */
-.commune-panel.panel-warning,
-.frame-type-panel .panel-warning,
-.panel-warning {
-  background-color: #FFFBEB !important;
-  border-color: #FDE68A !important;
-  border-left-color: #F5B21E !important;
-  color: #92400E !important;
-}
-
-.commune-panel.panel-warning .panel-icon-wrapper {
-  background-color: #FEF3C7;
-  color: #D97706;
-}
-
-.commune-panel.panel-warning .panel-title {
-  color: #78350F !important;
-}
-
-/* 3. Déclinaison : Info / Information travaux (Bleu civique) */
-.commune-panel.panel-info,
-.frame-type-panel .panel-info,
-.panel-info {
-  background-color: #F0F9FF !important;
-  border-color: #BAE6FD !important;
-  border-left-color: #0284C7 !important;
-  color: #075985 !important;
-}
-
-.commune-panel.panel-info .panel-icon-wrapper {
-  background-color: #E0F2FE;
-  color: #0284C7;
-}
-
-.commune-panel.panel-info .panel-title {
-  color: #0C4A6E !important;
-}
-
-/* 4. Déclinaison : Primary / Institutionnel (Vert Sauveterre) */
-.commune-panel.panel-primary,
-.frame-type-panel .panel-primary,
-.panel-primary {
-  background-color: #F0FDF4 !important;
-  border-color: #BBF7D0 !important;
-  border-left-color: var(--sauveterre-green) !important;
-  color: #166534 !important;
-}
-
-.commune-panel.panel-primary .panel-icon-wrapper {
-  background-color: var(--sauveterre-green-light);
-  color: var(--sauveterre-green);
-}
-
-.commune-panel.panel-primary .panel-title {
+.frame-background-none .commune-panel a:hover,
+.frame-background-none .panel a:hover {
   color: var(--sauveterre-green-dark) !important;
 }
 
-/* 5. Déclinaison : Success / Message positif (Vert émeraude) */
-.commune-panel.panel-success,
-.frame-type-panel .panel-success,
-.panel-success {
-  background-color: #F0FDF4 !important;
-  border-color: #BBF7D0 !important;
-  border-left-color: #16A34A !important;
-  color: #15803D !important;
+/* 2. frame-background-primary : Vert du template (#00703A) */
+.commune-emergency-alert-container .frame-background-primary,
+.frame-background-primary.frame-type-panel,
+.frame-type-panel.frame-background-primary {
+  background-color: var(--sauveterre-green) !important;
+  color: #ffffff !important;
 }
 
-.commune-panel.panel-success .panel-icon-wrapper {
-  background-color: #DCFCE7;
-  color: #16A34A;
+.frame-background-primary .commune-panel,
+.frame-background-primary .panel {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-left: 6px solid rgba(255, 255, 255, 0.9) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(4px);
 }
 
-.commune-panel.panel-success .panel-title {
-  color: #14532D !important;
+.frame-background-primary .commune-panel .panel-title,
+.frame-background-primary .commune-panel .panel-bodytext,
+.frame-background-primary .commune-panel p,
+.frame-background-primary .panel-body,
+.frame-background-primary .panel-heading {
+  color: #ffffff !important;
 }
 
-/* 6. Déclinaison : Default / Standard (Ardoise) */
-.commune-panel.panel-default,
-.frame-type-panel .panel-default,
-.panel-default {
-  background-color: #F8FAFC !important;
-  border-color: #E2E8F0 !important;
-  border-left-color: #475569 !important;
-  color: #334155 !important;
+.frame-background-primary .panel-icon-wrapper {
+  background-color: rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
 }
 
-.commune-panel.panel-default .panel-icon-wrapper {
-  background-color: #F1F5F9;
-  color: #475569;
+.frame-background-primary .commune-panel a,
+.frame-background-primary .panel a {
+  color: #FFF2A8 !important;
+  text-decoration: underline !important;
+  font-weight: 700 !important;
 }
 
-.commune-panel.panel-default .panel-title {
-  color: #1E293B !important;
+.frame-background-primary .commune-panel a:hover,
+.frame-background-primary .panel a:hover {
+  color: #ffffff !important;
+}
+
+/* 3. frame-background-secondary : Jaune/Or du template (#F5B21E) */
+.commune-emergency-alert-container .frame-background-secondary,
+.frame-background-secondary.frame-type-panel,
+.frame-type-panel.frame-background-secondary {
+  background-color: var(--sauveterre-gold) !important;
+  color: #1A1A1A !important;
+}
+
+.frame-background-secondary .commune-panel,
+.frame-background-secondary .panel {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(0, 0, 0, 0.18) !important;
+  border-left: 6px solid rgba(0, 0, 0, 0.8) !important;
+  color: #1A1A1A !important;
+}
+
+.frame-background-secondary .commune-panel .panel-title,
+.frame-background-secondary .commune-panel .panel-bodytext,
+.frame-background-secondary .commune-panel p,
+.frame-background-secondary .panel-body,
+.frame-background-secondary .panel-heading {
+  color: #1A1A1A !important;
+}
+
+.frame-background-secondary .panel-icon-wrapper {
+  background-color: rgba(0, 0, 0, 0.14) !important;
+  color: #1A1A1A !important;
+}
+
+.frame-background-secondary .commune-panel a,
+.frame-background-secondary .panel a {
+  color: #004D25 !important;
+  text-decoration: underline !important;
+  font-weight: 700 !important;
+}
+
+.frame-background-secondary .commune-panel a:hover,
+.frame-background-secondary .panel a:hover {
+  color: #000000 !important;
+}
+
+/* 4. frame-background-tertiary : Orange harmonieux (#C2410C) */
+.commune-emergency-alert-container .frame-background-tertiary,
+.frame-background-tertiary.frame-type-panel,
+.frame-type-panel.frame-background-tertiary {
+  background-color: #C2410C !important;
+  color: #ffffff !important;
+}
+
+.frame-background-tertiary .commune-panel,
+.frame-background-tertiary .panel {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-left: 6px solid rgba(255, 255, 255, 0.9) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(4px);
+}
+
+.frame-background-tertiary .commune-panel .panel-title,
+.frame-background-tertiary .commune-panel .panel-bodytext,
+.frame-background-tertiary .commune-panel p,
+.frame-background-tertiary .panel-body,
+.frame-background-tertiary .panel-heading {
+  color: #ffffff !important;
+}
+
+.frame-background-tertiary .panel-icon-wrapper {
+  background-color: rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+}
+
+.frame-background-tertiary .commune-panel a,
+.frame-background-tertiary .panel a {
+  color: #FFF2A8 !important;
+  text-decoration: underline !important;
+  font-weight: 700 !important;
+}
+
+.frame-background-tertiary .commune-panel a:hover,
+.frame-background-tertiary .panel a:hover {
+  color: #ffffff !important;
+}
+
+/* 5. frame-background-quaternary : Rouge harmonieux (#B91C1C) */
+.commune-emergency-alert-container .frame-background-quaternary,
+.frame-background-quaternary.frame-type-panel,
+.frame-type-panel.frame-background-quaternary {
+  background-color: #B91C1C !important;
+  color: #ffffff !important;
+}
+
+.frame-background-quaternary .commune-panel,
+.frame-background-quaternary .panel {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-left: 6px solid rgba(255, 255, 255, 0.9) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(4px);
+}
+
+.frame-background-quaternary .commune-panel .panel-title,
+.frame-background-quaternary .commune-panel .panel-bodytext,
+.frame-background-quaternary .commune-panel p,
+.frame-background-quaternary .panel-body,
+.frame-background-quaternary .panel-heading {
+  color: #ffffff !important;
+}
+
+.frame-background-quaternary .panel-icon-wrapper {
+  background-color: rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+}
+
+.frame-background-quaternary .commune-panel a,
+.frame-background-quaternary .panel a {
+  color: #FFF2A8 !important;
+  text-decoration: underline !important;
+  font-weight: 700 !important;
+}
+
+.frame-background-quaternary .commune-panel a:hover,
+.frame-background-quaternary .panel a:hover {
+  color: #ffffff !important;
 }
