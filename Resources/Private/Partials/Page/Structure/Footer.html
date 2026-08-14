@@ -5,9 +5,9 @@
 <footer id="main-footer" class="commune-footer bg-dark text-white pt-5 pb-3 mt-auto" role="contentinfo">
     <div class="container">
         <div class="row g-4 mb-4">
-            <!-- Bloc Coordonnées & Horaires de la Mairie -->
+            <!-- Colonne 1 : Coordonnées & Horaires de la Mairie -->
             <div class="col-lg-4 col-md-6">
-                <h2 class="h5 text-uppercase text-primary-light border-bottom pb-2 mb-3">
+                <h2 class="h5 text-uppercase border-bottom pb-2 mb-3 footer-column-title">
                     {f:translate(key: 'footer.contact_title', extensionName: 'site_commune_rgaa')}
                 </h2>
                 <address class="mb-3 text-light-50">
@@ -32,9 +32,9 @@
                 </div>
             </div>
 
-            <!-- Numéros d'urgence républicains -->
+            <!-- Colonne 2 : Numéros d'urgence républicains -->
             <div class="col-lg-4 col-md-6">
-                <h2 class="h5 text-uppercase text-primary-light border-bottom pb-2 mb-3">
+                <h2 class="h5 text-uppercase border-bottom pb-2 mb-3 footer-column-title">
                     {f:translate(key: 'footer.emergency_numbers', extensionName: 'site_commune_rgaa')}
                 </h2>
                 <ul class="list-unstyled emergency-list">
@@ -46,39 +46,59 @@
                 </ul>
             </div>
 
-            <!-- Liens utiles et démarches citoyennes -->
+            <!-- Colonne 3 : Carte de localisation & Plan d'accès (Remplace les liens utiles) -->
             <div class="col-lg-4 col-12">
-                <h2 class="h5 text-uppercase text-primary-light border-bottom pb-2 mb-3">
-                    {f:translate(key: 'footer.useful_links', extensionName: 'site_commune_rgaa')}
+                <h2 class="h5 text-uppercase border-bottom pb-2 mb-3 footer-column-title">
+                    <f:if condition="{communeFooterMapTitle}">
+                        <f:then>{communeFooterMapTitle}</f:then>
+                        <f:else>Nous situer</f:else>
+                    </f:if>
                 </h2>
-                <ul class="list-unstyled commune-footer-links">
-                    <li class="mb-2">
-                        <a href="https://www.service-public.fr/" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none">
-                            Service-Public.fr <span class="visually-hidden">(ouvre une nouvelle fenêtre)</span> ↗
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="https://france-renov.gouv.fr/" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none">
-                            France Rénov' <span class="visually-hidden">(ouvre une nouvelle fenêtre)</span> ↗
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="https://antai.gouv.fr/" target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none">
-                            ANTAI (Stationnement et amendes) <span class="visually-hidden">(ouvre une nouvelle fenêtre)</span> ↗
-                        </a>
-                    </li>
-                </ul>
+                
+                <f:if condition="{footerMapContent}">
+                    <f:then>
+                        <!-- Contenu personnalisé de carte / plan d'accès (colPos 300) -->
+                        <div class="commune-footer-map-content">
+                            <f:for each="{footerMapContent}" as="record">
+                                <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
+                            </f:for>
+                        </div>
+                    </f:then>
+                    <f:else>
+                        <!-- Carte interactive par défaut ou widget de localisation -->
+                        <div class="commune-footer-map-box bg-dark-subtle rounded p-3 text-center border border-secondary-subtle">
+                            <div class="mb-2">
+                                <i class="bi bi-geo-alt-fill text-warning fs-3" aria-hidden="true"></i>
+                            </div>
+                            <p class="small mb-3 text-light-50">
+                                <strong>Hôtel de Ville</strong><br>
+                                {communeAdresse}
+                            </p>
+                            <a href="https://www.openstreetmap.org/search?query={communeAdresse -> f:format.urlencode()}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-light d-inline-flex align-items-center gap-1">
+                                <span>Voir sur la carte / Itinéraire</span>
+                                <span class="visually-hidden">(ouvre un service externe dans un nouvel onglet)</span>
+                                <span aria-hidden="true">↗</span>
+                            </a>
+                        </div>
+                    </f:else>
+                </f:if>
             </div>
         </div>
 
         <hr class="border-secondary my-4">
 
-        <!-- Mentions légales, Déclaration RGAA obligatoire et Copyright -->
-        <div class="row align-items-center small text-light-50 gy-2">
-            <div class="col-md-6 text-center text-md-start">
+        <!-- Mentions légales, Déclaration RGAA obligatoire et Menu personnalisé de bas de page -->
+        <div class="row align-items-center small text-light-50 gy-3">
+            <!-- Mention légale RGAA personnalisable (Statut, Taux, Titre, Lien) -->
+            <div class="col-lg-6 col-12 text-center text-lg-start">
                 <p class="mb-0">
-                    <strong>{f:translate(key: 'footer.rgaa_statement', extensionName: 'site_commune_rgaa')}</strong> 
-                    <span class="badge badge-rgaa me-1">{communeRgaaStatut} ({communeRgaaTaux})</span>
+                    <strong>
+                        <f:if condition="{communeRgaaTitre}">
+                            <f:then>{communeRgaaTitre}</f:then>
+                            <f:else>{f:translate(key: 'footer.rgaa_statement', extensionName: 'site_commune_rgaa')}</f:else>
+                        </f:if>
+                    </strong> 
+                    <span class="badge badge-rgaa mx-1">{communeRgaaStatut} ({communeRgaaTaux})</span>
                     <f:if condition="{communeRgaaPageUid}">
                         <f:link.page pageUid="{communeRgaaPageUid}" class="text-white text-decoration-underline ms-1">
                             Consulter la déclaration d'accessibilité
@@ -86,26 +106,33 @@
                     </f:if>
                 </p>
             </div>
-            <div class="col-md-6 text-center text-md-end">
-                <ul class="list-inline mb-0">
-                    <li class="list-inline-item">
-                        <f:link.page pageUid="12" class="text-white-50 text-decoration-none">
-                            {f:translate(key: 'footer.legal_notice', extensionName: 'site_commune_rgaa')}
-                        </f:link.page>
-                    </li>
-                    <li class="list-inline-item">·</li>
-                    <li class="list-inline-item">
-                        <f:link.page pageUid="13" class="text-white-50 text-decoration-none">
-                            {f:translate(key: 'footer.privacy_policy', extensionName: 'site_commune_rgaa')}
-                        </f:link.page>
-                    </li>
-                    <li class="list-inline-item">·</li>
-                    <li class="list-inline-item">
-                        <f:link.page pageUid="11" class="text-white-50 text-decoration-none">
-                            {f:translate(key: 'footer.sitemap', extensionName: 'site_commune_rgaa')}
-                        </f:link.page>
-                    </li>
-                </ul>
+
+            <!-- Liens de bas de page à droite (Dynamiques depuis le dossier [13] Pied de page) -->
+            <div class="col-lg-6 col-12 text-center text-lg-end commune-footer-dynamic-nav">
+                <f:if condition="{footerNavigation}">
+                    <f:then>
+                        <f:format.raw>{footerNavigation}</f:format.raw>
+                    </f:then>
+                    <f:else>
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item">
+                                <f:link.page pageUid="{rootLine.0.uid}" class="text-white-50 text-decoration-none">Accueil</f:link.page>
+                            </li>
+                            <li class="list-inline-item separator text-white-50" aria-hidden="true">·</li>
+                            <li class="list-inline-item">
+                                <f:link.page pageUid="18" class="text-white-50 text-decoration-none">Mentions Légales</f:link.page>
+                            </li>
+                            <li class="list-inline-item separator text-white-50" aria-hidden="true">·</li>
+                            <li class="list-inline-item">
+                                <f:link.page pageUid="19" class="text-white-50 text-decoration-none">Politique des cookies</f:link.page>
+                            </li>
+                            <li class="list-inline-item separator text-white-50" aria-hidden="true">·</li>
+                            <li class="list-inline-item">
+                                <f:link.page pageUid="20" class="text-white-50 text-decoration-none">Plan du site</f:link.page>
+                            </li>
+                        </ul>
+                    </f:else>
+                </f:if>
             </div>
         </div>
     </div>

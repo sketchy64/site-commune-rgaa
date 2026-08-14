@@ -83,33 +83,61 @@ page {
       # Données de la commune
       communeNom = TEXT
       communeNom.value = {$commune.nom}
+      communeNom.override.data = site:commune.nom
 
       communeSlogan = TEXT
       communeSlogan.value = {$commune.slogan}
+      communeSlogan.override.data = site:commune.slogan
 
       communeDepartement = TEXT
       communeDepartement.value = {$commune.departement}
+      communeDepartement.override.data = site:commune.departement
 
       communeAdresse = TEXT
       communeAdresse.value = {$commune.adresse}
+      communeAdresse.override.data = site:commune.adresse
 
       communeTelephone = TEXT
       communeTelephone.value = {$commune.telephone}
+      communeTelephone.override.data = site:commune.telephone
 
       communeEmail = TEXT
       communeEmail.value = {$commune.email}
+      communeEmail.override.data = site:commune.email
 
       communeHoraires = TEXT
       communeHoraires.value = {$commune.horaires}
+      communeHoraires.override.data = site:commune.horaires
+
+      # Accessibilité RGAA
+      communeRgaaTitre = TEXT
+      communeRgaaTitre.value = {$commune.rgaa_titre}
+      communeRgaaTitre.override.data = site:commune.rgaa_titre
 
       communeRgaaStatut = TEXT
       communeRgaaStatut.value = {$commune.rgaa_statut}
+      communeRgaaStatut.override.data = site:commune.rgaa_statut
 
       communeRgaaTaux = TEXT
       communeRgaaTaux.value = {$commune.rgaa_taux}
+      communeRgaaTaux.override.data = site:commune.rgaa_taux
 
       communeRgaaPageUid = TEXT
       communeRgaaPageUid.value = {$commune.rgaa_page_uid}
+      communeRgaaPageUid.override.data = site:commune.rgaa_page_uid
+
+      # Pied de page
+      communeFooterFolderUid = TEXT
+      communeFooterFolderUid.value = {$commune.footer_folder_uid}
+      communeFooterFolderUid.override.data = site:commune.footer_folder_uid
+
+      communeFooterMapTitle = TEXT
+      communeFooterMapTitle.value = {$commune.footer_map_title}
+      communeFooterMapTitle.override.data = site:commune.footer_map_title
+
+      communeFooterMapAddress = TEXT
+      communeFooterMapAddress.value = {$commune.footer_map_address}
+      communeFooterMapAddress.override.data = site:commune.footer_map_address
 
       # Menu principal accessible
       mainNavigation = HMENU
@@ -172,6 +200,27 @@ page {
           }
         }
       }
+
+      # Menu dynamique de bas de page (généré depuis le dossier configuré, ex: [13] Pied de page)
+      footerNavigation = HMENU
+      footerNavigation {
+        special = directory
+        special.value = {$commune.footer_folder_uid}
+        special.value.override.data = site:commune.footer_folder_uid
+        1 = TMENU
+        1 {
+          wrap = <ul class="list-inline mb-0">|</ul>
+          NO {
+            wrapItemAndSub = <li class="list-inline-item">|</li><li class="list-inline-item separator text-white-50" aria-hidden="true">·</li>
+            ATagParams = class="text-white-50 text-decoration-none"
+          }
+          ACT = 1
+          ACT {
+            wrapItemAndSub = <li class="list-inline-item">|</li><li class="list-inline-item separator text-white-50" aria-hidden="true">·</li>
+            ATagParams = class="text-white fw-bold text-decoration-none" aria-current="page"
+          }
+        }
+      }
     }
 
     # Données de colonnes de contenu (Backend Layouts)
@@ -216,12 +265,28 @@ page {
         as = newsContent
       }
 
+      140 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+      140 {
+        table = tt_content
+        orderBy = sorting
+        where = {#colPos} = 140
+        as = interactiveMapContent
+      }
+
       200 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
       200 {
         table = tt_content
         orderBy = sorting
         where = {#colPos} = 200
         as = sidebarLeftContent
+      }
+
+      300 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+      300 {
+        table = tt_content
+        orderBy = sorting
+        where = {#colPos} = 300
+        as = footerMapContent
       }
     }
   }

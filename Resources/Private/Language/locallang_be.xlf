@@ -33,6 +33,12 @@
             <trans-unit id="backend_layout.column.sidebar_left" xml:space="preserve">
                 <source>Menu latéral et informations pratiques</source>
             </trans-unit>
+            <trans-unit id="backend_layout.column.interactive_map" xml:space="preserve">
+                <source>Carte interactive de la commune (Plan / Points d'intérêt)</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.column.footer_map" xml:space="preserve">
+                <source>Carte de localisation et plan d'accès (Pied de page)</source>
+            </trans-unit>
 
             <!-- Niveaux de titres TCEFORM RGAA -->
             <trans-unit id="tceform.header_layout.h1" xml:space="preserve">

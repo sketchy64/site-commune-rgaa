@@ -1,0 +1,167 @@
+categories:
+  commune_general:
+    label: 'Collectivité - Informations Générales'
+    description: 'Identité officielle, dénomination et armoiries de la mairie'
+  commune_contact:
+    label: 'Collectivité - Coordonnées & Horaires'
+    description: 'Adresse, téléphone, courriel et horaires d''ouverture au public'
+  commune_a11y:
+    label: 'Accessibilité Numérique & RGAA'
+    description: 'Statut de conformité légale RGAA 4.1.2 et déclaration obligatoire'
+  commune_footer:
+    label: 'Pied de page & Navigation légale'
+    description: 'Configuration du menu de pied de page et de la carte de localisation'
+  commune_emergency:
+    label: 'Numéros d''urgence & Utiles'
+    description: 'Numéros d''urgence républicains affichés dans le pied de page'
+
+settings:
+  # ============================================================================
+  # INFORMATIONS GÉNÉRALES
+  # ============================================================================
+  commune.nom:
+    label: 'Nom officiel de la commune / collectivité'
+    description: 'Affiché dans l''en-tête, le titre du site et le pied de page'
+    category: commune_general
+    type: string
+    default: 'Mairie de Notre-Commune'
+
+  commune.slogan:
+    label: 'Devise ou sous-titre officiel'
+    description: 'Exemple : République Française - Liberté, Égalité, Fraternité'
+    category: commune_general
+    type: string
+    default: 'République Française - Liberté, Égalité, Fraternité'
+
+  commune.departement:
+    label: 'Département'
+    description: 'Exemple : 64 - Pyrénées-Atlantiques'
+    category: commune_general
+    type: string
+    default: '64 - Pyrénées-Atlantiques'
+
+  commune.region:
+    label: 'Région'
+    description: 'Exemple : Nouvelle-Aquitaine'
+    category: commune_general
+    type: string
+    default: 'Nouvelle-Aquitaine'
+
+  # ============================================================================
+  # COORDONNÉES & HORAIRES
+  # ============================================================================
+  commune.adresse:
+    label: 'Adresse postale de la Mairie'
+    description: 'Numéro, rue, code postal et ville'
+    category: commune_contact
+    type: string
+    default: '1 Place de la République, 64000 Commune'
+
+  commune.telephone:
+    label: 'Numéro de téléphone officiel'
+    description: 'Exemple : 05 59 00 00 00'
+    category: commune_contact
+    type: string
+    default: '05 59 00 00 00'
+
+  commune.email:
+    label: 'Adresse e-mail de contact'
+    description: 'Exemple : contact@notre-commune.fr'
+    category: commune_contact
+    type: string
+    default: 'contact@notre-commune.fr'
+
+  commune.horaires:
+    label: 'Horaires d''ouverture au public'
+    description: 'Horaires d''accueil de la mairie pour les administrés'
+    category: commune_contact
+    type: string
+    default: 'Du Lundi au Vendredi : 8h30 - 12h00 / 13h30 - 17h30'
+
+  # ============================================================================
+  # ACCESSIBILITÉ & RGAA 4.1.2
+  # ============================================================================
+  commune.rgaa_titre:
+    label: 'Intitulé de la mention d''accessibilité'
+    description: 'Texte d''introduction (Ex : Accessibilité : ou Conformité RGAA :)'
+    category: commune_a11y
+    type: string
+    default: 'Accessibilité :'
+
+  commune.rgaa_statut:
+    label: 'Statut de conformité légale'
+    description: 'Mention obligatoire selon le décret n° 2019-768'
+    category: commune_a11y
+    type: string
+    default: 'partiellement conforme'
+
+  commune.rgaa_taux:
+    label: 'Taux de conformité RGAA'
+    description: 'Pourcentage résultant de l''audit (Ex : 84%)'
+    category: commune_a11y
+    type: string
+    default: '84%'
+
+  commune.rgaa_page_uid:
+    label: 'Page de la Déclaration d''accessibilité (ID / UID)'
+    description: 'Identifiant (UID) de la page contenant la déclaration complète'
+    category: commune_a11y
+    type: int
+    default: 96
+
+  # ============================================================================
+  # PIED DE PAGE & NAVIGATION
+  # ============================================================================
+  commune.footer_folder_uid:
+    label: 'Dossier des liens de bas de page (ID / UID)'
+    description: 'Identifiant du dossier contenant les pages de pied de page (Ex : 13 pour le dossier [13] Pied de page)'
+    category: commune_footer
+    type: int
+    default: 13
+
+  commune.footer_map_title:
+    label: 'Titre du bloc carte de localisation (Pied de page)'
+    description: 'Titre affiché au-dessus de la carte dans le footer'
+    category: commune_footer
+    type: string
+    default: 'Nous situer'
+
+  commune.footer_map_address:
+    label: 'Adresse de recherche pour la carte de localisation'
+    description: 'Adresse utilisée pour générer la carte interactive de localisation'
+    category: commune_footer
+    type: string
+    default: 'Mairie, 64000'
+
+  # ============================================================================
+  # NUMÉROS D'URGENCE RÉPUBLICAINS
+  # ============================================================================
+  commune.samu:
+    label: 'SAMU (Urgences médicales)'
+    category: commune_emergency
+    type: string
+    default: '15'
+
+  commune.police:
+    label: 'Police secours / Gendarmerie'
+    category: commune_emergency
+    type: string
+    default: '17'
+
+  commune.pompiers:
+    label: 'Sapeurs-Pompiers'
+    category: commune_emergency
+    type: string
+    default: '18'
+
+  commune.urgence_europeenne:
+    label: 'Numéro d''urgence européen'
+    category: commune_emergency
+    type: string
+    default: '112'
+
+  commune.sourds_malentendants:
+    label: 'Urgence personnes sourdes et malentendantes (SMS/Visio)'
+    category: commune_emergency
+    type: string
+    default: '114'
