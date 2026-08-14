@@ -27,16 +27,16 @@ mod.web_layout.BackendLayouts {
           3 {
             columns {
               1 {
-                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.edito
-                colPos = 115
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.quickaccess
+                colPos = 120
               }
             }
           }
           4 {
             columns {
               1 {
-                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.quickaccess
-                colPos = 120
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.edito
+                colPos = 115
               }
             }
           }

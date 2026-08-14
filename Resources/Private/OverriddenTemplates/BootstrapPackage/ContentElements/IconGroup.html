@@ -1,0 +1,54 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:bk2k="http://typo3.org/ns/BK2K/BootstrapPackage/ViewHelpers"
+      xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:if condition="{records}">
+        <div class="icon-group d-flex flex-wrap justify-content-center gap-3">
+            <f:for each="{records}" as="record">
+                <f:if condition="{record.data.link}">
+                    <f:then>
+                        <f:link.typolink parameter="{record.data.link}" class="icon-group-item d-flex align-items-center gap-3">
+                            <f:if condition="{record.icon}">
+                                <div class="icon-group-item-icon flex-shrink-0" aria-hidden="true">
+                                    <bk2k:icon icon="{record.icon}" width="32" height="32" />
+                                </div>
+                            </f:if>
+                            <div class="icon-group-item-content flex-grow-1">
+                                <span class="icon-group-item-title d-block">{record.data.header}</span>
+                                <f:if condition="{record.data.subheader}">
+                                    <span class="icon-group-item-text d-block">{record.data.subheader}</span>
+                                </f:if>
+                                <f:if condition="{record.data.bodytext}">
+                                    <div class="icon-group-item-text"><f:format.html>{record.data.bodytext}</f:format.html></div>
+                                </f:if>
+                            </div>
+                        </f:link.typolink>
+                    </f:then>
+                    <f:else>
+                        <div class="icon-group-item d-flex align-items-center gap-3">
+                            <f:if condition="{record.icon}">
+                                <div class="icon-group-item-icon flex-shrink-0" aria-hidden="true">
+                                    <bk2k:icon icon="{record.icon}" width="32" height="32" />
+                                </div>
+                            </f:if>
+                            <div class="icon-group-item-content flex-grow-1">
+                                <span class="icon-group-item-title d-block">{record.data.header}</span>
+                                <f:if condition="{record.data.subheader}">
+                                    <span class="icon-group-item-text d-block">{record.data.subheader}</span>
+                                </f:if>
+                                <f:if condition="{record.data.bodytext}">
+                                    <div class="icon-group-item-text"><f:format.html>{record.data.bodytext}</f:format.html></div>
+                                </f:if>
+                            </div>
+                        </div>
+                    </f:else>
+                </f:if>
+            </f:for>
+        </div>
+    </f:if>
+</f:section>
+</html>

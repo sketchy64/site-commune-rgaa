@@ -16,28 +16,7 @@
         </section>
     </f:if>
 
-    <!-- 2. Section Édito / Le mot du Maire (colPos 115) -->
-    <f:if condition="{editoContent}">
-        <section class="commune-home-section commune-edito-section py-5" aria-label="{f:if(condition: communeHomeEditoTitle, then: communeHomeEditoTitle, else: 'Le mot du Maire')}">
-            <div class="container">
-                <f:if condition="!{communeHomeEditoHideTitle}">
-                    <div class="mb-4">
-                        <h2 class="h3 commune-section-title">
-                            <f:if condition="{communeHomeEditoTitle}">
-                                <f:then>{communeHomeEditoTitle}</f:then>
-                                <f:else>Le mot du Maire</f:else>
-                            </f:if>
-                        </h2>
-                    </div>
-                </f:if>
-                <div class="edito-content-wrapper">
-                    <f:format.raw>{editoContent}</f:format.raw>
-                </div>
-            </div>
-        </section>
-    </f:if>
-
-    <!-- 3. Section Accès rapides / Démarches citoyennes (colPos 120) -->
+    <!-- 2. Section Accès rapides / Démarches citoyennes (colPos 120) -->
     <f:if condition="{quickAccessContent}">
         <section class="commune-home-section commune-quickaccess-section py-5" aria-label="{f:if(condition: communeHomeQuickaccessTitle, then: communeHomeQuickaccessTitle, else: 'Accès rapides')}">
             <div class="container">
@@ -53,6 +32,27 @@
                 </f:if>
                 <div class="commune-quickaccess-wrapper">
                     <f:format.raw>{quickAccessContent}</f:format.raw>
+                </div>
+            </div>
+        </section>
+    </f:if>
+
+    <!-- 3. Section Édito / Le mot du Maire (colPos 115) -->
+    <f:if condition="{editoContent}">
+        <section class="commune-home-section commune-edito-section py-5" aria-label="{f:if(condition: communeHomeEditoTitle, then: communeHomeEditoTitle, else: 'Le mot du Maire')}">
+            <div class="container">
+                <f:if condition="!{communeHomeEditoHideTitle}">
+                    <div class="mb-4">
+                        <h2 class="h3 commune-section-title">
+                            <f:if condition="{communeHomeEditoTitle}">
+                                <f:then>{communeHomeEditoTitle}</f:then>
+                                <f:else>Le mot du Maire</f:else>
+                            </f:if>
+                        </h2>
+                    </div>
+                </f:if>
+                <div class="edito-content-wrapper">
+                    <f:format.raw>{editoContent}</f:format.raw>
                 </div>
             </div>
         </section>
