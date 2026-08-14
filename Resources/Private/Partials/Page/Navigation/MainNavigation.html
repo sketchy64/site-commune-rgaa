@@ -4,10 +4,14 @@
 <!-- Menu principal de navigation (Landmark role="navigation") -->
 <nav id="main-navigation" class="navbar navbar-expand-lg navbar-dark bg-primary-commune py-0" role="navigation" aria-label="{f:translate(key: 'nav.main', extensionName: 'site_commune_rgaa')}">
     <div class="container">
-        <!-- Bouton mobile accessible avec icône et libellé bien espacés -->
-        <button class="navbar-toggler my-2 d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMainContent" aria-controls="navbarMainContent" aria-expanded="false" aria-label="Afficher ou masquer le menu de navigation">
-            <span class="navbar-toggler-icon" aria-hidden="true"></span>
-            <span class="navbar-toggler-label d-inline d-lg-none">Menu</span>
+        <!-- Bouton mobile accessible (masqué sur desktop >= 992px) -->
+        <button class="navbar-toggler d-lg-none my-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMainContent" aria-controls="navbarMainContent" aria-expanded="false" aria-label="Afficher ou masquer le menu de navigation">
+            <svg class="navbar-toggler-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <span class="navbar-toggler-label">Menu</span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarMainContent">
