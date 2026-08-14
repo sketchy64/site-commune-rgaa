@@ -16,19 +16,49 @@
         </section>
     </f:if>
 
-    <!-- 2. Section Accès rapides démarches citoyennes (colPos 120) -->
-    <f:if condition="{quickAccessContent}">
-        <section class="commune-quickaccess-section py-4 bg-light mb-4" aria-label="Démarches et accès rapides">
+    <!-- 2. Section Édito / Le mot du Maire (colPos 115) -->
+    <f:if condition="{editoContent}">
+        <section class="commune-edito-section py-4 mb-4" aria-label="{f:if(condition: communeHomeEditoTitle, then: communeHomeEditoTitle, else: 'Le mot du Maire')}">
             <div class="container">
-                <h2 class="h3 mb-4 text-center commune-section-title">Mes démarches en ligne</h2>
-                <div class="row g-3 justify-content-center">
+                <f:if condition="!{communeHomeEditoHideTitle}">
+                    <div class="mb-4">
+                        <h2 class="h3 commune-section-title">
+                            <f:if condition="{communeHomeEditoTitle}">
+                                <f:then>{communeHomeEditoTitle}</f:then>
+                                <f:else>Le mot du Maire</f:else>
+                            </f:if>
+                        </h2>
+                    </div>
+                </f:if>
+                <div class="edito-content-wrapper">
+                    <f:format.raw>{editoContent}</f:format.raw>
+                </div>
+            </div>
+        </section>
+    </f:if>
+
+    <!-- 3. Section Accès rapides / Démarches citoyennes (colPos 120) -->
+    <f:if condition="{quickAccessContent}">
+        <section class="commune-quickaccess-section py-4 bg-light mb-4" aria-label="{f:if(condition: communeHomeQuickaccessTitle, then: communeHomeQuickaccessTitle, else: 'Accès rapides')}">
+            <div class="container">
+                <f:if condition="!{communeHomeQuickaccessHideTitle}">
+                    <div class="text-center mb-4">
+                        <h2 class="h3 commune-section-title">
+                            <f:if condition="{communeHomeQuickaccessTitle}">
+                                <f:then>{communeHomeQuickaccessTitle}</f:then>
+                                <f:else>Accès rapides</f:else>
+                            </f:if>
+                        </h2>
+                    </div>
+                </f:if>
+                <div class="commune-quickaccess-wrapper">
                     <f:format.raw>{quickAccessContent}</f:format.raw>
                 </div>
             </div>
         </section>
     </f:if>
 
-    <!-- 3. Section Contenu Principal (colPos 0) -->
+    <!-- 4. Section Contenu Principal (colPos 0) -->
     <f:if condition="{mainContent}">
         <div class="container my-4">
             <div class="row">
@@ -39,13 +69,20 @@
         </div>
     </f:if>
 
-    <!-- 4. Section Agenda et Actualités (colPos 130) -->
+    <!-- 5. Section Agenda et Actualités (colPos 130) -->
     <f:if condition="{newsContent}">
-        <section class="commune-news-section py-5 bg-light mt-4" aria-label="Actualités et événements de la ville">
+        <section class="commune-news-section py-5 bg-light mt-4" aria-label="{f:if(condition: communeHomeNewsTitle, then: communeHomeNewsTitle, else: 'Actualités & Agenda municipal')}">
             <div class="container">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="h3 mb-0 commune-section-title">Actualités & Agenda municipal</h2>
-                </div>
+                <f:if condition="!{communeHomeNewsHideTitle}">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="h3 mb-0 commune-section-title">
+                            <f:if condition="{communeHomeNewsTitle}">
+                                <f:then>{communeHomeNewsTitle}</f:then>
+                                <f:else>Actualités & Agenda municipal</f:else>
+                            </f:if>
+                        </h2>
+                    </div>
+                </f:if>
                 <div class="row g-4">
                     <f:format.raw>{newsContent}</f:format.raw>
                 </div>
@@ -53,13 +90,20 @@
         </section>
     </f:if>
 
-    <!-- 5. Section Carte Interactive de la commune (colPos 140) -->
+    <!-- 6. Section Carte Interactive de la commune (colPos 140) -->
     <f:if condition="{interactiveMapContent}">
-        <section class="commune-interactive-map-section py-5 mt-4" aria-label="Carte et plan interactif de la commune">
+        <section class="commune-interactive-map-section py-5 mt-4" aria-label="{f:if(condition: communeHomeMapTitle, then: communeHomeMapTitle, else: 'Plan interactif & Découverte')}">
             <div class="container">
-                <div class="text-center mb-4">
-                    <h2 class="h3 commune-section-title">Plan interactif & Découverte</h2>
-                </div>
+                <f:if condition="!{communeHomeMapHideTitle}">
+                    <div class="text-center mb-4">
+                        <h2 class="h3 commune-section-title">
+                            <f:if condition="{communeHomeMapTitle}">
+                                <f:then>{communeHomeMapTitle}</f:then>
+                                <f:else>Plan interactif & Découverte</f:else>
+                            </f:if>
+                        </h2>
+                    </div>
+                </f:if>
                 <div class="commune-map-wrapper shadow-sm rounded overflow-hidden">
                     <f:format.raw>{interactiveMapContent}</f:format.raw>
                 </div>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" width="600" height="350">
+  <defs>
+    <linearGradient id="mapBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8f5e9" />
+      <stop offset="100%" stop-color="#c8e6c9" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  
+  <!-- Fond de plan de ville -->
+  <rect width="600" height="350" fill="url(#mapBg)" rx="8" />
+  
+  <!-- Routes et rivières stylisées -->
+  <path d="M-20,180 Q150,140 300,200 T620,120" fill="none" stroke="#25a1d9" stroke-width="16" opacity="0.6"/>
+  <path d="M-20,180 Q150,140 300,200 T620,120" fill="none" stroke="#ffffff" stroke-width="6" opacity="0.4"/>
+  
+  <path d="M120,-20 L240,370" fill="none" stroke="#ffffff" stroke-width="12"/>
+  <path d="M-20,90 L620,260" fill="none" stroke="#ffffff" stroke-width="14"/>
+  <path d="M450,-20 L380,370" fill="none" stroke="#ffffff" stroke-width="10"/>
+  <path d="M50,300 L550,60" fill="none" stroke="#f5b21e" stroke-width="8" stroke-dasharray="8,6" opacity="0.8"/>
+  
+  <!-- Bâtiments / Zones -->
+  <rect x="250" y="80" width="100" height="70" rx="4" fill="#ffffff" opacity="0.85" />
+  <rect x="160" y="210" width="80" height="50" rx="4" fill="#ffffff" opacity="0.85" />
+  <rect x="420" y="160" width="90" height="60" rx="4" fill="#ffffff" opacity="0.85" />
+  
+  <!-- Punaise / Pin de Mairie -->
+  <g transform="translate(300, 135)" filter="url(#shadow)">
+    <path d="M0,0 C-18,-24 -24,-38 -24,-52 C-24,-66 -13,-76 0,-76 C13,-76 24,-66 24,-52 C24,-38 18,-24 0,0 Z" fill="#00703a"/>
+    <circle cx="0" cy="-52" r="9" fill="#f5b21e"/>
+  </g>
+  
+  <!-- Bandeau info bas -->
+  <rect x="20" y="280" width="560" height="50" rx="6" fill="#00552c" opacity="0.92"/>
+  <text x="300" y="312" fill="#ffffff" font-family="'Montserrat', sans-serif" font-size="16" font-weight="700" text-anchor="middle">
+    📍 Cliquer pour ouvrir le Plan d'accès & Itinéraire
+  </text>
+</svg>

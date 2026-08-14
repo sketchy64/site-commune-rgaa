@@ -34,6 +34,19 @@ commune {
   email = contact@notre-commune.fr
   horaires = Du Lundi au Vendredi : 8h30 - 12h00 / 13h30 - 17h30
 
+  # Titres & Masquage des sections de la page d'accueil
+  home_edito_title = Le mot du Maire
+  home_edito_hide_title = 0
+
+  home_quickaccess_title = Accès rapides
+  home_quickaccess_hide_title = 0
+
+  home_news_title = Actualités & Agenda municipal
+  home_news_hide_title = 0
+
+  home_map_title = Plan interactif & Découverte
+  home_map_hide_title = 0
+
   # Accessibilité & RGAA 4.1.2
   rgaa_titre = Accessibilité :
   rgaa_statut = partiellement conforme
@@ -41,9 +54,12 @@ commune {
   rgaa_page_uid = 96
 
   # Pied de page & Navigation
-  footer_folder_uid = 13
-  footer_map_title = Nous situer
+  footer_col1_title = Coordonnées & Horaires
+  footer_col2_title = Numéros d'urgence
+  footer_col3_title = Nous situer
+  footer_map_image = EXT:site_commune_rgaa/Resources/Public/Images/plan-acces.svg
   footer_map_page_uid = 21
+  footer_folder_uid = 13
 
   # Application mobile (PWA)
   pwa_enable = 1

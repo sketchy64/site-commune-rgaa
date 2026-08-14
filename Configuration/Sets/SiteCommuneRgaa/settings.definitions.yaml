@@ -5,12 +5,15 @@ categories:
   commune_contact:
     label: 'Collectivité - Coordonnées & Horaires'
     description: 'Adresse, téléphone, courriel et horaires d''ouverture au public'
+  commune_home_sections:
+    label: 'Page d''accueil - Titres des zones'
+    description: 'Personnalisation et masquage des titres des sections de la page d''accueil'
   commune_a11y:
     label: 'Accessibilité Numérique & RGAA'
     description: 'Statut de conformité légale RGAA 4.1.2 et déclaration obligatoire'
   commune_footer:
     label: 'Pied de page & Navigation'
-    description: 'Configuration du menu de pied de page et du lien vers le plan d''accès'
+    description: 'Configuration des titres de colonnes, de l''image du plan d''accès et du menu'
   commune_app:
     label: 'Application Mobile (PWA) & Notifications'
     description: 'Installation sur smartphones (iOS / Android) et alertes d''actualités'
@@ -82,6 +85,61 @@ settings:
     default: 'Du Lundi au Vendredi : 8h30 - 12h00 / 13h30 - 17h30'
 
   # ============================================================================
+  # PAGE D'ACCUEIL - TITRES & VISIBILITÉ DES ZONES
+  # ============================================================================
+  commune.home_edito_title:
+    label: 'Titre de la zone Édito'
+    description: 'Titre de la section Mot du Maire / Édito'
+    category: commune_home_sections
+    type: string
+    default: 'Le mot du Maire'
+
+  commune.home_edito_hide_title:
+    label: 'Masquer le titre de la zone Édito'
+    category: commune_home_sections
+    type: bool
+    default: false
+
+  commune.home_quickaccess_title:
+    label: 'Titre de la zone Accès rapides'
+    description: 'Titre au-dessus des icônes ou démarches'
+    category: commune_home_sections
+    type: string
+    default: 'Accès rapides'
+
+  commune.home_quickaccess_hide_title:
+    label: 'Masquer le titre de la zone Accès rapides'
+    category: commune_home_sections
+    type: bool
+    default: false
+
+  commune.home_news_title:
+    label: 'Titre de la zone Actualités & Agenda'
+    description: 'Titre de la section des actualités et événements municipaux'
+    category: commune_home_sections
+    type: string
+    default: 'Actualités & Agenda municipal'
+
+  commune.home_news_hide_title:
+    label: 'Masquer le titre de la zone Actualités & Agenda'
+    category: commune_home_sections
+    type: bool
+    default: false
+
+  commune.home_map_title:
+    label: 'Titre de la zone Carte interactive'
+    description: 'Titre de la section de découverte et plan interactif'
+    category: commune_home_sections
+    type: string
+    default: 'Plan interactif & Découverte'
+
+  commune.home_map_hide_title:
+    label: 'Masquer le titre de la zone Carte interactive'
+    category: commune_home_sections
+    type: bool
+    default: false
+
+  # ============================================================================
   # ACCESSIBILITÉ & RGAA 4.1.2
   # ============================================================================
   commune.rgaa_titre:
@@ -115,26 +173,44 @@ settings:
   # ============================================================================
   # PIED DE PAGE & NAVIGATION
   # ============================================================================
+  commune.footer_col1_title:
+    label: 'Titre Colonne 1 du Pied de page'
+    category: commune_footer
+    type: string
+    default: 'Coordonnées & Horaires'
+
+  commune.footer_col2_title:
+    label: 'Titre Colonne 2 du Pied de page'
+    category: commune_footer
+    type: string
+    default: 'Numéros d''urgence'
+
+  commune.footer_col3_title:
+    label: 'Titre Colonne 3 du Pied de page (Nous situer)'
+    category: commune_footer
+    type: string
+    default: 'Nous situer'
+
+  commune.footer_map_image:
+    label: 'Image du plan d''accès (Pied de page)'
+    description: 'Chemin vers l''image ou plan affiché dans le footer (Ex : EXT:site_commune_rgaa/Resources/Public/Images/plan-acces.svg)'
+    category: commune_footer
+    type: string
+    default: 'EXT:site_commune_rgaa/Resources/Public/Images/plan-acces.svg'
+
+  commune.footer_map_page_uid:
+    label: 'Page du Plan d''accès / Localisation (ID / UID)'
+    description: 'Identifiant (UID) de la page ouverte au clic sur l''image du pied de page (Ex : 21 pour [21] Plan d''accès)'
+    category: commune_footer
+    type: int
+    default: 21
+
   commune.footer_folder_uid:
     label: 'Dossier des liens de bas de page (ID / UID)'
     description: 'Identifiant du dossier contenant les pages du pied de page (Ex : 13 pour le dossier [13] Pied de page)'
     category: commune_footer
     type: int
     default: 13
-
-  commune.footer_map_title:
-    label: 'Titre du bloc plan d''accès (Pied de page)'
-    description: 'Titre affiché au-dessus de la carte dans le footer (Ex : Nous situer)'
-    category: commune_footer
-    type: string
-    default: 'Nous situer'
-
-  commune.footer_map_page_uid:
-    label: 'Page du Plan d''accès / Localisation (ID / UID)'
-    description: 'Identifiant (UID) de la page ouverte au clic sur la carte du pied de page (Ex : 21 pour [21] Plan d''accès)'
-    category: commune_footer
-    type: int
-    default: 21
 
   # ============================================================================
   # APPLICATION MOBILE (PWA) & NOTIFICATIONS

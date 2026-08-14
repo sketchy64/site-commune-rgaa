@@ -136,6 +136,39 @@ page {
       communeHoraires.value = {$commune.horaires}
       communeHoraires.override.data = site:commune.horaires
 
+      # Titres et visibilité des sections de la page d'accueil
+      communeHomeEditoTitle = TEXT
+      communeHomeEditoTitle.value = {$commune.home_edito_title}
+      communeHomeEditoTitle.override.data = site:commune.home_edito_title
+
+      communeHomeEditoHideTitle = TEXT
+      communeHomeEditoHideTitle.value = {$commune.home_edito_hide_title}
+      communeHomeEditoHideTitle.override.data = site:commune.home_edito_hide_title
+
+      communeHomeQuickaccessTitle = TEXT
+      communeHomeQuickaccessTitle.value = {$commune.home_quickaccess_title}
+      communeHomeQuickaccessTitle.override.data = site:commune.home_quickaccess_title
+
+      communeHomeQuickaccessHideTitle = TEXT
+      communeHomeQuickaccessHideTitle.value = {$commune.home_quickaccess_hide_title}
+      communeHomeQuickaccessHideTitle.override.data = site:commune.home_quickaccess_hide_title
+
+      communeHomeNewsTitle = TEXT
+      communeHomeNewsTitle.value = {$commune.home_news_title}
+      communeHomeNewsTitle.override.data = site:commune.home_news_title
+
+      communeHomeNewsHideTitle = TEXT
+      communeHomeNewsHideTitle.value = {$commune.home_news_hide_title}
+      communeHomeNewsHideTitle.override.data = site:commune.home_news_hide_title
+
+      communeHomeMapTitle = TEXT
+      communeHomeMapTitle.value = {$commune.home_map_title}
+      communeHomeMapTitle.override.data = site:commune.home_map_title
+
+      communeHomeMapHideTitle = TEXT
+      communeHomeMapHideTitle.value = {$commune.home_map_hide_title}
+      communeHomeMapHideTitle.override.data = site:commune.home_map_hide_title
+
       # Accessibilité RGAA
       communeRgaaTitre = TEXT
       communeRgaaTitre.value = {$commune.rgaa_titre}
@@ -154,17 +187,29 @@ page {
       communeRgaaPageUid.override.data = site:commune.rgaa_page_uid
 
       # Pied de page
-      communeFooterFolderUid = TEXT
-      communeFooterFolderUid.value = {$commune.footer_folder_uid}
-      communeFooterFolderUid.override.data = site:commune.footer_folder_uid
+      communeFooterCol1Title = TEXT
+      communeFooterCol1Title.value = {$commune.footer_col1_title}
+      communeFooterCol1Title.override.data = site:commune.footer_col1_title
 
-      communeFooterMapTitle = TEXT
-      communeFooterMapTitle.value = {$commune.footer_map_title}
-      communeFooterMapTitle.override.data = site:commune.footer_map_title
+      communeFooterCol2Title = TEXT
+      communeFooterCol2Title.value = {$commune.footer_col2_title}
+      communeFooterCol2Title.override.data = site:commune.footer_col2_title
+
+      communeFooterCol3Title = TEXT
+      communeFooterCol3Title.value = {$commune.footer_col3_title}
+      communeFooterCol3Title.override.data = site:commune.footer_col3_title
+
+      communeFooterMapImage = TEXT
+      communeFooterMapImage.value = {$commune.footer_map_image}
+      communeFooterMapImage.override.data = site:commune.footer_map_image
 
       communeFooterMapPageUid = TEXT
       communeFooterMapPageUid.value = {$commune.footer_map_page_uid}
       communeFooterMapPageUid.override.data = site:commune.footer_map_page_uid
+
+      communeFooterFolderUid = TEXT
+      communeFooterFolderUid.value = {$commune.footer_folder_uid}
+      communeFooterFolderUid.override.data = site:commune.footer_folder_uid
 
       # Rendu standard direct et robuste de toutes les colonnes de contenu TYPO3
       emergencyAlertContent = CONTENT
@@ -182,6 +227,15 @@ page {
         select {
           orderBy = sorting
           where = {#colPos}=110
+        }
+      }
+
+      editoContent = CONTENT
+      editoContent {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=115
         }
       }
 

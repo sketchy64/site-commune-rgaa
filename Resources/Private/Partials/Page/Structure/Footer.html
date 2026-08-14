@@ -8,7 +8,10 @@
             <!-- Colonne 1 : Coordonnées & Horaires de la Mairie -->
             <div class="col-lg-4 col-md-6">
                 <h2 class="h5 text-uppercase border-bottom pb-2 mb-3 footer-column-title">
-                    {f:translate(key: 'footer.contact_title', extensionName: 'site_commune_rgaa')}
+                    <f:if condition="{communeFooterCol1Title}">
+                        <f:then>{communeFooterCol1Title}</f:then>
+                        <f:else>{f:translate(key: 'footer.contact_title', extensionName: 'site_commune_rgaa')}</f:else>
+                    </f:if>
                 </h2>
                 <address class="mb-3 text-light-50">
                     <p class="mb-1"><strong>{communeNom}</strong></p>
@@ -35,7 +38,10 @@
             <!-- Colonne 2 : Numéros d'urgence républicains -->
             <div class="col-lg-4 col-md-6">
                 <h2 class="h5 text-uppercase border-bottom pb-2 mb-3 footer-column-title">
-                    {f:translate(key: 'footer.emergency_numbers', extensionName: 'site_commune_rgaa')}
+                    <f:if condition="{communeFooterCol2Title}">
+                        <f:then>{communeFooterCol2Title}</f:then>
+                        <f:else>{f:translate(key: 'footer.emergency_numbers', extensionName: 'site_commune_rgaa')}</f:else>
+                    </f:if>
                 </h2>
                 <ul class="list-unstyled emergency-list">
                     <li class="mb-2"><strong>15</strong> : SAMU (Urgences médicales)</li>
@@ -46,36 +52,34 @@
                 </ul>
             </div>
 
-            <!-- Colonne 3 : Plan d'accès & Localisation (Lien vers la page Plan d'accès) -->
+            <!-- Colonne 3 : Nous situer / Plan d'accès (Image cliquable renvoyant vers la page du plan d'accès) -->
             <div class="col-lg-4 col-12">
                 <h2 class="h5 text-uppercase border-bottom pb-2 mb-3 footer-column-title">
-                    <f:if condition="{communeFooterMapTitle}">
-                        <f:then>{communeFooterMapTitle}</f:then>
+                    <f:if condition="{communeFooterCol3Title}">
+                        <f:then>{communeFooterCol3Title}</f:then>
                         <f:else>Nous situer</f:else>
                     </f:if>
                 </h2>
                 
-                <div class="commune-footer-map-box bg-dark-subtle rounded p-3 text-center border border-secondary-subtle">
-                    <div class="mb-2">
-                        <i class="bi bi-geo-alt-fill text-warning fs-2" aria-hidden="true"></i>
-                    </div>
-                    <p class="small mb-3 text-light-50">
-                        <strong>Hôtel de Ville</strong><br>
-                        {communeAdresse}
-                    </p>
+                <div class="commune-footer-map-container">
                     <f:if condition="{communeFooterMapPageUid}">
                         <f:then>
-                            <!-- Lien direct vers la page Plan d'accès du site -->
-                            <f:link.page pageUid="{communeFooterMapPageUid}" class="btn btn-sm btn-outline-light d-inline-flex align-items-center gap-2">
-                                <i class="bi bi-map" aria-hidden="true"></i>
-                                <span>Consulter le plan d'accès</span>
+                            <f:link.page pageUid="{communeFooterMapPageUid}" class="d-block text-decoration-none commune-footer-map-image-link position-relative overflow-hidden rounded shadow-sm border border-secondary-subtle" title="Consulter le plan d'accès de la commune">
+                                <f:if condition="{communeFooterMapImage}">
+                                    <f:then>
+                                        <img src="{f:uri.image(src: communeFooterMapImage)}" class="img-fluid w-100 rounded commune-footer-map-img" alt="Plan d'accès et localisation de la mairie" />
+                                    </f:then>
+                                    <f:else>
+                                        <img src="{f:uri.resource(path: 'Images/plan-acces.svg', extensionName: 'site_commune_rgaa')}" class="img-fluid w-100 rounded commune-footer-map-img" alt="Plan d'accès et localisation de la mairie" />
+                                    </f:else>
+                                </f:if>
+                                <span class="visually-hidden">Ouvrir la page du plan d'accès</span>
                             </f:link.page>
                         </f:then>
                         <f:else>
-                            <a href="https://www.openstreetmap.org/search?query={communeAdresse -> f:format.urlencode()}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-light d-inline-flex align-items-center gap-1">
-                                <span>Voir sur la carte / Itinéraire</span>
-                                <span class="visually-hidden">(ouvre un service externe dans un nouvel onglet)</span>
-                                <span aria-hidden="true">↗</span>
+                            <a href="https://www.openstreetmap.org/search?query={communeAdresse -> f:format.urlencode()}" target="_blank" rel="noopener noreferrer" class="d-block text-decoration-none commune-footer-map-image-link position-relative overflow-hidden rounded shadow-sm border border-secondary-subtle" title="Voir l'itinéraire sur la carte externe (nouvelle fenêtre)">
+                                <img src="{f:uri.resource(path: 'Images/plan-acces.svg', extensionName: 'site_commune_rgaa')}" class="img-fluid w-100 rounded commune-footer-map-img" alt="Plan d'accès de la mairie" />
+                                <span class="visually-hidden">Voir sur la carte OpenStreetMap (nouvelle fenêtre)</span>
                             </a>
                         </f:else>
                     </f:if>

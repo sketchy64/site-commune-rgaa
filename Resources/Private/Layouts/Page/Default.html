@@ -17,8 +17,8 @@
     <!-- En-tête institutionnel & navigation principale -->
     <f:render partial="Structure/Header" arguments="{_all}" />
 
-    <!-- Fil d'Ariane accessible (sauf page d'accueil) -->
-    <f:if condition="{data.uid} != {rootLine.0.uid}">
+    <!-- Fil d'Ariane accessible (uniquement sur sous-pages, masqué sur la page d'accueil) -->
+    <f:if condition="{rootLine -> f:count()} > 1">
         <f:render partial="Navigation/Breadcrumb" arguments="{_all}" />
     </f:if>
 

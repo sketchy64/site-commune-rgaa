@@ -21,8 +21,11 @@
             <trans-unit id="backend_layout.column.hero" xml:space="preserve">
                 <source>Bannière / Actualité à la Une (Hero)</source>
             </trans-unit>
+            <trans-unit id="backend_layout.column.edito" xml:space="preserve">
+                <source>Édito / Mot du Maire (Texte &amp; Image)</source>
+            </trans-unit>
             <trans-unit id="backend_layout.column.quickaccess" xml:space="preserve">
-                <source>Accès rapides aux démarches (4 blocs)</source>
+                <source>Accès rapides (Groupe d'icônes / Démarches)</source>
             </trans-unit>
             <trans-unit id="backend_layout.column.main" xml:space="preserve">
                 <source>Contenu principal</source>
