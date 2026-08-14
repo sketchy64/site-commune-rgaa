@@ -1,7 +1,7 @@
 # Import des Backend Layouts
-@import './BackendLayouts/commune_home.tsconfig'
-@import './BackendLayouts/commune_subpage.tsconfig'
-@import './BackendLayouts/commune_default.tsconfig'
+@import 'EXT:site_commune_rgaa/Configuration/TSconfig/BackendLayouts/commune_home.tsconfig'
+@import 'EXT:site_commune_rgaa/Configuration/TSconfig/BackendLayouts/commune_subpage.tsconfig'
+@import 'EXT:site_commune_rgaa/Configuration/TSconfig/BackendLayouts/commune_default.tsconfig'
 
 # Configuration TCEFORM pour conformité RGAA (Critère 9.1 - Hiérarchie des titres)
 TCEFORM.tt_content {

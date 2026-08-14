@@ -1,0 +1,2 @@
+# Inclusion automatique globale du Page TSconfig pour TYPO3 v12 et v13
+@import 'EXT:site_commune_rgaa/Configuration/TSconfig/page.tsconfig'

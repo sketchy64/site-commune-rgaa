@@ -1,1 +1,1 @@
-@import '../../TSconfig/page.tsconfig'
+@import 'EXT:site_commune_rgaa/Configuration/TSconfig/page.tsconfig'
