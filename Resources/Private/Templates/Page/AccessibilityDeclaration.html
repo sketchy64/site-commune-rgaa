@@ -72,9 +72,7 @@
 
             <f:if condition="{mainContent}">
                 <div class="mt-4 pt-3 border-top">
-                    <f:for each="{mainContent}" as="record">
-                        <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
-                    </f:for>
+                    <f:format.raw>{mainContent}</f:format.raw>
                 </div>
             </f:if>
         </article>

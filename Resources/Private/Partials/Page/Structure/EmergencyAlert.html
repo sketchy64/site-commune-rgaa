@@ -12,9 +12,7 @@
             </svg>
         </div>
         <div class="flex-grow-1 font-weight-bold">
-            <f:for each="{emergencyAlertContent}" as="record">
-                <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
-            </f:for>
+            <f:format.raw>{emergencyAlertContent}</f:format.raw>
         </div>
     </div>
 </div>
