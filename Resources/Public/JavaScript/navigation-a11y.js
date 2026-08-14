@@ -45,4 +45,28 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.setAttribute('aria-expanded', (!isExpanded).toString());
     });
   });
+
+  // Bouton Retour en haut de page avec défilement fluide
+  const backToTopBtn = document.getElementById('commune-back-to-top');
+  if (backToTopBtn) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+      // Replacer le focus en haut de page pour les lecteurs d'écran
+      const skipLink = document.querySelector('.skip-links a') || document.body;
+      if (skipLink) {
+        skipLink.focus();
+      }
+    });
+  }
 });

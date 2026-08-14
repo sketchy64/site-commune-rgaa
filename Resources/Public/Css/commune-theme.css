@@ -713,46 +713,156 @@ a:hover, a:focus {
 }
 
 /* ==============================================================================
-   Zone Édito / Mot du Maire (Page d'accueil)
+   Alternance Automatique des Sections de la Page d'accueil
    ============================================================================== */
-.commune-edito-section {
+.commune-home-section {
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+/* Alternance automatique : Sections impaires en blanc, paires en gris très clair */
+.commune-home-section:nth-of-type(odd) {
   background-color: #ffffff;
+}
+
+.commune-home-section:nth-of-type(even) {
+  background-color: var(--commune-bg-light);
+  border-top: 1px solid var(--commune-border);
   border-bottom: 1px solid var(--commune-border);
 }
 
-.edito-content-wrapper {
-  background: linear-gradient(to right, #ffffff, var(--commune-bg-light));
-  border: 1px solid var(--commune-border);
-  border-left: 5px solid var(--sauveterre-green);
-  border-radius: 8px;
-  padding: 1.5rem 2rem;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
+.commune-home-section.commune-hero-section {
+  background-color: transparent !important;
+  border: none !important;
 }
 
-.edito-content-wrapper img {
+/* ==============================================================================
+   Support Pleine Largeur pour "Pas de cadre" (Frame: None)
+   ============================================================================== */
+.frame-none,
+.frame-type-none,
+.frame-size-default.frame-none,
+.frame-background-none.frame-none,
+.commune-hero-section .container-fluid,
+.commune-interactive-map-section .container-fluid {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* ==============================================================================
+   Zone Édito / Mot du Maire (Page d'accueil) - Photo Full Height & Cover
+   ============================================================================== */
+.commune-edito-section {
+  position: relative;
+}
+
+.edito-content-wrapper {
+  background: #ffffff;
+  border: 1px solid var(--commune-border);
+  border-left: 6px solid var(--sauveterre-green);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* Adaptation de l'élément Texte & Media dans l'édito */
+.commune-edito-section .ce-textpic,
+.commune-edito-section .ce-gallery,
+.commune-edito-section .frame-type-textmedia,
+.commune-edito-section .frame-type-textpic {
+  height: 100%;
+}
+
+.commune-edito-section .row {
+  align-items: stretch;
+}
+
+.commune-edito-section .ce-gallery img,
+.commune-edito-section .ce-media img,
+.commune-edito-section .figure img,
+.commune-edito-section .img-fluid,
+.commune-edito-section img {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  max-height: 520px;
+  object-fit: cover;
+  border-radius: 0;
+  display: block;
+}
+
+.commune-edito-section .ce-bodytext,
+.commune-edito-section .element-bodytext {
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* ==============================================================================
    Image cliquable du Plan d'accès dans le Pied de page
    ============================================================================== */
 .commune-footer-map-image-link {
-  transition: all 0.25s ease;
-  background-color: rgba(255, 255, 255, 0.05);
+  transition: transform 0.25s ease;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0;
 }
 
 .commune-footer-map-image-link:hover,
 .commune-footer-map-image-link:focus {
-  transform: scale(1.02);
-  border-color: var(--sauveterre-gold) !important;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3) !important;
+  transform: scale(1.03);
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .commune-footer-map-img {
-  transition: transform 0.3s ease;
+  transition: filter 0.3s ease;
 }
 
 .commune-footer-map-image-link:hover .commune-footer-map-img {
-  filter: brightness(1.05);
+  filter: brightness(1.08);
+}
+
+/* ==============================================================================
+   Bouton Retour en haut de page (Smooth Scroll to Top)
+   ============================================================================== */
+.commune-back-to-top {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--sauveterre-green) !important;
+  border: 2px solid var(--sauveterre-gold) !important;
+  color: #ffffff !important;
+  font-size: 1.25rem;
+  z-index: 1050;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.2s ease, visibility 0.3s;
+}
+
+.commune-back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.commune-back-to-top:hover,
+.commune-back-to-top:focus {
+  background-color: var(--sauveterre-green-dark) !important;
+  border-color: #ffffff !important;
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35) !important;
 }

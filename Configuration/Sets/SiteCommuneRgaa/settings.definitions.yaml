@@ -13,7 +13,7 @@ categories:
     description: 'Statut de conformité légale RGAA 4.1.2 et déclaration obligatoire'
   commune_footer:
     label: 'Pied de page & Navigation'
-    description: 'Configuration des titres de colonnes, de l''image du plan d''accès et du menu'
+    description: 'Configuration des titres de colonnes, du bouton contact, de l''image du plan d''accès et du menu'
   commune_app:
     label: 'Application Mobile (PWA) & Notifications'
     description: 'Installation sur smartphones (iOS / Android) et alertes d''actualités'
@@ -178,6 +178,20 @@ settings:
     category: commune_footer
     type: string
     default: 'Coordonnées & Horaires'
+
+  commune.footer_contact_btn_title:
+    label: 'Texte du bouton de contact (Pied de page)'
+    description: 'Texte du bouton affiché sous les horaires (Ex : Contacter la mairie)'
+    category: commune_footer
+    type: string
+    default: 'Contacter la mairie'
+
+  commune.footer_contact_page_uid:
+    label: 'Page de Contact (ID / UID)'
+    description: 'Identifiant de la page vers laquelle pointe le bouton contact du footer (Ex : 22 pour [22] Nous contacter)'
+    category: commune_footer
+    type: int
+    default: 22
 
   commune.footer_col2_title:
     label: 'Titre Colonne 2 du Pied de page'

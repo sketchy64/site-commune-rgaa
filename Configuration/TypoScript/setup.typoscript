@@ -191,6 +191,14 @@ page {
       communeFooterCol1Title.value = {$commune.footer_col1_title}
       communeFooterCol1Title.override.data = site:commune.footer_col1_title
 
+      communeFooterContactBtnTitle = TEXT
+      communeFooterContactBtnTitle.value = {$commune.footer_contact_btn_title}
+      communeFooterContactBtnTitle.override.data = site:commune.footer_contact_btn_title
+
+      communeFooterContactPageUid = TEXT
+      communeFooterContactPageUid.value = {$commune.footer_contact_page_uid}
+      communeFooterContactPageUid.override.data = site:commune.footer_contact_page_uid
+
       communeFooterCol2Title = TEXT
       communeFooterCol2Title.value = {$commune.footer_col2_title}
       communeFooterCol2Title.override.data = site:commune.footer_col2_title

@@ -55,6 +55,9 @@ commune {
 
   # Pied de page & Navigation
   footer_col1_title = Coordonnées & Horaires
+  footer_contact_btn_title = Contacter la mairie
+  footer_contact_page_uid = 22
+
   footer_col2_title = Numéros d'urgence
   footer_col3_title = Nous situer
   footer_map_image = EXT:site_commune_rgaa/Resources/Public/Images/plan-acces.svg
