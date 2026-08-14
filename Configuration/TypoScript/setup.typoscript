@@ -1,10 +1,10 @@
 # ==============================================================================
-# Setup TypoScript : Site Commune RGAA (Surcouche Bootstrap Package)
+# Setup TypoScript : Site Commune RGAA (Surcouche Bootstrap Package & News)
 # ==============================================================================
 
 page = PAGE
 page {
-  # Balise HTML conforme RGAA avec attributs de langue
+  # Configuration HTML5 & Métadonnées mobiles / PWA
   config {
     htmlTag_setParams = lang="fr" dir="ltr"
     doctype = html5
@@ -12,7 +12,22 @@ page {
     viewport = width=device-width, initial-scale=1, shrink-to-fit=no
   }
 
-  # Inclusion des feuilles de styles conformes RGAA
+  # Métadonnées pour Application Mobile (PWA Android / iOS)
+  meta {
+    theme-color = #00703A
+    apple-mobile-web-app-capable = yes
+    apple-mobile-web-app-status-bar-style = black-translucent
+    apple-mobile-web-app-title = {$commune.pwa_app_name}
+    application-name = {$commune.pwa_app_name}
+  }
+
+  # Déclaration du Web App Manifest pour installation smartphone
+  headerData {
+    10 = TEXT
+    10.value = <link rel="manifest" href="/manifest.webmanifest">
+  }
+
+  # Inclusion des feuilles de styles conformes RGAA & Thème Sauveterre
   includeCSS {
     commune_theme = EXT:site_commune_rgaa/Resources/Public/Css/commune-theme.css
     commune_accessibility = EXT:site_commune_rgaa/Resources/Public/Css/accessibility.css
@@ -22,7 +37,7 @@ page {
     }
   }
 
-  # Inclusion des scripts JavaScript d'accessibilité (Navigation clavier, Toolbar A11y, ARIA)
+  # Inclusion des scripts JavaScript d'accessibilité & PWA Notifications
   includeJSFooter {
     commune_a11y_toolbar = EXT:site_commune_rgaa/Resources/Public/JavaScript/accessibility-toolbar.js
     commune_a11y_toolbar {
@@ -34,6 +49,10 @@ page {
     }
     commune_a11y_carousel = EXT:site_commune_rgaa/Resources/Public/JavaScript/carousel-a11y.js
     commune_a11y_carousel {
+      defer = 1
+    }
+    commune_pwa_notify = EXT:site_commune_rgaa/Resources/Public/JavaScript/pwa-notifications.js
+    commune_pwa_notify {
       defer = 1
     }
   }
@@ -135,9 +154,31 @@ page {
       communeFooterMapTitle.value = {$commune.footer_map_title}
       communeFooterMapTitle.override.data = site:commune.footer_map_title
 
-      communeFooterMapAddress = TEXT
-      communeFooterMapAddress.value = {$commune.footer_map_address}
-      communeFooterMapAddress.override.data = site:commune.footer_map_address
+      communeFooterMapPageUid = TEXT
+      communeFooterMapPageUid.value = {$commune.footer_map_page_uid}
+      communeFooterMapPageUid.override.data = site:commune.footer_map_page_uid
+
+      # Rendu standard robuste de toutes les colonnes de contenu TYPO3
+      emergencyAlertContent =< styles.content.get
+      emergencyAlertContent.select.where = {#colPos} = 100
+
+      heroContent =< styles.content.get
+      heroContent.select.where = {#colPos} = 110
+
+      quickAccessContent =< styles.content.get
+      quickAccessContent.select.where = {#colPos} = 120
+
+      mainContent =< styles.content.get
+      mainContent.select.where = {#colPos} = 0
+
+      newsContent =< styles.content.get
+      newsContent.select.where = {#colPos} = 130
+
+      interactiveMapContent =< styles.content.get
+      interactiveMapContent.select.where = {#colPos} = 140
+
+      sidebarLeftContent =< styles.content.get
+      sidebarLeftContent.select.where = {#colPos} = 200
 
       # Menu principal accessible
       mainNavigation = HMENU
@@ -222,72 +263,22 @@ page {
         }
       }
     }
+  }
+}
 
-    # Données de colonnes de contenu (Backend Layouts)
-    dataProcessing {
-      100 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
-      100 {
-        table = tt_content
-        orderBy = sorting
-        where = {#colPos} = 100
-        as = emergencyAlertContent
-      }
-
-      110 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
-      110 {
-        table = tt_content
-        orderBy = sorting
-        where = {#colPos} = 110
-        as = heroContent
-      }
-
-      120 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
-      120 {
-        table = tt_content
-        orderBy = sorting
-        where = {#colPos} = 120
-        as = quickAccessContent
-      }
-
-      0 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
-      0 {
-        table = tt_content
-        orderBy = sorting
-        where = {#colPos} = 0
-        as = mainContent
-      }
-
-      130 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
-      130 {
-        table = tt_content
-        orderBy = sorting
-        where = {#colPos} = 130
-        as = newsContent
-      }
-
-      140 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
-      140 {
-        table = tt_content
-        orderBy = sorting
-        where = {#colPos} = 140
-        as = interactiveMapContent
-      }
-
-      200 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
-      200 {
-        table = tt_content
-        orderBy = sorting
-        where = {#colPos} = 200
-        as = sidebarLeftContent
-      }
-
-      300 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
-      300 {
-        table = tt_content
-        orderBy = sorting
-        where = {#colPos} = 300
-        as = footerMapContent
-      }
+# ------------------------------------------------------------------------------
+# Configuration de la surcouche pour EXT:news (georgringer/news)
+# ------------------------------------------------------------------------------
+plugin.tx_news {
+  view {
+    templateRootPaths {
+      100 = EXT:site_commune_rgaa/Resources/Private/Extensions/News/Templates/
+    }
+    partialRootPaths {
+      100 = EXT:site_commune_rgaa/Resources/Private/Extensions/News/Partials/
+    }
+    layoutRootPaths {
+      100 = EXT:site_commune_rgaa/Resources/Private/Extensions/News/Layouts/
     }
   }
 }

@@ -43,7 +43,11 @@ commune {
   # Pied de page & Navigation
   footer_folder_uid = 13
   footer_map_title = Nous situer
-  footer_map_address = 1 Place de la République, 64000 Commune
+  footer_map_page_uid = 21
+
+  # Application mobile (PWA)
+  pwa_enable = 1
+  pwa_app_name = Mairie
 
   # Numéros d'urgence républicains
   samu = 15

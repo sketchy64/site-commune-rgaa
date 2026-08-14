@@ -20,9 +20,7 @@
                 <!-- Contenu additionnel colonne latérale (colPos 200) -->
                 <f:if condition="{sidebarLeftContent}">
                     <div class="commune-sidebar-extra">
-                        <f:for each="{sidebarLeftContent}" as="record">
-                            <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
-                        </f:for>
+                        <f:format.raw>{sidebarLeftContent}</f:format.raw>
                     </div>
                 </f:if>
             </aside>
@@ -38,9 +36,7 @@
 
                 <!-- Contenu principal (colPos 0) -->
                 <div class="commune-page-content">
-                    <f:for each="{mainContent}" as="record">
-                        <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
-                    </f:for>
+                    <f:format.raw>{mainContent}</f:format.raw>
                 </div>
             </article>
         </div>

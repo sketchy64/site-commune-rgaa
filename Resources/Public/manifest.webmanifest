@@ -1,0 +1,19 @@
+{
+  "name": "Site Officiel de la Mairie",
+  "short_name": "Mairie",
+  "description": "Portail officiel de la commune - Démarches, actualités, agenda et alertes citoyennes",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#00703A",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "EXT:site_commune_rgaa/Resources/Public/Icons/Extension.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

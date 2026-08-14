@@ -1,0 +1,33 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="General" />
+
+<f:section name="content">
+    <f:if condition="{news}">
+        <f:then>
+            <div class="commune-news-list-container">
+                <div class="row g-4">
+                    <f:for each="{news}" as="newsItem" iteration="iterator">
+                        <div class="col-lg-4 col-md-6 col-12 d-flex">
+                            <f:render partial="List/Item" arguments="{newsItem: newsItem, settings: settings, iterator: iterator}" />
+                        </div>
+                    </f:for>
+                </div>
+
+                <!-- Pagination accessible RGAA -->
+                <f:if condition="{settings.list.paginate.insertAbove}">
+                    <f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+                </f:if>
+            </div>
+        </f:then>
+        <f:else>
+            <div class="alert alert-info" role="status">
+                <i class="bi bi-info-circle me-2" aria-hidden="true"></i>
+                <f:translate key="list_nonewsfound" default="Aucune actualité disponible pour le moment." />
+            </div>
+        </f:else>
+    </f:if>
+</f:section>
+</html>

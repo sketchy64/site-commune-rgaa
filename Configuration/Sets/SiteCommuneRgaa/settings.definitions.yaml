@@ -9,8 +9,11 @@ categories:
     label: 'Accessibilité Numérique & RGAA'
     description: 'Statut de conformité légale RGAA 4.1.2 et déclaration obligatoire'
   commune_footer:
-    label: 'Pied de page & Navigation légale'
-    description: 'Configuration du menu de pied de page et de la carte de localisation'
+    label: 'Pied de page & Navigation'
+    description: 'Configuration du menu de pied de page et du lien vers le plan d''accès'
+  commune_app:
+    label: 'Application Mobile (PWA) & Notifications'
+    description: 'Installation sur smartphones (iOS / Android) et alertes d''actualités'
   commune_emergency:
     label: 'Numéros d''urgence & Utiles'
     description: 'Numéros d''urgence républicains affichés dans le pied de page'
@@ -104,7 +107,7 @@ settings:
 
   commune.rgaa_page_uid:
     label: 'Page de la Déclaration d''accessibilité (ID / UID)'
-    description: 'Identifiant (UID) de la page contenant la déclaration complète'
+    description: 'Identifiant (UID) de la page contenant la déclaration complète (Ex : 96)'
     category: commune_a11y
     type: int
     default: 96
@@ -114,24 +117,41 @@ settings:
   # ============================================================================
   commune.footer_folder_uid:
     label: 'Dossier des liens de bas de page (ID / UID)'
-    description: 'Identifiant du dossier contenant les pages de pied de page (Ex : 13 pour le dossier [13] Pied de page)'
+    description: 'Identifiant du dossier contenant les pages du pied de page (Ex : 13 pour le dossier [13] Pied de page)'
     category: commune_footer
     type: int
     default: 13
 
   commune.footer_map_title:
-    label: 'Titre du bloc carte de localisation (Pied de page)'
-    description: 'Titre affiché au-dessus de la carte dans le footer'
+    label: 'Titre du bloc plan d''accès (Pied de page)'
+    description: 'Titre affiché au-dessus de la carte dans le footer (Ex : Nous situer)'
     category: commune_footer
     type: string
     default: 'Nous situer'
 
-  commune.footer_map_address:
-    label: 'Adresse de recherche pour la carte de localisation'
-    description: 'Adresse utilisée pour générer la carte interactive de localisation'
+  commune.footer_map_page_uid:
+    label: 'Page du Plan d''accès / Localisation (ID / UID)'
+    description: 'Identifiant (UID) de la page ouverte au clic sur la carte du pied de page (Ex : 21 pour [21] Plan d''accès)'
     category: commune_footer
+    type: int
+    default: 21
+
+  # ============================================================================
+  # APPLICATION MOBILE (PWA) & NOTIFICATIONS
+  # ============================================================================
+  commune.pwa_enable:
+    label: 'Activer la compatibilité Application Mobile (PWA Android & iOS)'
+    description: 'Permet aux citoyens d''installer le site comme une application sur leur écran d''accueil'
+    category: commune_app
+    type: bool
+    default: true
+
+  commune.pwa_app_name:
+    label: 'Nom court de l''application mobile'
+    description: 'Nom affiché sous l''icône sur l''écran d''accueil du smartphone'
+    category: commune_app
     type: string
-    default: 'Mairie, 64000'
+    default: 'Mairie'
 
   # ============================================================================
   # NUMÉROS D'URGENCE RÉPUBLICAINS

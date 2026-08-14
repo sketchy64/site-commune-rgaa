@@ -7,13 +7,11 @@
     <!-- Titre principal masqué ou visible de premier niveau (Critère 9.1 RGAA - 1 seul H1) -->
     <h1 class="visually-hidden">Bienvenue sur le portail officiel de la commune de {communeNom}</h1>
 
-    <!-- 1. Section Bandeau d'image / Hero sous la navigation (colPos 110) -->
+    <!-- 1. Section Bandeau d'image / Carrousel Hero sous la navigation (colPos 110) -->
     <f:if condition="{heroContent}">
         <section class="commune-hero-section mb-4" aria-label="Bandeau principal et actualités à la une">
             <div class="container-fluid px-0">
-                <f:for each="{heroContent}" as="record">
-                    <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
-                </f:for>
+                <f:format.raw>{heroContent}</f:format.raw>
             </div>
         </section>
     </f:if>
@@ -23,12 +21,8 @@
         <section class="commune-quickaccess-section py-4 bg-light mb-4" aria-label="Démarches et accès rapides">
             <div class="container">
                 <h2 class="h3 mb-4 text-center commune-section-title">Mes démarches en ligne</h2>
-                <div class="row g-3">
-                    <f:for each="{quickAccessContent}" as="record">
-                        <div class="col-lg-3 col-sm-6">
-                            <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
-                        </div>
-                    </f:for>
+                <div class="row g-3 justify-content-center">
+                    <f:format.raw>{quickAccessContent}</f:format.raw>
                 </div>
             </div>
         </section>
@@ -39,9 +33,7 @@
         <div class="container my-4">
             <div class="row">
                 <div class="col-12">
-                    <f:for each="{mainContent}" as="record">
-                        <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
-                    </f:for>
+                    <f:format.raw>{mainContent}</f:format.raw>
                 </div>
             </div>
         </div>
@@ -55,9 +47,7 @@
                     <h2 class="h3 mb-0 commune-section-title">Actualités & Agenda municipal</h2>
                 </div>
                 <div class="row g-4">
-                    <f:for each="{newsContent}" as="record">
-                        <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
-                    </f:for>
+                    <f:format.raw>{newsContent}</f:format.raw>
                 </div>
             </div>
         </section>
@@ -71,9 +61,7 @@
                     <h2 class="h3 commune-section-title">Plan interactif & Découverte</h2>
                 </div>
                 <div class="commune-map-wrapper shadow-sm rounded overflow-hidden">
-                    <f:for each="{interactiveMapContent}" as="record">
-                        <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
-                    </f:for>
+                    <f:format.raw>{interactiveMapContent}</f:format.raw>
                 </div>
             </div>
         </section>

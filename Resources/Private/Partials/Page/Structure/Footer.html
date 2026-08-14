@@ -46,7 +46,7 @@
                 </ul>
             </div>
 
-            <!-- Colonne 3 : Carte de localisation & Plan d'accès (Remplace les liens utiles) -->
+            <!-- Colonne 3 : Plan d'accès & Localisation (Lien vers la page Plan d'accès) -->
             <div class="col-lg-4 col-12">
                 <h2 class="h5 text-uppercase border-bottom pb-2 mb-3 footer-column-title">
                     <f:if condition="{communeFooterMapTitle}">
@@ -55,33 +55,31 @@
                     </f:if>
                 </h2>
                 
-                <f:if condition="{footerMapContent}">
-                    <f:then>
-                        <!-- Contenu personnalisé de carte / plan d'accès (colPos 300) -->
-                        <div class="commune-footer-map-content">
-                            <f:for each="{footerMapContent}" as="record">
-                                <f:cObject typoscriptObjectPath="tt_content" data="{record.data}" />
-                            </f:for>
-                        </div>
-                    </f:then>
-                    <f:else>
-                        <!-- Carte interactive par défaut ou widget de localisation -->
-                        <div class="commune-footer-map-box bg-dark-subtle rounded p-3 text-center border border-secondary-subtle">
-                            <div class="mb-2">
-                                <i class="bi bi-geo-alt-fill text-warning fs-3" aria-hidden="true"></i>
-                            </div>
-                            <p class="small mb-3 text-light-50">
-                                <strong>Hôtel de Ville</strong><br>
-                                {communeAdresse}
-                            </p>
+                <div class="commune-footer-map-box bg-dark-subtle rounded p-3 text-center border border-secondary-subtle">
+                    <div class="mb-2">
+                        <i class="bi bi-geo-alt-fill text-warning fs-2" aria-hidden="true"></i>
+                    </div>
+                    <p class="small mb-3 text-light-50">
+                        <strong>Hôtel de Ville</strong><br>
+                        {communeAdresse}
+                    </p>
+                    <f:if condition="{communeFooterMapPageUid}">
+                        <f:then>
+                            <!-- Lien direct vers la page Plan d'accès du site -->
+                            <f:link.page pageUid="{communeFooterMapPageUid}" class="btn btn-sm btn-outline-light d-inline-flex align-items-center gap-2">
+                                <i class="bi bi-map" aria-hidden="true"></i>
+                                <span>Consulter le plan d'accès</span>
+                            </f:link.page>
+                        </f:then>
+                        <f:else>
                             <a href="https://www.openstreetmap.org/search?query={communeAdresse -> f:format.urlencode()}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-light d-inline-flex align-items-center gap-1">
                                 <span>Voir sur la carte / Itinéraire</span>
                                 <span class="visually-hidden">(ouvre un service externe dans un nouvel onglet)</span>
                                 <span aria-hidden="true">↗</span>
                             </a>
-                        </div>
-                    </f:else>
-                </f:if>
+                        </f:else>
+                    </f:if>
+                </div>
             </div>
         </div>
 
