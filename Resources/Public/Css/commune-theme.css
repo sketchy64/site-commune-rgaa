@@ -917,8 +917,8 @@ a.icon-group-item:hover {
   position: fixed;
   bottom: 25px;
   right: 25px;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -930,6 +930,15 @@ a.icon-group-item:hover {
   visibility: hidden;
   transform: translateY(20px);
   transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.2s ease, visibility 0.3s;
+}
+
+.commune-back-to-top svg,
+.commune-back-to-top .back-to-top-arrow {
+  width: 26px !important;
+  height: 26px !important;
+  stroke: #ffffff !important;
+  stroke-width: 3px !important;
+  display: block !important;
 }
 
 .commune-back-to-top.visible {
@@ -945,6 +954,13 @@ a.icon-group-item:hover {
   color: var(--sauveterre-gold) !important;
   transform: translateY(-4px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35) !important;
+}
+
+.commune-back-to-top:hover svg,
+.commune-back-to-top:focus svg,
+.commune-back-to-top:hover .back-to-top-arrow,
+.commune-back-to-top:focus .back-to-top-arrow {
+  stroke: var(--sauveterre-gold) !important;
 }
 
 /* ==============================================================================
