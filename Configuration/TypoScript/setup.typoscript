@@ -64,14 +64,22 @@ page {
     templateName {
       cObject = CASE
       cObject {
-        key.data = levelfield:-1, backend_layout_next_level, slide
-        key.override.field = backend_layout
+        key.data = pagelayout
+
+        pagets__commune_home = TEXT
+        pagets__commune_home.value = Home
 
         commune_home = TEXT
         commune_home.value = Home
 
+        pagets__commune_subpage = TEXT
+        pagets__commune_subpage.value = Subpage
+
         commune_subpage = TEXT
         commune_subpage.value = Subpage
+
+        pagets__commune_default = TEXT
+        pagets__commune_default.value = Default
 
         commune_default = TEXT
         commune_default.value = Default
@@ -158,27 +166,69 @@ page {
       communeFooterMapPageUid.value = {$commune.footer_map_page_uid}
       communeFooterMapPageUid.override.data = site:commune.footer_map_page_uid
 
-      # Rendu standard robuste de toutes les colonnes de contenu TYPO3
-      emergencyAlertContent =< styles.content.get
-      emergencyAlertContent.select.where = {#colPos} = 100
+      # Rendu standard direct et robuste de toutes les colonnes de contenu TYPO3
+      emergencyAlertContent = CONTENT
+      emergencyAlertContent {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=100
+        }
+      }
 
-      heroContent =< styles.content.get
-      heroContent.select.where = {#colPos} = 110
+      heroContent = CONTENT
+      heroContent {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=110
+        }
+      }
 
-      quickAccessContent =< styles.content.get
-      quickAccessContent.select.where = {#colPos} = 120
+      quickAccessContent = CONTENT
+      quickAccessContent {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=120
+        }
+      }
 
-      mainContent =< styles.content.get
-      mainContent.select.where = {#colPos} = 0
+      mainContent = CONTENT
+      mainContent {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=0
+        }
+      }
 
-      newsContent =< styles.content.get
-      newsContent.select.where = {#colPos} = 130
+      newsContent = CONTENT
+      newsContent {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=130
+        }
+      }
 
-      interactiveMapContent =< styles.content.get
-      interactiveMapContent.select.where = {#colPos} = 140
+      interactiveMapContent = CONTENT
+      interactiveMapContent {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=140
+        }
+      }
 
-      sidebarLeftContent =< styles.content.get
-      sidebarLeftContent.select.where = {#colPos} = 200
+      sidebarLeftContent = CONTENT
+      sidebarLeftContent {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=200
+        }
+      }
 
       # Menu principal accessible
       mainNavigation = HMENU
