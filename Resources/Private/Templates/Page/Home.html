@@ -7,9 +7,9 @@
     <!-- Titre principal masqué de premier niveau (Critère 9.1 RGAA - 1 seul H1) -->
     <h1 class="visually-hidden">Bienvenue sur le portail officiel de la commune de {communeNom}</h1>
 
-    <!-- 1. Section Bandeau d'image / Carrousel Hero sous la navigation (colPos 110) -->
+    <!-- 1. Section Bandeau d'image / Carrousel Hero sous la navigation (colPos 110 - Pleine largeur sans padding) -->
     <f:if condition="{heroContent}">
-        <section class="commune-home-section commune-hero-section" aria-label="Bandeau principal et actualités à la une">
+        <section class="commune-home-section commune-hero-section p-0 m-0" aria-label="Bandeau principal et actualités à la une">
             <div class="container-fluid px-0">
                 <f:format.raw>{heroContent}</f:format.raw>
             </div>
@@ -30,7 +30,7 @@
                         </h2>
                     </div>
                 </f:if>
-                <div class="edito-content-wrapper shadow-sm rounded">
+                <div class="edito-content-wrapper">
                     <f:format.raw>{editoContent}</f:format.raw>
                 </div>
             </div>
@@ -79,23 +79,21 @@
         </section>
     </f:if>
 
-    <!-- 5. Section Carte Interactive de la commune (colPos 140) -->
+    <!-- 5. Section Carte Interactive de la commune (colPos 140 - Pleine largeur si sans cadre) -->
     <f:if condition="{interactiveMapContent}">
-        <section class="commune-home-section commune-interactive-map-section py-5" aria-label="{f:if(condition: communeHomeMapTitle, then: communeHomeMapTitle, else: 'Plan interactif & Découverte')}">
-            <div class="container-fluid px-0">
-                <f:if condition="!{communeHomeMapHideTitle}">
-                    <div class="container text-center mb-4">
-                        <h2 class="h3 commune-section-title">
-                            <f:if condition="{communeHomeMapTitle}">
-                                <f:then>{communeHomeMapTitle}</f:then>
-                                <f:else>Plan interactif & Découverte</f:else>
-                            </f:if>
-                        </h2>
-                    </div>
-                </f:if>
-                <div class="commune-map-wrapper shadow-none rounded-0 overflow-hidden">
-                    <f:format.raw>{interactiveMapContent}</f:format.raw>
+        <section class="commune-home-section commune-interactive-map-section p-0 m-0" aria-label="{f:if(condition: communeHomeMapTitle, then: communeHomeMapTitle, else: 'Plan interactif & Découverte')}">
+            <f:if condition="!{communeHomeMapHideTitle}">
+                <div class="container text-center pt-5 pb-3">
+                    <h2 class="h3 commune-section-title mb-0">
+                        <f:if condition="{communeHomeMapTitle}">
+                            <f:then>{communeHomeMapTitle}</f:then>
+                            <f:else>Plan interactif & Découverte</f:else>
+                        </f:if>
+                    </h2>
                 </div>
+            </f:if>
+            <div class="commune-map-wrapper w-100 p-0 m-0 overflow-hidden">
+                <f:format.raw>{interactiveMapContent}</f:format.raw>
             </div>
         </section>
     </f:if>

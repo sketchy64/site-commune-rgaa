@@ -30,9 +30,12 @@
     <!-- Pied de page officiel avec mentions RGAA obligatoires -->
     <f:render partial="Structure/Footer" arguments="{_all}" />
 
-    <!-- Bouton Retour en haut de page avec défilement fluide -->
+    <!-- Bouton Retour en haut de page avec flèche visible et défilement fluide -->
     <button id="commune-back-to-top" class="commune-back-to-top btn btn-primary rounded-circle shadow" type="button" aria-label="Remonter en haut de la page" title="Remonter en haut de la page">
-        <i class="bi bi-arrow-up" aria-hidden="true"></i>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+        </svg>
     </button>
 </div>
 </html>
