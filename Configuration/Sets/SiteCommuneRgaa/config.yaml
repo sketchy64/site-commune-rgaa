@@ -1,4 +1,4 @@
 name: commune/site-commune-rgaa
 label: 'Site Commune RGAA'
 dependencies:
-  - bk2k/bootstrap-package
+  - bootstrap-package/full
