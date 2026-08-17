@@ -373,12 +373,22 @@ page {
           expAll = 1
           wrap = <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 commune-sitemap-grid">|</div>
           NO {
-            wrapItemAndSub = <div class="col"><div class="commune-sitemap-card h-100 shadow-sm"><div class="commune-sitemap-card-header"><h3 class="h5 mb-0 fw-bold">|</h3></div></div></div>
+            wrapItemAndSub = <div class="col d-flex"><div class="commune-sitemap-card w-100 shadow-sm"><div class="commune-sitemap-card-header"><h3 class="h5 mb-0 fw-bold">|</h3></div>|</div></div>
+            ATagParams = class="commune-sitemap-root-link"
+          }
+          ACT = 1
+          ACT {
+            wrapItemAndSub = <div class="col d-flex"><div class="commune-sitemap-card w-100 shadow-sm"><div class="commune-sitemap-card-header"><h3 class="h5 mb-0 fw-bold">|</h3></div>|</div></div>
             ATagParams = class="commune-sitemap-root-link"
           }
           IFSUB = 1
           IFSUB {
-            wrapItemAndSub = <div class="col"><div class="commune-sitemap-card h-100 shadow-sm"><div class="commune-sitemap-card-header"><h3 class="h5 mb-0 fw-bold">|</h3></div>|*|</div></div>
+            wrapItemAndSub = <div class="col d-flex"><div class="commune-sitemap-card w-100 shadow-sm"><div class="commune-sitemap-card-header"><h3 class="h5 mb-0 fw-bold">|</h3></div>|</div></div>
+            ATagParams = class="commune-sitemap-root-link"
+          }
+          ACTIFSUB = 1
+          ACTIFSUB {
+            wrapItemAndSub = <div class="col d-flex"><div class="commune-sitemap-card w-100 shadow-sm"><div class="commune-sitemap-card-header"><h3 class="h5 mb-0 fw-bold">|</h3></div>|</div></div>
             ATagParams = class="commune-sitemap-root-link"
           }
         }
@@ -389,6 +399,11 @@ page {
           NO {
             wrapItemAndSub = <li class="commune-sitemap-item py-1">|</li>
             ATagParams = class="commune-sitemap-link text-decoration-none"
+          }
+          ACT = 1
+          ACT {
+            wrapItemAndSub = <li class="commune-sitemap-item py-1">|</li>
+            ATagParams = class="commune-sitemap-link text-decoration-none fw-semibold"
           }
           IFSUB = 1
           IFSUB {
@@ -401,6 +416,11 @@ page {
           expAll = 1
           wrap = <ul class="list-unstyled commune-sitemap-subsublist ps-3 pt-1 mb-1 border-start border-2 ms-2">|</ul>
           NO {
+            wrapItemAndSub = <li class="commune-sitemap-subitem py-1">|</li>
+            ATagParams = class="commune-sitemap-sublink text-decoration-none text-muted"
+          }
+          ACT = 1
+          ACT {
             wrapItemAndSub = <li class="commune-sitemap-subitem py-1">|</li>
             ATagParams = class="commune-sitemap-sublink text-decoration-none text-muted"
           }
