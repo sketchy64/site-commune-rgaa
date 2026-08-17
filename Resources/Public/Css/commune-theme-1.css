@@ -1316,3 +1316,591 @@ a.icon-group-item:hover {
 .commune-brand:hover .commune-logo-img {
   transform: scale(1.03);
 }
+
+/* ==============================================================================
+   1. Hiérarchie Typographique (Niveaux de Titres H1 à H6 - Thème 1 Sauveterre)
+   ============================================================================== */
+.commune-page-content h1,
+.ce-header h1,
+article h1 {
+  font-family: var(--commune-font-title);
+  font-size: 2.15rem;
+  font-weight: 800;
+  color: var(--sauveterre-green-dark);
+  line-height: 1.25;
+  margin-top: 1.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.commune-page-content h2,
+.ce-header h2,
+article h2 {
+  font-family: var(--commune-font-title);
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--commune-text-main);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.commune-page-content h3,
+.ce-header h3,
+article h3 {
+  font-family: var(--commune-font-title);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--sauveterre-green-dark);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  border-left: 4px solid var(--sauveterre-gold);
+  padding-left: 0.65rem;
+  line-height: 1.35;
+}
+
+.commune-page-content h4,
+.ce-header h4,
+article h4 {
+  font-family: var(--commune-font-title);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--commune-text-main);
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.commune-page-content h5,
+.ce-header h5,
+article h5 {
+  font-family: var(--commune-font-title);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--sauveterre-green-dark);
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.commune-page-content h6,
+.ce-header h6,
+article h6 {
+  font-family: var(--commune-font-title);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--sauveterre-gold-dark);
+  margin-top: 0.85rem;
+  margin-bottom: 0.35rem;
+}
+
+/* ==============================================================================
+   2. Tableaux (Tables - Bootstrap Package)
+   ============================================================================== */
+.table,
+table {
+  width: 100%;
+  margin-bottom: 1.75rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--commune-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table thead th,
+table thead th {
+  background-color: var(--sauveterre-green-dark) !important;
+  color: #ffffff !important;
+  font-family: var(--commune-font-title);
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.9rem 1.1rem;
+  border: none !important;
+  vertical-align: middle;
+}
+
+.table tbody td,
+table tbody td,
+.table tbody th,
+table tbody th {
+  padding: 0.85rem 1.1rem;
+  vertical-align: middle;
+  border-top: 1px solid var(--commune-border);
+  color: var(--commune-text-main);
+  font-size: 0.96rem;
+}
+
+.table-striped tbody tr:nth-of-type(odd),
+table.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #F8FAF9;
+}
+
+.table-hover tbody tr:hover,
+table.table-hover tbody tr:hover {
+  background-color: #FEF7E6 !important;
+}
+
+.table-responsive {
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  margin-bottom: 1.75rem;
+}
+
+/* ==============================================================================
+   3. Accordéons (Accordions - Bootstrap Package)
+   ============================================================================== */
+.accordion {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  margin-bottom: 1.75rem;
+}
+
+.accordion-item {
+  border: 1px solid var(--commune-border);
+  border-radius: 0 !important;
+  margin-bottom: -1px;
+}
+
+.accordion-item:first-of-type {
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+}
+
+.accordion-item:last-of-type {
+  border-bottom-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+}
+
+.accordion-button {
+  font-family: var(--commune-font-title);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--commune-text-main);
+  background-color: #ffffff;
+  padding: 1.1rem 1.35rem;
+  border-left: 5px solid var(--sauveterre-green);
+  transition: all 0.2s ease;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: var(--sauveterre-green-light) !important;
+  color: var(--sauveterre-green-dark) !important;
+  border-left: 6px solid var(--sauveterre-green);
+  box-shadow: none !important;
+}
+
+.accordion-button:focus {
+  outline: 3px solid var(--sauveterre-gold) !important;
+  box-shadow: none !important;
+}
+
+.accordion-body {
+  padding: 1.25rem 1.5rem;
+  background-color: #ffffff;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: var(--commune-text-main);
+}
+
+/* ==============================================================================
+   4. Onglets & Pilules (Tabs / Pills / Navs - Bootstrap Package)
+   ============================================================================== */
+.nav-tabs {
+  border-bottom: 2px solid var(--sauveterre-green);
+  gap: 4px;
+}
+
+.nav-tabs .nav-link {
+  font-family: var(--commune-font-title);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--commune-text-main);
+  border: 1px solid transparent;
+  border-radius: 6px 6px 0 0;
+  padding: 0.75rem 1.25rem;
+  transition: all 0.2s ease;
+}
+
+.nav-tabs .nav-link:hover,
+.nav-tabs .nav-link:focus {
+  color: var(--sauveterre-green-dark);
+  background-color: var(--sauveterre-green-light);
+  border-color: var(--sauveterre-green-light);
+}
+
+.nav-tabs .nav-link.active {
+  background-color: var(--sauveterre-green) !important;
+  color: #ffffff !important;
+  border-color: var(--sauveterre-green) var(--sauveterre-green) transparent !important;
+  font-weight: 700;
+}
+
+.nav-pills .nav-link {
+  font-family: var(--commune-font-title);
+  font-weight: 600;
+  color: var(--commune-text-main);
+  border-radius: 6px;
+  padding: 0.6rem 1.15rem;
+  transition: all 0.2s ease;
+}
+
+.nav-pills .nav-link.active {
+  background-color: var(--sauveterre-green) !important;
+  color: #ffffff !important;
+}
+
+.tab-content {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border: 1px solid var(--commune-border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  margin-bottom: 1.75rem;
+}
+
+/* ==============================================================================
+   5. Listes de Fichiers & Téléchargements (File List / Uploads)
+   ============================================================================== */
+.ce-uploads,
+.file-list,
+.media-list,
+ul.ce-uploads {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 1.25rem 0 !important;
+}
+
+.ce-uploads li,
+.file-list li,
+.ce-uploads .ce-uploads-item {
+  background-color: #ffffff;
+  border: 1px solid var(--commune-border);
+  border-left: 5px solid var(--sauveterre-green);
+  border-radius: 6px;
+  padding: 0.9rem 1.25rem;
+  margin-bottom: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-left-color 0.2s ease;
+}
+
+.ce-uploads li:hover,
+.file-list li:hover,
+.ce-uploads .ce-uploads-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 112, 58, 0.1);
+  border-left-color: var(--sauveterre-gold);
+}
+
+.ce-uploads .ce-uploads-link,
+.file-list a,
+.ce-uploads a {
+  color: var(--sauveterre-green-dark) !important;
+  font-weight: 700;
+  text-decoration: none !important;
+  font-family: var(--commune-font-title);
+  font-size: 0.98rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ce-uploads .ce-uploads-link:hover,
+.file-list a:hover {
+  color: var(--sauveterre-green) !important;
+}
+
+.ce-uploads .ce-uploads-description,
+.file-list .file-desc {
+  color: var(--commune-text-muted);
+  font-size: 0.88rem;
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.ce-uploads .ce-uploads-filesize,
+.file-list .file-size {
+  background-color: var(--commune-bg-light);
+  color: var(--commune-text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+  border: 1px solid var(--commune-border);
+  flex-shrink: 0;
+}
+
+/* ==============================================================================
+   6. Carrousels (Carousel - Bootstrap Package)
+   ============================================================================== */
+.carousel {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1.75rem;
+}
+
+.carousel-indicators [data-bs-target] {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 2px solid var(--sauveterre-green-dark);
+  margin: 0 4px;
+  transition: all 0.25s ease;
+}
+
+.carousel-indicators .active {
+  background-color: var(--sauveterre-gold) !important;
+  transform: scale(1.3);
+  border-color: #ffffff;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 44px;
+  height: 44px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 112, 58, 0.85);
+  border-radius: 50%;
+  margin: 0 15px;
+  opacity: 0.85;
+  transition: all 0.2s ease;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  background-color: var(--sauveterre-green-dark);
+  opacity: 1;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.carousel-caption {
+  background: rgba(0, 55, 28, 0.85);
+  backdrop-filter: blur(8px);
+  border-left: 5px solid var(--sauveterre-gold);
+  border-radius: 6px;
+  padding: 1.25rem 1.75rem;
+  text-align: left;
+  bottom: 25px;
+  left: 5%;
+  right: 5%;
+}
+
+.carousel-caption h2,
+.carousel-caption h3,
+.carousel-caption h4 {
+  color: #ffffff !important;
+  font-family: var(--commune-font-title);
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.carousel-caption p {
+  color: #f1f5f9 !important;
+  margin-bottom: 0;
+  font-size: 0.95rem;
+}
+
+/* ==============================================================================
+   7. Citations (Blockquotes / Quotes)
+   ============================================================================== */
+blockquote,
+.blockquote {
+  position: relative;
+  background: linear-gradient(135deg, #ffffff 0%, var(--commune-bg-light) 100%);
+  border-left: 5px solid var(--sauveterre-gold);
+  border-radius: 0 8px 8px 0;
+  padding: 1.5rem 2rem;
+  margin: 1.75rem 0;
+  font-style: italic;
+  font-size: 1.12rem;
+  line-height: 1.65;
+  color: #1e293b;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+blockquote p,
+.blockquote p {
+  margin-bottom: 0.5rem;
+}
+
+.blockquote-footer {
+  font-family: var(--commune-font-title);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--sauveterre-green-dark);
+  font-style: normal;
+  margin-top: 0.6rem;
+}
+
+.blockquote-footer::before {
+  content: "— ";
+  color: var(--sauveterre-gold);
+  font-weight: 700;
+}
+
+/* ==============================================================================
+   8. Cartes & Groupes de Contenu (Cards / Card Groups)
+   ============================================================================== */
+.card {
+  border: 1px solid var(--commune-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #ffffff;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  margin-bottom: 1.5rem;
+}
+
+.card:hover {
+  box-shadow: 0 8px 20px rgba(0, 112, 58, 0.08);
+}
+
+.card-header {
+  background-color: var(--commune-bg-light);
+  border-bottom: 2px solid var(--sauveterre-green);
+  font-family: var(--commune-font-title);
+  font-weight: 700;
+  color: var(--sauveterre-green-dark);
+  padding: 0.9rem 1.25rem;
+}
+
+.card-footer {
+  background-color: var(--commune-bg-light);
+  border-top: 1px solid var(--commune-border);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9rem;
+}
+
+/* ==============================================================================
+   9. Callouts / Encadrés de Mise en Valeur
+   ============================================================================== */
+.callout {
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  border: 1px solid var(--commune-border);
+  border-left-width: 5px !important;
+  border-radius: 6px;
+  background-color: #ffffff;
+}
+
+.callout-primary {
+  border-left-color: var(--sauveterre-green) !important;
+  background-color: #F0FDF4 !important;
+  color: #166534 !important;
+}
+
+.callout-info {
+  border-left-color: #0284C7 !important;
+  background-color: #F0F9FF !important;
+  color: #075985 !important;
+}
+
+.callout-warning {
+  border-left-color: var(--sauveterre-gold) !important;
+  background-color: #FFFBEB !important;
+  color: #92400E !important;
+}
+
+.callout-danger {
+  border-left-color: #DC2626 !important;
+  background-color: #FEF2F2 !important;
+  color: #991B1B !important;
+}
+
+.callout-success {
+  border-left-color: #16A34A !important;
+  background-color: #F0FDF4 !important;
+  color: #15803D !important;
+}
+
+/* ==============================================================================
+   10. Galeries & Éléments Multimédias (Images / Figures)
+   ============================================================================== */
+.ce-image img,
+.ce-gallery img,
+.ce-textpic img,
+.figure-img {
+  border-radius: 6px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s ease;
+}
+
+.ce-gallery-item:hover img {
+  transform: scale(1.02);
+}
+
+figcaption,
+.figure-caption,
+.ce-caption {
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--commune-text-muted);
+  border-left: 3px solid var(--sauveterre-gold);
+  padding-left: 0.6rem;
+  margin-top: 0.45rem;
+  line-height: 1.4;
+}
+
+/* ==============================================================================
+   11. Formulaires & Champs de Saisie
+   ============================================================================== */
+.form-control,
+.form-select {
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.95rem;
+  color: var(--commune-text-main);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--sauveterre-green) !important;
+  box-shadow: 0 0 0 3px rgba(0, 112, 58, 0.2) !important;
+  outline: none;
+}
+
+.form-check-input:checked {
+  background-color: var(--sauveterre-green) !important;
+  border-color: var(--sauveterre-green) !important;
+}
+
+/* ==============================================================================
+   12. Pagination (Page Browser)
+   ============================================================================== */
+.pagination .page-link {
+  color: var(--sauveterre-green);
+  border: 1px solid var(--commune-border);
+  font-weight: 600;
+  font-family: var(--commune-font-title);
+  padding: 0.5rem 0.85rem;
+  border-radius: 4px;
+  margin: 0 2px;
+  transition: all 0.2s ease;
+  text-decoration: none !important;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--sauveterre-green) !important;
+  border-color: var(--sauveterre-green) !important;
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.pagination .page-link:hover {
+  background-color: var(--sauveterre-green-light);
+  color: var(--sauveterre-green-dark);
+  border-color: var(--sauveterre-green);
+}
