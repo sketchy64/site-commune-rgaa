@@ -28,15 +28,15 @@ settings:
   # ============================================================================
   # SÉLECTION DU THÈME GRAPHIQUE
   # ============================================================================
-  commune.theme:
+  commune.theme_css:
     label: 'Thème graphique du site'
-    description: 'Sélectionnez la charte graphique à appliquer. Par défaut : "default" (Bootstrap Package). "theme-1" applique la charte Sauveterre (Vert & Or).'
+    description: 'Sélectionnez la charte graphique à appliquer. Par défaut : Thème 1 - Sauveterre (Vert & Or). Choisissez vide pour Bootstrap Package standard.'
     category: commune_theme
     type: string
-    default: 'theme-1'
+    default: 'EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css'
     enum:
-      - 'default'
-      - 'theme-1'
+      - 'EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css'
+      - ''
 
   # ============================================================================
   # INFORMATIONS GÉNÉRALES & LOGO

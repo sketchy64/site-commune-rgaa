@@ -27,8 +27,9 @@ page {
     10.value = <link rel="manifest" href="/manifest.webmanifest">
   }
 
-  # Inclusion des feuilles de styles de base conformes RGAA
+  # Inclusion des feuilles de styles conformes RGAA & Thème sélectionné
   includeCSS {
+    commune_theme = {$commune.theme_css}
     commune_accessibility = EXT:site_commune_rgaa/Resources/Public/Css/accessibility.css
     commune_print = EXT:site_commune_rgaa/Resources/Public/Css/print.css
     commune_print {
@@ -436,16 +437,3 @@ lib.contentElement {
     100 = EXT:site_commune_rgaa/Resources/Private/OverriddenTemplates/BootstrapPackage/ContentElements/
   }
 }
-
-# ------------------------------------------------------------------------------
-# Sélection dynamique du Thème Graphique (Feuilles de styles CSS)
-# ------------------------------------------------------------------------------
-# Thème 1 - Sauveterre (Vert & Or) : Activé par défaut ou sur sélection "theme-1"
-[site("settings")["commune"]["theme"] == "theme-1" || "{$commune.theme}" == "theme-1" || ("{$commune.theme}" != "default" && site("settings")["commune"]["theme"] != "default")]
-  page.includeCSS.commune_theme = EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css
-[GLOBAL]
-
-# Thème "default" (Bootstrap Package Standard) : Désactivation de la surcouche de thème
-[site("settings")["commune"]["theme"] == "default" || "{$commune.theme}" == "default"]
-  page.includeCSS.commune_theme >
-[GLOBAL]
