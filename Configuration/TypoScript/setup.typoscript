@@ -364,69 +364,6 @@ page {
         }
       }
 
-      # Plan du site arborescent épuré sur 3 colonnes pour la page d'accueil
-      homeSiteMapTree = HMENU
-      homeSiteMapTree {
-        entryLevel = 0
-        1 = TMENU
-        1 {
-          expAll = 1
-          wrap = <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 commune-sitemap-grid">|</div>
-          NO {
-            wrapItemAndSub = <div class="col mb-4"><div class="commune-sitemap-column"><h3 class="h5 commune-sitemap-root-title mb-2">|</h3>|</div></div>
-            ATagParams = class="commune-sitemap-root-link"
-          }
-          ACT = 1
-          ACT {
-            wrapItemAndSub = <div class="col mb-4"><div class="commune-sitemap-column"><h3 class="h5 commune-sitemap-root-title mb-2">|</h3>|</div></div>
-            ATagParams = class="commune-sitemap-root-link"
-          }
-          IFSUB = 1
-          IFSUB {
-            wrapItemAndSub = <div class="col mb-4"><div class="commune-sitemap-column"><h3 class="h5 commune-sitemap-root-title mb-2">|</h3>|</div></div>
-            ATagParams = class="commune-sitemap-root-link"
-          }
-          ACTIFSUB = 1
-          ACTIFSUB {
-            wrapItemAndSub = <div class="col mb-4"><div class="commune-sitemap-column"><h3 class="h5 commune-sitemap-root-title mb-2">|</h3>|</div></div>
-            ATagParams = class="commune-sitemap-root-link"
-          }
-        }
-        2 = TMENU
-        2 {
-          expAll = 1
-          wrap = <ul class="list-unstyled commune-sitemap-sublist mb-0">|</ul>
-          NO {
-            wrapItemAndSub = <li class="commune-sitemap-item py-1">|</li>
-            ATagParams = class="commune-sitemap-link text-decoration-none"
-          }
-          ACT = 1
-          ACT {
-            wrapItemAndSub = <li class="commune-sitemap-item py-1">|</li>
-            ATagParams = class="commune-sitemap-link text-decoration-none fw-semibold"
-          }
-          IFSUB = 1
-          IFSUB {
-            wrapItemAndSub = <li class="commune-sitemap-item py-1">|</li>
-            ATagParams = class="commune-sitemap-link text-decoration-none fw-semibold"
-          }
-        }
-        3 = TMENU
-        3 {
-          expAll = 1
-          wrap = <ul class="list-unstyled commune-sitemap-subsublist ps-3 pt-1 mb-1 border-start border-2 ms-2">|</ul>
-          NO {
-            wrapItemAndSub = <li class="commune-sitemap-subitem py-1">|</li>
-            ATagParams = class="commune-sitemap-sublink text-decoration-none text-muted"
-          }
-          ACT = 1
-          ACT {
-            wrapItemAndSub = <li class="commune-sitemap-subitem py-1">|</li>
-            ATagParams = class="commune-sitemap-sublink text-decoration-none text-muted"
-          }
-        }
-      }
-
       # Menu secondaire / Navigation latérale pour sous-pages
       subNavigation = HMENU
       subNavigation {

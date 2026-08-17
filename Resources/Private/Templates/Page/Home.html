@@ -100,7 +100,7 @@
         </section>
     </f:if>
 
-    <!-- 6. Section Plan du site & Découverte (3 colonnes bureau, 2 tablettes, 1 mobile) -->
+    <!-- 6. Section Plan du site & Navigation -->
     <f:if condition="{communeHomeSitemapEnable}">
         <section class="commune-home-section commune-sitemap-section py-5" aria-label="{f:if(condition: communeHomeSitemapTitle, then: communeHomeSitemapTitle, else: 'Plan du site & Navigation')}">
             <div class="container">
@@ -114,9 +114,6 @@
                         </h2>
                     </div>
                 </f:if>
-                <div class="commune-sitemap-wrapper">
-                    <f:format.raw>{homeSiteMapTree}</f:format.raw>
-                </div>
             </div>
         </section>
     </f:if>
