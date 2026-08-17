@@ -1,4 +1,7 @@
 categories:
+  commune_theme:
+    label: 'Apparence & Thèmes Graphiques'
+    description: 'Sélection de la charte graphique et des feuilles de styles du site'
   commune_general:
     label: 'Collectivité - Informations Générales'
     description: 'Identité officielle, logo, dénomination et armoiries de la mairie'
@@ -22,6 +25,19 @@ categories:
     description: 'Numéros d''urgence républicains affichés dans le pied de page'
 
 settings:
+  # ============================================================================
+  # SÉLECTION DU THÈME GRAPHIQUE
+  # ============================================================================
+  commune.theme:
+    label: 'Thème graphique du site'
+    description: 'Sélectionnez la charte graphique à appliquer. Par défaut : "default" (Bootstrap Package). "theme-1" applique la charte Sauveterre (Vert & Or).'
+    category: commune_theme
+    type: string
+    default: 'theme-1'
+    enum:
+      - 'default'
+      - 'theme-1'
+
   # ============================================================================
   # INFORMATIONS GÉNÉRALES & LOGO
   # ============================================================================
@@ -168,14 +184,14 @@ settings:
 
   commune.home_sitemap_enable:
     label: 'Activer la section Plan du site sur la page d''accueil'
-    description: 'Affiche l''arborescence du site sur 3 colonnes avant le pied de page'
+    description: 'Affiche la section du plan du site avant le pied de page'
     category: commune_home_sections
     type: bool
     default: true
 
   commune.home_sitemap_title:
     label: 'Titre de la section Plan du site'
-    description: 'Titre au-dessus des 3 colonnes du plan du site'
+    description: 'Titre de la section du plan du site'
     category: commune_home_sections
     type: string
     default: 'Plan du site & Navigation'

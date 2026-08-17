@@ -22,6 +22,12 @@ page {
 # Configuration Institutionnelle de la Collectivité / Mairie
 # ------------------------------------------------------------------------------
 commune {
+  # customcategory=commune_theme=Apparence & Thèmes Graphiques
+  # customsubcategory=commune_theme_select=Sélection du Thème
+  
+  # cat=commune_theme/commune_theme_select/010; type=options[Bootstrap Package (Défaut standard)=default, Thème 1 - Sauveterre (Vert & Or)=theme-1]; label=Thème graphique du site
+  theme = theme-1
+
   # Logo et identité visuelle
   logo_file = 
   logo_height = 60
