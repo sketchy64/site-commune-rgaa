@@ -5,7 +5,7 @@ mod.web_layout.BackendLayouts {
     config {
       backend_layout {
         colCount = 1
-        rowCount = 6
+        rowCount = 7
         rows {
           1 {
             columns {
@@ -43,12 +43,20 @@ mod.web_layout.BackendLayouts {
           5 {
             columns {
               1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.featured_news
+                colPos = 125
+              }
+            }
+          }
+          6 {
+            columns {
+              1 {
                 name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.events_news
                 colPos = 130
               }
             }
           }
-          6 {
+          7 {
             columns {
               1 {
                 name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.interactive_map

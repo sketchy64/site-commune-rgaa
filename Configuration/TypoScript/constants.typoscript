@@ -27,10 +27,11 @@ commune {
   # customsubcategory=commune_identity=2. Identité & Marque
   # customsubcategory=commune_contact=3. Coordonnées & Horaires
   # customsubcategory=commune_home=4. Page d'accueil
-  # customsubcategory=commune_a11y=5. Accessibilité & RGAA
-  # customsubcategory=commune_footer=6. Pied de page
-  # customsubcategory=commune_app=7. Application mobile
-  # customsubcategory=commune_emergency=8. Numéros d'urgence
+  # customsubcategory=commune_news=5. Actualités
+  # customsubcategory=commune_a11y=6. Accessibilité & RGAA
+  # customsubcategory=commune_footer=7. Pied de page
+  # customsubcategory=commune_app=8. Application mobile
+  # customsubcategory=commune_emergency=9. Numéros d'urgence
   
   # cat=commune_root/commune_theme/010; type=options[Bootstrap Package (Défaut standard)=, Thème 1 - Sauveterre (Vert & Or)=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css]; label=Thème graphique du site
   theme_css = EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css
@@ -72,6 +73,13 @@ commune {
   # cat=commune_root/commune_home/040; type=boolean; label=Masquer titre Édito
   home_edito_hide_title = 0
 
+  # cat=commune_root/commune_home/045; type=string; label=Titre Actualités à la une
+  home_featured_news_title = Actualités à la une
+  # cat=commune_root/commune_home/046; type=boolean; label=Masquer titre Actualités à la une
+  home_featured_news_hide_title = 0
+  # cat=commune_root/commune_home/047; type=boolean; label=Masquer la section Actualités à la une
+  home_featured_news_hide_section = 0
+
   # cat=commune_root/commune_home/050; type=string; label=Titre Actualités & Agenda
   home_news_title = Actualités & Agenda municipal
   # cat=commune_root/commune_home/060; type=boolean; label=Masquer titre Actualités & Agenda
@@ -88,6 +96,9 @@ commune {
   home_sitemap_title = Plan du site & Navigation
   # cat=commune_root/commune_home/110; type=boolean; label=Masquer titre Plan du site
   home_sitemap_hide_title = 0
+
+  # cat=commune_root/commune_news/010; type=options[En colonnes (Cartes)=cards, En ligne (Image à gauche)=rows]; label=Mode d'affichage des listes d'actualités
+  news_list_layout = cards
 
   # cat=commune_root/commune_a11y/010; type=string; label=Intitulé mention accessibilité
   rgaa_titre = Accessibilité :

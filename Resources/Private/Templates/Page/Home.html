@@ -58,7 +58,28 @@
         </section>
     </f:if>
 
-    <!-- 4. Section Agenda et Actualités (colPos 130) -->
+    <!-- 4. Section Actualités à la une / Carrousel (colPos 125) -->
+    <f:if condition="{featuredNewsContent} && !{communeHomeFeaturedNewsHideSection}">
+        <section class="commune-home-section commune-featured-news-section py-5" aria-label="{f:if(condition: communeHomeFeaturedNewsTitle, then: communeHomeFeaturedNewsTitle, else: 'Actualités à la une')}">
+            <div class="container">
+                <f:if condition="!{communeHomeFeaturedNewsHideTitle}">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="h3 mb-0 commune-section-title">
+                            <f:if condition="{communeHomeFeaturedNewsTitle}">
+                                <f:then>{communeHomeFeaturedNewsTitle}</f:then>
+                                <f:else>Actualités à la une</f:else>
+                            </f:if>
+                        </h2>
+                    </div>
+                </f:if>
+                <div class="commune-featured-news-wrapper">
+                    <f:format.raw>{featuredNewsContent}</f:format.raw>
+                </div>
+            </div>
+        </section>
+    </f:if>
+
+    <!-- 5. Section Agenda et Actualités (colPos 130) -->
     <f:if condition="{newsContent}">
         <section class="commune-home-section commune-news-section py-5" aria-label="{f:if(condition: communeHomeNewsTitle, then: communeHomeNewsTitle, else: 'Actualités & Agenda municipal')}">
             <div class="container">
@@ -79,7 +100,7 @@
         </section>
     </f:if>
 
-    <!-- 5. Section Carte Interactive de la commune (colPos 140) -->
+    <!-- 6. Section Carte Interactive de la commune (colPos 140) -->
     <f:if condition="{interactiveMapContent}">
         <section class="commune-home-section commune-interactive-map-section py-5" aria-label="{f:if(condition: communeHomeMapTitle, then: communeHomeMapTitle, else: 'Plan interactif & Découverte')}">
             <f:if condition="!{communeHomeMapHideTitle}">
@@ -100,7 +121,7 @@
         </section>
     </f:if>
 
-    <!-- 6. Section Plan du site & Navigation -->
+    <!-- 7. Section Plan du site & Navigation -->
     <f:if condition="{communeHomeSitemapEnable}">
         <section class="commune-home-section commune-sitemap-section py-5" aria-label="{f:if(condition: communeHomeSitemapTitle, then: communeHomeSitemapTitle, else: 'Plan du site & Navigation')}">
             <div class="container">

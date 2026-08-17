@@ -1,0 +1,73 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<article class="commune-news-card commune-news-card-horizontal card border-0 shadow-sm overflow-hidden mb-0" aria-labelledby="news-title-{newsItem.uid}">
+    <div class="row g-0 align-items-stretch h-100">
+        <!-- Image d'illustration à gauche -->
+        <div class="col-md-4 col-lg-4 position-relative news-horizontal-image-col">
+            <div class="news-media-wrapper news-media-wrapper-horizontal h-100 position-relative">
+                <f:if condition="{newsItem.mediaPreviews}">
+                    <f:then>
+                        <f:media file="{newsItem.mediaPreviews.0}" width="500c" height="340c" class="news-card-image w-100 h-100" alt="{f:if(condition: newsItem.mediaPreviews.0.originalResource.alternative, then: newsItem.mediaPreviews.0.originalResource.alternative, else: newsItem.title)}" />
+                    </f:then>
+                    <f:else>
+                        <f:if condition="{settings.displayDummyIfNoMedia}">
+                            <div class="news-placeholder bg-light d-flex align-items-center justify-content-center h-100 py-5">
+                                <i class="bi bi-newspaper fs-1 text-muted opacity-50" aria-hidden="true"></i>
+                            </div>
+                        </f:if>
+                    </f:else>
+                </f:if>
+
+                <!-- Badge de catégorie Sauveterre -->
+                <f:if condition="{newsItem.firstCategory}">
+                    <span class="badge news-category-badge position-absolute top-0 start-0 m-3 shadow-sm">
+                        {newsItem.firstCategory.title}
+                    </span>
+                </f:if>
+            </div>
+        </div>
+
+        <!-- Corps de la carte à droite -->
+        <div class="col-md-8 col-lg-8 d-flex flex-column news-horizontal-content-col">
+            <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                <!-- Date de publication avec icône calendrier -->
+                <div class="news-meta text-muted small mb-2 d-flex align-items-center gap-2">
+                    <i class="bi bi-calendar3 text-primary-commune" aria-hidden="true"></i>
+                    <time datetime="{f:format.date(date: newsItem.datetime, format: 'Y-m-d')}">
+                        {f:format.date(date: newsItem.datetime, format: '%d %B %Y')}
+                    </time>
+                </div>
+
+                <!-- Titre -->
+                <h3 id="news-title-{newsItem.uid}" class="h5 card-title mb-3 fw-bold">
+                    <n:link newsItem="{newsItem}" settings="{settings}" class="text-decoration-none text-dark stretched-link-hover">
+                        {newsItem.title}
+                    </n:link>
+                </h3>
+
+                <!-- Résumé / Teaser -->
+                <div class="card-text text-muted mb-4 flex-grow-1">
+                    <f:if condition="{newsItem.teaser}">
+                        <f:then>
+                            {newsItem.teaser -> f:format.crop(maxCharacters: '220', respectWordBoundaries: '1')}
+                        </f:then>
+                        <f:else>
+                            {newsItem.bodytext -> f:format.stripTags() -> f:format.crop(maxCharacters: '220', respectWordBoundaries: '1')}
+                        </f:else>
+                    </f:if>
+                </div>
+
+                <!-- Bouton d'action accessible (Critère 6.1 RGAA) -->
+                <div class="mt-auto pt-2 border-top d-flex justify-content-between align-items-center">
+                    <n:link newsItem="{newsItem}" settings="{settings}" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1" aria-label="Lire la suite de l'actualité : {newsItem.title}">
+                        <span>Lire la suite</span>
+                        <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                    </n:link>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+</html>

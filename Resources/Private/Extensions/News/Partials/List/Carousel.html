@@ -1,0 +1,146 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:variable name="carouselId" value="news-carousel-{f:if(condition: contentObjectData.uid, then: contentObjectData.uid, else: 'featured')}" />
+
+<div class="commune-news-carousel-container position-relative">
+    <div id="{carouselId}"
+         class="carousel slide commune-news-carousel shadow-sm rounded-3 overflow-hidden bg-white"
+         data-bs-ride="carousel"
+         data-bs-interval="6000"
+         role="region"
+         aria-roledescription="carrousel"
+         aria-label="{f:if(condition: settings.carouselAriaLabel, then: settings.carouselAriaLabel, else: 'Actualités à la une')}">
+
+        <!-- Barre de contrôle d'accessibilité (Pause/Lecture) et indicateurs -->
+        <div class="carousel-accessibility-header d-flex justify-content-between align-items-center px-4 py-2 bg-light border-bottom">
+            <!-- Indicateurs de diapositives -->
+            <div class="carousel-indicators-custom d-flex align-items-center gap-1 mb-0">
+                <f:for each="{news}" as="newsItem" iteration="iterator">
+                    <button type="button"
+                            data-bs-target="#{carouselId}"
+                            data-bs-slide-to="{iterator.index}"
+                            class="carousel-indicator-bullet {f:if(condition: iterator.isFirst, then: 'active')}"
+                            aria-current="{f:if(condition: iterator.isFirst, then: 'true', else: 'false')}"
+                            aria-label="Diapositive {iterator.cycle} sur {iterator.total} : {newsItem.title -> f:format.crop(maxCharacters: '40')}">
+                        <span class="visually-hidden">Diapositive {iterator.cycle}</span>
+                    </button>
+                </f:for>
+            </div>
+
+            <!-- Boutons de commande : Pause/Lecture (Critère 13.8 RGAA) & Navigation -->
+            <div class="carousel-controls-group d-flex align-items-center gap-2">
+                <button type="button"
+                        class="btn btn-sm btn-outline-secondary carousel-play-pause-btn d-inline-flex align-items-center gap-1"
+                        data-carousel-id="{carouselId}"
+                        aria-pressed="false"
+                        aria-label="Mettre en pause le défilement automatique du carrousel"
+                        title="Mettre en pause le carrousel">
+                    <span class="btn-icon" aria-hidden="true">⏸</span>
+                    <span class="btn-text small d-none d-sm-inline">Pause</span>
+                </button>
+
+                <div class="btn-group btn-group-sm" role="group" aria-label="Navigation du carrousel">
+                    <button class="btn btn-outline-primary"
+                            type="button"
+                            data-bs-target="#{carouselId}"
+                            data-bs-slide="prev"
+                            aria-label="Actualité précédente">
+                        <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                        <span class="visually-hidden">Précédent</span>
+                    </button>
+                    <button class="btn btn-outline-primary"
+                            type="button"
+                            data-bs-target="#{carouselId}"
+                            data-bs-slide="next"
+                            aria-label="Actualité suivante">
+                        <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                        <span class="visually-hidden">Suivant</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diapositives du carrousel -->
+        <div class="carousel-inner">
+            <f:for each="{news}" as="newsItem" iteration="iterator">
+                <div class="carousel-item {f:if(condition: iterator.isFirst, then: 'active')}"
+                     role="group"
+                     aria-roledescription="diapositive"
+                     aria-label="Actualité {iterator.cycle} sur {iterator.total} : {newsItem.title}">
+                    
+                    <article class="commune-carousel-slide card border-0 h-100" aria-labelledby="carousel-news-title-{newsItem.uid}">
+                        <div class="row g-0 align-items-stretch">
+                            <!-- Image à gauche -->
+                            <div class="col-md-5 col-lg-5 position-relative carousel-media-col">
+                                <div class="carousel-media-wrapper h-100 position-relative">
+                                    <f:if condition="{newsItem.mediaPreviews}">
+                                        <f:then>
+                                            <f:media file="{newsItem.mediaPreviews.0}" width="650c" height="420c" class="carousel-slide-image w-100 h-100" alt="{f:if(condition: newsItem.mediaPreviews.0.originalResource.alternative, then: newsItem.mediaPreviews.0.originalResource.alternative, else: newsItem.title)}" />
+                                        </f:then>
+                                        <f:else>
+                                            <f:if condition="{settings.displayDummyIfNoMedia}">
+                                                <div class="news-placeholder bg-light d-flex align-items-center justify-content-center h-100 py-5">
+                                                    <i class="bi bi-newspaper fs-1 text-muted opacity-50" aria-hidden="true"></i>
+                                                </div>
+                                            </f:if>
+                                        </f:else>
+                                    </f:if>
+
+                                    <!-- Badge de catégorie Sauveterre -->
+                                    <f:if condition="{newsItem.firstCategory}">
+                                        <span class="badge news-category-badge position-absolute top-0 start-0 m-3 shadow-sm">
+                                            {newsItem.firstCategory.title}
+                                        </span>
+                                    </f:if>
+                                </div>
+                            </div>
+
+                            <!-- Contenu à droite -->
+                            <div class="col-md-7 col-lg-7 d-flex flex-column carousel-content-col">
+                                <div class="card-body p-4 p-lg-5 d-flex flex-column flex-grow-1 justify-content-center">
+                                    <!-- Date de publication avec icône de calendrier -->
+                                    <div class="news-meta text-muted small mb-2 d-flex align-items-center gap-2">
+                                        <i class="bi bi-calendar3 text-primary-commune" aria-hidden="true"></i>
+                                        <time datetime="{f:format.date(date: newsItem.datetime, format: 'Y-m-d')}">
+                                            {f:format.date(date: newsItem.datetime, format: '%d %B %Y')}
+                                        </time>
+                                    </div>
+
+                                    <!-- Titre de l'actualité -->
+                                    <h3 id="carousel-news-title-{newsItem.uid}" class="h4 card-title fw-bold mb-3">
+                                        <n:link newsItem="{newsItem}" settings="{settings}" class="text-decoration-none text-dark stretched-link-hover">
+                                            {newsItem.title}
+                                        </n:link>
+                                    </h3>
+
+                                    <!-- Résumé / Teaser -->
+                                    <div class="card-text text-muted mb-4 fs-6">
+                                        <f:if condition="{newsItem.teaser}">
+                                            <f:then>
+                                                {newsItem.teaser -> f:format.crop(maxCharacters: '260', respectWordBoundaries: '1')}
+                                            </f:then>
+                                            <f:else>
+                                                {newsItem.bodytext -> f:format.stripTags() -> f:format.crop(maxCharacters: '260', respectWordBoundaries: '1')}
+                                            </f:else>
+                                        </f:if>
+                                    </div>
+
+                                    <!-- Bouton d'action accessible -->
+                                    <div class="pt-2">
+                                        <n:link newsItem="{newsItem}" settings="{settings}" class="btn btn-primary d-inline-flex align-items-center gap-2 px-3 py-2" aria-label="Lire la suite de l'actualité à la une : {newsItem.title}">
+                                            <span>Lire la suite</span>
+                                            <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                                        </n:link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </f:for>
+        </div>
+    </div>
+</div>
+</html>

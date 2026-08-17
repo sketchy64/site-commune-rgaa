@@ -15,42 +15,44 @@
                         {newsItem.firstCategory.title}
                     </span>
                 </f:if>
-                <h1 class="page-title text-start mb-3" itemprop="headline">{newsItem.title}</h1>
-                <div class="news-meta text-muted d-flex align-items-center gap-3">
-                    <time datetime="{f:format.date(date: newsItem.datetime, format: 'Y-m-d')}" itemprop="datePublished">
-                        <i class="bi bi-calendar3" aria-hidden="true"></i>
-                        Publié le <f:format.date format="d/m/Y">{newsItem.datetime}</f:format.date>
-                    </time>
+
+                <h2 class="h2 page-title fw-bold text-primary-commune mb-3" itemprop="headline">
+                    {newsItem.title}
+                </h2>
+
+                <div class="news-detail-meta text-muted small d-flex flex-wrap align-items-center gap-3 pb-3 border-bottom">
+                    <span class="d-flex align-items-center gap-1">
+                        <i class="bi bi-calendar3 text-primary-commune" aria-hidden="true"></i>
+                        <time datetime="{f:format.date(date: newsItem.datetime, format: 'Y-m-d')}" itemprop="datePublished">
+                            Publié le {f:format.date(date: newsItem.datetime, format: '%d %B %Y')}
+                        </time>
+                    </span>
                     <f:if condition="{newsItem.author}">
-                        <span class="author" itemprop="author">
-                            <i class="bi bi-person" aria-hidden="true"></i> {newsItem.author}
+                        <span class="d-flex align-items-center gap-1">
+                            <i class="bi bi-person text-primary-commune" aria-hidden="true"></i>
+                            <span itemprop="author">{newsItem.author}</span>
                         </span>
                     </f:if>
                 </div>
             </header>
 
-            <!-- Image principale / Médias -->
-            <f:if condition="{newsItem.mediaPreviews}">
+            <!-- Image principale / Média -->
+            <f:if condition="{newsItem.mediaNonPreviews}">
                 <div class="news-detail-media mb-4">
-                    <f:for each="{newsItem.mediaPreviews}" as="mediaElement">
-                        <figure class="figure w-100">
-                            <f:image image="{mediaElement}"
-                                     class="figure-img img-fluid rounded w-100 shadow-sm"
-                                     title="{mediaElement.title}"
-                                     additionalAttributes="{rgaa:a11y.decorativeImage(alt: mediaElement.alternative, isDecorative: false)}" />
-                            <f:if condition="{mediaElement.description}">
-                                <figcaption class="figure-caption text-muted mt-2">
-                                    {mediaElement.description}
-                                </figcaption>
-                            </f:if>
-                        </figure>
-                    </f:for>
+                    <figure class="figure w-100">
+                        <f:media file="{newsItem.mediaNonPreviews.0}" width="900c" height="500c" class="figure-img img-fluid rounded shadow-sm w-100" alt="{f:if(condition: newsItem.mediaNonPreviews.0.originalResource.alternative, then: newsItem.mediaNonPreviews.0.originalResource.alternative, else: newsItem.title)}" />
+                        <f:if condition="{newsItem.mediaNonPreviews.0.originalResource.description}">
+                            <figcaption class="figure-caption text-muted mt-2 small">
+                                {newsItem.mediaNonPreviews.0.originalResource.description}
+                            </figcaption>
+                        </f:if>
+                    </figure>
                 </div>
             </f:if>
 
-            <!-- Chapeau / Teaser -->
+            <!-- Chapô / Teaser -->
             <f:if condition="{newsItem.teaser}">
-                <div class="news-detail-teaser lead mb-4 fw-medium" itemprop="description">
+                <div class="lead fw-semibold text-dark mb-4 news-detail-teaser" itemprop="description">
                     <f:format.html>{newsItem.teaser}</f:format.html>
                 </div>
             </f:if>
@@ -63,7 +65,7 @@
             <!-- Fichiers joints / Téléchargements éventuels -->
             <f:if condition="{newsItem.relatedFiles}">
                 <div class="news-related-files mb-4">
-                    <h2 class="h5 mb-3 fw-bold">Documents à télécharger</h2>
+                    <h3 class="h5 mb-3 fw-bold">Documents à télécharger</h3>
                     <ul class="commune-uploads-list ce-uploads" role="list">
                         <f:for each="{newsItem.relatedFiles}" as="relatedFile">
                             <li class="commune-upload-item">

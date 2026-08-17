@@ -22,3 +22,10 @@ TCEFORM.tt_content {
 mod.web_layout.BackendLayouts {
   # Layout par défaut pour les nouvelles sous-pages
 }
+
+# Layouts de gabarit pour EXT:news
+tx_news.templateLayouts {
+  cards = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:news.templateLayout.cards
+  rows = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:news.templateLayout.rows
+  carousel = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:news.templateLayout.carousel
+}

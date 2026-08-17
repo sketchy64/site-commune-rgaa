@@ -29,6 +29,11 @@ categories:
     description: 'Configuration des sections et zones de la page d''accueil'
     parent: commune_root
 
+  commune_news:
+    label: 'Actualités'
+    description: 'Configuration de l''affichage des listes et carrousels d''actualités'
+    parent: commune_root
+
   commune_a11y:
     label: 'Accessibilité Numérique & RGAA'
     description: 'Statut de conformité légale RGAA 4.1.2 et déclaration obligatoire'
@@ -230,6 +235,26 @@ settings:
     type: bool
     default: false
 
+  commune.home_featured_news_title:
+    label: 'Titre de la zone Actualités à la une'
+    description: 'Titre de la section Actualités à la une sur la page d''accueil'
+    category: commune_home_sections
+    type: string
+    default: 'Actualités à la une'
+
+  commune.home_featured_news_hide_title:
+    label: 'Masquer le titre de la zone Actualités à la une'
+    category: commune_home_sections
+    type: bool
+    default: false
+
+  commune.home_featured_news_hide_section:
+    label: 'Masquer la section Actualités à la une'
+    description: 'Permet de désactiver l''affichage de la section Actualités à la une sur l''accueil'
+    category: commune_home_sections
+    type: bool
+    default: false
+
   commune.home_news_title:
     label: 'Titre de la zone Actualités & Agenda'
     description: 'Titre de la section des actualités et événements municipaux'
@@ -280,7 +305,20 @@ settings:
     default: false
 
   # ============================================================================
-  # 5. ACCESSIBILITÉ & RGAA 4.1.2
+  # 5. ACTUALITÉS
+  # ============================================================================
+  commune.news_list_layout:
+    label: 'Disposition des listes d''actualités'
+    description: 'Choisissez entre un affichage en colonnes (cartes verticales) ou en ligne (horizontal avec image à gauche).'
+    category: commune_news
+    type: string
+    default: 'cards'
+    enum:
+      - 'cards'
+      - 'rows'
+
+  # ============================================================================
+  # 6. ACCESSIBILITÉ & RGAA 4.1.2
   # ============================================================================
   commune.rgaa_titre:
     label: 'Intitulé de la mention d''accessibilité'

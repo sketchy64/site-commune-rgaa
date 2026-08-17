@@ -7,20 +7,50 @@
 <f:section name="content">
     <f:if condition="{news}">
         <f:then>
-            <div class="commune-news-list-container">
-                <div class="row g-4">
-                    <f:for each="{news}" as="newsItem" iteration="iterator">
-                        <div class="col-lg-4 col-md-6 col-12 d-flex">
-                            <f:render partial="List/Item" arguments="{newsItem: newsItem, settings: settings, iterator: iterator}" />
-                        </div>
-                    </f:for>
-                </div>
+            <f:variable name="activeLayout" value="{f:if(condition: settings.templateLayout, then: settings.templateLayout, else: settings.listLayout)}" />
+            
+            <f:switch expression="{activeLayout}">
+                <f:case value="carousel">
+                    <!-- Mode Carrousel défilant -->
+                    <f:render partial="List/Carousel" arguments="{news: news, settings: settings, contentObjectData: contentObjectData}" />
+                </f:case>
 
-                <!-- Pagination accessible RGAA -->
-                <f:if condition="{settings.list.paginate.insertAbove}">
-                    <f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
-                </f:if>
-            </div>
+                <f:case value="rows">
+                    <!-- Mode Liste en ligne (Image à gauche, texte à droite) -->
+                    <div class="commune-news-list-container commune-news-list-rows">
+                        <div class="row g-4">
+                            <f:for each="{news}" as="newsItem" iteration="iterator">
+                                <div class="col-12">
+                                    <f:render partial="List/ItemRow" arguments="{newsItem: newsItem, settings: settings, iterator: iterator}" />
+                                </div>
+                            </f:for>
+                        </div>
+
+                        <!-- Pagination accessible RGAA -->
+                        <f:if condition="{settings.list.paginate.insertAbove}">
+                            <f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+                        </f:if>
+                    </div>
+                </f:case>
+
+                <f:defaultCase>
+                    <!-- Mode par défaut : En colonnes / Grille de cartes -->
+                    <div class="commune-news-list-container commune-news-list-cards">
+                        <div class="row g-4">
+                            <f:for each="{news}" as="newsItem" iteration="iterator">
+                                <div class="col-lg-4 col-md-6 col-12 d-flex">
+                                    <f:render partial="List/Item" arguments="{newsItem: newsItem, settings: settings, iterator: iterator}" />
+                                </div>
+                            </f:for>
+                        </div>
+
+                        <!-- Pagination accessible RGAA -->
+                        <f:if condition="{settings.list.paginate.insertAbove}">
+                            <f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+                        </f:if>
+                    </div>
+                </f:defaultCase>
+            </f:switch>
         </f:then>
         <f:else>
             <div class="alert alert-info" role="status">

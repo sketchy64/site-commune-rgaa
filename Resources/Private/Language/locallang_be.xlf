@@ -24,6 +24,9 @@
             <trans-unit id="backend_layout.column.edito" xml:space="preserve">
                 <source>Édito / Mot du Maire (Texte &amp; Image)</source>
             </trans-unit>
+            <trans-unit id="backend_layout.column.featured_news" xml:space="preserve">
+                <source>Actualités à la une (Carrousel / En vedette)</source>
+            </trans-unit>
             <trans-unit id="backend_layout.column.quickaccess" xml:space="preserve">
                 <source>Accès rapides (Groupe d'icônes / Démarches)</source>
             </trans-unit>
@@ -41,6 +44,17 @@
             </trans-unit>
             <trans-unit id="backend_layout.column.footer_map" xml:space="preserve">
                 <source>Carte de localisation et plan d'accès (Pied de page)</source>
+            </trans-unit>
+
+            <!-- Gabarits d'affichage EXT:news -->
+            <trans-unit id="news.templateLayout.cards" xml:space="preserve">
+                <source>Affichage en colonnes (Cartes)</source>
+            </trans-unit>
+            <trans-unit id="news.templateLayout.rows" xml:space="preserve">
+                <source>Affichage en ligne (Image à gauche)</source>
+            </trans-unit>
+            <trans-unit id="news.templateLayout.carousel" xml:space="preserve">
+                <source>Carrousel défilant (Actualités à la une)</source>
             </trans-unit>
 
             <!-- Niveaux de titres TCEFORM RGAA -->

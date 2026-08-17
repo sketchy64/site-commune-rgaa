@@ -175,6 +175,19 @@ page {
       communeHomeEditoHideTitle.value = {$commune.home_edito_hide_title}
       communeHomeEditoHideTitle.override.data = site:commune.home_edito_hide_title
 
+      # Titre et visibilité de la section Actualités à la une (Accueil)
+      communeHomeFeaturedNewsTitle = TEXT
+      communeHomeFeaturedNewsTitle.value = {$commune.home_featured_news_title}
+      communeHomeFeaturedNewsTitle.override.data = site:commune.home_featured_news_title
+
+      communeHomeFeaturedNewsHideTitle = TEXT
+      communeHomeFeaturedNewsHideTitle.value = {$commune.home_featured_news_hide_title}
+      communeHomeFeaturedNewsHideTitle.override.data = site:commune.home_featured_news_hide_title
+
+      communeHomeFeaturedNewsHideSection = TEXT
+      communeHomeFeaturedNewsHideSection.value = {$commune.home_featured_news_hide_section}
+      communeHomeFeaturedNewsHideSection.override.data = site:commune.home_featured_news_hide_section
+
       communeHomeNewsTitle = TEXT
       communeHomeNewsTitle.value = {$commune.home_news_title}
       communeHomeNewsTitle.override.data = site:commune.home_news_title
@@ -287,6 +300,15 @@ page {
         select {
           orderBy = sorting
           where = {#colPos}=115
+        }
+      }
+
+      featuredNewsContent = CONTENT
+      featuredNewsContent {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=125
         }
       }
 
@@ -426,6 +448,9 @@ plugin.tx_news {
     layoutRootPaths {
       100 = EXT:site_commune_rgaa/Resources/Private/Extensions/News/Layouts/
     }
+  }
+  settings {
+    listLayout = {$commune.news_list_layout}
   }
 }
 
