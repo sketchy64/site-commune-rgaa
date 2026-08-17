@@ -1319,6 +1319,7 @@ a.icon-group-item:hover {
 
 /* ==============================================================================
    Section Plan du Site (Page d'accueil - 3 colonnes bureau, 2 tablette, 1 mobile)
+   Épuré directement dans les colonnes sans boîtes ni ombres
    ============================================================================== */
 .commune-sitemap-section {
   background-color: var(--commune-bg-light);
@@ -1326,50 +1327,31 @@ a.icon-group-item:hover {
 }
 
 .commune-sitemap-grid {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
-.commune-sitemap-card {
-  background-color: #ffffff;
-  border: 1px solid var(--commune-border);
-  border-top: 4px solid var(--sauveterre-green);
-  border-radius: 8px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-top-color 0.25s ease;
+.commune-sitemap-column {
+  margin-bottom: 1.5rem;
 }
 
-.commune-sitemap-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 22px rgba(0, 112, 58, 0.12) !important;
-  border-top-color: var(--sauveterre-gold);
-}
-
-.commune-sitemap-card-header {
-  background-color: #ffffff;
-  padding: 1.15rem 1.35rem;
-  border-bottom: 1px solid var(--commune-border);
+.commune-sitemap-root-title {
+  font-family: var(--commune-font-title);
+  font-weight: 700;
+  font-size: 1.15rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 2px solid var(--sauveterre-green);
+  display: inline-block;
+  margin-bottom: 0.75rem !important;
 }
 
 .commune-sitemap-root-link {
   color: var(--sauveterre-green-dark) !important;
-  font-family: var(--commune-font-title);
-  font-weight: 700;
-  font-size: 1.15rem;
   text-decoration: none !important;
-  display: block;
   transition: color 0.2s ease;
 }
 
 .commune-sitemap-root-link:hover {
   color: var(--sauveterre-green) !important;
-}
-
-.commune-sitemap-card-body {
-  padding: 1.15rem 1.35rem;
-  flex-grow: 1;
 }
 
 .commune-sitemap-sublist {
@@ -1380,8 +1362,8 @@ a.icon-group-item:hover {
 .commune-sitemap-item {
   position: relative;
   padding-left: 1.35rem;
-  margin-bottom: 0.5rem;
-  line-height: 1.45;
+  margin-bottom: 0.35rem;
+  line-height: 1.4;
 }
 
 .commune-sitemap-item::before {
@@ -1391,7 +1373,7 @@ a.icon-group-item:hover {
   top: 0;
   color: var(--sauveterre-gold);
   font-size: 1.05rem;
-  line-height: 1.4;
+  line-height: 1.35;
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
@@ -1415,14 +1397,14 @@ a.icon-group-item:hover {
 
 .commune-sitemap-subsublist {
   border-left: 2px solid var(--sauveterre-green-light) !important;
-  margin-top: 0.35rem;
-  margin-bottom: 0.35rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
 }
 
 .commune-sitemap-subitem {
   position: relative;
   padding-left: 1.1rem;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.25rem;
 }
 
 .commune-sitemap-subitem::before {
