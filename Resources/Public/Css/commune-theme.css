@@ -329,6 +329,23 @@ h1.page-title::before,
   border-radius: 2px;
 }
 
+.text-center .commune-section-title,
+.commune-section-title.text-center {
+  text-align: center !important;
+}
+
+.text-center .commune-section-title::after,
+.commune-section-title.text-center::after {
+  left: 50% !important;
+  transform: translateX(-35px) !important;
+}
+
+.text-center .commune-section-title::before,
+.commune-section-title.text-center::before {
+  left: 50% !important;
+  transform: translateX(20px) !important;
+}
+
 /* ==============================================================================
    Accès Rapides / Démarches Citoyennes
    ============================================================================== */
