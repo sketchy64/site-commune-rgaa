@@ -107,6 +107,23 @@ page {
 
     # Variables injectées dans les templates Fluid
     variables {
+      # Logo et personnalisation de marque
+      communeLogoFile = TEXT
+      communeLogoFile.value = {$commune.logo_file}
+      communeLogoFile.override.data = site:commune.logo_file
+
+      communeLogoHeight = TEXT
+      communeLogoHeight.value = {$commune.logo_height}
+      communeLogoHeight.override.data = site:commune.logo_height
+
+      communeHeaderHideTitle = TEXT
+      communeHeaderHideTitle.value = {$commune.header_hide_title}
+      communeHeaderHideTitle.override.data = site:commune.header_hide_title
+
+      communeHeaderHideSlogan = TEXT
+      communeHeaderHideSlogan.value = {$commune.header_hide_slogan}
+      communeHeaderHideSlogan.override.data = site:commune.header_hide_slogan
+
       # Données de la commune
       communeNom = TEXT
       communeNom.value = {$commune.nom}
@@ -137,14 +154,6 @@ page {
       communeHoraires.override.data = site:commune.horaires
 
       # Titres et visibilité des sections de la page d'accueil
-      communeHomeEditoTitle = TEXT
-      communeHomeEditoTitle.value = {$commune.home_edito_title}
-      communeHomeEditoTitle.override.data = site:commune.home_edito_title
-
-      communeHomeEditoHideTitle = TEXT
-      communeHomeEditoHideTitle.value = {$commune.home_edito_hide_title}
-      communeHomeEditoHideTitle.override.data = site:commune.home_edito_hide_title
-
       communeHomeQuickaccessTitle = TEXT
       communeHomeQuickaccessTitle.value = {$commune.home_quickaccess_title}
       communeHomeQuickaccessTitle.override.data = site:commune.home_quickaccess_title
@@ -152,6 +161,14 @@ page {
       communeHomeQuickaccessHideTitle = TEXT
       communeHomeQuickaccessHideTitle.value = {$commune.home_quickaccess_hide_title}
       communeHomeQuickaccessHideTitle.override.data = site:commune.home_quickaccess_hide_title
+
+      communeHomeEditoTitle = TEXT
+      communeHomeEditoTitle.value = {$commune.home_edito_title}
+      communeHomeEditoTitle.override.data = site:commune.home_edito_title
+
+      communeHomeEditoHideTitle = TEXT
+      communeHomeEditoHideTitle.value = {$commune.home_edito_hide_title}
+      communeHomeEditoHideTitle.override.data = site:commune.home_edito_hide_title
 
       communeHomeNewsTitle = TEXT
       communeHomeNewsTitle.value = {$commune.home_news_title}
@@ -168,6 +185,18 @@ page {
       communeHomeMapHideTitle = TEXT
       communeHomeMapHideTitle.value = {$commune.home_map_hide_title}
       communeHomeMapHideTitle.override.data = site:commune.home_map_hide_title
+
+      communeHomeSitemapEnable = TEXT
+      communeHomeSitemapEnable.value = {$commune.home_sitemap_enable}
+      communeHomeSitemapEnable.override.data = site:commune.home_sitemap_enable
+
+      communeHomeSitemapTitle = TEXT
+      communeHomeSitemapTitle.value = {$commune.home_sitemap_title}
+      communeHomeSitemapTitle.override.data = site:commune.home_sitemap_title
+
+      communeHomeSitemapHideTitle = TEXT
+      communeHomeSitemapHideTitle.value = {$commune.home_sitemap_hide_title}
+      communeHomeSitemapHideTitle.override.data = site:commune.home_sitemap_hide_title
 
       # Accessibilité RGAA
       communeRgaaTitre = TEXT
@@ -238,21 +267,21 @@ page {
         }
       }
 
-      editoContent = CONTENT
-      editoContent {
-        table = tt_content
-        select {
-          orderBy = sorting
-          where = {#colPos}=115
-        }
-      }
-
       quickAccessContent = CONTENT
       quickAccessContent {
         table = tt_content
         select {
           orderBy = sorting
           where = {#colPos}=120
+        }
+      }
+
+      editoContent = CONTENT
+      editoContent {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=115
         }
       }
 
@@ -331,6 +360,49 @@ page {
           ACT {
             wrapItemAndSub = <li role="none">|</li>
             ATagParams = class="dropdown-item active" role="menuitem" aria-current="page"
+          }
+        }
+      }
+
+      # Plan du site arborescent sur 3 colonnes pour la page d'accueil
+      homeSiteMapTree = HMENU
+      homeSiteMapTree {
+        entryLevel = 0
+        1 = TMENU
+        1 {
+          expAll = 1
+          wrap = <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 commune-sitemap-grid">|</div>
+          NO {
+            wrapItemAndSub = <div class="col"><div class="commune-sitemap-card h-100 shadow-sm"><div class="commune-sitemap-card-header"><h3 class="h5 mb-0 fw-bold">|</h3></div></div></div>
+            ATagParams = class="commune-sitemap-root-link"
+          }
+          IFSUB = 1
+          IFSUB {
+            wrapItemAndSub = <div class="col"><div class="commune-sitemap-card h-100 shadow-sm"><div class="commune-sitemap-card-header"><h3 class="h5 mb-0 fw-bold">|</h3></div>|*|</div></div>
+            ATagParams = class="commune-sitemap-root-link"
+          }
+        }
+        2 = TMENU
+        2 {
+          expAll = 1
+          wrap = <div class="commune-sitemap-card-body p-3"><ul class="list-unstyled commune-sitemap-sublist mb-0">|</ul></div>
+          NO {
+            wrapItemAndSub = <li class="commune-sitemap-item py-1">|</li>
+            ATagParams = class="commune-sitemap-link text-decoration-none"
+          }
+          IFSUB = 1
+          IFSUB {
+            wrapItemAndSub = <li class="commune-sitemap-item py-1">|</li>
+            ATagParams = class="commune-sitemap-link text-decoration-none fw-semibold"
+          }
+        }
+        3 = TMENU
+        3 {
+          expAll = 1
+          wrap = <ul class="list-unstyled commune-sitemap-subsublist ps-3 pt-1 mb-1 border-start border-2 ms-2">|</ul>
+          NO {
+            wrapItemAndSub = <li class="commune-sitemap-subitem py-1">|</li>
+            ATagParams = class="commune-sitemap-sublink text-decoration-none text-muted"
           }
         }
       }

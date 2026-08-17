@@ -22,6 +22,12 @@ page {
 # Configuration Institutionnelle de la Collectivité / Mairie
 # ------------------------------------------------------------------------------
 commune {
+  # Logo et identité visuelle
+  logo_file = 
+  logo_height = 60
+  header_hide_title = 0
+  header_hide_slogan = 0
+
   # Nom officiel et identité
   nom = Mairie de Notre-Commune
   slogan = République Française - Liberté, Égalité, Fraternité
@@ -35,17 +41,21 @@ commune {
   horaires = Du Lundi au Vendredi : 8h30 - 12h00 / 13h30 - 17h30
 
   # Titres & Masquage des sections de la page d'accueil
-  home_edito_title = Le mot du Maire
-  home_edito_hide_title = 0
-
   home_quickaccess_title = Accès rapides
   home_quickaccess_hide_title = 0
+
+  home_edito_title = Le mot du Maire
+  home_edito_hide_title = 0
 
   home_news_title = Actualités & Agenda municipal
   home_news_hide_title = 0
 
   home_map_title = Plan interactif & Découverte
   home_map_hide_title = 0
+
+  home_sitemap_enable = 1
+  home_sitemap_title = Plan du site & Navigation
+  home_sitemap_hide_title = 0
 
   # Accessibilité & RGAA 4.1.2
   rgaa_titre = Accessibilité :

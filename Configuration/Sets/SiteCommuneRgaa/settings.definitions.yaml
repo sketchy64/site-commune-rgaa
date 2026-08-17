@@ -1,7 +1,7 @@
 categories:
   commune_general:
     label: 'Collectivité - Informations Générales'
-    description: 'Identité officielle, dénomination et armoiries de la mairie'
+    description: 'Identité officielle, logo, dénomination et armoiries de la mairie'
   commune_contact:
     label: 'Collectivité - Coordonnées & Horaires'
     description: 'Adresse, téléphone, courriel et horaires d''ouverture au public'
@@ -23,8 +23,22 @@ categories:
 
 settings:
   # ============================================================================
-  # INFORMATIONS GÉNÉRALES
+  # INFORMATIONS GÉNÉRALES & LOGO
   # ============================================================================
+  commune.logo_file:
+    label: 'Chemin du logo de la mairie'
+    description: 'Fichier image du logo (Ex : fileadmin/logo.svg ou EXT:site_commune_rgaa/Resources/Public/Images/logo.svg)'
+    category: commune_general
+    type: string
+    default: ''
+
+  commune.logo_height:
+    label: 'Hauteur du logo (en pixels)'
+    description: 'Hauteur d''affichage du logo dans l''en-tête (Ex : 60)'
+    category: commune_general
+    type: int
+    default: 60
+
   commune.nom:
     label: 'Nom officiel de la commune / collectivité'
     description: 'Affiché dans l''en-tête, le titre du site et le pied de page'
@@ -32,12 +46,25 @@ settings:
     type: string
     default: 'Mairie de Notre-Commune'
 
+  commune.header_hide_title:
+    label: 'Masquer le nom de la commune dans l''en-tête'
+    description: 'Cocher pour masquer le texte du titre si le logo contient déjà le nom'
+    category: commune_general
+    type: bool
+    default: false
+
   commune.slogan:
     label: 'Devise ou sous-titre officiel'
     description: 'Exemple : République Française - Liberté, Égalité, Fraternité'
     category: commune_general
     type: string
     default: 'République Française - Liberté, Égalité, Fraternité'
+
+  commune.header_hide_slogan:
+    label: 'Masquer le slogan/devise dans l''en-tête'
+    category: commune_general
+    type: bool
+    default: false
 
   commune.departement:
     label: 'Département'
@@ -87,19 +114,6 @@ settings:
   # ============================================================================
   # PAGE D'ACCUEIL - TITRES & VISIBILITÉ DES ZONES
   # ============================================================================
-  commune.home_edito_title:
-    label: 'Titre de la zone Édito'
-    description: 'Titre de la section Mot du Maire / Édito'
-    category: commune_home_sections
-    type: string
-    default: 'Le mot du Maire'
-
-  commune.home_edito_hide_title:
-    label: 'Masquer le titre de la zone Édito'
-    category: commune_home_sections
-    type: bool
-    default: false
-
   commune.home_quickaccess_title:
     label: 'Titre de la zone Accès rapides'
     description: 'Titre au-dessus des icônes ou démarches'
@@ -109,6 +123,19 @@ settings:
 
   commune.home_quickaccess_hide_title:
     label: 'Masquer le titre de la zone Accès rapides'
+    category: commune_home_sections
+    type: bool
+    default: false
+
+  commune.home_edito_title:
+    label: 'Titre de la zone Édito'
+    description: 'Titre de la section Mot du Maire / Édito'
+    category: commune_home_sections
+    type: string
+    default: 'Le mot du Maire'
+
+  commune.home_edito_hide_title:
+    label: 'Masquer le titre de la zone Édito'
     category: commune_home_sections
     type: bool
     default: false
@@ -135,6 +162,26 @@ settings:
 
   commune.home_map_hide_title:
     label: 'Masquer le titre de la zone Carte interactive'
+    category: commune_home_sections
+    type: bool
+    default: false
+
+  commune.home_sitemap_enable:
+    label: 'Activer la section Plan du site sur la page d''accueil'
+    description: 'Affiche l''arborescence du site sur 3 colonnes avant le pied de page'
+    category: commune_home_sections
+    type: bool
+    default: true
+
+  commune.home_sitemap_title:
+    label: 'Titre de la section Plan du site'
+    description: 'Titre au-dessus des 3 colonnes du plan du site'
+    category: commune_home_sections
+    type: string
+    default: 'Plan du site & Navigation'
+
+  commune.home_sitemap_hide_title:
+    label: 'Masquer le titre de la section Plan du site'
     category: commune_home_sections
     type: bool
     default: false

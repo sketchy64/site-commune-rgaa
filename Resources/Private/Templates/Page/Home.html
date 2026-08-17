@@ -4,7 +4,7 @@
 <f:layout name="Default" />
 
 <f:section name="Main">
-    <!-- Titre principal masqué de premier niveau (Critère 9.1 RGAA - 1 seul H1) -->
+    <!-- Titre principal masqué de premier niveau (Critère 9.1 RGAA - 1 seul H1 sur l'accueil) -->
     <h1 class="visually-hidden">Bienvenue sur le portail officiel de la commune de {communeNom}</h1>
 
     <!-- 1. Section Bandeau d'image / Carrousel Hero sous la navigation (colPos 110 - Pleine largeur sans padding) -->
@@ -21,8 +21,8 @@
         <section class="commune-home-section commune-quickaccess-section py-5" aria-label="{f:if(condition: communeHomeQuickaccessTitle, then: communeHomeQuickaccessTitle, else: 'Accès rapides')}">
             <div class="container">
                 <f:if condition="!{communeHomeQuickaccessHideTitle}">
-                    <div class="text-center mb-4">
-                        <h2 class="h3 commune-section-title">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="h3 mb-0 commune-section-title">
                             <f:if condition="{communeHomeQuickaccessTitle}">
                                 <f:then>{communeHomeQuickaccessTitle}</f:then>
                                 <f:else>Accès rapides</f:else>
@@ -42,8 +42,8 @@
         <section class="commune-home-section commune-edito-section py-5" aria-label="{f:if(condition: communeHomeEditoTitle, then: communeHomeEditoTitle, else: 'Le mot du Maire')}">
             <div class="container">
                 <f:if condition="!{communeHomeEditoHideTitle}">
-                    <div class="mb-4">
-                        <h2 class="h3 commune-section-title">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="h3 mb-0 commune-section-title">
                             <f:if condition="{communeHomeEditoTitle}">
                                 <f:then>{communeHomeEditoTitle}</f:then>
                                 <f:else>Le mot du Maire</f:else>
@@ -79,21 +79,44 @@
         </section>
     </f:if>
 
-    <!-- 5. Section Carte Interactive de la commune (colPos 140 - Pleine largeur si sans cadre) -->
+    <!-- 5. Section Carte Interactive de la commune (colPos 140) -->
     <f:if condition="{interactiveMapContent}">
-        <section class="commune-home-section commune-interactive-map-section p-0 m-0" aria-label="{f:if(condition: communeHomeMapTitle, then: communeHomeMapTitle, else: 'Plan interactif & Découverte')}">
+        <section class="commune-home-section commune-interactive-map-section py-5" aria-label="{f:if(condition: communeHomeMapTitle, then: communeHomeMapTitle, else: 'Plan interactif & Découverte')}">
             <f:if condition="!{communeHomeMapHideTitle}">
-                <div class="container text-center pt-5 pb-3">
-                    <h2 class="h3 commune-section-title mb-0">
-                        <f:if condition="{communeHomeMapTitle}">
-                            <f:then>{communeHomeMapTitle}</f:then>
-                            <f:else>Plan interactif & Découverte</f:else>
-                        </f:if>
-                    </h2>
+                <div class="container mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="h3 mb-0 commune-section-title">
+                            <f:if condition="{communeHomeMapTitle}">
+                                <f:then>{communeHomeMapTitle}</f:then>
+                                <f:else>Plan interactif & Découverte</f:else>
+                            </f:if>
+                        </h2>
+                    </div>
                 </div>
             </f:if>
             <div class="commune-map-wrapper w-100 p-0 m-0 overflow-hidden">
                 <f:format.raw>{interactiveMapContent}</f:format.raw>
+            </div>
+        </section>
+    </f:if>
+
+    <!-- 6. Section Plan du site & Découverte (3 colonnes bureau, 2 tablettes, 1 mobile) -->
+    <f:if condition="{communeHomeSitemapEnable}">
+        <section class="commune-home-section commune-sitemap-section py-5" aria-label="{f:if(condition: communeHomeSitemapTitle, then: communeHomeSitemapTitle, else: 'Plan du site & Navigation')}">
+            <div class="container">
+                <f:if condition="!{communeHomeSitemapHideTitle}">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="h3 mb-0 commune-section-title">
+                            <f:if condition="{communeHomeSitemapTitle}">
+                                <f:then>{communeHomeSitemapTitle}</f:then>
+                                <f:else>Plan du site & Navigation</f:else>
+                            </f:if>
+                        </h2>
+                    </div>
+                </f:if>
+                <div class="commune-sitemap-wrapper">
+                    <f:format.raw>{homeSiteMapTree}</f:format.raw>
+                </div>
             </div>
         </section>
     </f:if>

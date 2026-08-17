@@ -9,17 +9,28 @@
             <div class="col-lg-6 col-12 d-flex align-items-center gap-3">
                 <f:link.page pageUid="{rootLine.0.uid}" class="text-decoration-none d-flex align-items-center gap-3 text-dark commune-brand" title="Retour à la page d'accueil de {communeNom}">
                     <div class="commune-logo-wrapper" aria-hidden="true">
-                        <!-- Bloc républicain Marianne ou Armoiries -->
-                        <div class="commune-marianne-badge">
-                            <span class="marianne-bar red"></span>
-                            <span class="marianne-bar white"></span>
-                            <span class="marianne-bar blue"></span>
-                        </div>
+                        <f:if condition="{communeLogoFile}">
+                            <f:then>
+                                <img src="{f:uri.image(src: communeLogoFile)}" height="{f:if(condition: communeLogoHeight, then: communeLogoHeight, else: 60)}" style="max-height: {f:if(condition: communeLogoHeight, then: communeLogoHeight, else: 60)}px; width: auto;" alt="Logo {communeNom}" class="commune-logo-img img-fluid" />
+                            </f:then>
+                            <f:else>
+                                <!-- Bloc républicain Marianne ou Armoiries -->
+                                <div class="commune-marianne-badge">
+                                    <span class="marianne-bar red"></span>
+                                    <span class="marianne-bar white"></span>
+                                    <span class="marianne-bar blue"></span>
+                                </div>
+                            </f:else>
+                        </f:if>
                     </div>
                     <div>
-                        <span class="h4 mb-0 fw-bold d-block commune-title">{communeNom}</span>
-                        <f:if condition="{communeSlogan}">
-                            <small class="text-muted d-block commune-slogan">{communeSlogan}</small>
+                        <f:if condition="!{communeHeaderHideTitle}">
+                            <span class="h4 mb-0 fw-bold d-block commune-title">{communeNom}</span>
+                        </f:if>
+                        <f:if condition="!{communeHeaderHideSlogan}">
+                            <f:if condition="{communeSlogan}">
+                                <small class="text-muted d-block commune-slogan">{communeSlogan}</small>
+                            </f:if>
                         </f:if>
                     </div>
                 </f:link.page>

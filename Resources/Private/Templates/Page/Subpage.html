@@ -27,8 +27,10 @@
 
             <!-- Corps de la page (Article principal) -->
             <article class="col-lg-9 col-md-8">
-                <!-- Titre H1 unique de la page -->
-                <h1 class="h2 page-title pb-2 mb-4 border-bottom text-primary-commune">{data.title}</h1>
+                <!-- Titre H1 unique de la page avec même style que les H2 de l'accueil -->
+                <div class="mb-4">
+                    <h1 class="page-title commune-section-title mb-0">{data.title}</h1>
+                </div>
 
                 <f:if condition="{data.subtitle}">
                     <p class="lead text-muted mb-4">{data.subtitle}</p>
