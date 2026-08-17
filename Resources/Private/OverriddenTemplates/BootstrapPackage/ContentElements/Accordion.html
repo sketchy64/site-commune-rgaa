@@ -10,17 +10,16 @@
         <div class="accordion" id="accordion-{data.uid}">
             <f:for each="{records}" as="record" iteration="iteration">
                 <div class="accordion-item">
-                    <!-- En-tête d'accordéon accessible avec bouton natif et ARIA -->
-                    <h3 class="accordion-header" id="heading-{data.uid}-{record.data.uid}">
-                        <button class="accordion-button {f:if(condition: '{iteration.isFirst} && {data.tx_bootstrappackage_accordion_item_active}', else: 'collapsed')}"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#collapse-{data.uid}-{record.data.uid}"
-                                aria-expanded="{f:if(condition: '{iteration.isFirst} && {data.tx_bootstrappackage_accordion_item_active}', then: 'true', else: 'false')}"
-                                aria-controls="collapse-{data.uid}-{record.data.uid}">
-                            {record.data.header}
-                        </button>
-                    </h3>
+                    <!-- Bouton d'accordéon direct (sans balise H3) accessible avec ARIA et Bootstrap 5 -->
+                    <button class="accordion-button {f:if(condition: '{iteration.isFirst} && {data.tx_bootstrappackage_accordion_item_active}', else: 'collapsed')}"
+                            id="heading-{data.uid}-{record.data.uid}"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapse-{data.uid}-{record.data.uid}"
+                            aria-expanded="{f:if(condition: '{iteration.isFirst} && {data.tx_bootstrappackage_accordion_item_active}', then: 'true', else: 'false')}"
+                            aria-controls="collapse-{data.uid}-{record.data.uid}">
+                        {record.data.header}
+                    </button>
                     <div id="collapse-{data.uid}-{record.data.uid}"
                          class="accordion-collapse collapse {f:if(condition: '{iteration.isFirst} && {data.tx_bootstrappackage_accordion_item_active}', then: 'show')}"
                          aria-labelledby="heading-{data.uid}-{record.data.uid}"

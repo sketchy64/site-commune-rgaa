@@ -1322,81 +1322,231 @@ a.icon-group-item:hover {
    ============================================================================== */
 .commune-page-content h1,
 .ce-header h1,
-article h1 {
-  font-family: var(--commune-font-title);
-  font-size: 2.15rem;
-  font-weight: 800;
-  color: var(--sauveterre-green-dark);
-  line-height: 1.25;
-  margin-top: 1.75rem;
-  margin-bottom: 1.25rem;
+article h1,
+main h1:not(.commune-title):not(.page-title) {
+  font-family: var(--commune-font-title) !important;
+  font-size: 1.75rem !important;
+  font-weight: 700 !important;
+  color: var(--commune-text-main) !important;
+  position: relative !important;
+  display: inline-block !important;
+  padding-bottom: 0.75rem !important;
+  margin-top: 1.75rem !important;
+  margin-bottom: 1.5rem !important;
+  line-height: 1.3 !important;
 }
 
+.commune-page-content h1::after,
+.ce-header h1::after,
+article h1::after,
+main h1:not(.commune-title):not(.page-title)::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 50px !important;
+  height: 4px !important;
+  background-color: var(--sauveterre-green) !important;
+  border-radius: 2px !important;
+}
+
+.commune-page-content h1::before,
+.ce-header h1::before,
+article h1::before,
+main h1:not(.commune-title):not(.page-title)::before {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 55px !important;
+  width: 12px !important;
+  height: 4px !important;
+  background-color: var(--sauveterre-gold) !important;
+  border-radius: 2px !important;
+}
+
+/* Titres H2 : Vert foncé, 1.45rem, bordure gauche or */
 .commune-page-content h2,
 .ce-header h2,
-article h2 {
-  font-family: var(--commune-font-title);
-  font-size: 1.65rem;
-  font-weight: 700;
-  color: var(--commune-text-main);
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  line-height: 1.3;
+article h2,
+main h2:not(.commune-section-title):not(.panel-title) {
+  font-family: var(--commune-font-title) !important;
+  font-size: 1.45rem !important;
+  font-weight: 700 !important;
+  color: var(--sauveterre-green-dark) !important;
+  border-left: 4px solid var(--sauveterre-gold) !important;
+  padding-left: 0.65rem !important;
+  margin-top: 1.75rem !important;
+  margin-bottom: 1rem !important;
+  line-height: 1.35 !important;
 }
 
+/* Titres H3 : Couleur noir/texte principal, 1.25rem */
 .commune-page-content h3,
 .ce-header h3,
-article h3 {
-  font-family: var(--commune-font-title);
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--sauveterre-green-dark);
-  margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
-  border-left: 4px solid var(--sauveterre-gold);
-  padding-left: 0.65rem;
-  line-height: 1.35;
+article h3,
+main h3:not(.commune-sitemap-root-title):not(.accordion-header):not(.panel-title) {
+  font-family: var(--commune-font-title) !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: var(--commune-text-main) !important;
+  border-left: none !important;
+  padding-left: 0 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.75rem !important;
+  line-height: 1.35 !important;
 }
 
+/* Titres H4 : 1.15rem inchangé */
 .commune-page-content h4,
 .ce-header h4,
-article h4 {
-  font-family: var(--commune-font-title);
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--commune-text-main);
-  margin-top: 1.25rem;
-  margin-bottom: 0.5rem;
+article h4,
+main h4 {
+  font-family: var(--commune-font-title) !important;
+  font-size: 1.15rem !important;
+  font-weight: 600 !important;
+  color: var(--commune-text-main) !important;
+  margin-top: 1.25rem !important;
+  margin-bottom: 0.5rem !important;
 }
 
+/* Titres H5 : 1rem majuscules inchangé */
 .commune-page-content h5,
 .ce-header h5,
-article h5 {
-  font-family: var(--commune-font-title);
-  font-size: 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--sauveterre-green-dark);
-  margin-top: 1rem;
-  margin-bottom: 0.4rem;
+article h5,
+main h5 {
+  font-family: var(--commune-font-title) !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  color: var(--sauveterre-green-dark) !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0.4rem !important;
 }
 
+/* Titres H6 : 1rem */
 .commune-page-content h6,
 .ce-header h6,
-article h6 {
-  font-family: var(--commune-font-title);
-  font-size: 0.88rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--sauveterre-gold-dark);
-  margin-top: 0.85rem;
-  margin-bottom: 0.35rem;
+article h6,
+main h6 {
+  font-family: var(--commune-font-title) !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  color: var(--sauveterre-gold-dark) !important;
+  margin-top: 0.85rem !important;
+  margin-bottom: 0.35rem !important;
 }
 
 /* ==============================================================================
-   2. Tableaux (Tables - Bootstrap Package)
+   2. Listes à Puces Stylisées (Listes non ordonnées & ordonnées)
+   ============================================================================== */
+.commune-page-content ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads),
+article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads),
+.ce-bodytext ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads),
+.ce-textmedia ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 1rem 0 1.5rem 0 !important;
+}
+
+.commune-page-content ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li,
+article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li,
+.ce-bodytext ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li,
+.ce-textmedia ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li {
+  position: relative !important;
+  padding-left: 1.65rem !important;
+  margin-bottom: 0.55rem !important;
+  line-height: 1.6 !important;
+}
+
+.commune-page-content ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li::before,
+article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li::before,
+.ce-bodytext ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li::before,
+.ce-textmedia ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li::before {
+  content: "▸" !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  color: var(--sauveterre-gold) !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  transition: transform 0.2s ease, color 0.2s ease !important;
+}
+
+.commune-page-content ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li:hover::before,
+article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li:hover::before,
+.ce-bodytext ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li:hover::before {
+  transform: translateX(3px) !important;
+  color: var(--sauveterre-green) !important;
+}
+
+/* Sous-listes imbriquées */
+.commune-page-content ul ul,
+article ul ul,
+.ce-bodytext ul ul,
+.ce-textmedia ul ul {
+  border-left: 2px solid var(--sauveterre-green-light) !important;
+  padding-left: 0.6rem !important;
+  margin: 0.4rem 0 0.4rem 0.5rem !important;
+}
+
+.commune-page-content ul ul > li::before,
+article ul ul > li::before,
+.ce-bodytext ul ul > li::before,
+.ce-textmedia ul ul > li::before {
+  content: "•" !important;
+  color: var(--sauveterre-green) !important;
+  font-size: 1.1rem !important;
+}
+
+/* Listes ordonnées numérotées */
+.commune-page-content ol,
+article ol,
+.ce-bodytext ol,
+.ce-textmedia ol {
+  counter-reset: commune-counter;
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 1rem 0 1.5rem 0 !important;
+}
+
+.commune-page-content ol > li,
+article ol > li,
+.ce-bodytext ol > li,
+.ce-textmedia ol > li {
+  counter-increment: commune-counter;
+  position: relative !important;
+  padding-left: 2.2rem !important;
+  margin-bottom: 0.65rem !important;
+  line-height: 1.6 !important;
+}
+
+.commune-page-content ol > li::before,
+article ol > li::before,
+.ce-bodytext ol > li::before,
+.ce-textmedia ol > li::before {
+  content: counter(commune-counter) !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0.15rem !important;
+  width: 1.45rem !important;
+  height: 1.45rem !important;
+  background-color: var(--sauveterre-green) !important;
+  color: #ffffff !important;
+  font-family: var(--commune-font-title) !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* ==============================================================================
+   3. Tableaux (Tables - Bootstrap Package)
    ============================================================================== */
 .table,
 table {
@@ -1419,8 +1569,21 @@ table thead th {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   padding: 0.9rem 1.1rem;
-  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
   vertical-align: middle;
+}
+
+.table thead th:first-child,
+table thead th:first-child {
+  border-left: none !important;
+}
+
+.table thead th:last-child,
+table thead th:last-child {
+  border-right: none !important;
 }
 
 .table tbody td,
@@ -1430,17 +1593,43 @@ table tbody th {
   padding: 0.85rem 1.1rem;
   vertical-align: middle;
   border-top: 1px solid var(--commune-border);
+  border-left: 1px solid var(--commune-border) !important;
+  border-right: 1px solid var(--commune-border) !important;
   color: var(--commune-text-main);
   font-size: 0.96rem;
 }
 
-.table-striped tbody tr:nth-of-type(odd),
-table.table-striped tbody tr:nth-of-type(odd) {
-  background-color: #F8FAF9;
+.table tbody td:first-child,
+table tbody td:first-child,
+.table tbody th:first-child,
+table tbody th:first-child {
+  border-left: none !important;
+}
+
+.table tbody td:last-child,
+table tbody td:last-child,
+.table tbody th:last-child,
+table tbody th:last-child {
+  border-right: none !important;
+}
+
+/* Couleur de fond gris clair du thème toutes les 2 lignes */
+.table tbody tr:nth-of-type(even),
+table tbody tr:nth-of-type(even),
+.table-striped tbody tr:nth-of-type(even),
+table.table-striped tbody tr:nth-of-type(even) {
+  background-color: var(--commune-bg-light) !important;
+}
+
+.table tbody tr:nth-of-type(odd),
+table tbody tr:nth-of-type(odd) {
+  background-color: #ffffff;
 }
 
 .table-hover tbody tr:hover,
-table.table-hover tbody tr:hover {
+table.table-hover tbody tr:hover,
+.table tbody tr:hover,
+table tbody tr:hover {
   background-color: #FEF7E6 !important;
 }
 
@@ -1451,7 +1640,7 @@ table.table-hover tbody tr:hover {
 }
 
 /* ==============================================================================
-   3. Accordéons (Accordions - Bootstrap Package)
+   4. Accordéons (Accordions - Bootstrap Package - Géré par Button)
    ============================================================================== */
 .accordion {
   border-radius: 8px;
@@ -1485,6 +1674,8 @@ table.table-hover tbody tr:hover {
   padding: 1.1rem 1.35rem;
   border-left: 5px solid var(--sauveterre-green);
   transition: all 0.2s ease;
+  width: 100%;
+  text-align: left;
 }
 
 .accordion-button:not(.collapsed) {
@@ -1508,7 +1699,7 @@ table.table-hover tbody tr:hover {
 }
 
 /* ==============================================================================
-   4. Onglets & Pilules (Tabs / Pills / Navs - Bootstrap Package)
+   5. Onglets & Pilules (Tabs / Pills / Navs - Bootstrap Package)
    ============================================================================== */
 .nav-tabs {
   border-bottom: 2px solid var(--sauveterre-green);
@@ -1565,7 +1756,7 @@ table.table-hover tbody tr:hover {
 }
 
 /* ==============================================================================
-   5. Listes de Fichiers & Téléchargements (File List / Uploads)
+   6. Listes de Fichiers & Téléchargements (File List / Uploads)
    ============================================================================== */
 .ce-uploads,
 .file-list,
@@ -1640,7 +1831,7 @@ ul.ce-uploads {
 }
 
 /* ==============================================================================
-   6. Carrousels (Carousel - Bootstrap Package)
+   7. Carrousels (Carousel - Bootstrap Package)
    ============================================================================== */
 .carousel {
   border-radius: 10px;
@@ -1713,7 +1904,7 @@ ul.ce-uploads {
 }
 
 /* ==============================================================================
-   7. Citations (Blockquotes / Quotes)
+   8. Citations (Blockquotes / Quotes)
    ============================================================================== */
 blockquote,
 .blockquote {
@@ -1751,7 +1942,7 @@ blockquote p,
 }
 
 /* ==============================================================================
-   8. Cartes & Groupes de Contenu (Cards / Card Groups)
+   9. Cartes & Groupes de Contenu (Cards / Card Groups)
    ============================================================================== */
 .card {
   border: 1px solid var(--commune-border);
@@ -1783,7 +1974,7 @@ blockquote p,
 }
 
 /* ==============================================================================
-   9. Callouts / Encadrés de Mise en Valeur
+   10. Callouts / Encadrés de Mise en Valeur
    ============================================================================== */
 .callout {
   padding: 1.25rem 1.5rem;
@@ -1825,19 +2016,28 @@ blockquote p,
 }
 
 /* ==============================================================================
-   10. Galeries & Éléments Multimédias (Images / Figures)
+   11. Images & Médias de Contenu (Style Édito appliqué à tout le site)
    ============================================================================== */
+#main-content img:not(.commune-logo-img):not(.navbar-brand img):not(.commune-back-to-top svg),
+.commune-page-content img,
 .ce-image img,
 .ce-gallery img,
 .ce-textpic img,
-.figure-img {
-  border-radius: 6px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-  transition: transform 0.25s ease;
+.ce-textmedia img,
+.figure-img,
+article img {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  max-width: 100%;
+  height: auto;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.ce-gallery-item:hover img {
-  transform: scale(1.02);
+.ce-gallery-item:hover img,
+.ce-image:hover img,
+.figure:hover img {
+  transform: scale(1.015);
+  box-shadow: 0 6px 16px rgba(0, 112, 58, 0.12) !important;
 }
 
 figcaption,
@@ -1853,7 +2053,7 @@ figcaption,
 }
 
 /* ==============================================================================
-   11. Formulaires & Champs de Saisie
+   12. Formulaires & Champs de Saisie
    ============================================================================== */
 .form-control,
 .form-select {
@@ -1878,7 +2078,7 @@ figcaption,
 }
 
 /* ==============================================================================
-   12. Pagination (Page Browser)
+   13. Pagination (Page Browser)
    ============================================================================== */
 .pagination .page-link {
   color: var(--sauveterre-green);
