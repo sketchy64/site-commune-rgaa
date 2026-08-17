@@ -33,7 +33,7 @@ commune {
   # customsubcategory=commune_app=8. Application mobile
   # customsubcategory=commune_emergency=9. Numéros d'urgence
   
-  # cat=commune_root/commune_theme/010; type=options[Bootstrap Package (Défaut standard)=, Thème 1 - Sauveterre (Vert & Or)=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css]; label=Thème graphique du site
+  # cat=commune_root/commune_theme/010; type=options[Thème 1 - Sauveterre (Vert & Or)=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css, Thème 2 - Océan / Côte Basque (Bleu & Sable)=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-2.css, Thème 3 - Pyrénées / Montagne (Ardoise & Terracotta)=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-3.css, Bootstrap Package standard (Sans surcouche)=]; label=Thème graphique du site
   theme_css = EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css
 
   # cat=commune_root/commune_identity/010; type=string; label=Chemin du logo

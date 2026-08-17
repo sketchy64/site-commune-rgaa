@@ -109,8 +109,9 @@ page {
     variables {
       # Thème graphique sélectionné
       communeTheme = TEXT
-      communeTheme.value = {$commune.theme}
-      communeTheme.override.data = site:commune.theme
+      communeTheme.value = {$commune.theme_css}
+      communeTheme.override.data = site:commune.theme_css
+      communeTheme.override.ifEmpty.data = site:settings.commune.theme_css
 
       # Logo et personnalisation de marque
       communeLogoFile = TEXT

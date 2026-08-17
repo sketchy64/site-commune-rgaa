@@ -1,7 +1,7 @@
-/**
- * Site Commune RGAA - Thème Sauveterre
- * Inspiré de la charte graphique de la Ville de Sauveterre (https://mairiesauveterre.fr/fr)
- * Couleurs : Vert (#00703A), Or (#F5B21E), Bleu Ciel (#25A1D9)
+﻿/**
+ * Site Commune RGAA - Thème 3 Pyrénées / Montagne
+ * Charte graphique Pyrénées / Montagne & Terroir (https://mairiesauveterre.fr/fr)
+ * Couleurs : Ardoise Bleutée (#2D3748), Ocre / Terracotta (#C05621), Vert Sapin (#1E4D2B)
  * Conforme RGAA 4.1.2 / WCAG 2.1 AA
  */
 
@@ -9,15 +9,15 @@
 
 :root {
   /* Palette officielle Sauveterre */
-  --sauveterre-green: #00703a;
-  --sauveterre-green-dark: #00552c;
-  --sauveterre-green-light: #e8f5e9;
-  --sauveterre-gold: #f5b21e;
-  --sauveterre-gold-dark: #cf9619;
-  --sauveterre-gold-light: #fef7e6;
-  --sauveterre-blue: #25a1d9;
-  --sauveterre-blue-dark: #1d7daa;
-  --sauveterre-blue-light: #e6f6fd;
+  --sauveterre-green: #2d3748;
+  --sauveterre-green-dark: #1a202c;
+  --sauveterre-green-light: #edf2f7;
+  --sauveterre-gold: #c05621;
+  --sauveterre-gold-dark: #9c4221;
+  --sauveterre-gold-light: #feebc8;
+  --sauveterre-blue: #1e4d2b;
+  --sauveterre-blue-dark: #14351d;
+  --sauveterre-blue-light: #e6f4ea;
   
   /* Variables institutionnelles standard */
   --commune-primary: var(--sauveterre-green);
@@ -138,7 +138,7 @@ a:hover, a:focus {
 
 .commune-search-form .form-control:focus {
   border-color: var(--sauveterre-green);
-  box-shadow: 0 0 0 3px rgba(0, 112, 58, 0.2);
+  box-shadow: 0 0 0 3px rgba(45, 55, 72, 0.2);
 }
 
 .commune-search-form .btn-primary {
@@ -242,7 +242,7 @@ a:hover, a:focus {
   background-color: var(--sauveterre-green-dark) !important;
   border-color: var(--sauveterre-green-dark) !important;
   transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0, 112, 58, 0.25);
+  box-shadow: 0 4px 10px rgba(45, 55, 72, 0.25);
 }
 
 .btn-secondary,
@@ -368,7 +368,7 @@ h1.page-title::before,
 .commune-quickaccess-card:hover {
   transform: translateY(-4px);
   border-color: var(--sauveterre-green);
-  box-shadow: 0 10px 20px rgba(0, 112, 58, 0.12);
+  box-shadow: 0 10px 20px rgba(45, 55, 72, 0.12);
 }
 
 .commune-quickaccess-icon {
@@ -519,7 +519,7 @@ h1.page-title::before,
   letter-spacing: 0.5px;
   position: relative;
   padding-bottom: 0.6rem;
-  border-bottom: 2px solid rgba(245, 178, 30, 0.4) !important;
+  border-bottom: 2px solid rgba(192, 86, 33, 0.4) !important;
 }
 
 .commune-footer a {
@@ -581,7 +581,7 @@ h1.page-title::before,
 
 .commune-news-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 25px rgba(0, 112, 58, 0.12) !important;
+  box-shadow: 0 12px 25px rgba(45, 55, 72, 0.12) !important;
 }
 
 .commune-news-card .news-media-wrapper {
@@ -632,17 +632,17 @@ h1.page-title::before,
 /* Section Actualités à la une & Carrousel */
 .commune-featured-news-section {
   background: linear-gradient(180deg, #f8fbf9 0%, #ffffff 100%);
-  border-bottom: 1px solid rgba(0, 112, 58, 0.08);
+  border-bottom: 1px solid rgba(45, 55, 72, 0.08);
 }
 
 .commune-news-carousel {
-  border: 1px solid rgba(0, 112, 58, 0.12);
+  border: 1px solid rgba(45, 55, 72, 0.12);
   border-radius: 12px;
 }
 
 .commune-news-carousel .carousel-accessibility-header {
   background-color: #f4f8f5;
-  border-color: rgba(0, 112, 58, 0.1) !important;
+  border-color: rgba(45, 55, 72, 0.1) !important;
 }
 
 .commune-news-carousel .carousel-indicators-custom .carousel-indicator-bullet {
@@ -650,7 +650,7 @@ h1.page-title::before,
   height: 12px;
   border-radius: 6px;
   border: none;
-  background-color: rgba(0, 112, 58, 0.25);
+  background-color: rgba(45, 55, 72, 0.25);
   padding: 0;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -667,7 +667,7 @@ h1.page-title::before,
 
 .commune-news-carousel .carousel-controls-group .carousel-play-pause-btn {
   font-size: 0.8rem;
-  border-color: rgba(0, 112, 58, 0.3);
+  border-color: rgba(45, 55, 72, 0.3);
   color: var(--sauveterre-green);
 }
 
@@ -847,7 +847,7 @@ a.icon-group-item {
 a.icon-group-item:hover {
   transform: translateY(-4px) !important;
   border-left-color: var(--sauveterre-gold) !important;
-  box-shadow: 0 8px 22px rgba(0, 112, 58, 0.12) !important;
+  box-shadow: 0 8px 22px rgba(45, 55, 72, 0.12) !important;
   color: var(--sauveterre-green-dark) !important;
 }
 
@@ -1903,7 +1903,7 @@ ul.ce-uploads {
 .file-list li:hover,
 .ce-uploads .ce-uploads-item:hover {
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 24px rgba(0, 112, 58, 0.12) !important;
+  box-shadow: 0 8px 24px rgba(45, 55, 72, 0.12) !important;
   border-left-color: var(--sauveterre-gold) !important;
 }
 
@@ -1925,7 +1925,7 @@ ul.ce-uploads {
 .commune-upload-link:hover,
 .ce-uploads .ce-uploads-link:hover,
 .file-list a:hover {
-  background-color: rgba(232, 245, 233, 0.35) !important;
+  background-color: rgba(237, 242, 247, 0.35) !important;
 }
 
 .commune-upload-link:focus-visible {
@@ -2105,7 +2105,7 @@ ul.ce-uploads {
 .commune-upload-badge.format-badge:not([class*="format-p"]):not([class*="format-d"]):not([class*="format-x"]):not([class*="format-z"]):not([class*="format-j"]):not([class*="format-m"]) {
   background-color: var(--sauveterre-green-light);
   color: var(--sauveterre-green-dark);
-  border: 1px solid rgba(0, 112, 58, 0.2);
+  border: 1px solid rgba(45, 55, 72, 0.2);
 }
 
 .commune-upload-badge.size-badge,
@@ -2134,7 +2134,7 @@ ul.ce-uploads {
   gap: 0.45rem;
   background-color: var(--sauveterre-green-light);
   color: var(--sauveterre-green-dark);
-  border: 1px solid rgba(0, 112, 58, 0.25);
+  border: 1px solid rgba(45, 55, 72, 0.25);
   font-family: var(--commune-font-title);
   font-weight: 700;
   font-size: 0.86rem;
@@ -2152,7 +2152,7 @@ ul.ce-uploads {
   background-color: var(--sauveterre-green);
   color: #ffffff;
   border-color: var(--sauveterre-green);
-  box-shadow: 0 4px 12px rgba(0, 112, 58, 0.25);
+  box-shadow: 0 4px 12px rgba(45, 55, 72, 0.25);
 }
 
 .commune-upload-item:hover .commune-upload-btn .download-icon {
@@ -2220,7 +2220,7 @@ ul.ce-uploads {
   height: 44px;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 112, 58, 0.85);
+  background-color: rgba(45, 55, 72, 0.85);
   border-radius: 50%;
   margin: 0 15px;
   opacity: 0.85;
@@ -2312,7 +2312,7 @@ blockquote p,
 }
 
 .card:hover {
-  box-shadow: 0 8px 20px rgba(0, 112, 58, 0.08);
+  box-shadow: 0 8px 20px rgba(45, 55, 72, 0.08);
 }
 
 .card-header {
@@ -2395,7 +2395,7 @@ article img {
 .ce-image:hover img,
 .figure:hover img {
   transform: scale(1.015);
-  box-shadow: 0 6px 16px rgba(0, 112, 58, 0.12) !important;
+  box-shadow: 0 6px 16px rgba(45, 55, 72, 0.12) !important;
 }
 
 figcaption,
@@ -2426,7 +2426,7 @@ figcaption,
 .form-control:focus,
 .form-select:focus {
   border-color: var(--sauveterre-green) !important;
-  box-shadow: 0 0 0 3px rgba(0, 112, 58, 0.2) !important;
+  box-shadow: 0 0 0 3px rgba(45, 55, 72, 0.2) !important;
   outline: none;
 }
 
