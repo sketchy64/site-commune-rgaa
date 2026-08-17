@@ -798,673 +798,61 @@ a.icon-group-item:hover {
 .icon-group-item svg {
   width: 28px !important;
   height: 28px !important;
-  fill: currentColor !important;
 }
 
-.frame-type-icon_group .icon-group-item-title,
-.icon-group-item-title,
-.icon-group-item h3,
-.icon-group-item h4 {
+.icon-group-item-content {
+  flex-grow: 1;
+}
+
+.icon-group-item-title {
   font-family: var(--commune-font-title) !important;
-  font-size: 0.95rem !important;
   font-weight: 700 !important;
+  font-size: 1.05rem !important;
   text-transform: uppercase !important;
   letter-spacing: 0.5px !important;
   color: var(--commune-text-main) !important;
-  margin: 0 !important;
   line-height: 1.3 !important;
+  margin-bottom: 0.2rem !important;
   transition: color 0.2s ease !important;
 }
 
-.frame-type-icon_group .icon-group-item:hover .icon-group-item-title,
 .icon-group-item:hover .icon-group-item-title {
-  color: var(--sauveterre-green-dark) !important;
-}
-
-.frame-type-icon_group .icon-group-item-text,
-.icon-group-item-text,
-.icon-group-item p {
-  color: var(--commune-text-muted) !important;
-  font-size: 0.85rem !important;
-  margin-bottom: 0 !important;
-  margin-top: 0.25rem !important;
-}
-
-/* ==============================================================================
-   Alternance Automatique des Sections de la Page d'accueil
-   ============================================================================== */
-.commune-home-section {
-  position: relative;
-  transition: background-color 0.2s ease;
-}
-
-.commune-home-section:nth-of-type(odd) {
-  background-color: #ffffff;
-}
-
-.commune-home-section:nth-of-type(even) {
-  background-color: var(--commune-bg-light);
-  border-top: 1px solid var(--commune-border);
-  border-bottom: 1px solid var(--commune-border);
-}
-
-.commune-home-section.commune-hero-section {
-  background-color: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-/* ==============================================================================
-   Support Pleine Largeur pour "Pas de cadre" (Frame: None)
-   ============================================================================== */
-.frame-none,
-.frame-type-none,
-.frame-size-default.frame-none,
-.frame-background-none.frame-none {
-  width: 100% !important;
-  max-width: 100% !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-.frame-none .container,
-.frame-none .container-fluid {
-  max-width: 100% !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-
-.commune-interactive-map-section {
-  padding: 0 !important;
-}
-
-/* ==============================================================================
-   Zone Édito / Mot du Maire (Version initiale restaurée)
-   ============================================================================== */
-.commune-edito-section {
-  position: relative;
-}
-
-.edito-content-wrapper {
-  background: linear-gradient(to right, #ffffff, var(--commune-bg-light));
-  border: 1px solid var(--commune-border);
-  border-left: 5px solid var(--sauveterre-green);
-  border-radius: 8px;
-  padding: 1.75rem 2rem;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
-}
-
-.edito-content-wrapper img {
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  max-width: 100%;
-  height: auto;
-}
-
-/* ==============================================================================
-   Image cliquable du Plan d'accès dans le Pied de page
-   ============================================================================== */
-.commune-footer-map-image-link {
-  transition: transform 0.25s ease;
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0;
-}
-
-.commune-footer-map-image-link:hover,
-.commune-footer-map-image-link:focus {
-  transform: scale(1.03);
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.commune-footer-map-img {
-  transition: filter 0.3s ease;
-}
-
-.commune-footer-map-image-link:hover .commune-footer-map-img {
-  filter: brightness(1.08);
-}
-
-/* ==============================================================================
-   Bouton Retour en haut de page (Smooth Scroll to Top)
-   ============================================================================== */
-.commune-back-to-top {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  width: 56px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--sauveterre-green) !important;
-  border: 2px solid var(--sauveterre-gold) !important;
-  color: #ffffff !important;
-  z-index: 1050;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(20px);
-  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.2s ease, visibility 0.3s;
-}
-
-.commune-back-to-top svg,
-.commune-back-to-top .back-to-top-arrow {
-  width: 32px !important;
-  height: 32px !important;
-  stroke: #ffffff !important;
-  stroke-width: 3.5px !important;
-  display: block !important;
-}
-
-.commune-back-to-top.visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.commune-back-to-top:hover,
-.commune-back-to-top:focus {
-  background-color: var(--sauveterre-green-dark) !important;
-  border-color: #ffffff !important;
-  color: var(--sauveterre-gold) !important;
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35) !important;
-}
-
-.commune-back-to-top:hover svg,
-.commune-back-to-top:focus svg,
-.commune-back-to-top:hover .back-to-top-arrow,
-.commune-back-to-top:focus .back-to-top-arrow {
-  stroke: var(--sauveterre-gold) !important;
-}
-
-/* ==============================================================================
-   Menu Mobile : Bouton Hamburger & Affichage responsive strict
-   ============================================================================== */
-@media (min-width: 992px) {
-  .navbar-toggler,
-  .navbar-dark .navbar-toggler,
-  #main-navigation .navbar-toggler {
-    display: none !important;
-  }
-}
-
-@media (max-width: 991.98px) {
-  .navbar-dark .navbar-toggler,
-  .navbar-toggler {
-    position: relative !important;
-    width: auto !important;
-    height: auto !important;
-    min-height: 38px !important;
-    display: inline-flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    gap: 0.65rem !important;
-    padding: 0.4rem 0.85rem !important;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
-    border-radius: 6px !important;
-    background-color: rgba(0, 0, 0, 0.15) !important;
-    color: #ffffff !important;
-    cursor: pointer !important;
-  }
-
-  .navbar-dark .navbar-toggler:focus,
-  .navbar-toggler:focus {
-    outline: 3px solid var(--sauveterre-gold) !important;
-    box-shadow: none !important;
-  }
-
-  .navbar-toggler .navbar-toggler-svg {
-    width: 22px !important;
-    height: 22px !important;
-    stroke: #ffffff !important;
-    flex-shrink: 0 !important;
-    display: block !important;
-  }
-
-  .navbar-toggler .navbar-toggler-label {
-    font-family: var(--commune-font-title) !important;
-    font-size: 0.92rem !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.5px !important;
-    text-transform: uppercase !important;
-    color: #ffffff !important;
-    line-height: 1 !important;
-  }
-
-  /* Masquer tout icône ou span artefact résiduel de bootstrap_package */
-  .navbar-toggler .navbar-toggler-icon {
-    display: none !important;
-  }
-}
-
-/* ==============================================================================
-   Bandeau d'alerte citoyenne & Éléments de contenu "Panel" (Bootstrap Package)
-   Adaptation complète à la "Classe du panneau" (danger, warning, info, success, primary, default)
-   et aux fonds de cadre (frame-background-none, primary, secondary, tertiary, quaternary)
-   ============================================================================== */
-.commune-emergency-alert-container {
-  width: 100%;
-  position: relative;
-  z-index: 1020;
-}
-
-.commune-emergency-alert-container .frame,
-.commune-emergency-alert-container .frame-type-panel {
-  padding-top: 0.75rem !important;
-  padding-bottom: 0.75rem !important;
-  margin: 0 !important;
-  border-radius: 0 !important;
-}
-
-.commune-panel,
-.frame-type-panel .panel,
-.frame-type-panel {
-  border: 1px solid transparent;
-  border-left-width: 6px !important;
-  border-radius: 6px !important;
-  margin-bottom: 0 !important;
-  transition: all 0.25s ease;
-}
-
-/* Typographie agrandie pour le contenu du bandeau d'alerte */
-.commune-panel .panel-bodytext,
-.commune-panel .panel-bodytext p,
-.commune-panel p,
-.frame-type-panel .panel-body,
-.frame-type-panel .panel-body p {
-  font-size: 1.15rem !important;
-  font-weight: 500 !important;
-  line-height: 1.6 !important;
-  margin-bottom: 0 !important;
-}
-
-.commune-panel .panel-title,
-.frame-type-panel .panel-heading,
-.frame-type-panel .panel-title {
-  font-family: var(--commune-font-title) !important;
-  font-size: 1.25rem !important;
-  font-weight: 700 !important;
-  margin-bottom: 0.35rem !important;
-  line-height: 1.3 !important;
-}
-
-.commune-panel .panel-icon-wrapper {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-/* ==============================================================================
-   Gestion des fonds de cadre (Frame Backgrounds) avec Transparence du Panneau
-   ============================================================================== */
-
-/* 1. frame-background-none : Gris clair par défaut */
-.commune-emergency-alert-container .frame-background-none,
-.frame-background-none.frame-type-panel,
-.frame-type-panel.frame-background-none {
-  background-color: var(--commune-bg-light) !important;
-  color: var(--commune-text-main) !important;
-  border-bottom: 1px solid var(--commune-border) !important;
-}
-
-.frame-background-none .commune-panel,
-.frame-background-none .panel {
-  background-color: #ffffff !important;
-  border: 1px solid var(--commune-border) !important;
-  border-left: 6px solid var(--sauveterre-green) !important;
-  color: var(--commune-text-main) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-}
-
-.frame-background-none .commune-panel a,
-.frame-background-none .panel a {
   color: var(--sauveterre-green) !important;
-  text-decoration: underline !important;
-  font-weight: 700 !important;
 }
 
-.frame-background-none .commune-panel a:hover,
-.frame-background-none .panel a:hover {
-  color: var(--sauveterre-green-dark) !important;
-}
-
-/* 2. frame-background-primary : Vert du template (#00703A) */
-.commune-emergency-alert-container .frame-background-primary,
-.frame-background-primary.frame-type-panel,
-.frame-type-panel.frame-background-primary {
-  background-color: var(--sauveterre-green) !important;
-  color: #ffffff !important;
-}
-
-.frame-background-primary .commune-panel,
-.frame-background-primary .panel {
-  background-color: rgba(255, 255, 255, 0.15) !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  border-left: 6px solid rgba(255, 255, 255, 0.9) !important;
-  color: #ffffff !important;
-  backdrop-filter: blur(4px);
-}
-
-.frame-background-primary .commune-panel .panel-title,
-.frame-background-primary .commune-panel .panel-bodytext,
-.frame-background-primary .commune-panel p,
-.frame-background-primary .panel-body,
-.frame-background-primary .panel-heading {
-  color: #ffffff !important;
-}
-
-.frame-background-primary .panel-icon-wrapper {
-  background-color: rgba(255, 255, 255, 0.22) !important;
-  color: #ffffff !important;
-}
-
-.frame-background-primary .commune-panel a,
-.frame-background-primary .panel a {
-  color: #FFF2A8 !important;
-  text-decoration: underline !important;
-  font-weight: 700 !important;
-}
-
-.frame-background-primary .commune-panel a:hover,
-.frame-background-primary .panel a:hover {
-  color: #ffffff !important;
-}
-
-/* 3. frame-background-secondary : Jaune/Or du template (#F5B21E) */
-.commune-emergency-alert-container .frame-background-secondary,
-.frame-background-secondary.frame-type-panel,
-.frame-type-panel.frame-background-secondary {
-  background-color: var(--sauveterre-gold) !important;
-  color: #1A1A1A !important;
-}
-
-.frame-background-secondary .commune-panel,
-.frame-background-secondary .panel {
-  background-color: rgba(0, 0, 0, 0.08) !important;
-  border: 1px solid rgba(0, 0, 0, 0.18) !important;
-  border-left: 6px solid rgba(0, 0, 0, 0.8) !important;
-  color: #1A1A1A !important;
-}
-
-.frame-background-secondary .commune-panel .panel-title,
-.frame-background-secondary .commune-panel .panel-bodytext,
-.frame-background-secondary .commune-panel p,
-.frame-background-secondary .panel-body,
-.frame-background-secondary .panel-heading {
-  color: #1A1A1A !important;
-}
-
-.frame-background-secondary .panel-icon-wrapper {
-  background-color: rgba(0, 0, 0, 0.14) !important;
-  color: #1A1A1A !important;
-}
-
-.frame-background-secondary .commune-panel a,
-.frame-background-secondary .panel a {
-  color: #004D25 !important;
-  text-decoration: underline !important;
-  font-weight: 700 !important;
-}
-
-.frame-background-secondary .commune-panel a:hover,
-.frame-background-secondary .panel a:hover {
-  color: #000000 !important;
-}
-
-/* 4. frame-background-tertiary : Orange harmonieux (#C2410C) */
-.commune-emergency-alert-container .frame-background-tertiary,
-.frame-background-tertiary.frame-type-panel,
-.frame-type-panel.frame-background-tertiary {
-  background-color: #C2410C !important;
-  color: #ffffff !important;
-}
-
-.frame-background-tertiary .commune-panel,
-.frame-background-tertiary .panel {
-  background-color: rgba(255, 255, 255, 0.15) !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  border-left: 6px solid rgba(255, 255, 255, 0.9) !important;
-  color: #ffffff !important;
-  backdrop-filter: blur(4px);
-}
-
-.frame-background-tertiary .commune-panel .panel-title,
-.frame-background-tertiary .commune-panel .panel-bodytext,
-.frame-background-tertiary .commune-panel p,
-.frame-background-tertiary .panel-body,
-.frame-background-tertiary .panel-heading {
-  color: #ffffff !important;
-}
-
-.frame-background-tertiary .panel-icon-wrapper {
-  background-color: rgba(255, 255, 255, 0.22) !important;
-  color: #ffffff !important;
-}
-
-.frame-background-tertiary .commune-panel a,
-.frame-background-tertiary .panel a {
-  color: #FFF2A8 !important;
-  text-decoration: underline !important;
-  font-weight: 700 !important;
-}
-
-.frame-background-tertiary .commune-panel a:hover,
-.frame-background-tertiary .panel a:hover {
-  color: #ffffff !important;
-}
-
-/* 5. frame-background-quaternary : Rouge harmonieux (#B91C1C) */
-.commune-emergency-alert-container .frame-background-quaternary,
-.frame-background-quaternary.frame-type-panel,
-.frame-type-panel.frame-background-quaternary {
-  background-color: #B91C1C !important;
-  color: #ffffff !important;
-}
-
-.frame-background-quaternary .commune-panel,
-.frame-background-quaternary .panel {
-  background-color: rgba(255, 255, 255, 0.15) !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  border-left: 6px solid rgba(255, 255, 255, 0.9) !important;
-  color: #ffffff !important;
-  backdrop-filter: blur(4px);
-}
-
-.frame-background-quaternary .commune-panel .panel-title,
-.frame-background-quaternary .commune-panel .panel-bodytext,
-.frame-background-quaternary .commune-panel p,
-.frame-background-quaternary .panel-body,
-.frame-background-quaternary .panel-heading {
-  color: #ffffff !important;
-}
-
-.frame-background-quaternary .panel-icon-wrapper {
-  background-color: rgba(255, 255, 255, 0.22) !important;
-  color: #ffffff !important;
-}
-
-.frame-background-quaternary .commune-panel a,
-.frame-background-quaternary .panel a {
-  color: #FFF2A8 !important;
-  text-decoration: underline !important;
-  font-weight: 700 !important;
-}
-
-.frame-background-quaternary .commune-panel a:hover,
-.frame-background-quaternary .panel a:hover {
-  color: #ffffff !important;
-}
-
-/* ==============================================================================
-   Personnalisation du Logo & de la Marque dans l'En-tête
-   ============================================================================== */
-.commune-logo-img {
-  object-fit: contain;
-  transition: transform 0.2s ease;
-}
-
-.commune-brand:hover .commune-logo-img {
-  transform: scale(1.03);
-}
-
-/* ==============================================================================
-   1. Hiérarchie Typographique (Niveaux de Titres H1 à H6 - Thème 1 Sauveterre)
-   ============================================================================== */
-.commune-page-content h1,
-.ce-header h1,
-article h1,
-main h1:not(.commune-title):not(.page-title) {
-  font-family: var(--commune-font-title) !important;
-  font-size: 1.75rem !important;
-  font-weight: 700 !important;
-  color: var(--commune-text-main) !important;
-  position: relative !important;
-  display: inline-block !important;
-  padding-bottom: 0.75rem !important;
-  margin-top: 1.75rem !important;
-  margin-bottom: 1.5rem !important;
-  line-height: 1.3 !important;
-}
-
-.commune-page-content h1::after,
-.ce-header h1::after,
-article h1::after,
-main h1:not(.commune-title):not(.page-title)::after {
-  content: "" !important;
-  position: absolute !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  width: 50px !important;
-  height: 4px !important;
-  background-color: var(--sauveterre-green) !important;
-  border-radius: 2px !important;
-}
-
-.commune-page-content h1::before,
-.ce-header h1::before,
-article h1::before,
-main h1:not(.commune-title):not(.page-title)::before {
-  content: "" !important;
-  position: absolute !important;
-  bottom: 0 !important;
-  left: 55px !important;
-  width: 12px !important;
-  height: 4px !important;
-  background-color: var(--sauveterre-gold) !important;
-  border-radius: 2px !important;
-}
-
-/* Titres H2 : Vert foncé, 1.45rem, bordure gauche or */
-.commune-page-content h2,
-.ce-header h2,
-article h2,
-main h2:not(.commune-section-title):not(.panel-title) {
-  font-family: var(--commune-font-title) !important;
-  font-size: 1.45rem !important;
-  font-weight: 700 !important;
-  color: var(--sauveterre-green-dark) !important;
-  border-left: 4px solid var(--sauveterre-gold) !important;
-  padding-left: 0.65rem !important;
-  margin-top: 1.75rem !important;
-  margin-bottom: 1rem !important;
-  line-height: 1.35 !important;
-}
-
-/* Titres H3 : Couleur noir/texte principal, 1.25rem */
-.commune-page-content h3,
-.ce-header h3,
-article h3,
-main h3:not(.commune-sitemap-root-title):not(.accordion-header):not(.panel-title) {
-  font-family: var(--commune-font-title) !important;
-  font-size: 1.25rem !important;
-  font-weight: 700 !important;
-  color: var(--commune-text-main) !important;
-  border-left: none !important;
-  padding-left: 0 !important;
-  margin-top: 1.5rem !important;
-  margin-bottom: 0.75rem !important;
-  line-height: 1.35 !important;
-}
-
-/* Titres H4 : 1.15rem inchangé */
-.commune-page-content h4,
-.ce-header h4,
-article h4,
-main h4 {
-  font-family: var(--commune-font-title) !important;
-  font-size: 1.15rem !important;
-  font-weight: 600 !important;
-  color: var(--commune-text-main) !important;
-  margin-top: 1.25rem !important;
-  margin-bottom: 0.5rem !important;
-}
-
-/* Titres H5 : 1rem majuscules inchangé */
-.commune-page-content h5,
-.ce-header h5,
-article h5,
-main h5 {
-  font-family: var(--commune-font-title) !important;
-  font-size: 1rem !important;
-  font-weight: 600 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.5px !important;
-  color: var(--sauveterre-green-dark) !important;
-  margin-top: 1rem !important;
-  margin-bottom: 0.4rem !important;
-}
-
-/* Titres H6 : 1rem */
-.commune-page-content h6,
-.ce-header h6,
-article h6,
-main h6 {
-  font-family: var(--commune-font-title) !important;
-  font-size: 1rem !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.5px !important;
-  color: var(--sauveterre-gold-dark) !important;
-  margin-top: 0.85rem !important;
-  margin-bottom: 0.35rem !important;
+.icon-group-item-text {
+  font-size: 0.9rem !important;
+  color: var(--commune-text-muted) !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
 }
 
 /* ==============================================================================
    2. Listes à Puces Stylisées (Listes non ordonnées & ordonnées)
    ============================================================================== */
-.commune-page-content ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads),
-article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads),
-.ce-bodytext ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads),
-.ce-textmedia ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) {
+.commune-page-content ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"]),
+article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"]),
+.ce-bodytext ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"]),
+.ce-textmedia ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"]) {
   list-style: none !important;
   padding-left: 0 !important;
   margin: 1rem 0 1.5rem 0 !important;
 }
 
-.commune-page-content ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li,
-article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li,
-.ce-bodytext ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li,
-.ce-textmedia ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li {
+.commune-page-content ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"]) > li,
+article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"]) > li,
+.ce-bodytext ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"]) > li,
+.ce-textmedia ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"]) > li {
   position: relative !important;
   padding-left: 1.65rem !important;
   margin-bottom: 0.55rem !important;
   line-height: 1.6 !important;
 }
 
-.commune-page-content ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li::before,
-article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li::before,
-.ce-bodytext ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li::before,
-.ce-textmedia ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li::before {
+.commune-page-content ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"]) > li::before,
+article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"]) > li::before,
+.ce-bodytext ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"]) > li::before,
+.ce-textmedia ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"]) > li::before {
   content: "▸" !important;
   position: absolute !important;
   left: 0 !important;
@@ -1476,11 +864,31 @@ article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(
   transition: transform 0.2s ease, color 0.2s ease !important;
 }
 
-.commune-page-content ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li:hover::before,
-article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li:hover::before,
-.ce-bodytext ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads) > li:hover::before {
+.commune-page-content ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"]) > li:hover::before,
+article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"]) > li:hover::before,
+.ce-bodytext ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"]) > li:hover::before {
   transform: translateX(3px) !important;
   color: var(--sauveterre-green) !important;
+}
+
+/* Neutralisation explicite totale des puces pour toutes les listes de fichiers */
+.frame-type-uploads ul,
+.frame-type-uploads li,
+.ce-uploads,
+.ce-uploads li,
+.commune-uploads-list,
+.commune-upload-item {
+  list-style: none !important;
+}
+
+.frame-type-uploads ul > li::before,
+.frame-type-uploads li::before,
+.ce-uploads > li::before,
+.ce-uploads li::before,
+.commune-uploads-list > li::before,
+.commune-upload-item::before {
+  content: none !important;
+  display: none !important;
 }
 
 /* Sous-listes imbriquées */
@@ -1540,567 +948,334 @@ article ol > li::before,
   font-size: 0.78rem !important;
   font-weight: 700 !important;
   border-radius: 50% !important;
-  display: inline-flex !important;
+  display: flex !important;
   align-items: center !important;
   justify-content: center !important;
 }
 
 /* ==============================================================================
-   3. Tableaux (Tables - Bootstrap Package)
+   6. Listes de Fichiers & Téléchargements (File List / Uploads) - Thème Sauveterre
    ============================================================================== */
-.table,
-table {
+.frame-type-uploads,
+.commune-uploads-container {
   width: 100%;
-  margin-bottom: 1.75rem;
-  border-collapse: separate;
-  border-spacing: 0;
-  border: 1px solid var(--commune-border);
-  border-radius: 8px;
-  overflow: hidden;
+  margin: 1.25rem 0;
 }
 
-.table thead th,
-table thead th {
-  background-color: var(--sauveterre-green-dark) !important;
-  color: #ffffff !important;
-  font-family: var(--commune-font-title);
-  font-weight: 600;
-  font-size: 0.88rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 0.9rem 1.1rem;
-  border-top: none !important;
-  border-bottom: none !important;
-  border-left: 1px solid rgba(255, 255, 255, 0.2) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
-  vertical-align: middle;
-}
-
-.table thead th:first-child,
-table thead th:first-child {
-  border-left: none !important;
-}
-
-.table thead th:last-child,
-table thead th:last-child {
-  border-right: none !important;
-}
-
-.table tbody td,
-table tbody td,
-.table tbody th,
-table tbody th {
-  padding: 0.85rem 1.1rem;
-  vertical-align: middle;
-  border-top: 1px solid var(--commune-border);
-  border-left: 1px solid var(--commune-border) !important;
-  border-right: 1px solid var(--commune-border) !important;
-  color: var(--commune-text-main);
-  font-size: 0.96rem;
-}
-
-.table tbody td:first-child,
-table tbody td:first-child,
-.table tbody th:first-child,
-table tbody th:first-child {
-  border-left: none !important;
-}
-
-.table tbody td:last-child,
-table tbody td:last-child,
-.table tbody th:last-child,
-table tbody th:last-child {
-  border-right: none !important;
-}
-
-/* Couleur de fond gris clair du thème toutes les 2 lignes */
-.table tbody tr:nth-of-type(even),
-table tbody tr:nth-of-type(even),
-.table-striped tbody tr:nth-of-type(even),
-table.table-striped tbody tr:nth-of-type(even) {
-  background-color: var(--commune-bg-light) !important;
-}
-
-.table tbody tr:nth-of-type(odd),
-table tbody tr:nth-of-type(odd) {
-  background-color: #ffffff;
-}
-
-.table-hover tbody tr:hover,
-table.table-hover tbody tr:hover,
-.table tbody tr:hover,
-table tbody tr:hover {
-  background-color: #FEF7E6 !important;
-}
-
-.table-responsive {
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-  margin-bottom: 1.75rem;
-}
-
-/* ==============================================================================
-   4. Accordéons (Accordions - Bootstrap Package - Géré par Button)
-   ============================================================================== */
-.accordion {
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-  margin-bottom: 1.75rem;
-}
-
-.accordion-item {
-  border: 1px solid var(--commune-border);
-  border-radius: 0 !important;
-  margin-bottom: -1px;
-}
-
-.accordion-item:first-of-type {
-  border-top-left-radius: 8px !important;
-  border-top-right-radius: 8px !important;
-}
-
-.accordion-item:last-of-type {
-  border-bottom-left-radius: 8px !important;
-  border-bottom-right-radius: 8px !important;
-}
-
-.accordion-button {
-  font-family: var(--commune-font-title);
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--commune-text-main);
-  background-color: #ffffff;
-  padding: 1.1rem 1.35rem;
-  border-left: 5px solid var(--sauveterre-green);
-  transition: all 0.2s ease;
-  width: 100%;
-  text-align: left;
-}
-
-.accordion-button:not(.collapsed) {
-  background-color: var(--sauveterre-green-light) !important;
-  color: var(--sauveterre-green-dark) !important;
-  border-left: 6px solid var(--sauveterre-green);
-  box-shadow: none !important;
-}
-
-.accordion-button:focus {
-  outline: 3px solid var(--sauveterre-gold) !important;
-  box-shadow: none !important;
-}
-
-.accordion-body {
-  padding: 1.25rem 1.5rem;
-  background-color: #ffffff;
-  font-size: 0.98rem;
-  line-height: 1.7;
-  color: var(--commune-text-main);
-}
-
-/* ==============================================================================
-   5. Onglets & Pilules (Tabs / Pills / Navs - Bootstrap Package)
-   ============================================================================== */
-.nav-tabs {
-  border-bottom: 2px solid var(--sauveterre-green);
-  gap: 4px;
-}
-
-.nav-tabs .nav-link {
-  font-family: var(--commune-font-title);
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--commune-text-main);
-  border: 1px solid transparent;
-  border-radius: 6px 6px 0 0;
-  padding: 0.75rem 1.25rem;
-  transition: all 0.2s ease;
-}
-
-.nav-tabs .nav-link:hover,
-.nav-tabs .nav-link:focus {
-  color: var(--sauveterre-green-dark);
-  background-color: var(--sauveterre-green-light);
-  border-color: var(--sauveterre-green-light);
-}
-
-.nav-tabs .nav-link.active {
-  background-color: var(--sauveterre-green) !important;
-  color: #ffffff !important;
-  border-color: var(--sauveterre-green) var(--sauveterre-green) transparent !important;
-  font-weight: 700;
-}
-
-.nav-pills .nav-link {
-  font-family: var(--commune-font-title);
-  font-weight: 600;
-  color: var(--commune-text-main);
-  border-radius: 6px;
-  padding: 0.6rem 1.15rem;
-  transition: all 0.2s ease;
-}
-
-.nav-pills .nav-link.active {
-  background-color: var(--sauveterre-green) !important;
-  color: #ffffff !important;
-}
-
-.tab-content {
-  background-color: #ffffff;
-  padding: 1.5rem;
-  border: 1px solid var(--commune-border);
-  border-top: none;
-  border-radius: 0 0 8px 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  margin-bottom: 1.75rem;
-}
-
-/* ==============================================================================
-   6. Listes de Fichiers & Téléchargements (File List / Uploads)
-   ============================================================================== */
+.commune-uploads-list,
 .ce-uploads,
 .file-list,
 .media-list,
 ul.ce-uploads {
   list-style: none !important;
   padding: 0 !important;
-  margin: 1.25rem 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.85rem !important;
 }
 
+.commune-upload-item,
 .ce-uploads li,
 .file-list li,
 .ce-uploads .ce-uploads-item {
-  background-color: #ffffff;
-  border: 1px solid var(--commune-border);
-  border-left: 5px solid var(--sauveterre-green);
-  border-radius: 6px;
-  padding: 0.9rem 1.25rem;
-  margin-bottom: 0.65rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-left-color 0.2s ease;
+  background-color: #ffffff !important;
+  border: 1px solid var(--commune-border) !important;
+  border-left: 5px solid var(--sauveterre-green) !important;
+  border-radius: 8px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-left-color 0.25s ease !important;
+  overflow: hidden !important;
 }
 
+.commune-upload-item:hover,
 .ce-uploads li:hover,
 .file-list li:hover,
 .ce-uploads .ce-uploads-item:hover {
-  transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(0, 112, 58, 0.1);
-  border-left-color: var(--sauveterre-gold);
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(0, 112, 58, 0.12) !important;
+  border-left-color: var(--sauveterre-gold) !important;
 }
 
+/* Lien englobant accessible */
+.commune-upload-link,
 .ce-uploads .ce-uploads-link,
 .file-list a,
 .ce-uploads a {
-  color: var(--sauveterre-green-dark) !important;
-  font-weight: 700;
+  display: flex !important;
+  align-items: center !important;
+  gap: 1.15rem !important;
+  padding: 1rem 1.25rem !important;
   text-decoration: none !important;
-  font-family: var(--commune-font-title);
-  font-size: 0.98rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+  color: var(--commune-text-main) !important;
+  width: 100% !important;
+  transition: background-color 0.15s ease !important;
 }
 
+.commune-upload-link:hover,
 .ce-uploads .ce-uploads-link:hover,
 .file-list a:hover {
-  color: var(--sauveterre-green) !important;
+  background-color: rgba(232, 245, 233, 0.35) !important;
 }
 
-.ce-uploads .ce-uploads-description,
-.file-list .file-desc {
-  color: var(--commune-text-muted);
-  font-size: 0.88rem;
-  width: 100%;
-  margin-top: 0.25rem;
+.commune-upload-link:focus-visible {
+  outline: 3px solid var(--sauveterre-gold) !important;
+  outline-offset: -2px !important;
+  border-radius: 7px !important;
 }
 
-.ce-uploads .ce-uploads-filesize,
-.file-list .file-size {
-  background-color: var(--commune-bg-light);
-  color: var(--commune-text-muted);
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 0.25rem 0.55rem;
-  border-radius: 4px;
-  border: 1px solid var(--commune-border);
+/* Zone visuelle : Pictogramme vectoriel SVG & Vignette */
+.commune-upload-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
-/* ==============================================================================
-   7. Carrousels (Carousel - Bootstrap Package)
-   ============================================================================== */
-.carousel {
+.commune-file-icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
   border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  margin-bottom: 1.75rem;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.carousel-indicators [data-bs-target] {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.7);
-  border: 2px solid var(--sauveterre-green-dark);
-  margin: 0 4px;
-  transition: all 0.25s ease;
-}
-
-.carousel-indicators .active {
-  background-color: var(--sauveterre-gold) !important;
-  transform: scale(1.3);
-  border-color: #ffffff;
-}
-
-.carousel-control-prev,
-.carousel-control-next {
+.commune-file-icon-badge .commune-file-svg {
   width: 44px;
   height: 44px;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 112, 58, 0.85);
-  border-radius: 50%;
-  margin: 0 15px;
-  opacity: 0.85;
-  transition: all 0.2s ease;
+  display: block;
 }
 
-.carousel-control-prev:hover,
-.carousel-control-next:hover {
-  background-color: var(--sauveterre-green-dark);
-  opacity: 1;
-  transform: translateY(-50%) scale(1.08);
+.commune-upload-item:hover .commune-file-icon-badge {
+  transform: scale(1.08);
 }
 
-.carousel-caption {
-  background: rgba(0, 55, 28, 0.85);
-  backdrop-filter: blur(8px);
-  border-left: 5px solid var(--sauveterre-gold);
-  border-radius: 6px;
-  padding: 1.25rem 1.75rem;
-  text-align: left;
-  bottom: 25px;
-  left: 5%;
-  right: 5%;
-}
-
-.carousel-caption h2,
-.carousel-caption h3,
-.carousel-caption h4 {
-  color: #ffffff !important;
-  font-family: var(--commune-font-title);
-  font-weight: 700;
-  margin-bottom: 0.35rem;
-}
-
-.carousel-caption p {
-  color: #f1f5f9 !important;
-  margin-bottom: 0;
-  font-size: 0.95rem;
-}
-
-/* ==============================================================================
-   8. Citations (Blockquotes / Quotes)
-   ============================================================================== */
-blockquote,
-.blockquote {
-  position: relative;
-  background: linear-gradient(135deg, #ffffff 0%, var(--commune-bg-light) 100%);
-  border-left: 5px solid var(--sauveterre-gold);
-  border-radius: 0 8px 8px 0;
-  padding: 1.5rem 2rem;
-  margin: 1.75rem 0;
-  font-style: italic;
-  font-size: 1.12rem;
-  line-height: 1.65;
-  color: #1e293b;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-}
-
-blockquote p,
-.blockquote p {
-  margin-bottom: 0.5rem;
-}
-
-.blockquote-footer {
-  font-family: var(--commune-font-title);
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: var(--sauveterre-green-dark);
-  font-style: normal;
-  margin-top: 0.6rem;
-}
-
-.blockquote-footer::before {
-  content: "— ";
-  color: var(--sauveterre-gold);
-  font-weight: 700;
-}
-
-/* ==============================================================================
-   9. Cartes & Groupes de Contenu (Cards / Card Groups)
-   ============================================================================== */
-.card {
-  border: 1px solid var(--commune-border);
+.commune-upload-thumbnail {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
   border-radius: 8px;
-  overflow: hidden;
-  background-color: #ffffff;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  margin-bottom: 1.5rem;
+  border: 1px solid var(--commune-border);
 }
 
-.card:hover {
-  box-shadow: 0 8px 20px rgba(0, 112, 58, 0.08);
+/* Zone textuelle : Titre, Description & Métadonnées */
+.commune-upload-content {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
 
-.card-header {
-  background-color: var(--commune-bg-light);
-  border-bottom: 2px solid var(--sauveterre-green);
-  font-family: var(--commune-font-title);
+.commune-upload-title,
+.ce-uploads-fileName {
+  font-family: var(--commune-font-title) !important;
+  font-weight: 700 !important;
+  font-size: 1.02rem !important;
+  color: var(--sauveterre-green-dark) !important;
+  line-height: 1.35 !important;
+  transition: color 0.2s ease !important;
+  word-break: break-word;
+}
+
+.commune-upload-item:hover .commune-upload-title,
+.commune-upload-item:hover .ce-uploads-fileName {
+  color: var(--sauveterre-green) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+}
+
+.commune-upload-description,
+.ce-uploads-description,
+.file-list .file-desc {
+  color: var(--commune-text-muted) !important;
+  font-size: 0.88rem !important;
+  line-height: 1.45 !important;
+  margin-top: 0.15rem !important;
+  margin-bottom: 0 !important;
+}
+
+/* Métadonnées & Badges */
+.commune-upload-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.35rem;
+}
+
+.commune-upload-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
   font-weight: 700;
-  color: var(--sauveterre-green-dark);
-  padding: 0.9rem 1.25rem;
-}
-
-.card-footer {
-  background-color: var(--commune-bg-light);
-  border-top: 1px solid var(--commune-border);
-  padding: 0.75rem 1.25rem;
-  font-size: 0.9rem;
-}
-
-/* ==============================================================================
-   10. Callouts / Encadrés de Mise en Valeur
-   ============================================================================== */
-.callout {
-  padding: 1.25rem 1.5rem;
-  margin: 1.5rem 0;
-  border: 1px solid var(--commune-border);
-  border-left-width: 5px !important;
-  border-radius: 6px;
-  background-color: #ffffff;
-}
-
-.callout-primary {
-  border-left-color: var(--sauveterre-green) !important;
-  background-color: #F0FDF4 !important;
-  color: #166534 !important;
-}
-
-.callout-info {
-  border-left-color: #0284C7 !important;
-  background-color: #F0F9FF !important;
-  color: #075985 !important;
-}
-
-.callout-warning {
-  border-left-color: var(--sauveterre-gold) !important;
-  background-color: #FFFBEB !important;
-  color: #92400E !important;
-}
-
-.callout-danger {
-  border-left-color: #DC2626 !important;
-  background-color: #FEF2F2 !important;
-  color: #991B1B !important;
-}
-
-.callout-success {
-  border-left-color: #16A34A !important;
-  background-color: #F0FDF4 !important;
-  color: #15803D !important;
-}
-
-/* ==============================================================================
-   11. Images & Médias de Contenu (Style Édito appliqué à tout le site)
-   ============================================================================== */
-#main-content img:not(.commune-logo-img):not(.navbar-brand img):not(.commune-back-to-top svg),
-.commune-page-content img,
-.ce-image img,
-.ce-gallery img,
-.ce-textpic img,
-.ce-textmedia img,
-.figure-img,
-article img {
-  border-radius: 8px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
-  max-width: 100%;
-  height: auto;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.ce-gallery-item:hover img,
-.ce-image:hover img,
-.figure:hover img {
-  transform: scale(1.015);
-  box-shadow: 0 6px 16px rgba(0, 112, 58, 0.12) !important;
-}
-
-figcaption,
-.figure-caption,
-.ce-caption {
-  font-size: 0.88rem;
-  font-style: italic;
-  color: var(--commune-text-muted);
-  border-left: 3px solid var(--sauveterre-gold);
-  padding-left: 0.6rem;
-  margin-top: 0.45rem;
-  line-height: 1.4;
-}
-
-/* ==============================================================================
-   12. Formulaires & Champs de Saisie
-   ============================================================================== */
-.form-control,
-.form-select {
-  border: 1px solid #CBD5E1;
-  border-radius: 6px;
-  padding: 0.6rem 0.9rem;
-  font-size: 0.95rem;
-  color: var(--commune-text-main);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.form-control:focus,
-.form-select:focus {
-  border-color: var(--sauveterre-green) !important;
-  box-shadow: 0 0 0 3px rgba(0, 112, 58, 0.2) !important;
-  outline: none;
-}
-
-.form-check-input:checked {
-  background-color: var(--sauveterre-green) !important;
-  border-color: var(--sauveterre-green) !important;
-}
-
-/* ==============================================================================
-   13. Pagination (Page Browser)
-   ============================================================================== */
-.pagination .page-link {
-  color: var(--sauveterre-green);
-  border: 1px solid var(--commune-border);
-  font-weight: 600;
   font-family: var(--commune-font-title);
-  padding: 0.5rem 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 0.18rem 0.55rem;
   border-radius: 4px;
-  margin: 0 2px;
-  transition: all 0.2s ease;
-  text-decoration: none !important;
+  line-height: 1.3;
 }
 
-.pagination .page-item.active .page-link {
-  background-color: var(--sauveterre-green) !important;
-  border-color: var(--sauveterre-green) !important;
-  color: #ffffff !important;
-  font-weight: 700;
+/* Badges spécifiques par format aux teintes harmonisées */
+.commune-upload-badge.format-pdf {
+  background-color: #FDE8E8;
+  color: #9B1C1C;
+  border: 1px solid #F8B4B4;
 }
 
-.pagination .page-link:hover {
+.commune-upload-badge.format-doc,
+.commune-upload-badge.format-docx,
+.commune-upload-badge.format-odt,
+.commune-upload-badge.format-rtf {
+  background-color: #E6F6FD;
+  color: #1D7DAA;
+  border: 1px solid #BAE6FD;
+}
+
+.commune-upload-badge.format-xls,
+.commune-upload-badge.format-xlsx,
+.commune-upload-badge.format-ods,
+.commune-upload-badge.format-csv {
+  background-color: #E8F5E9;
+  color: #00703A;
+  border: 1px solid #C8E6C9;
+}
+
+.commune-upload-badge.format-ppt,
+.commune-upload-badge.format-pptx,
+.commune-upload-badge.format-odp {
+  background-color: #FEF7E6;
+  color: #B45309;
+  border: 1px solid #FDE68A;
+}
+
+.commune-upload-badge.format-zip,
+.commune-upload-badge.format-rar,
+.commune-upload-badge.format-7z,
+.commune-upload-badge.format-tar,
+.commune-upload-badge.format-gz {
+  background-color: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FDE68A;
+}
+
+.commune-upload-badge.format-jpg,
+.commune-upload-badge.format-jpeg,
+.commune-upload-badge.format-png,
+.commune-upload-badge.format-webp,
+.commune-upload-badge.format-svg,
+.commune-upload-badge.format-gif {
+  background-color: #E0F2FE;
+  color: #0369A1;
+  border: 1px solid #BAE6FD;
+}
+
+.commune-upload-badge.format-mp3,
+.commune-upload-badge.format-wav,
+.commune-upload-badge.format-ogg,
+.commune-upload-badge.format-m4a,
+.commune-upload-badge.format-aac {
+  background-color: #F3E8FF;
+  color: #6B21A8;
+  border: 1px solid #E9D5FF;
+}
+
+.commune-upload-badge.format-mp4,
+.commune-upload-badge.format-webm,
+.commune-upload-badge.format-mkv,
+.commune-upload-badge.format-mov {
+  background-color: #CCFBF1;
+  color: #0F766E;
+  border: 1px solid #99F6E4;
+}
+
+.commune-upload-badge.format-badge:not([class*="format-p"]):not([class*="format-d"]):not([class*="format-x"]):not([class*="format-z"]):not([class*="format-j"]):not([class*="format-m"]) {
   background-color: var(--sauveterre-green-light);
   color: var(--sauveterre-green-dark);
+  border: 1px solid rgba(0, 112, 58, 0.2);
+}
+
+.commune-upload-badge.size-badge,
+.ce-uploads-filesize,
+.file-list .file-size {
+  background-color: var(--commune-bg-light) !important;
+  color: var(--commune-text-muted) !important;
+  border: 1px solid var(--commune-border) !important;
+  font-family: var(--commune-font-body) !important;
+  font-weight: 600 !important;
+  font-size: 0.78rem !important;
+  text-transform: none !important;
+}
+
+/* Zone Action / Bouton Téléchargement */
+.commune-upload-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.commune-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background-color: var(--sauveterre-green-light);
+  color: var(--sauveterre-green-dark);
+  border: 1px solid rgba(0, 112, 58, 0.25);
+  font-family: var(--commune-font-title);
+  font-weight: 700;
+  font-size: 0.86rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 6px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.commune-upload-btn .download-icon {
+  transition: transform 0.2s ease;
+}
+
+.commune-upload-item:hover .commune-upload-btn {
+  background-color: var(--sauveterre-green);
+  color: #ffffff;
   border-color: var(--sauveterre-green);
+  box-shadow: 0 4px 12px rgba(0, 112, 58, 0.25);
+}
+
+.commune-upload-item:hover .commune-upload-btn .download-icon {
+  transform: translateY(2px);
+}
+
+/* Adaptation petits écrans */
+@media (max-width: 575.98px) {
+  .commune-upload-link {
+    flex-wrap: wrap;
+    gap: 0.85rem !important;
+    padding: 0.9rem 1rem !important;
+  }
+
+  .commune-upload-content {
+    width: calc(100% - 62px);
+  }
+
+  .commune-upload-action {
+    width: 100%;
+    margin-top: 0.25rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--commune-border);
+  }
+
+  .commune-upload-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .commune-upload-btn .btn-text {
+    display: inline !important;
+  }
 }
