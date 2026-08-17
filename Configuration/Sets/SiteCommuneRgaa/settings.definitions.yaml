@@ -1,32 +1,103 @@
 categories:
+  # ============================================================================
+  # NIVEAU 1 : CATÉGORIE RACINE
+  # ============================================================================
+  commune_root:
+    label: 'Site Collectivité RGAA'
+    description: 'Configuration globale et personnalisation du portail communal'
+
+  # ============================================================================
+  # NIVEAU 2 : SOUS-CATÉGORIES
+  # ============================================================================
   commune_theme:
-    label: 'Apparence & Thèmes Graphiques'
-    description: 'Sélection de la charte graphique et des feuilles de styles du site'
-  commune_general:
-    label: 'Collectivité - Informations Générales'
-    description: 'Identité officielle, logo, dénomination et armoiries de la mairie'
+    label: 'Apparence & Thèmes'
+    description: 'Sélection de la charte graphique et de la feuille de style'
+    parent: commune_root
+
+  commune_identity:
+    label: 'Identité & Marque'
+    description: 'Dénomination officielle, armoiries, devises et logo'
+    parent: commune_root
+
   commune_contact:
-    label: 'Collectivité - Coordonnées & Horaires'
-    description: 'Adresse, téléphone, courriel et horaires d''ouverture au public'
-  commune_home_sections:
-    label: 'Page d''accueil - Titres des zones'
-    description: 'Personnalisation et masquage des titres des sections de la page d''accueil'
+    label: 'Coordonnées & Horaires'
+    description: 'Adresse postale, téléphone, e-mail et horaires d''accueil'
+    parent: commune_root
+
+  commune_home:
+    label: 'Page d''accueil'
+    description: 'Configuration des sections et zones de la page d''accueil'
+    parent: commune_root
+
   commune_a11y:
     label: 'Accessibilité Numérique & RGAA'
     description: 'Statut de conformité légale RGAA 4.1.2 et déclaration obligatoire'
+    parent: commune_root
+
   commune_footer:
     label: 'Pied de page & Navigation'
-    description: 'Configuration des titres de colonnes, du bouton contact, de l''image du plan d''accès et du menu'
+    description: 'Configuration des colonnes du footer, bouton contact, plan et liens'
+    parent: commune_root
+
   commune_app:
-    label: 'Application Mobile (PWA) & Notifications'
+    label: 'Application Mobile (PWA) & Alertes'
     description: 'Installation sur smartphones (iOS / Android) et alertes d''actualités'
+    parent: commune_root
+
   commune_emergency:
     label: 'Numéros d''urgence & Utiles'
     description: 'Numéros d''urgence républicains affichés dans le pied de page'
+    parent: commune_root
+
+  # ============================================================================
+  # NIVEAU 3 : SOUS-SOUS-CATÉGORIES DÉTAILLÉES
+  # ============================================================================
+  # Sous-catégories de "Identité & Marque"
+  commune_identity_general:
+    label: 'Nom & Devise'
+    description: 'Dénomination officielle de la mairie et devise'
+    parent: commune_identity
+
+  commune_identity_logo:
+    label: 'Logo & En-tête'
+    description: 'Fichier image du logo, hauteur et affichage dans l''en-tête'
+    parent: commune_identity
+
+  # Sous-catégories de "Page d'accueil"
+  commune_home_sections:
+    label: 'Titres des zones'
+    description: 'Personnalisation et masquage des titres des sections d''accueil'
+    parent: commune_home
+
+  commune_home_sitemap:
+    label: 'Plan du site (Accueil)'
+    description: 'Affichage et titre de la zone Plan du site sur la page d''accueil'
+    parent: commune_home
+
+  # Sous-catégories de "Pied de page & Navigation"
+  commune_footer_titles:
+    label: 'Titres des colonnes'
+    description: 'Intitulés des 3 colonnes du pied de page'
+    parent: commune_footer
+
+  commune_footer_contact:
+    label: 'Bouton Contacter la mairie'
+    description: 'Texte et lien vers la page de contact'
+    parent: commune_footer
+
+  commune_footer_map:
+    label: 'Plan d''accès / Nous situer'
+    description: 'Image et lien vers la page du plan d''accès'
+    parent: commune_footer
+
+  commune_footer_links:
+    label: 'Dossier des liens utiles'
+    description: 'Identifiant du dossier contenant les pages de pied de page'
+    parent: commune_footer
 
 settings:
   # ============================================================================
-  # SÉLECTION DU THÈME GRAPHIQUE
+  # 1. APPARENCE & THÈMES
   # ============================================================================
   commune.theme_css:
     label: 'Thème graphique du site'
@@ -39,65 +110,68 @@ settings:
       - ''
 
   # ============================================================================
-  # INFORMATIONS GÉNÉRALES & LOGO
+  # 2. IDENTITÉ & MARQUE : LOGO & EN-TÊTE
   # ============================================================================
   commune.logo_file:
     label: 'Chemin du logo de la mairie'
     description: 'Fichier image du logo (Ex : fileadmin/logo.svg ou EXT:site_commune_rgaa/Resources/Public/Images/logo.svg)'
-    category: commune_general
+    category: commune_identity_logo
     type: string
     default: ''
 
   commune.logo_height:
     label: 'Hauteur du logo (en pixels)'
     description: 'Hauteur d''affichage du logo dans l''en-tête (Ex : 60)'
-    category: commune_general
+    category: commune_identity_logo
     type: int
     default: 60
-
-  commune.nom:
-    label: 'Nom officiel de la commune / collectivité'
-    description: 'Affiché dans l''en-tête, le titre du site et le pied de page'
-    category: commune_general
-    type: string
-    default: 'Mairie de Notre-Commune'
 
   commune.header_hide_title:
     label: 'Masquer le nom de la commune dans l''en-tête'
     description: 'Cocher pour masquer le texte du titre si le logo contient déjà le nom'
-    category: commune_general
+    category: commune_identity_logo
     type: bool
     default: false
+
+  commune.header_hide_slogan:
+    label: 'Masquer le slogan/devise dans l''en-tête'
+    category: commune_identity_logo
+    type: bool
+    default: false
+
+  # ============================================================================
+  # 2. IDENTITÉ & MARQUE : NOM & DEVISE
+  # ============================================================================
+  commune.nom:
+    label: 'Nom officiel de la commune / collectivité'
+    description: 'Affiché dans l''en-tête, le titre du site et le pied de page'
+    category: commune_identity_general
+    type: string
+    default: 'Mairie de Notre-Commune'
 
   commune.slogan:
     label: 'Devise ou sous-titre officiel'
     description: 'Exemple : République Française - Liberté, Égalité, Fraternité'
-    category: commune_general
+    category: commune_identity_general
     type: string
     default: 'République Française - Liberté, Égalité, Fraternité'
-
-  commune.header_hide_slogan:
-    label: 'Masquer le slogan/devise dans l''en-tête'
-    category: commune_general
-    type: bool
-    default: false
 
   commune.departement:
     label: 'Département'
     description: 'Exemple : 64 - Pyrénées-Atlantiques'
-    category: commune_general
+    category: commune_identity_general
     type: string
     default: '64 - Pyrénées-Atlantiques'
 
   commune.region:
     label: 'Région'
     description: 'Exemple : Nouvelle-Aquitaine'
-    category: commune_general
+    category: commune_identity_general
     type: string
     default: 'Nouvelle-Aquitaine'
 
   # ============================================================================
-  # COORDONNÉES & HORAIRES
+  # 3. COORDONNÉES & HORAIRES
   # ============================================================================
   commune.adresse:
     label: 'Adresse postale de la Mairie'
@@ -128,7 +202,7 @@ settings:
     default: 'Du Lundi au Vendredi : 8h30 - 12h00 / 13h30 - 17h30'
 
   # ============================================================================
-  # PAGE D'ACCUEIL - TITRES & VISIBILITÉ DES ZONES
+  # 4. PAGE D'ACCUEIL : TITRES DES ZONES
   # ============================================================================
   commune.home_quickaccess_title:
     label: 'Titre de la zone Accès rapides'
@@ -182,28 +256,31 @@ settings:
     type: bool
     default: false
 
+  # ============================================================================
+  # 4. PAGE D'ACCUEIL : PLAN DU SITE
+  # ============================================================================
   commune.home_sitemap_enable:
     label: 'Activer la section Plan du site sur la page d''accueil'
     description: 'Affiche la section du plan du site avant le pied de page'
-    category: commune_home_sections
+    category: commune_home_sitemap
     type: bool
     default: true
 
   commune.home_sitemap_title:
     label: 'Titre de la section Plan du site'
     description: 'Titre de la section du plan du site'
-    category: commune_home_sections
+    category: commune_home_sitemap
     type: string
     default: 'Plan du site & Navigation'
 
   commune.home_sitemap_hide_title:
     label: 'Masquer le titre de la section Plan du site'
-    category: commune_home_sections
+    category: commune_home_sitemap
     type: bool
     default: false
 
   # ============================================================================
-  # ACCESSIBILITÉ & RGAA 4.1.2
+  # 5. ACCESSIBILITÉ & RGAA 4.1.2
   # ============================================================================
   commune.rgaa_titre:
     label: 'Intitulé de la mention d''accessibilité'
@@ -234,63 +311,72 @@ settings:
     default: 96
 
   # ============================================================================
-  # PIED DE PAGE & NAVIGATION
+  # 6. PIED DE PAGE : TITRES DES COLONNES
   # ============================================================================
   commune.footer_col1_title:
-    label: 'Titre Colonne 1 du Pied de page'
-    category: commune_footer
+    label: 'Titre Colonne 1 (Coordonnées & Horaires)'
+    category: commune_footer_titles
     type: string
     default: 'Coordonnées & Horaires'
 
+  commune.footer_col2_title:
+    label: 'Titre Colonne 2 (Numéros d''urgence)'
+    category: commune_footer_titles
+    type: string
+    default: 'Numéros d''urgence'
+
+  commune.footer_col3_title:
+    label: 'Titre Colonne 3 (Nous situer)'
+    category: commune_footer_titles
+    type: string
+    default: 'Nous situer'
+
+  # ============================================================================
+  # 6. PIED DE PAGE : BOUTON CONTACT
+  # ============================================================================
   commune.footer_contact_btn_title:
-    label: 'Texte du bouton de contact (Pied de page)'
+    label: 'Texte du bouton de contact'
     description: 'Texte du bouton affiché sous les horaires (Ex : Contacter la mairie)'
-    category: commune_footer
+    category: commune_footer_contact
     type: string
     default: 'Contacter la mairie'
 
   commune.footer_contact_page_uid:
     label: 'Page de Contact (ID / UID)'
     description: 'Identifiant de la page vers laquelle pointe le bouton contact du footer (Ex : 22 pour [22] Nous contacter)'
-    category: commune_footer
+    category: commune_footer_contact
     type: int
     default: 22
 
-  commune.footer_col2_title:
-    label: 'Titre Colonne 2 du Pied de page'
-    category: commune_footer
-    type: string
-    default: 'Numéros d''urgence'
-
-  commune.footer_col3_title:
-    label: 'Titre Colonne 3 du Pied de page (Nous situer)'
-    category: commune_footer
-    type: string
-    default: 'Nous situer'
-
+  # ============================================================================
+  # 6. PIED DE PAGE : PLAN D'ACCÈS / CARTE
+  # ============================================================================
   commune.footer_map_image:
-    label: 'Image du plan d''accès (Pied de page)'
+    label: 'Image du plan d''accès'
     description: 'Chemin vers l''image ou plan affiché dans le footer (Ex : EXT:site_commune_rgaa/Resources/Public/Images/plan-acces.svg)'
-    category: commune_footer
+    category: commune_footer_map
     type: string
     default: 'EXT:site_commune_rgaa/Resources/Public/Images/plan-acces.svg'
 
   commune.footer_map_page_uid:
     label: 'Page du Plan d''accès / Localisation (ID / UID)'
     description: 'Identifiant (UID) de la page ouverte au clic sur l''image du pied de page (Ex : 21 pour [21] Plan d''accès)'
-    category: commune_footer
+    category: commune_footer_map
     type: int
     default: 21
 
+  # ============================================================================
+  # 6. PIED DE PAGE : DOSSIER DES LIENS
+  # ============================================================================
   commune.footer_folder_uid:
     label: 'Dossier des liens de bas de page (ID / UID)'
     description: 'Identifiant du dossier contenant les pages du pied de page (Ex : 13 pour le dossier [13] Pied de page)'
-    category: commune_footer
+    category: commune_footer_links
     type: int
     default: 13
 
   # ============================================================================
-  # APPLICATION MOBILE (PWA) & NOTIFICATIONS
+  # 7. APPLICATION MOBILE (PWA) & ALERTES
   # ============================================================================
   commune.pwa_enable:
     label: 'Activer la compatibilité Application Mobile (PWA Android & iOS)'
@@ -307,7 +393,7 @@ settings:
     default: 'Mairie'
 
   # ============================================================================
-  # NUMÉROS D'URGENCE RÉPUBLICAINS
+  # 8. NUMÉROS D'URGENCE RÉPUBLICAINS
   # ============================================================================
   commune.samu:
     label: 'SAMU (Urgences médicales)'

@@ -22,73 +22,114 @@ page {
 # Configuration Institutionnelle de la Collectivité / Mairie
 # ------------------------------------------------------------------------------
 commune {
-  # customcategory=commune_theme=Apparence & Thèmes Graphiques
-  # customsubcategory=commune_theme_select=Sélection du Thème
+  # customcategory=commune_root=Site Collectivité RGAA
+  # customsubcategory=commune_theme=1. Apparence & Thèmes
+  # customsubcategory=commune_identity=2. Identité & Marque
+  # customsubcategory=commune_contact=3. Coordonnées & Horaires
+  # customsubcategory=commune_home=4. Page d'accueil
+  # customsubcategory=commune_a11y=5. Accessibilité & RGAA
+  # customsubcategory=commune_footer=6. Pied de page
+  # customsubcategory=commune_app=7. Application mobile
+  # customsubcategory=commune_emergency=8. Numéros d'urgence
   
-  # cat=commune_theme/commune_theme_select/010; type=options[Bootstrap Package (Défaut standard)=, Thème 1 - Sauveterre (Vert & Or)=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css]; label=Thème graphique du site
+  # cat=commune_root/commune_theme/010; type=options[Bootstrap Package (Défaut standard)=, Thème 1 - Sauveterre (Vert & Or)=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css]; label=Thème graphique du site
   theme_css = EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css
 
-  # Logo et identité visuelle
+  # cat=commune_root/commune_identity/010; type=string; label=Chemin du logo
   logo_file = 
+  # cat=commune_root/commune_identity/020; type=int+; label=Hauteur du logo (px)
   logo_height = 60
+  # cat=commune_root/commune_identity/030; type=boolean; label=Masquer le nom de la commune dans l'en-tête
   header_hide_title = 0
+  # cat=commune_root/commune_identity/040; type=boolean; label=Masquer le slogan dans l'en-tête
   header_hide_slogan = 0
 
-  # Nom officiel et identité
+  # cat=commune_root/commune_identity/050; type=string; label=Nom officiel de la commune
   nom = Mairie de Notre-Commune
+  # cat=commune_root/commune_identity/060; type=string; label=Devise ou sous-titre
   slogan = République Française - Liberté, Égalité, Fraternité
+  # cat=commune_root/commune_identity/070; type=string; label=Département
   departement = 64 - Pyrénées-Atlantiques
+  # cat=commune_root/commune_identity/080; type=string; label=Région
   region = Nouvelle-Aquitaine
 
-  # Coordonnées officielles
+  # cat=commune_root/commune_contact/010; type=string; label=Adresse postale
   adresse = 1 Place de la République, 64000 Commune
+  # cat=commune_root/commune_contact/020; type=string; label=Téléphone
   telephone = 05 59 00 00 00
+  # cat=commune_root/commune_contact/030; type=string; label=E-mail
   email = contact@notre-commune.fr
+  # cat=commune_root/commune_contact/040; type=string; label=Horaires d'accueil
   horaires = Du Lundi au Vendredi : 8h30 - 12h00 / 13h30 - 17h30
 
-  # Titres & Masquage des sections de la page d'accueil
+  # cat=commune_root/commune_home/010; type=string; label=Titre Accès rapides
   home_quickaccess_title = Accès rapides
+  # cat=commune_root/commune_home/020; type=boolean; label=Masquer titre Accès rapides
   home_quickaccess_hide_title = 0
 
+  # cat=commune_root/commune_home/030; type=string; label=Titre Édito / Mot du Maire
   home_edito_title = Le mot du Maire
+  # cat=commune_root/commune_home/040; type=boolean; label=Masquer titre Édito
   home_edito_hide_title = 0
 
+  # cat=commune_root/commune_home/050; type=string; label=Titre Actualités & Agenda
   home_news_title = Actualités & Agenda municipal
+  # cat=commune_root/commune_home/060; type=boolean; label=Masquer titre Actualités & Agenda
   home_news_hide_title = 0
 
+  # cat=commune_root/commune_home/070; type=string; label=Titre Carte interactive
   home_map_title = Plan interactif & Découverte
+  # cat=commune_root/commune_home/080; type=boolean; label=Masquer titre Carte interactive
   home_map_hide_title = 0
 
+  # cat=commune_root/commune_home/090; type=boolean; label=Activer section Plan du site
   home_sitemap_enable = 1
+  # cat=commune_root/commune_home/100; type=string; label=Titre Plan du site
   home_sitemap_title = Plan du site & Navigation
+  # cat=commune_root/commune_home/110; type=boolean; label=Masquer titre Plan du site
   home_sitemap_hide_title = 0
 
-  # Accessibilité & RGAA 4.1.2
+  # cat=commune_root/commune_a11y/010; type=string; label=Intitulé mention accessibilité
   rgaa_titre = Accessibilité :
+  # cat=commune_root/commune_a11y/020; type=string; label=Statut de conformité RGAA
   rgaa_statut = partiellement conforme
+  # cat=commune_root/commune_a11y/030; type=string; label=Taux de conformité RGAA
   rgaa_taux = 84%
+  # cat=commune_root/commune_a11y/040; type=int+; label=UID page Déclaration accessibilité
   rgaa_page_uid = 96
 
-  # Pied de page & Navigation
+  # cat=commune_root/commune_footer/010; type=string; label=Titre Colonne 1 Footer
   footer_col1_title = Coordonnées & Horaires
+  # cat=commune_root/commune_footer/020; type=string; label=Texte bouton contact
   footer_contact_btn_title = Contacter la mairie
+  # cat=commune_root/commune_footer/030; type=int+; label=UID page contact
   footer_contact_page_uid = 22
 
+  # cat=commune_root/commune_footer/040; type=string; label=Titre Colonne 2 Footer
   footer_col2_title = Numéros d'urgence
+  # cat=commune_root/commune_footer/050; type=string; label=Titre Colonne 3 Footer
   footer_col3_title = Nous situer
+  # cat=commune_root/commune_footer/060; type=string; label=Image plan d'accès Footer
   footer_map_image = EXT:site_commune_rgaa/Resources/Public/Images/plan-acces.svg
+  # cat=commune_root/commune_footer/070; type=int+; label=UID page plan d'accès
   footer_map_page_uid = 21
+  # cat=commune_root/commune_footer/080; type=int+; label=UID dossier liens de bas de page
   footer_folder_uid = 13
 
-  # Application mobile (PWA)
+  # cat=commune_root/commune_app/010; type=boolean; label=Activer PWA Mobile
   pwa_enable = 1
+  # cat=commune_root/commune_app/020; type=string; label=Nom application mobile
   pwa_app_name = Mairie
 
-  # Numéros d'urgence républicains
+  # cat=commune_root/commune_emergency/010; type=string; label=SAMU
   samu = 15
+  # cat=commune_root/commune_emergency/020; type=string; label=Police / Gendarmerie
   police = 17
+  # cat=commune_root/commune_emergency/030; type=string; label=Pompiers
   pompiers = 18
+  # cat=commune_root/commune_emergency/040; type=string; label=Urgence européenne
   urgence_europeenne = 112
+  # cat=commune_root/commune_emergency/050; type=string; label=Urgence sourds/malentendants
   sourds_malentendants = 114
 
   # Réseaux sociaux institutionnels
