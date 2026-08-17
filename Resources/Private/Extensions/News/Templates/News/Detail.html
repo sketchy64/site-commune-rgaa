@@ -1,5 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+      xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
 <f:layout name="General" />
@@ -14,44 +15,42 @@
                         {newsItem.firstCategory.title}
                     </span>
                 </f:if>
-
-                <h1 class="h2 page-title fw-bold text-primary-commune mb-3" itemprop="headline">
-                    {newsItem.title}
-                </h1>
-
-                <div class="news-detail-meta text-muted small d-flex flex-wrap align-items-center gap-3 pb-3 border-bottom">
-                    <span class="d-flex align-items-center gap-1">
-                        <i class="bi bi-calendar3 text-primary-commune" aria-hidden="true"></i>
-                        <time datetime="{f:format.date(date: newsItem.datetime, format: 'Y-m-d')}" itemprop="datePublished">
-                            Publié le {f:format.date(date: newsItem.datetime, format: '%d %B %Y')}
-                        </time>
-                    </span>
+                <h1 class="page-title text-start mb-3" itemprop="headline">{newsItem.title}</h1>
+                <div class="news-meta text-muted d-flex align-items-center gap-3">
+                    <time datetime="{f:format.date(date: newsItem.datetime, format: 'Y-m-d')}" itemprop="datePublished">
+                        <i class="bi bi-calendar3" aria-hidden="true"></i>
+                        Publié le <f:format.date format="d/m/Y">{newsItem.datetime}</f:format.date>
+                    </time>
                     <f:if condition="{newsItem.author}">
-                        <span class="d-flex align-items-center gap-1">
-                            <i class="bi bi-person text-primary-commune" aria-hidden="true"></i>
-                            <span itemprop="author">{newsItem.author}</span>
+                        <span class="author" itemprop="author">
+                            <i class="bi bi-person" aria-hidden="true"></i> {newsItem.author}
                         </span>
                     </f:if>
                 </div>
             </header>
 
-            <!-- Image principale / Média -->
-            <f:if condition="{newsItem.mediaNonPreviews}">
+            <!-- Image principale / Médias -->
+            <f:if condition="{newsItem.mediaPreviews}">
                 <div class="news-detail-media mb-4">
-                    <figure class="figure w-100">
-                        <f:media file="{newsItem.mediaNonPreviews.0}" width="900c" height="500c" class="figure-img img-fluid rounded shadow-sm w-100" alt="{f:if(condition: newsItem.mediaNonPreviews.0.originalResource.alternative, then: newsItem.mediaNonPreviews.0.originalResource.alternative, else: newsItem.title)}" />
-                        <f:if condition="{newsItem.mediaNonPreviews.0.originalResource.description}">
-                            <figcaption class="figure-caption text-muted mt-2 small">
-                                {newsItem.mediaNonPreviews.0.originalResource.description}
-                            </figcaption>
-                        </f:if>
-                    </figure>
+                    <f:for each="{newsItem.mediaPreviews}" as="mediaElement">
+                        <figure class="figure w-100">
+                            <f:image image="{mediaElement}"
+                                     class="figure-img img-fluid rounded w-100 shadow-sm"
+                                     title="{mediaElement.title}"
+                                     additionalAttributes="{rgaa:a11y.decorativeImage(alt: mediaElement.alternative, isDecorative: false)}" />
+                            <f:if condition="{mediaElement.description}">
+                                <figcaption class="figure-caption text-muted mt-2">
+                                    {mediaElement.description}
+                                </figcaption>
+                            </f:if>
+                        </figure>
+                    </f:for>
                 </div>
             </f:if>
 
-            <!-- Chapô / Teaser -->
+            <!-- Chapeau / Teaser -->
             <f:if condition="{newsItem.teaser}">
-                <div class="lead fw-semibold text-dark mb-4 news-detail-teaser" itemprop="description">
+                <div class="news-detail-teaser lead mb-4 fw-medium" itemprop="description">
                     <f:format.html>{newsItem.teaser}</f:format.html>
                 </div>
             </f:if>
@@ -63,15 +62,51 @@
 
             <!-- Fichiers joints / Téléchargements éventuels -->
             <f:if condition="{newsItem.relatedFiles}">
-                <div class="news-related-files card bg-light border-0 p-3 mb-4">
+                <div class="news-related-files mb-4">
                     <h2 class="h5 mb-3 fw-bold">Documents à télécharger</h2>
-                    <ul class="list-unstyled mb-0">
+                    <ul class="commune-uploads-list ce-uploads" role="list">
                         <f:for each="{newsItem.relatedFiles}" as="relatedFile">
-                            <li class="mb-2">
-                                <a href="{relatedFile.originalResource.publicUrl}" target="_blank" rel="noopener noreferrer" class="d-inline-flex align-items-center gap-2 text-decoration-none">
-                                    <i class="bi bi-file-earmark-arrow-down fs-5 text-primary-commune" aria-hidden="true"></i>
-                                    <span>{relatedFile.originalResource.title -> f:or(alternative: relatedFile.originalResource.name)}</span>
-                                    <span class="badge bg-secondary small">{relatedFile.originalResource.size -> f:format.bytes()}</span>
+                            <li class="commune-upload-item">
+                                <a href="{relatedFile.originalResource.publicUrl}"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   class="commune-upload-link"
+                                   aria-label="{rgaa:a11y.ariaLabel(action: 'Télécharger', context: '{relatedFile.originalResource.title -> f:or(alternative: relatedFile.originalResource.name)}', extra: '{relatedFile.originalResource.extension -> f:format.case(mode: \'upper\')}, {relatedFile.originalResource.size -> f:format.bytes(decimals: 1)}')}">
+                                    
+                                    <div class="commune-upload-visual flex-shrink-0" aria-hidden="true">
+                                        <f:render partial="Media/FileIcon" arguments="{extension: relatedFile.originalResource.extension}" />
+                                    </div>
+
+                                    <div class="commune-upload-content flex-grow-1">
+                                        <span class="commune-upload-title">
+                                            {relatedFile.originalResource.title -> f:or(alternative: relatedFile.originalResource.name)}
+                                        </span>
+                                        <f:if condition="{relatedFile.originalResource.description}">
+                                            <span class="commune-upload-description">
+                                                {relatedFile.originalResource.description}
+                                            </span>
+                                        </f:if>
+                                        <div class="commune-upload-meta">
+                                            <span class="commune-upload-badge format-badge format-{relatedFile.originalResource.extension -> f:format.case(mode: 'lower')}">
+                                                {relatedFile.originalResource.extension -> f:format.case(mode: 'upper')}
+                                            </span>
+                                            <span class="commune-upload-badge size-badge">
+                                                {relatedFile.originalResource.size -> f:format.bytes(decimals: 1)}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="commune-upload-action flex-shrink-0">
+                                        <span class="commune-upload-btn" aria-hidden="true">
+                                            <span class="btn-text d-none d-md-inline">Télécharger</span>
+                                            <svg class="download-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                <polyline points="7 10 12 15 17 10"></polyline>
+                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                            </svg>
+                                        </span>
+                                        <rgaa:a11y.externalLinkAria target="_blank" message="ouvre une nouvelle fenêtre" />
+                                    </div>
                                 </a>
                             </li>
                         </f:for>

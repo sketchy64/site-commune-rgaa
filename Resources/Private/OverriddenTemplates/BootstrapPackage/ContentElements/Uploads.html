@@ -1,0 +1,89 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:bk2k="http://typo3.org/ns/BK2K/BootstrapPackage/ViewHelpers"
+      xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:if condition="{files}">
+        <div class="commune-uploads-container">
+            <ul class="commune-uploads-list ce-uploads" role="list">
+                <f:for each="{files}" as="file">
+                    <li class="commune-upload-item">
+                        <a href="{file.publicUrl}"
+                           class="commune-upload-link"
+                           {f:if(condition: data.target, then: 'target="{data.target}" rel="noopener noreferrer"')}
+                           aria-label="{rgaa:a11y.ariaLabel(action: 'Télécharger', context: '{file.properties.title -> f:or(alternative: file.name)}', extra: '{file.extension -> f:format.case(mode: \'upper\')}, {file.size -> f:format.bytes(decimals: 1)}')}">
+                            
+                            <!-- Vignette miniature ou Pictogramme vectoriel moderne Sauveterre -->
+                            <div class="commune-upload-visual flex-shrink-0" aria-hidden="true">
+                                <f:if condition="{data.uploads_type} == 2">
+                                    <f:then>
+                                        <f:if condition="{file.type} == 2">
+                                            <f:then>
+                                                <f:image image="{file}"
+                                                         width="48c"
+                                                         height="48c"
+                                                         class="commune-upload-thumbnail rounded shadow-sm"
+                                                         additionalAttributes="{rgaa:a11y.decorativeImage(alt: '', isDecorative: true)}" />
+                                            </f:then>
+                                            <f:else>
+                                                <f:render partial="Media/FileIcon" arguments="{extension: file.extension}" />
+                                            </f:else>
+                                        </f:if>
+                                    </f:then>
+                                    <f:else>
+                                        <f:render partial="Media/FileIcon" arguments="{extension: file.extension}" />
+                                    </f:else>
+                                </f:if>
+                            </div>
+
+                            <!-- Métadonnées textuelles & descriptives du fichier -->
+                            <div class="commune-upload-content flex-grow-1">
+                                <span class="commune-upload-title">
+                                    {file.properties.title -> f:or(alternative: file.name)}
+                                </span>
+
+                                <f:if condition="{data.uploads_description}">
+                                    <f:if condition="{file.properties.description}">
+                                        <span class="commune-upload-description">
+                                            {file.properties.description}
+                                        </span>
+                                    </f:if>
+                                </f:if>
+
+                                <div class="commune-upload-meta">
+                                    <span class="commune-upload-badge format-badge format-{file.extension -> f:format.case(mode: 'lower')}">
+                                        {file.extension -> f:format.case(mode: 'upper')}
+                                    </span>
+                                    <f:if condition="{data.filelink_size}">
+                                        <span class="commune-upload-badge size-badge">
+                                            {file.size -> f:format.bytes(decimals: 1)}
+                                        </span>
+                                    </f:if>
+                                </div>
+                            </div>
+
+                            <!-- Bouton / Indicateur interactif de téléchargement -->
+                            <div class="commune-upload-action flex-shrink-0">
+                                <span class="commune-upload-btn" aria-hidden="true">
+                                    <span class="btn-text d-none d-md-inline">Télécharger</span>
+                                    <svg class="download-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                </span>
+                                <f:if condition="{data.target} == '_blank'">
+                                    <rgaa:a11y.externalLinkAria target="{data.target}" message="ouvre une nouvelle fenêtre" />
+                                </f:if>
+                            </div>
+                        </a>
+                    </li>
+                </f:for>
+            </ul>
+        </div>
+    </f:if>
+</f:section>
+</html>

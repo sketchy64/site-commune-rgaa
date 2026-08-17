@@ -436,4 +436,7 @@ lib.contentElement {
   templateRootPaths {
     100 = EXT:site_commune_rgaa/Resources/Private/OverriddenTemplates/BootstrapPackage/ContentElements/
   }
+  partialRootPaths {
+    100 = EXT:site_commune_rgaa/Resources/Private/Partials/ContentElements/
+  }
 }
