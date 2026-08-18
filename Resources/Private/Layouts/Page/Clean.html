@@ -1,6 +1,12 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
+<!-- Chargement dynamique de la feuille de style du thème sélectionné (Paramètres de site ou Constantes) -->
+<f:variable name="activeTheme" value="{f:if(condition: communeTheme, then: communeTheme, else: site.settings.commune.theme_css)}" />
+<f:if condition="{activeTheme} && {activeTheme} != 'none' && {activeTheme} != 'default'">
+    <f:asset.css identifier="commune-theme" href="{activeTheme}" priority="1" />
+</f:if>
+
 <f:render partial="Structure/SkipLinks" arguments="{_all}" />
 
 <div id="top" class="site-wrapper d-flex flex-column min-vh-100">

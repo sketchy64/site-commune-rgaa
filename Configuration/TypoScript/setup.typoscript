@@ -27,9 +27,8 @@ page {
     10.value = <link rel="manifest" href="/manifest.webmanifest">
   }
 
-  # Inclusion des feuilles de styles conformes RGAA & Thème sélectionné
+  # Inclusion des feuilles de styles de base conformes RGAA
   includeCSS {
-    commune_theme = {$commune.theme_css}
     commune_accessibility = EXT:site_commune_rgaa/Resources/Public/Css/accessibility.css
     commune_print = EXT:site_commune_rgaa/Resources/Public/Css/print.css
     commune_print {
