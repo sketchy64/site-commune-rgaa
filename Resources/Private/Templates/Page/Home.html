@@ -1,5 +1,4 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
 <f:layout name="Default" />
 
@@ -9,7 +8,8 @@
 
     <!-- 1. Section Bandeau d'image / Carrousel Hero sous la navigation (colPos 110 - Pleine largeur sans padding) -->
     <f:if condition="{heroContent}">
-        <section class="commune-home-section commune-hero-section p-0 m-0" aria-label="Bandeau principal et actualités à la une">
+        <section class="commune-home-section commune-hero-section p-0 m-0"
+            aria-label="Bandeau principal et actualités à la une">
             <div class="container-fluid px-0">
                 <f:format.raw>{heroContent}</f:format.raw>
             </div>
@@ -18,7 +18,8 @@
 
     <!-- 2. Section Accès rapides / Démarches citoyennes (colPos 120) -->
     <f:if condition="{quickAccessContent}">
-        <section class="commune-home-section commune-quickaccess-section py-5" aria-label="{f:if(condition: communeHomeQuickaccessTitle, then: communeHomeQuickaccessTitle, else: 'Accès rapides')}">
+        <section class="commune-home-section commune-quickaccess-section py-5"
+            aria-label="{f:if(condition: communeHomeQuickaccessTitle, then: communeHomeQuickaccessTitle, else: 'Accès rapides')}">
             <div class="container">
                 <f:if condition="!{communeHomeQuickaccessHideTitle}">
                     <div class="text-center mb-4">
@@ -39,7 +40,8 @@
 
     <!-- 3. Section Édito / Le mot du Maire (colPos 115) -->
     <f:if condition="{editoContent}">
-        <section class="commune-home-section commune-edito-section py-5" aria-label="{f:if(condition: communeHomeEditoTitle, then: communeHomeEditoTitle, else: 'Le mot du Maire')}">
+        <section class="commune-home-section commune-edito-section py-5"
+            aria-label="{f:if(condition: communeHomeEditoTitle, then: communeHomeEditoTitle, else: 'Le mot du Maire')}">
             <div class="container">
                 <f:if condition="!{communeHomeEditoHideTitle}">
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -60,7 +62,8 @@
 
     <!-- 4. Section Actualités à la une / Carrousel (colPos 125) -->
     <f:if condition="{featuredNewsContent} && !{communeHomeFeaturedNewsHideSection}">
-        <section class="commune-home-section commune-featured-news-section py-5" aria-label="{f:if(condition: communeHomeFeaturedNewsTitle, then: communeHomeFeaturedNewsTitle, else: 'Actualités à la une')}">
+        <section class="commune-home-section commune-featured-news-section py-5"
+            aria-label="{f:if(condition: communeHomeFeaturedNewsTitle, then: communeHomeFeaturedNewsTitle, else: 'Actualités à la une')}">
             <div class="container">
                 <f:if condition="!{communeHomeFeaturedNewsHideTitle}">
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -81,7 +84,8 @@
 
     <!-- 5. Section Agenda et Actualités (colPos 130) -->
     <f:if condition="{newsContent}">
-        <section class="commune-home-section commune-news-section py-5" aria-label="{f:if(condition: communeHomeNewsTitle, then: communeHomeNewsTitle, else: 'Actualités & Agenda municipal')}">
+        <section class="commune-home-section commune-news-section py-5"
+            aria-label="{f:if(condition: communeHomeNewsTitle, then: communeHomeNewsTitle, else: 'Actualités & Agenda municipal')}">
             <div class="container">
                 <f:if condition="!{communeHomeNewsHideTitle}">
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -102,7 +106,8 @@
 
     <!-- 6. Section Carte Interactive de la commune (colPos 140) -->
     <f:if condition="{interactiveMapContent}">
-        <section class="commune-home-section commune-interactive-map-section py-5" aria-label="{f:if(condition: communeHomeMapTitle, then: communeHomeMapTitle, else: 'Plan interactif & Découverte')}">
+        <section class="commune-home-section commune-interactive-map-section p-0 m-0"
+            aria-label="{f:if(condition: communeHomeMapTitle, then: communeHomeMapTitle, else: 'Plan interactif & Découverte')}">
             <f:if condition="!{communeHomeMapHideTitle}">
                 <div class="container mb-4">
                     <div class="d-flex justify-content-between align-items-center">
@@ -123,7 +128,8 @@
 
     <!-- 7. Section Plan du site & Navigation -->
     <f:if condition="{communeHomeSitemapEnable}">
-        <section class="commune-home-section commune-sitemap-section py-5" aria-label="{f:if(condition: communeHomeSitemapTitle, then: communeHomeSitemapTitle, else: 'Plan du site & Navigation')}">
+        <section class="commune-home-section commune-sitemap-section py-5"
+            aria-label="{f:if(condition: communeHomeSitemapTitle, then: communeHomeSitemapTitle, else: 'Plan du site & Navigation')}">
             <div class="container">
                 <f:if condition="!{communeHomeSitemapHideTitle}">
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -142,4 +148,5 @@
         </section>
     </f:if>
 </f:section>
+
 </html>

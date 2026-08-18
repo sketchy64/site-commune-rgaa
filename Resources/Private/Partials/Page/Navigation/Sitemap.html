@@ -3,11 +3,75 @@
 
 <!-- Structure accessible du Plan du Site (Landmark role="navigation") -->
 <nav class="commune-sitemap-nav" aria-label="{f:if(condition: communeHomeSitemapTitle, then: communeHomeSitemapTitle, else: 'Plan du site')}">
-    <f:if condition="{sitemapNavigation}">
+    <f:if condition="{sitemapTree}">
         <f:then>
+            <!-- Rendu dynamique moderne TYPO3 MenuProcessor (sans la page d'accueil) -->
+            <div class="commune-sitemap-grid">
+                <f:for each="{sitemapTree}" as="item">
+                    <f:if condition="!{item.isSpacer} && {item.data.doktype} != 199 && {item.data.doktype} != 254 && {item.title} != 'Accueil' && {item.nav_title} != 'Accueil'">
+                        <div class="commune-sitemap-col">
+                            <div class="commune-sitemap-group">
+                                <div class="commune-sitemap-header">
+                                    <h3 class="commune-sitemap-title">
+                                        <a href="{item.link}" class="commune-sitemap-title-link">{item.title}<span class="commune-sitemap-dot">.</span></a>
+                                    </h3>
+                                </div>
+                                <f:if condition="{item.children}">
+                                    <ul class="commune-sitemap-list list-unstyled" role="list">
+                                        <f:for each="{item.children}" as="child">
+                                            <li class="commune-sitemap-item level-2{f:if(condition: child.children, then: ' has-children')}">
+                                                <a href="{child.link}" class="commune-sitemap-link level-2{f:if(condition: child.children, then: ' is-parent')}">
+                                                    <f:if condition="{child.children}">
+                                                        <f:then>
+                                                            <span class="commune-sitemap-parent-label">{child.title} <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+                                                        </f:then>
+                                                        <f:else>
+                                                            {child.title}
+                                                        </f:else>
+                                                    </f:if>
+                                                </a>
+                                                <f:if condition="{child.children}">
+                                                    <ul class="commune-sitemap-sublist list-unstyled" role="list">
+                                                        <f:for each="{child.children}" as="subChild">
+                                                            <li class="commune-sitemap-item level-3{f:if(condition: subChild.children, then: ' has-children')}">
+                                                                <a href="{subChild.link}" class="commune-sitemap-link level-3">
+                                                                    <span class="commune-sitemap-icon" aria-hidden="true">
+                                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                                            <polyline points="9 18 15 12 9 6"></polyline>
+                                                                        </svg>
+                                                                    </span>
+                                                                    <span class="commune-sitemap-item-text">{subChild.title}</span>
+                                                                </a>
+                                                                <f:if condition="{subChild.children}">
+                                                                    <ul class="commune-sitemap-subsublist list-unstyled" role="list">
+                                                                        <f:for each="{subChild.children}" as="leaf">
+                                                                            <li class="commune-sitemap-item level-4">
+                                                                                <a href="{leaf.link}" class="commune-sitemap-link level-4">
+                                                                                    <span class="commune-sitemap-icon-dot" aria-hidden="true">•</span>
+                                                                                    <span class="commune-sitemap-item-text">{leaf.title}</span>
+                                                                                </a>
+                                                                            </li>
+                                                                        </f:for>
+                                                                    </ul>
+                                                                </f:if>
+                                                            </li>
+                                                        </f:for>
+                                                    </ul>
+                                                </f:if>
+                                            </li>
+                                        </f:for>
+                                    </ul>
+                                </f:if>
+                            </div>
+                        </div>
+                    </f:if>
+                </f:for>
+            </div>
+        </f:then>
+        <f:else if="{sitemapNavigation}">
             <!-- Rendu dynamique généré par TYPO3 HMENU -->
             <f:format.raw>{sitemapNavigation}</f:format.raw>
-        </f:then>
+        </f:else>
         <f:else>
             <!-- Rendu complet et accessible structuré en colonnes -->
             <div class="commune-sitemap-grid">

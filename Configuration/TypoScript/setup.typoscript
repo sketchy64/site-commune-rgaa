@@ -115,6 +115,20 @@ page {
       20 = {$page.theme.layoutRootPath}
     }
 
+    # Processeurs de données pour les menus et arborescences (TYPO3 v12/v13)
+    dataProcessing {
+      10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+      10 {
+        special = directory
+        special.value.data = site:rootPageId
+        levels = 4
+        expandAll = 1
+        includeSpacer = 0
+        as = sitemapTree
+        excludeDoktypes = 199,254
+      }
+    }
+
     # Variables injectées dans les templates Fluid
     variables {
       # Thème graphique sélectionné (priorité aux réglages de site, puis constantes)
@@ -444,30 +458,24 @@ page {
         }
       }
 
-      # Plan du site complet pour la page d'accueil (Hiérarchisé jusqu'à 4 niveaux, hors page d'accueil)
+      # Plan du site pour la page d'accueil (Hiérarchisé jusqu'à 4 niveaux)
       sitemapNavigation = HMENU
       sitemapNavigation {
-        entryLevel = 0
+        special = directory
+        special.value.data = site:rootPageId
+        ifEmpty.special.value = 1
         excludeDoktypes = 199,254
-        excludeUidList = 1
-        excludeUidList.override.data = site:rootPageId
         1 = TMENU
         1 {
           expAll = 1
           wrap = <div class="commune-sitemap-grid">|</div>
           NO {
-            stdWrap.if.value.data = site:rootPageId
-            stdWrap.if.equals.field = uid
-            stdWrap.if.negate = 1
             wrapItemAndSub = <div class="commune-sitemap-group"><div class="commune-sitemap-header">|</div></div>
             stdWrap.wrap = <h3 class="commune-sitemap-title">|</h3>
             ATagParams = class="commune-sitemap-title-link"
           }
           IFSUB = 1
           IFSUB {
-            stdWrap.if.value.data = site:rootPageId
-            stdWrap.if.equals.field = uid
-            stdWrap.if.negate = 1
             wrapItemAndSub = <div class="commune-sitemap-group"><div class="commune-sitemap-header">|</div></div>
             stdWrap.wrap = <h3 class="commune-sitemap-title">|</h3>
             ATagParams = class="commune-sitemap-title-link"
