@@ -1,10 +1,11 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
 <!-- Chargement dynamique de la feuille de style du thème sélectionné (Paramètres de site ou Constantes) -->
-<f:variable name="activeTheme" value="{communeTheme}" />
+<f:variable name="activeTheme" value="{rgaa:siteSetting(key: 'commune.theme_css', default: communeTheme)}" />
 <f:if condition="!{activeTheme}">
-    <f:variable name="activeTheme" value="{site.settings.get('commune.theme_css')}" />
+    <f:variable name="activeTheme" value="EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css" />
 </f:if>
 <f:if condition="{activeTheme} && {activeTheme} != 'none' && {activeTheme} != 'default'">
     <f:asset.css identifier="commune-theme" href="{activeTheme}" priority="1" />
