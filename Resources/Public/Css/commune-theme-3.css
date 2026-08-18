@@ -473,17 +473,65 @@ h1.page-title::before,
   object-fit: cover;
 }
 
+/* Section Carte Interactive Pleine Largeur / Pleine Hauteur (colPos 140) */
 .commune-interactive-map-section {
-  background-color: var(--commune-bg-light);
-  border-top: 1px solid var(--commune-border);
-  border-bottom: 1px solid var(--commune-border);
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden;
+}
+
+.commune-interactive-map-section .frame,
+.commune-interactive-map-section .frame-group-container,
+.commune-interactive-map-section .frame-group-inner,
+.commune-interactive-map-section .frame-container,
+.commune-interactive-map-section .frame-inner {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  max-width: 100% !important;
+  width: 100% !important;
 }
 
 .commune-map-wrapper {
-  background-color: #ffffff;
-  border: 1px solid var(--commune-border);
-  border-radius: 8px;
-  min-height: 380px;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  min-height: 480px;
+}
+
+.commune-map-wrapper .tx-maps2,
+.commune-map-wrapper .maps2,
+.commune-map-wrapper .leaflet-container {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  min-height: 480px;
+}
+
+/* Neutralisation stricte des arrondis et ombres sur les tuiles et marqueurs Leaflet */
+.commune-map-wrapper img,
+.leaflet-container img,
+.leaflet-tile,
+.leaflet-tile-container img,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.maps2 img,
+.tx-maps2 img {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  max-width: none !important;
 }
 
 .commune-footer-map-box {

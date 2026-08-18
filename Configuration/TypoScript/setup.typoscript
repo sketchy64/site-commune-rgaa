@@ -444,21 +444,30 @@ page {
         }
       }
 
-      # Plan du site complet pour la page d'accueil (Hiérarchisé jusqu'à 4 niveaux)
+      # Plan du site complet pour la page d'accueil (Hiérarchisé jusqu'à 4 niveaux, hors page d'accueil)
       sitemapNavigation = HMENU
       sitemapNavigation {
         entryLevel = 0
+        excludeDoktypes = 199,254
+        excludeUidList = 1
+        excludeUidList.override.data = site:rootPageId
         1 = TMENU
         1 {
           expAll = 1
           wrap = <div class="commune-sitemap-grid">|</div>
           NO {
+            stdWrap.if.value.data = site:rootPageId
+            stdWrap.if.equals.field = uid
+            stdWrap.if.negate = 1
             wrapItemAndSub = <div class="commune-sitemap-group"><div class="commune-sitemap-header">|</div></div>
             stdWrap.wrap = <h3 class="commune-sitemap-title">|</h3>
             ATagParams = class="commune-sitemap-title-link"
           }
           IFSUB = 1
           IFSUB {
+            stdWrap.if.value.data = site:rootPageId
+            stdWrap.if.equals.field = uid
+            stdWrap.if.negate = 1
             wrapItemAndSub = <div class="commune-sitemap-group"><div class="commune-sitemap-header">|</div></div>
             stdWrap.wrap = <h3 class="commune-sitemap-title">|</h3>
             ATagParams = class="commune-sitemap-title-link"
