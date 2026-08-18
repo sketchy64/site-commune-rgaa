@@ -10,6 +10,11 @@ page {
     doctype = html5
     metaCharset = utf-8
     viewport = width=device-width, initial-scale=1, shrink-to-fit=no
+    # Désactivation de la compression et fusion CSS/JS pour faciliter le débogage et le rechargement direct
+    compressCss = 0
+    concatenateCss = 0
+    compressJs = 0
+    concatenateJs = 0
   }
 
   # Métadonnées pour Application Mobile (PWA Android / iOS)
@@ -21,10 +26,16 @@ page {
     application-name = {$commune.pwa_app_name}
   }
 
-  # Déclaration du Web App Manifest pour installation smartphone
+  # Déclaration du Web App Manifest et balise de débogage du thème
   headerData {
     10 = TEXT
     10.value = <link rel="manifest" href="/manifest.webmanifest">
+    99 = TEXT
+    99 {
+      data = site:settings:commune.theme_css
+      ifEmpty.value = {$commune.theme_css}
+      wrap = <!-- Theme actif: | -->
+    }
   }
 
   # Inclusion des feuilles de styles de base conformes RGAA
@@ -106,11 +117,13 @@ page {
 
     # Variables injectées dans les templates Fluid
     variables {
-      # Thème graphique sélectionné
+      # Thème graphique sélectionné (priorité aux réglages de site, puis constantes)
       communeTheme = TEXT
-      communeTheme.value = {$commune.theme_css}
-      communeTheme.override.data = site:commune.theme_css
-      communeTheme.override.ifEmpty.data = site:settings.commune.theme_css
+      communeTheme {
+        data = site:settings:commune.theme_css
+        ifEmpty.data = site:settings.commune.theme_css
+        ifEmpty.ifEmpty.value = {$commune.theme_css}
+      }
 
       # Logo et personnalisation de marque
       communeLogoFile = TEXT

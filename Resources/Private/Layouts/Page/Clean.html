@@ -2,7 +2,10 @@
       data-namespace-typo3-fluid="true">
 
 <!-- Chargement dynamique de la feuille de style du thème sélectionné (Paramètres de site ou Constantes) -->
-<f:variable name="activeTheme" value="{f:if(condition: communeTheme, then: communeTheme, else: site.settings.commune.theme_css)}" />
+<f:variable name="activeTheme" value="{communeTheme}" />
+<f:if condition="!{activeTheme}">
+    <f:variable name="activeTheme" value="{site.settings.get('commune.theme_css')}" />
+</f:if>
 <f:if condition="{activeTheme} && {activeTheme} != 'none' && {activeTheme} != 'default'">
     <f:asset.css identifier="commune-theme" href="{activeTheme}" priority="1" />
 </f:if>
