@@ -100,11 +100,11 @@
         </section>
     </f:if>
 
-    <!-- 6. Section Carte Interactive de la commune (colPos 140 - Pleine largeur et hauteur) -->
+    <!-- 6. Section Carte Interactive de la commune (colPos 140) -->
     <f:if condition="{interactiveMapContent}">
-        <section class="commune-home-section commune-interactive-map-section p-0 m-0" aria-label="{f:if(condition: communeHomeMapTitle, then: communeHomeMapTitle, else: 'Plan interactif & Découverte')}">
+        <section class="commune-home-section commune-interactive-map-section py-5" aria-label="{f:if(condition: communeHomeMapTitle, then: communeHomeMapTitle, else: 'Plan interactif & Découverte')}">
             <f:if condition="!{communeHomeMapHideTitle}">
-                <div class="container py-4">
+                <div class="container mb-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <h2 class="h3 mb-0 commune-section-title">
                             <f:if condition="{communeHomeMapTitle}">
