@@ -1,0 +1,579 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<!-- Structure accessible du Plan du Site (Landmark role="navigation") -->
+<nav class="commune-sitemap-nav" aria-label="{f:if(condition: communeHomeSitemapTitle, then: communeHomeSitemapTitle, else: 'Plan du site')}">
+    <f:if condition="{sitemapNavigation}">
+        <f:then>
+            <!-- Rendu dynamique généré par TYPO3 HMENU -->
+            <f:format.raw>{sitemapNavigation}</f:format.raw>
+        </f:then>
+        <f:else>
+            <!-- Rendu complet et accessible structuré en colonnes -->
+            <div class="commune-sitemap-grid">
+                <!-- Colonne 1 : Au quotidien / Action sociale / Outils -->
+                <div class="commune-sitemap-col">
+                    <!-- Groupe : Au quotidien -->
+                    <div class="commune-sitemap-group">
+                        <div class="commune-sitemap-header">
+                            <h3 class="commune-sitemap-title">
+                                <a href="#au-quotidien" class="commune-sitemap-title-link">Au quotidien<span class="commune-sitemap-dot">.</span></a>
+                            </h3>
+                        </div>
+                        <ul class="commune-sitemap-list list-unstyled" role="list">
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#annuaire" class="commune-sitemap-link level-2">Annuaire téléphonique interne</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#planning" class="commune-sitemap-link level-2">Planning hebdomadaire</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#plan-bureaux" class="commune-sitemap-link level-2">Plan bureaux</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#organigramme" class="commune-sitemap-link level-2">Organigramme</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#annuaire-maires" class="commune-sitemap-link level-2">Annuaire des Maires</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#reunions-territoriales" class="commune-sitemap-link level-2">Réunions territoriales</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Groupe : Action sociale -->
+                    <div class="commune-sitemap-group">
+                        <div class="commune-sitemap-header">
+                            <h3 class="commune-sitemap-title">
+                                <a href="#action-sociale" class="commune-sitemap-title-link">Action sociale<span class="commune-sitemap-dot">.</span></a>
+                            </h3>
+                        </div>
+                        <ul class="commune-sitemap-list list-unstyled" role="list">
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#action-sociale-presentation" class="commune-sitemap-link level-2">Présentation générale</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#cnas" class="commune-sitemap-link level-2">CNAS</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#ria" class="commune-sitemap-link level-2">RIA</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#cas" class="commune-sitemap-link level-2">CAS</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2 has-children">
+                                <a href="#apemac" class="commune-sitemap-link level-2 is-parent">
+                                    <span class="commune-sitemap-parent-label">APEMAC <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+                                </a>
+                                <ul class="commune-sitemap-sublist list-unstyled" role="list">
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#apemac-actualites" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Actualités</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#apemac-derniere-minute" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Dernière minute</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#apemac-presentation" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Présentation</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Groupe : Outils -->
+                    <div class="commune-sitemap-group">
+                        <div class="commune-sitemap-header">
+                            <h3 class="commune-sitemap-title">
+                                <a href="#outils" class="commune-sitemap-title-link">Outils<span class="commune-sitemap-dot">.</span></a>
+                            </h3>
+                        </div>
+                        <ul class="commune-sitemap-list list-unstyled" role="list">
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#outils-infos" class="commune-sitemap-link level-2">Infos générales</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2 has-children">
+                                <a href="#outils-formation" class="commune-sitemap-link level-2 is-parent">
+                                    <span class="commune-sitemap-parent-label">Formation <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+                                </a>
+                                <ul class="commune-sitemap-sublist list-unstyled" role="list">
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#formation-plan" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Plan de formation</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#formation-reglement" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Règlement de formation</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#outils-notes-techniques" class="commune-sitemap-link level-2">Notes techniques</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#outils-documentation" class="commune-sitemap-link level-2">Documentation</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2 has-children">
+                                <a href="#outils-numerique" class="commune-sitemap-link level-2 is-parent">
+                                    <span class="commune-sitemap-parent-label">Numérique <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+                                </a>
+                                <ul class="commune-sitemap-sublist list-unstyled" role="list">
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#numerique-cybersecurite" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Cybersécurité</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#numerique-doc-diverse" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Documentation diverse</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#numerique-rgpd" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">RGPD</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#outils-presse" class="commune-sitemap-link level-2">Presse</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#outils-telephonie" class="commune-sitemap-link level-2">Téléphonie</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Colonne 2 : Vie des services -->
+                <div class="commune-sitemap-col">
+                    <div class="commune-sitemap-group">
+                        <div class="commune-sitemap-header">
+                            <h3 class="commune-sitemap-title">
+                                <a href="#vie-des-services" class="commune-sitemap-title-link">Vie des services<span class="commune-sitemap-dot">.</span></a>
+                            </h3>
+                        </div>
+                        <ul class="commune-sitemap-list list-unstyled" role="list">
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#services-actualites" class="commune-sitemap-link level-2">Actualités</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2 has-children">
+                                <a href="#base-adhesions" class="commune-sitemap-link level-2 is-parent">
+                                    <span class="commune-sitemap-parent-label">Base des adhésions <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+                                </a>
+                                <ul class="commune-sitemap-sublist list-unstyled" role="list">
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#registre-adhesions" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Registre des adhésions actualisé</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#decisions" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Décisions</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="commune-sitemap-item level-2 has-children">
+                                <a href="#maison-des-communes" class="commune-sitemap-link level-2 is-parent">
+                                    <span class="commune-sitemap-parent-label">Maison des communes <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+                                </a>
+                                <ul class="commune-sitemap-sublist list-unstyled" role="list">
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#salle-personnel" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Salle du personnel</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#extension-batiment" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Extension bâtiment &amp; Aménagement parking</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="commune-sitemap-item level-2 has-children">
+                                <a href="#service-administratif" class="commune-sitemap-link level-2 is-parent">
+                                    <span class="commune-sitemap-parent-label">Service Administratif <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+                                </a>
+                                <ul class="commune-sitemap-sublist list-unstyled" role="list">
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#actualisation-connaissances" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Séances d'actualisation des connaissances</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#newsletter-admin" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Newsletter</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#ouvrages" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Ouvrages</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#matrices-communes" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Matrices Communes</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#matrices-sia" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Matrices SIA</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="commune-sitemap-item level-2 has-children">
+                                <a href="#service-numerique" class="commune-sitemap-link level-2 is-parent">
+                                    <span class="commune-sitemap-parent-label">Service du Numérique <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+                                </a>
+                                <ul class="commune-sitemap-sublist list-unstyled" role="list">
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#missions-numerique" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Nos missions</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#newsletter-numerique" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Newsletter</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="commune-sitemap-item level-2 has-children">
+                                <a href="#service-patrimoine" class="commune-sitemap-link level-2 is-parent">
+                                    <span class="commune-sitemap-parent-label">Service du Patrimoine et de l'Architecture <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+                                </a>
+                                <ul class="commune-sitemap-sublist list-unstyled" role="list">
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#aps" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">A.P.S.</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#permis-construire" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Permis de construire</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#dce" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">D.C.E.</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#chantier-en-cours" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Chantier en cours</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#chantier-acheve" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Chantier achevé</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="commune-sitemap-item level-2 has-children">
+                                <a href="#service-territoires" class="commune-sitemap-link level-2 is-parent">
+                                    <span class="commune-sitemap-parent-label">Service Territoires et Urbanisme <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+                                </a>
+                                <ul class="commune-sitemap-sublist list-unstyled" role="list">
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#newsletter-urba" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Newsletter</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#service-voirie" class="commune-sitemap-link level-2">Service Voirie Réseaux Aménagement</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#reunion-personnel" class="commune-sitemap-link level-2">Réunion du personnel</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Colonne 3 : CS / Bureau / CST / L'Agence de demain -->
+                <div class="commune-sitemap-col">
+                    <!-- Groupe : CS / Bureau -->
+                    <div class="commune-sitemap-group">
+                        <div class="commune-sitemap-header">
+                            <h3 class="commune-sitemap-title">
+                                <a href="#cs-bureau" class="commune-sitemap-title-link">CS / Bureau<span class="commune-sitemap-dot">.</span></a>
+                            </h3>
+                        </div>
+                        <ul class="commune-sitemap-list list-unstyled" role="list">
+                            <li class="commune-sitemap-item level-2 has-children">
+                                <a href="#comite-syndical" class="commune-sitemap-link level-2 is-parent">
+                                    <span class="commune-sitemap-parent-label">Comité Syndical <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+                                </a>
+                                <ul class="commune-sitemap-sublist list-unstyled" role="list">
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#comite-rapports" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Rapports</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#comite-proces-verbaux" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Procès-verbaux</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="commune-sitemap-item level-2 has-children">
+                                <a href="#bureau" class="commune-sitemap-link level-2 is-parent">
+                                    <span class="commune-sitemap-parent-label">Bureau <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+                                </a>
+                                <ul class="commune-sitemap-sublist list-unstyled" role="list">
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#bureau-rapports" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Rapports</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#bureau-proces-verbaux" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Procès-verbaux</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Groupe : CST -->
+                    <div class="commune-sitemap-group">
+                        <div class="commune-sitemap-header">
+                            <h3 class="commune-sitemap-title">
+                                <a href="#cst" class="commune-sitemap-title-link">CST<span class="commune-sitemap-dot">.</span></a>
+                            </h3>
+                        </div>
+                        <ul class="commune-sitemap-list list-unstyled" role="list">
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#cst-presentation" class="commune-sitemap-link level-2">Présentation</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#cst-composition" class="commune-sitemap-link level-2">Composition</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#cst-reglement" class="commune-sitemap-link level-2">Règlement intérieur</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#cst-comptes-rendus" class="commune-sitemap-link level-2">Comptes-rendus</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#cst-representants" class="commune-sitemap-link level-2">Représentants du personnel</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#cst-archives" class="commune-sitemap-link level-2">Archives CT / CHSCT</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Groupe : L'Agence de demain -->
+                    <div class="commune-sitemap-group">
+                        <div class="commune-sitemap-header">
+                            <h3 class="commune-sitemap-title">
+                                <a href="#agence-demain" class="commune-sitemap-title-link">L'Agence de demain<span class="commune-sitemap-dot">.</span></a>
+                            </h3>
+                        </div>
+                        <ul class="commune-sitemap-list list-unstyled" role="list">
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#vos-createurs" class="commune-sitemap-link level-2">Vos CREA... teurs</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#atelier-18092023" class="commune-sitemap-link level-2">18/09/2023</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#atelier-02102023" class="commune-sitemap-link level-2">02/10/2023</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#atelier-23102023" class="commune-sitemap-link level-2">Ateliers du 23/10/2023</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#atelier-14112023" class="commune-sitemap-link level-2">Ateliers du 14/11/2023</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#atelier-20112023" class="commune-sitemap-link level-2">Ateliers du 20/11/2023</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#atelier-27112023" class="commune-sitemap-link level-2">Ateliers du 27/11/2023</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#atelier-28112023" class="commune-sitemap-link level-2">Ateliers du 28/11/2023</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#atelier-25012024" class="commune-sitemap-link level-2">Ateliers du 25/01/2024</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#atelier-26012024" class="commune-sitemap-link level-2">Ateliers du 26/01/2024</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#atelier-22032024" class="commune-sitemap-link level-2">22/03/2024</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Colonne 4 : Prévention -->
+                <div class="commune-sitemap-col">
+                    <div class="commune-sitemap-group">
+                        <div class="commune-sitemap-header">
+                            <h3 class="commune-sitemap-title">
+                                <a href="#prevention" class="commune-sitemap-title-link">Prévention<span class="commune-sitemap-dot">.</span></a>
+                            </h3>
+                        </div>
+                        <ul class="commune-sitemap-list list-unstyled" role="list">
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#acteurs-prevention" class="commune-sitemap-link level-2">Acteurs de la prévention</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2 has-children">
+                                <a href="#document-unique" class="commune-sitemap-link level-2 is-parent">
+                                    <span class="commune-sitemap-parent-label">Document unique <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+                                </a>
+                                <ul class="commune-sitemap-sublist list-unstyled" role="list">
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#duerp" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">DUERP</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#plan-actions" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Plan d'actions</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#prevention-rps" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Évaluation et prévention des RPS</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#registre-sante-securite" class="commune-sitemap-link level-2">Registre santé &amp; sécurité</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2">
+                                <a href="#dangers-graves" class="commune-sitemap-link level-2">Registre des dangers graves et imminents</a>
+                            </li>
+                            <li class="commune-sitemap-item level-2 has-children">
+                                <a href="#registre-unique" class="commune-sitemap-link level-2 is-parent">
+                                    <span class="commune-sitemap-parent-label">Registre unique <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+                                </a>
+                                <ul class="commune-sitemap-sublist list-unstyled" role="list">
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#fiche-accueil" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Fiche d'accueil</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#guide-risques-quotidien" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Guide de prévention des risques au quotidien</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#epi" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">EPI</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#notes-techniques-prevention" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Notes techniques</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="commune-sitemap-item level-2 has-children">
+                                <a href="#accident-incendie" class="commune-sitemap-link level-2 is-parent">
+                                    <span class="commune-sitemap-parent-label">En cas d'accident / incendie <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+                                </a>
+                                <ul class="commune-sitemap-sublist list-unstyled" role="list">
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#notice-securite" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Notice de sécurité</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#plans-evacuation" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Plans d'évacuation</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#liste-sst" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Liste SST</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#consignes" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Consignes</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#trousse-secours" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Trousse de secours</span>
+                                        </a>
+                                    </li>
+                                    <li class="commune-sitemap-item level-3">
+                                        <a href="#defibrillateur" class="commune-sitemap-link level-3">
+                                            <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                                            <span class="commune-sitemap-item-text">Défibrillateur</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </f:else>
+    </f:if>
+</nav>
+</html>

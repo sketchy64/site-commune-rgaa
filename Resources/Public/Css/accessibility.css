@@ -203,3 +203,56 @@ body.a11y-high-contrast input:focus-visible {
   background-color: #000000;
   color: #ffff00;
 }
+
+/* ==========================================================================
+   7. Plan du site accessible (RGAA 4.1.2)
+   ========================================================================== */
+.commune-sitemap-nav a:focus-visible {
+  outline: 3px solid var(--sauveterre-gold, #f5b21e) !important;
+  outline-offset: 2px !important;
+  border-radius: 2px;
+}
+
+body.a11y-high-contrast .commune-sitemap-wrapper {
+  background-color: #000000 !important;
+  border-color: #ffffff !important;
+}
+
+body.a11y-high-contrast .commune-sitemap-title,
+body.a11y-high-contrast .commune-sitemap-title-link {
+  color: #ffffff !important;
+}
+
+body.a11y-high-contrast .commune-sitemap-dot {
+  color: #ffff00 !important;
+}
+
+body.a11y-high-contrast .commune-sitemap-link.level-2 {
+  color: #00ffff !important;
+}
+
+body.a11y-high-contrast .commune-sitemap-link.level-2:hover,
+body.a11y-high-contrast .commune-sitemap-link.level-2:focus {
+  color: #ffff00 !important;
+}
+
+body.a11y-high-contrast .commune-sitemap-link.level-3 {
+  color: #e2e8f0 !important;
+}
+
+body.a11y-high-contrast .commune-sitemap-link.level-3:hover,
+body.a11y-high-contrast .commune-sitemap-link.level-3:focus {
+  color: #ffff00 !important;
+}
+
+body.a11y-high-contrast .commune-sitemap-icon {
+  color: #00ffff !important;
+}
+
+body.a11y-high-contrast .commune-sitemap-header {
+  border-bottom-color: #ffffff !important;
+}
+
+body.a11y-high-contrast .commune-sitemap-sublist {
+  border-left-color: #ffffff !important;
+}

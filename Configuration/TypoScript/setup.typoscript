@@ -443,6 +443,69 @@ page {
           }
         }
       }
+
+      # Plan du site complet pour la page d'accueil (Hiérarchisé jusqu'à 4 niveaux)
+      sitemapNavigation = HMENU
+      sitemapNavigation {
+        entryLevel = 0
+        1 = TMENU
+        1 {
+          expAll = 1
+          wrap = <div class="commune-sitemap-grid">|</div>
+          NO {
+            wrapItemAndSub = <div class="commune-sitemap-group"><div class="commune-sitemap-header">|</div></div>
+            stdWrap.wrap = <h3 class="commune-sitemap-title">|</h3>
+            ATagParams = class="commune-sitemap-title-link"
+          }
+          IFSUB = 1
+          IFSUB {
+            wrapItemAndSub = <div class="commune-sitemap-group"><div class="commune-sitemap-header">|</div></div>
+            stdWrap.wrap = <h3 class="commune-sitemap-title">|</h3>
+            ATagParams = class="commune-sitemap-title-link"
+          }
+        }
+        2 = TMENU
+        2 {
+          expAll = 1
+          wrap = <ul class="commune-sitemap-list list-unstyled" role="list">|</ul>
+          NO {
+            wrapItemAndSub = <li class="commune-sitemap-item level-2">|</li>
+            ATagParams = class="commune-sitemap-link level-2"
+          }
+          IFSUB = 1
+          IFSUB {
+            wrapItemAndSub = <li class="commune-sitemap-item level-2 has-children">|</li>
+            linkWrap = <span class="commune-sitemap-parent-label">| <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
+            ATagParams = class="commune-sitemap-link level-2 is-parent"
+          }
+        }
+        3 = TMENU
+        3 {
+          expAll = 1
+          wrap = <ul class="commune-sitemap-sublist list-unstyled" role="list">|</ul>
+          NO {
+            wrapItemAndSub = <li class="commune-sitemap-item level-3">|</li>
+            linkWrap = <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span><span class="commune-sitemap-item-text">|</span>
+            ATagParams = class="commune-sitemap-link level-3"
+          }
+          IFSUB = 1
+          IFSUB {
+            wrapItemAndSub = <li class="commune-sitemap-item level-3 has-children">|</li>
+            linkWrap = <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span><span class="commune-sitemap-parent-label">| <span class="commune-sitemap-caret-sm" aria-hidden="true">▾</span></span>
+            ATagParams = class="commune-sitemap-link level-3 is-parent"
+          }
+        }
+        4 = TMENU
+        4 {
+          expAll = 1
+          wrap = <ul class="commune-sitemap-subsublist list-unstyled" role="list">|</ul>
+          NO {
+            wrapItemAndSub = <li class="commune-sitemap-item level-4">|</li>
+            linkWrap = <span class="commune-sitemap-icon-dot" aria-hidden="true">•</span><span class="commune-sitemap-item-text">|</span>
+            ATagParams = class="commune-sitemap-link level-4"
+          }
+        }
+      }
     }
   }
 }

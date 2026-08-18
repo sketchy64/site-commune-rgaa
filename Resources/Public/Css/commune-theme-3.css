@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Site Commune RGAA - Thème 3 Pyrénées / Montagne
  * Charte graphique Pyrénées / Montagne & Terroir (https://mairiesauveterre.fr/fr)
  * Couleurs : Ardoise Bleutée (#2D3748), Ocre / Terracotta (#C05621), Vert Sapin (#1E4D2B)
@@ -2461,4 +2461,239 @@ figcaption,
   background-color: var(--sauveterre-green-light);
   color: var(--sauveterre-green-dark);
   border-color: var(--sauveterre-green);
+}
+
+/* ==============================================================================
+   14. Plan du Site (Sitemap Section) - Hiérarchie typographique & Icônes
+   ============================================================================== */
+.commune-sitemap-section {
+  background-color: var(--commune-bg-light);
+  border-top: 1px solid var(--commune-border);
+  border-bottom: 1px solid var(--commune-border);
+}
+
+.commune-sitemap-wrapper {
+  background-color: #ffffff;
+  border: 1px solid var(--commune-border);
+  border-radius: 12px;
+  padding: 2.25rem 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.commune-sitemap-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5rem 2rem;
+  align-items: start;
+}
+
+@media (max-width: 1199.98px) and (min-width: 768px) {
+  .commune-sitemap-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.25rem 1.75rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .commune-sitemap-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .commune-sitemap-wrapper {
+    padding: 1.5rem 1.25rem;
+  }
+}
+
+.commune-sitemap-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.commune-sitemap-group {
+  margin-bottom: 0.5rem;
+  break-inside: avoid;
+}
+
+.commune-sitemap-header {
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 2px solid var(--sauveterre-green-light);
+}
+
+/* Niveau 1 : Titres de grandes rubriques */
+.commune-sitemap-title {
+  font-family: var(--commune-font-title);
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: var(--commune-text-main);
+  margin-bottom: 0;
+  letter-spacing: -0.2px;
+  line-height: 1.3;
+}
+
+.commune-sitemap-title-link {
+  color: var(--commune-text-main);
+  text-decoration: none !important;
+  transition: color 0.2s ease;
+}
+
+.commune-sitemap-title-link:hover,
+.commune-sitemap-title-link:focus {
+  color: var(--sauveterre-green);
+}
+
+.commune-sitemap-dot {
+  color: var(--sauveterre-gold);
+  font-weight: 800;
+  margin-left: 1px;
+}
+
+/* Listes et éléments */
+.commune-sitemap-list {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.commune-sitemap-item {
+  margin-bottom: 0.32rem;
+  line-height: 1.45;
+}
+
+/* Niveau 2 : Sous-rubriques et liens directs */
+.commune-sitemap-link.level-2 {
+  font-family: var(--commune-font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--sauveterre-green);
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.15rem 0;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.commune-sitemap-link.level-2:hover,
+.commune-sitemap-link.level-2:focus {
+  color: var(--sauveterre-green-dark);
+  text-decoration: underline !important;
+  text-underline-offset: 2px;
+}
+
+.commune-sitemap-parent-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.commune-sitemap-caret {
+  font-size: 0.72rem;
+  color: var(--sauveterre-green);
+  opacity: 0.85;
+  transition: transform 0.2s ease;
+}
+
+.commune-sitemap-link.level-2:hover .commune-sitemap-caret {
+  transform: translateY(1px);
+  color: var(--sauveterre-green-dark);
+}
+
+/* Niveau 3 : Sous-pages / Feuilles avec icônes chevrons */
+.commune-sitemap-sublist {
+  padding-left: 0.5rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.6rem;
+  list-style: none;
+  border-left: 1px dashed rgba(60, 77, 94, 0.18);
+}
+
+.commune-sitemap-item.level-3 {
+  margin-bottom: 0.25rem;
+  padding-left: 0.5rem;
+}
+
+.commune-sitemap-link.level-3 {
+  font-family: var(--commune-font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--commune-text-muted);
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.12rem 0;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.commune-sitemap-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+  color: var(--sauveterre-green);
+  flex-shrink: 0;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.commune-sitemap-icon svg {
+  width: 11px;
+  height: 11px;
+}
+
+.commune-sitemap-caret-sm {
+  font-size: 0.65rem;
+  color: var(--sauveterre-green);
+  margin-left: 0.25rem;
+}
+
+.commune-sitemap-link.level-3:hover,
+.commune-sitemap-link.level-3:focus {
+  color: var(--sauveterre-green-dark);
+  text-decoration: underline !important;
+  text-underline-offset: 2px;
+}
+
+.commune-sitemap-link.level-3:hover .commune-sitemap-icon {
+  transform: translateX(3px);
+  color: var(--sauveterre-gold);
+}
+
+/* Niveau 4 : Sous-sous-pages */
+.commune-sitemap-subsublist {
+  padding-left: 0.75rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.4rem;
+  list-style: none;
+}
+
+.commune-sitemap-item.level-4 {
+  margin-bottom: 0.2rem;
+  padding-left: 0.4rem;
+}
+
+.commune-sitemap-link.level-4 {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: #6c757d;
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color 0.15s ease;
+}
+
+.commune-sitemap-icon-dot {
+  color: var(--sauveterre-gold);
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.commune-sitemap-link.level-4:hover,
+.commune-sitemap-link.level-4:focus {
+  color: var(--sauveterre-green-dark);
+  text-decoration: underline !important;
 }
