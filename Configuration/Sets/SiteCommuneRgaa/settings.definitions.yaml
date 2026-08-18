@@ -5,6 +5,7 @@ categories:
   commune_root:
     label: 'Site Collectivité RGAA'
     description: 'Configuration globale et personnalisation du portail communal'
+    before: '*'
 
   # ============================================================================
   # NIVEAU 2 : SOUS-CATÉGORIES
