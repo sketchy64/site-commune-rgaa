@@ -527,18 +527,118 @@ h1.page-title::before,
   max-width: 100% !important;
 }
 
-.commune-hero-section .carousel-inner,
-.commune-hero-section .carousel-item,
-.commune-hero-section .carousel-backgroundimage-container,
-.commune-hero-section .carousel-backgroundimage,
-.commune-hero-section img {
+/* Stabilisation stricte de la hauteur pour éliminer tout saut ou variation lors des transitions */
+.commune-hero-section .carousel-inner {
+  position: relative !important;
+  width: 100% !important;
+  height: 500px !important;
+  min-height: 500px !important;
+  max-height: 500px !important;
+  overflow: hidden !important;
   margin: 0 !important;
+  padding: 0 !important;
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
+}
+
+.commune-hero-section .carousel-item {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
   width: 100% !important;
-  max-height: 520px;
-  object-fit: cover;
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  float: none !important;
+  display: block !important;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out !important;
+}
+
+.commune-hero-section .carousel-item.active,
+.commune-hero-section .carousel-item.carousel-item-next.carousel-item-start,
+.commune-hero-section .carousel-item.carousel-item-prev.carousel-item-end {
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 2 !important;
+}
+
+.commune-hero-section .carousel-item.active.carousel-item-start,
+.commune-hero-section .carousel-item.active.carousel-item-end {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  z-index: 1 !important;
+  transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out !important;
+}
+
+.commune-hero-section .carousel-backgroundimage-container,
+.commune-hero-section .carousel-backgroundimage {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.commune-hero-section .carousel img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Hauteurs responsives fixes pour le bandeau d'accueil */
+@media (min-width: 1200px) {
+  .commune-hero-section .carousel-inner {
+    height: 500px !important;
+    min-height: 500px !important;
+    max-height: 500px !important;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .commune-hero-section .carousel-inner {
+    height: 440px !important;
+    min-height: 440px !important;
+    max-height: 440px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .commune-hero-section .carousel-inner {
+    height: 380px !important;
+    min-height: 380px !important;
+    max-height: 380px !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .commune-hero-section .carousel-inner {
+    height: 280px !important;
+    min-height: 280px !important;
+    max-height: 280px !important;
+  }
 }
 
 .commune-interactive-map-section {
