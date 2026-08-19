@@ -18,6 +18,13 @@
                 <f:case value="rows">
                     <!-- Mode Liste en ligne (Image à gauche, texte à droite) -->
                     <div class="commune-news-list-container commune-news-list-rows">
+                        <!-- Pagination accessible RGAA (haut si activée) -->
+                        <f:if condition="{pagination}">
+                            <f:if condition="{settings.list.paginate.insertAbove}">
+                                <f:render partial="List/Pagination" arguments="{pagination: pagination.pagination -> f:or(alternative: pagination), paginator: pagination.paginator -> f:or(alternative: paginator)}" />
+                            </f:if>
+                        </f:if>
+
                         <div class="row g-4">
                             <f:for each="{news}" as="newsItem" iteration="iterator">
                                 <div class="col-12">
@@ -26,9 +33,11 @@
                             </f:for>
                         </div>
 
-                        <!-- Pagination accessible RGAA -->
-                        <f:if condition="{settings.list.paginate.insertAbove}">
-                            <f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+                        <!-- Pagination accessible RGAA (bas) -->
+                        <f:if condition="{pagination}">
+                            <f:if condition="{settings.list.paginate.insertBelow} || !{settings.list.paginate.insertAbove}">
+                                <f:render partial="List/Pagination" arguments="{pagination: pagination.pagination -> f:or(alternative: pagination), paginator: pagination.paginator -> f:or(alternative: paginator)}" />
+                            </f:if>
                         </f:if>
                     </div>
                 </f:case>
@@ -36,6 +45,13 @@
                 <f:defaultCase>
                     <!-- Mode par défaut : En colonnes / Grille de cartes -->
                     <div class="commune-news-list-container commune-news-list-cards">
+                        <!-- Pagination accessible RGAA (haut si activée) -->
+                        <f:if condition="{pagination}">
+                            <f:if condition="{settings.list.paginate.insertAbove}">
+                                <f:render partial="List/Pagination" arguments="{pagination: pagination.pagination -> f:or(alternative: pagination), paginator: pagination.paginator -> f:or(alternative: paginator)}" />
+                            </f:if>
+                        </f:if>
+
                         <div class="row g-4">
                             <f:for each="{news}" as="newsItem" iteration="iterator">
                                 <div class="col-lg-4 col-md-6 col-12 d-flex">
@@ -44,18 +60,24 @@
                             </f:for>
                         </div>
 
-                        <!-- Pagination accessible RGAA -->
-                        <f:if condition="{settings.list.paginate.insertAbove}">
-                            <f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+                        <!-- Pagination accessible RGAA (bas) -->
+                        <f:if condition="{pagination}">
+                            <f:if condition="{settings.list.paginate.insertBelow} || !{settings.list.paginate.insertAbove}">
+                                <f:render partial="List/Pagination" arguments="{pagination: pagination.pagination -> f:or(alternative: pagination), paginator: pagination.paginator -> f:or(alternative: paginator)}" />
+                            </f:if>
                         </f:if>
                     </div>
                 </f:defaultCase>
             </f:switch>
         </f:then>
         <f:else>
-            <div class="alert alert-info" role="status">
-                <i class="bi bi-info-circle me-2" aria-hidden="true"></i>
-                <f:translate key="list_nonewsfound" default="Aucune actualité disponible pour le moment." />
+            <div class="alert alert-info d-flex align-items-center gap-2" role="status">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span><f:translate key="list_nonewsfound" default="Aucune actualité disponible pour le moment." /></span>
             </div>
         </f:else>
     </f:if>

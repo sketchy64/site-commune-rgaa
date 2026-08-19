@@ -1,117 +1,128 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
-      xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
+      xmlns:rgaa="http://typo3.org/ns/Apgl64/SiteCommuneRgaa/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<f:layout name="General" />
+<f:layout name="Detail" />
 
 <f:section name="content">
     <f:if condition="{newsItem}">
-        <article class="commune-news-detail-container" itemscope="itemscope" itemtype="http://schema.org/Article">
-            <!-- En-tête de l'actualité -->
-            <header class="news-detail-header mb-4">
+        <article class="commune-news-detail-container" aria-labelledby="news-detail-title">
+            <header class="news-detail-header mb-4 pb-3 border-bottom">
                 <f:if condition="{newsItem.firstCategory}">
                     <span class="badge news-category-badge mb-2">
                         {newsItem.firstCategory.title}
                     </span>
                 </f:if>
-
-                <h2 class="h2 page-title fw-bold text-primary-commune mb-3" itemprop="headline">
+                <h2 id="news-detail-title" class="page-title fw-bold text-dark mb-3">
                     {newsItem.title}
                 </h2>
-
-                <div class="news-detail-meta text-muted small d-flex flex-wrap align-items-center gap-3 pb-3 border-bottom">
-                    <span class="d-flex align-items-center gap-2">
-                        <svg class="news-calendar-icon flex-shrink-0" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                
+                <div class="news-detail-meta text-muted d-flex flex-wrap align-items-center gap-3">
+                    <!-- Date de publication avec icône SVG calendrier -->
+                    <span class="d-inline-flex align-items-center gap-2">
+                        <svg class="news-calendar-icon flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                             <line x1="16" y1="2" x2="16" y2="6"></line>
                             <line x1="8" y1="2" x2="8" y2="6"></line>
                             <line x1="3" y1="10" x2="21" y2="10"></line>
                         </svg>
-                        <time datetime="{f:format.date(date: newsItem.datetime, format: 'Y-m-d')}" itemprop="datePublished">
+                        <time datetime="{f:format.date(date: newsItem.datetime, format: 'Y-m-d')}">
                             Publié le {f:format.date(date: newsItem.datetime, format: '%d %B %Y')}
                         </time>
                     </span>
+
                     <f:if condition="{newsItem.author}">
-                        <span class="d-flex align-items-center gap-2">
-                            <svg class="flex-shrink-0 text-primary-commune" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <span class="news-author d-inline-flex align-items-center gap-1">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg>
-                            <span itemprop="author">{newsItem.author}</span>
+                            <span>Par {newsItem.author}</span>
                         </span>
                     </f:if>
                 </div>
             </header>
 
-            <!-- Contenu de l'actualité avec image flottante à droite en affichage bureau -->
-            <div class="news-detail-content-wrapper clearfix mb-5">
-                <f:variable name="detailMedia" value="{f:if(condition: newsItem.mediaNonPreviews, then: newsItem.mediaNonPreviews.0, else: newsItem.mediaPreviews.0)}" />
+            <div class="news-detail-main-content clearfix mb-5">
+                <!-- Image principale flottée à droite sur bureau avec Lightbox cliquable -->
+                <f:if condition="{newsItem.mediaNonPreviews}">
+                    <f:then>
+                        <f:variable name="detailMedia" value="{newsItem.mediaNonPreviews.0}" />
+                    </f:then>
+                    <f:else>
+                        <f:if condition="{newsItem.mediaPreviews}">
+                            <f:variable name="detailMedia" value="{newsItem.mediaPreviews.0}" />
+                        </f:if>
+                    </f:else>
+                </f:if>
+
                 <f:if condition="{detailMedia}">
-                    <!-- Image principale avec Lightbox (alignée à droite sur bureau) -->
-                    <div class="news-detail-media news-detail-media-float float-md-end ms-md-4 mb-4">
-                        <figure class="figure w-100 mb-0">
-                            <a href="{f:uri.image(image: detailMedia, maxWidth: 1920, maxHeight: 1200)}"
-                               class="lightbox d-block position-relative news-detail-lightbox-link rounded overflow-hidden shadow-sm"
-                               data-lightbox="lightbox-news-{newsItem.uid}"
-                               data-gallery="news-gallery-{newsItem.uid}"
-                               data-title="{f:if(condition: detailMedia.originalResource.title, then: detailMedia.originalResource.title, else: newsItem.title)}"
-                               data-description="{detailMedia.originalResource.description}"
-                               aria-label="Agrandir l'image : {f:if(condition: detailMedia.originalResource.alternative, then: detailMedia.originalResource.alternative, else: newsItem.title)}"
-                               title="Cliquer pour agrandir l'image dans une lightbox">
-                                
-                                <f:media file="{detailMedia}" width="550c" height="380c" class="figure-img img-fluid rounded w-100 mb-0 news-detail-img" alt="{f:if(condition: detailMedia.originalResource.alternative, then: detailMedia.originalResource.alternative, else: newsItem.title)}" />
-                                
-                                <span class="news-lightbox-badge" aria-hidden="true" title="Agrandir l'image">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="15 3 21 3 21 9"></polyline>
-                                        <polyline points="9 21 3 21 3 15"></polyline>
-                                        <line x1="21" y1="3" x2="14" y2="10"></line>
-                                        <line x1="3" y1="21" x2="10" y2="14"></line>
-                                    </svg>
-                                </span>
-                            </a>
-                            <f:if condition="{detailMedia.originalResource.description}">
-                                <figcaption class="figure-caption text-muted mt-2 small">
-                                    {detailMedia.originalResource.description}
-                                </figcaption>
-                            </f:if>
-                        </figure>
-                    </div>
+                    <figure class="news-detail-media-float float-md-end ms-md-4 mb-4" role="group" aria-label="Illustration de l'actualité">
+                        <a href="{f:uri.image(image: detailMedia, maxWidth: 1920, maxHeight: 1200)}"
+                           class="lightbox news-detail-lightbox-link shadow-sm d-block"
+                           data-lightbox="lightbox-news-{newsItem.uid}"
+                           data-gallery="news-gallery-{newsItem.uid}"
+                           data-title="{f:if(condition: detailMedia.originalResource.title, then: detailMedia.originalResource.title, else: newsItem.title)}"
+                           data-description="{detailMedia.originalResource.description}"
+                           aria-label="Agrandir l'image : {f:if(condition: detailMedia.originalResource.alternative, then: detailMedia.originalResource.alternative, else: newsItem.title)} (ouvre une visionneuse plein écran)"
+                           title="Cliquer pour agrandir l'image">
+                            <f:media file="{detailMedia}" width="700" height="460c" class="img-fluid rounded news-detail-img" alt="{f:if(condition: detailMedia.originalResource.alternative, then: detailMedia.originalResource.alternative, else: newsItem.title)}" />
+                            <span class="news-lightbox-badge" aria-hidden="true">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                                </svg>
+                            </span>
+                        </a>
+                        <f:if condition="{detailMedia.originalResource.description}">
+                            <figcaption class="figure-caption text-muted mt-2 small">
+                                {detailMedia.originalResource.description}
+                            </figcaption>
+                        </f:if>
+                    </figure>
                 </f:if>
 
                 <!-- Chapô / Teaser -->
                 <f:if condition="{newsItem.teaser}">
-                    <div class="lead fw-semibold text-dark mb-4 news-detail-teaser" itemprop="description">
+                    <div class="news-detail-teaser lead fw-semibold text-secondary mb-4">
                         <f:format.html>{newsItem.teaser}</f:format.html>
                     </div>
                 </f:if>
 
-                <!-- Corps de l'actualité -->
-                <div class="news-detail-body" itemprop="articleBody">
-                    <f:format.html>{newsItem.bodytext}</f:format.html>
-                </div>
+                <!-- Corps de texte -->
+                <f:if condition="{newsItem.bodytext}">
+                    <div class="news-detail-body typography-flow">
+                        <f:format.html>{newsItem.bodytext}</f:format.html>
+                    </div>
+                </f:if>
             </div>
 
-            <!-- Fichiers joints / Téléchargements éventuels -->
+            <!-- Fichiers joints / Documents à télécharger conformes RGAA -->
             <f:if condition="{newsItem.relatedFiles}">
-                <div class="news-related-files mb-4">
-                    <h3 class="h5 mb-3 fw-bold">Documents à télécharger</h3>
-                    <ul class="commune-uploads-list ce-uploads" role="list">
+                <div class="news-related-files card border-0 bg-light p-4 rounded-3 mb-5" role="region" aria-labelledby="related-files-title">
+                    <h3 id="related-files-title" class="h5 fw-bold mb-3 d-flex align-items-center gap-2">
+                        <svg class="file-section-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        <span>Documents associés à télécharger</span>
+                    </h3>
+                    <ul class="list-unstyled mb-0 d-flex flex-column gap-2" role="list">
                         <f:for each="{newsItem.relatedFiles}" as="relatedFile">
-                            <li class="commune-upload-item">
-                                <a href="{relatedFile.originalResource.publicUrl}"
+                            <li>
+                                <a href="{relatedFile.originalResource.publicUrl}" 
+                                   class="commune-upload-item d-flex align-items-center justify-content-between p-3 rounded bg-white shadow-sm text-decoration-none border"
                                    target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="commune-upload-link"
-                                   aria-label="{rgaa:a11y.ariaLabel(action: 'Télécharger', context: '{relatedFile.originalResource.title -> f:or(alternative: relatedFile.originalResource.name)}', extra: '{relatedFile.originalResource.extension -> f:format.case(mode: \'upper\')}, {relatedFile.originalResource.size -> f:format.bytes(decimals: 1)}')}">
+                                   aria-label="Télécharger {relatedFile.originalResource.title -> f:or(alternative: relatedFile.originalResource.name)} ({relatedFile.originalResource.extension -> f:format.case(mode: 'upper')}, {relatedFile.originalResource.size -> f:format.bytes(decimals: 1)}) (ouvre une nouvelle fenêtre)">
                                     
-                                    <div class="commune-upload-visual flex-shrink-0" aria-hidden="true">
-                                        <f:render partial="Media/FileIcon" arguments="{extension: relatedFile.originalResource.extension}" />
-                                    </div>
-
-                                    <div class="commune-upload-content flex-grow-1">
-                                        <span class="commune-upload-title">
+                                    <div class="commune-upload-info d-flex flex-column">
+                                        <span class="commune-upload-title fw-bold text-dark">
                                             {relatedFile.originalResource.title -> f:or(alternative: relatedFile.originalResource.name)}
                                         </span>
                                         <f:if condition="{relatedFile.originalResource.description}">
@@ -150,7 +161,10 @@
             <!-- Bouton retour aux actualités -->
             <div class="pt-4 border-top">
                 <a href="javascript:history.back()" class="btn btn-outline-primary d-inline-flex align-items-center gap-2">
-                    <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                    <svg class="news-btn-icon flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
                     <span>Retour aux actualités</span>
                 </a>
             </div>

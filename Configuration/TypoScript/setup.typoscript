@@ -1,37 +1,34 @@
 # ==============================================================================
-# Setup TypoScript : Site Commune RGAA (Surcouche Bootstrap Package & News)
+# Configuration TypoScript Globale - Site Commune RGAA
 # ==============================================================================
 
+# Configuration du moteur de rendu de page (PAGE)
 page = PAGE
 page {
-  # Configuration HTML5 & Métadonnées mobiles / PWA
-  config {
-    htmlTag_setParams = lang="fr" dir="ltr"
-    doctype = html5
-    metaCharset = utf-8
-    viewport = width=device-width, initial-scale=1, shrink-to-fit=no
-    # Désactivation de la compression et fusion CSS/JS pour faciliter le débogage et le rechargement direct
-    compressCss = 0
-    concatenateCss = 0
-    compressJs = 0
-    concatenateJs = 0
-  }
-
-  # Métadonnées pour Application Mobile (PWA Android / iOS)
+  # Balise meta viewport pour le responsive design (Critère 10.4 RGAA)
   meta {
+    viewport = width=device-width, initial-scale=1.0, shrink-to-fit=no
+    robots = index,follow
+    generator = TYPO3 CMS - Site Commune RGAA
+    description = Site officiel de la commune - Conforme aux normes d'accessibilité numérique RGAA 4.1.2
     theme-color = #00703A
+    mobile-web-app-capable = yes
     apple-mobile-web-app-capable = yes
-    apple-mobile-web-app-status-bar-style = black-translucent
-    apple-mobile-web-app-title = {$commune.pwa_app_name}
-    application-name = {$commune.pwa_app_name}
+    apple-mobile-web-app-status-bar-style = default
+    apple-mobile-web-app-title = Sauveterre
+    application-name = Sauveterre-de-Béarn
   }
 
-  # Déclaration du Web App Manifest et balise de débogage du thème
+  # Inclusion du Manifest PWA
   headerData {
     10 = TEXT
     10.value = <link rel="manifest" href="/manifest.webmanifest">
-    99 = TEXT
-    99 {
+    20 = TEXT
+    20.value = <link rel="apple-touch-icon" href="/typo3conf/ext/site_commune_rgaa/Resources/Public/Icons/icon-192x192.png">
+    
+    # Inclusion dynamique de la feuille de style du thème actif (depuis les constantes)
+    30 = TEXT
+    30 {
       data = site:settings:commune.theme_css
       ifEmpty.value = {$commune.theme_css}
       wrap = <!-- Theme actif: | -->
@@ -61,6 +58,10 @@ page {
     commune_a11y_carousel {
       defer = 1
     }
+    commune_a11y_lightbox = EXT:site_commune_rgaa/Resources/Public/JavaScript/lightbox-a11y.js
+    commune_a11y_lightbox {
+      defer = 1
+    }
     commune_pwa_notify = EXT:site_commune_rgaa/Resources/Public/JavaScript/pwa-notifications.js
     commune_pwa_notify {
       defer = 1
@@ -75,486 +76,467 @@ page {
       cObject = CASE
       cObject {
         key.data = pagelayout
-
+        
+        # Gabarit Page d'accueil
         pagets__commune_home = TEXT
         pagets__commune_home.value = Home
-
-        commune_home = TEXT
-        commune_home.value = Home
-
-        pagets__commune_subpage = TEXT
-        pagets__commune_subpage.value = Subpage
-
-        commune_subpage = TEXT
-        commune_subpage.value = Subpage
-
-        pagets__commune_default = TEXT
-        pagets__commune_default.value = Default
-
-        commune_default = TEXT
-        commune_default.value = Default
-
+        
+        # Gabarit Page standard (Contenu + Sous-navigation latérale)
+        pagets__commune_standard = TEXT
+        pagets__commune_standard.value = Standard
+        
+        # Gabarit Page pleine largeur
+        pagets__commune_fullwidth = TEXT
+        pagets__commune_fullwidth.value = FullWidth
+        
+        # Gabarit Page Démarches & Services
+        pagets__commune_demarches = TEXT
+        pagets__commune_demarches.value = Demarches
+        
+        # Gabarit Page Annuaire des Élus / Services
+        pagets__commune_directory = TEXT
+        pagets__commune_directory.value = Directory
+        
+        # Gabarit Page Agenda / Événements
+        pagets__commune_events = TEXT
+        pagets__commune_events.value = Events
+        
+        # Gabarit Page Publications / Délibérations (Documents téléchargeables RGAA)
+        pagets__commune_publications = TEXT
+        pagets__commune_publications.value = Publications
+        
+        # Gabarit par défaut
         default = TEXT
-        default.value = Default
+        default.value = Standard
       }
-      ifEmpty = Default
     }
-
+    
     templateRootPaths {
-      10 = EXT:bootstrap_package/Resources/Private/Templates/Page/
-      20 = {$page.theme.templateRootPath}
+      0 = EXT:site_commune_rgaa/Resources/Private/Templates/Page/
+      1 = {$commune.templates.pageRootPath}
     }
-
+    
     partialRootPaths {
-      10 = EXT:bootstrap_package/Resources/Private/Partials/Page/
-      20 = {$page.theme.partialRootPath}
+      0 = EXT:site_commune_rgaa/Resources/Private/Partials/Page/
+      1 = {$commune.partials.pageRootPath}
     }
-
+    
     layoutRootPaths {
-      10 = EXT:bootstrap_package/Resources/Private/Layouts/Page/
-      20 = {$page.theme.layoutRootPath}
+      0 = EXT:site_commune_rgaa/Resources/Private/Layouts/Page/
+      1 = {$commune.layouts.pageRootPath}
     }
-
-    # Processeurs de données pour les menus et arborescences (TYPO3 v12/v13)
-    dataProcessing {
-      10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
-      10 {
-        special = directory
-        special.value.data = site:rootPageId
-        levels = 4
-        expandAll = 1
-        includeSpacer = 0
-        as = sitemapTree
-        excludeDoktypes = 199,254
-      }
-    }
-
-    # Variables injectées dans les templates Fluid
+    
+    # Variables passées automatiquement à tous les gabarits Fluid
     variables {
-      # Thème graphique sélectionné (priorité aux réglages de site, puis constantes)
-      communeTheme = TEXT
-      communeTheme {
-        data = site:settings:commune.theme_css
-        ifEmpty.data = site:settings.commune.theme_css
-        ifEmpty.ifEmpty.value = {$commune.theme_css}
-      }
-
-      # Logo et personnalisation de marque
-      communeLogoFile = TEXT
-      communeLogoFile.value = {$commune.logo_file}
-      communeLogoFile.override.data = site:commune.logo_file
-
-      communeLogoHeight = TEXT
-      communeLogoHeight.value = {$commune.logo_height}
-      communeLogoHeight.override.data = site:commune.logo_height
-
-      communeHeaderHideTitle = TEXT
-      communeHeaderHideTitle.value = {$commune.header_hide_title}
-      communeHeaderHideTitle.override.data = site:commune.header_hide_title
-
-      communeHeaderHideSlogan = TEXT
-      communeHeaderHideSlogan.value = {$commune.header_hide_slogan}
-      communeHeaderHideSlogan.override.data = site:commune.header_hide_slogan
-
-      # Données de la commune
-      communeNom = TEXT
-      communeNom.value = {$commune.nom}
-      communeNom.override.data = site:commune.nom
-
+      # Informations sur la commune issues des constantes TypoScript
+      communeName = TEXT
+      communeName.value = {$commune.name}
+      
       communeSlogan = TEXT
       communeSlogan.value = {$commune.slogan}
-      communeSlogan.override.data = site:commune.slogan
-
-      communeDepartement = TEXT
-      communeDepartement.value = {$commune.departement}
-      communeDepartement.override.data = site:commune.departement
-
-      communeAdresse = TEXT
-      communeAdresse.value = {$commune.adresse}
-      communeAdresse.override.data = site:commune.adresse
-
-      communeTelephone = TEXT
-      communeTelephone.value = {$commune.telephone}
-      communeTelephone.override.data = site:commune.telephone
-
+      
+      communeDepartment = TEXT
+      communeDepartment.value = {$commune.department}
+      
+      communeLogo = TEXT
+      communeLogo.value = {$commune.logo}
+      
+      communeAddress = TEXT
+      communeAddress.value = {$commune.contact.address}
+      
+      communePostalCode = TEXT
+      communePostalCode.value = {$commune.contact.postalCode}
+      
+      communeCity = TEXT
+      communeCity.value = {$commune.contact.city}
+      
+      communePhone = TEXT
+      communePhone.value = {$commune.contact.phone}
+      
       communeEmail = TEXT
-      communeEmail.value = {$commune.email}
-      communeEmail.override.data = site:commune.email
+      communeEmail.value = {$commune.contact.email}
+      
+      communeOpeningHours = TEXT
+      communeOpeningHours.value = {$commune.contact.openingHours}
+      
+      communeMayorName = TEXT
+      communeMayorName.value = {$commune.mayor.name}
+      
+      communeMayorPhoto = TEXT
+      communeMayorPhoto.value = {$commune.mayor.photo}
+      
+      communeMayorMessage = TEXT
+      communeMayorMessage.value = {$commune.mayor.message}
+      
+      communeA11yStatus = TEXT
+      communeA11yStatus.value = {$commune.a11y.status}
+      
+      communeA11yRate = TEXT
+      communeA11yRate.value = {$commune.a11y.complianceRate}
+      
+      communeEmergencySamu = TEXT
+      communeEmergencySamu.value = {$commune.emergency.samu}
+      
+      communeEmergencyPolice = TEXT
+      communeEmergencyPolice.value = {$commune.emergency.police}
+      
+      communeEmergencyPompiers = TEXT
+      communeEmergencyPompiers.value = {$commune.emergency.pompiers}
+      
+      communeEmergencyEurope = TEXT
+      communeEmergencyEurope.value = {$commune.emergency.europe}
+      
+      communeEmergencySourds = TEXT
+      communeEmergencySourds.value = {$commune.emergency.sourds}
 
-      communeHoraires = TEXT
-      communeHoraires.value = {$commune.horaires}
-      communeHoraires.override.data = site:commune.horaires
+      # Paramètres d'activation des fonctionnalités
+      enableEmergencyBanner = TEXT
+      enableEmergencyBanner.value = {$commune.enableEmergencyBanner}
+      
+      enableA11yToolbar = TEXT
+      enableA11yToolbar.value = {$commune.enableA11yToolbar}
+      
+      enablePwa = TEXT
+      enablePwa.value = {$commune.enablePwa}
 
-      # Titres et visibilité des sections de la page d'accueil
-      communeHomeQuickaccessTitle = TEXT
-      communeHomeQuickaccessTitle.value = {$commune.home_quickaccess_title}
-      communeHomeQuickaccessTitle.override.data = site:commune.home_quickaccess_title
+      enablePushNotifications = TEXT
+      enablePushNotifications.value = {$commune.enablePushNotifications}
+      
+      enableQuickAccess = TEXT
+      enableQuickAccess.value = {$commune.enableQuickAccess}
+      
+      enableInteractiveMap = TEXT
+      enableInteractiveMap.value = {$commune.enableInteractiveMap}
+      
+      enableUpcomingEvents = TEXT
+      enableUpcomingEvents.value = {$commune.enableUpcomingEvents}
+      
+      enableSocialWall = TEXT
+      enableSocialWall.value = {$commune.enableSocialWall}
 
-      communeHomeQuickaccessHideTitle = TEXT
-      communeHomeQuickaccessHideTitle.value = {$commune.home_quickaccess_hide_title}
-      communeHomeQuickaccessHideTitle.override.data = site:commune.home_quickaccess_hide_title
+      # Section actualités à la une en page d'accueil
+      enableFeaturedNews = TEXT
+      enableFeaturedNews.value = {$commune.enableFeaturedNews}
 
-      communeHomeEditoTitle = TEXT
-      communeHomeEditoTitle.value = {$commune.home_edito_title}
-      communeHomeEditoTitle.override.data = site:commune.home_edito_title
+      featuredNewsTitle = TEXT
+      featuredNewsTitle.value = {$commune.featuredNews.title}
 
-      communeHomeEditoHideTitle = TEXT
-      communeHomeEditoHideTitle.value = {$commune.home_edito_hide_title}
-      communeHomeEditoHideTitle.override.data = site:commune.home_edito_hide_title
-
-      # Titre et visibilité de la section Actualités à la une (Accueil)
-      communeHomeFeaturedNewsTitle = TEXT
-      communeHomeFeaturedNewsTitle.value = {$commune.home_featured_news_title}
-      communeHomeFeaturedNewsTitle.override.data = site:commune.home_featured_news_title
-
-      communeHomeFeaturedNewsHideTitle = TEXT
-      communeHomeFeaturedNewsHideTitle.value = {$commune.home_featured_news_hide_title}
-      communeHomeFeaturedNewsHideTitle.override.data = site:commune.home_featured_news_hide_title
-
-      communeHomeFeaturedNewsHideSection = TEXT
-      communeHomeFeaturedNewsHideSection.value = {$commune.home_featured_news_hide_section}
-      communeHomeFeaturedNewsHideSection.override.data = site:commune.home_featured_news_hide_section
-
-      communeHomeNewsTitle = TEXT
-      communeHomeNewsTitle.value = {$commune.home_news_title}
-      communeHomeNewsTitle.override.data = site:commune.home_news_title
-
-      communeHomeNewsHideTitle = TEXT
-      communeHomeNewsHideTitle.value = {$commune.home_news_hide_title}
-      communeHomeNewsHideTitle.override.data = site:commune.home_news_hide_title
-
-      communeHomeMapTitle = TEXT
-      communeHomeMapTitle.value = {$commune.home_map_title}
-      communeHomeMapTitle.override.data = site:commune.home_map_title
-
-      communeHomeMapHideTitle = TEXT
-      communeHomeMapHideTitle.value = {$commune.home_map_hide_title}
-      communeHomeMapHideTitle.override.data = site:commune.home_map_hide_title
-
-      communeHomeSitemapEnable = TEXT
-      communeHomeSitemapEnable.value = {$commune.home_sitemap_enable}
-      communeHomeSitemapEnable.override.data = site:commune.home_sitemap_enable
-
-      communeHomeSitemapTitle = TEXT
-      communeHomeSitemapTitle.value = {$commune.home_sitemap_title}
-      communeHomeSitemapTitle.override.data = site:commune.home_sitemap_title
-
-      communeHomeSitemapHideTitle = TEXT
-      communeHomeSitemapHideTitle.value = {$commune.home_sitemap_hide_title}
-      communeHomeSitemapHideTitle.override.data = site:commune.home_sitemap_hide_title
-
-      # Accessibilité RGAA
-      communeRgaaTitre = TEXT
-      communeRgaaTitre.value = {$commune.rgaa_titre}
-      communeRgaaTitre.override.data = site:commune.rgaa_titre
-
-      communeRgaaStatut = TEXT
-      communeRgaaStatut.value = {$commune.rgaa_statut}
-      communeRgaaStatut.override.data = site:commune.rgaa_statut
-
-      communeRgaaTaux = TEXT
-      communeRgaaTaux.value = {$commune.rgaa_taux}
-      communeRgaaTaux.override.data = site:commune.rgaa_taux
-
-      communeRgaaPageUid = TEXT
-      communeRgaaPageUid.value = {$commune.rgaa_page_uid}
-      communeRgaaPageUid.override.data = site:commune.rgaa_page_uid
-
-      # Pied de page
-      communeFooterCol1Title = TEXT
-      communeFooterCol1Title.value = {$commune.footer_col1_title}
-      communeFooterCol1Title.override.data = site:commune.footer_col1_title
-
-      communeFooterContactBtnTitle = TEXT
-      communeFooterContactBtnTitle.value = {$commune.footer_contact_btn_title}
-      communeFooterContactBtnTitle.override.data = site:commune.footer_contact_btn_title
-
-      communeFooterContactPageUid = TEXT
-      communeFooterContactPageUid.value = {$commune.footer_contact_page_uid}
-      communeFooterContactPageUid.override.data = site:commune.footer_contact_page_uid
-
-      communeFooterCol2Title = TEXT
-      communeFooterCol2Title.value = {$commune.footer_col2_title}
-      communeFooterCol2Title.override.data = site:commune.footer_col2_title
-
-      communeFooterCol3Title = TEXT
-      communeFooterCol3Title.value = {$commune.footer_col3_title}
-      communeFooterCol3Title.override.data = site:commune.footer_col3_title
-
-      communeFooterMapImage = TEXT
-      communeFooterMapImage.value = {$commune.footer_map_image}
-      communeFooterMapImage.override.data = site:commune.footer_map_image
-
-      communeFooterMapPageUid = TEXT
-      communeFooterMapPageUid.value = {$commune.footer_map_page_uid}
-      communeFooterMapPageUid.override.data = site:commune.footer_map_page_uid
-
-      communeFooterFolderUid = TEXT
-      communeFooterFolderUid.value = {$commune.footer_folder_uid}
-      communeFooterFolderUid.override.data = site:commune.footer_folder_uid
-
-      # Rendu standard direct et robuste de toutes les colonnes de contenu TYPO3
-      emergencyAlertContent = CONTENT
-      emergencyAlertContent {
-        table = tt_content
-        select {
-          orderBy = sorting
-          where = {#colPos}=100
-        }
-      }
-
-      heroContent = CONTENT
-      heroContent {
-        table = tt_content
-        select {
-          orderBy = sorting
-          where = {#colPos}=110
-        }
-      }
-
-      quickAccessContent = CONTENT
-      quickAccessContent {
-        table = tt_content
-        select {
-          orderBy = sorting
-          where = {#colPos}=120
-        }
-      }
-
-      editoContent = CONTENT
-      editoContent {
-        table = tt_content
-        select {
-          orderBy = sorting
-          where = {#colPos}=115
-        }
-      }
-
-      featuredNewsContent = CONTENT
-      featuredNewsContent {
-        table = tt_content
-        select {
-          orderBy = sorting
-          where = {#colPos}=125
-        }
-      }
-
-      mainContent = CONTENT
-      mainContent {
-        table = tt_content
-        select {
-          orderBy = sorting
-          where = {#colPos}=0
-        }
-      }
-
-      newsContent = CONTENT
-      newsContent {
-        table = tt_content
-        select {
-          orderBy = sorting
-          where = {#colPos}=130
-        }
-      }
-
-      interactiveMapContent = CONTENT
-      interactiveMapContent {
-        table = tt_content
-        select {
-          orderBy = sorting
-          where = {#colPos}=140
-        }
-      }
-
-      sidebarLeftContent = CONTENT
-      sidebarLeftContent {
-        table = tt_content
-        select {
-          orderBy = sorting
-          where = {#colPos}=200
-        }
-      }
-
-      # Menu principal accessible
+      # Menu de navigation principale accessible (Critères 12.1 à 12.11 RGAA)
       mainNavigation = HMENU
       mainNavigation {
-        entryLevel = 0
         1 = TMENU
         1 {
           expAll = 1
-          wrap = <ul class="navbar-nav me-auto mb-2 mb-lg-0" role="menubar">|</ul>
+          NO = 1
           NO {
-            wrapItemAndSub = <li class="nav-item" role="none">|</li>
-            ATagParams = class="nav-link" role="menuitem"
+            wrapItemAndSub = <li class="nav-item">|</li>
+            ATagParams = class="nav-link"
+            ATagTitle.field = subtitle // title
+            stdWrap.htmlSpecialChars = 1
           }
+          
           ACT = 1
           ACT {
-            wrapItemAndSub = <li class="nav-item active" role="none">|</li>
-            ATagParams = class="nav-link active" role="menuitem" aria-current="page"
+            wrapItemAndSub = <li class="nav-item active">|</li>
+            ATagParams = class="nav-link active" aria-current="page"
+            ATagTitle.field = subtitle // title
+            stdWrap.htmlSpecialChars = 1
           }
+          
           IFSUB = 1
           IFSUB {
-            wrapItemAndSub = <li class="nav-item dropdown" role="none">|</li>
-            ATagParams = class="nav-link dropdown-toggle" role="menuitem" aria-expanded="false" data-bs-toggle="dropdown"
+            wrapItemAndSub = <li class="nav-item dropdown">|</li>
+            ATagParams = class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="nav-dropdown-{field:uid}"
+            ATagParams.insertData = 1
+            ATagTitle.field = subtitle // title
+            stdWrap.htmlSpecialChars = 1
           }
+          
           ACTIFSUB = 1
           ACTIFSUB {
-            wrapItemAndSub = <li class="nav-item dropdown active" role="none">|</li>
-            ATagParams = class="nav-link dropdown-toggle active" role="menuitem" aria-expanded="false" aria-current="true" data-bs-toggle="dropdown"
+            wrapItemAndSub = <li class="nav-item dropdown active">|</li>
+            ATagParams = class="nav-link dropdown-toggle active" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="true" id="nav-dropdown-{field:uid}"
+            ATagParams.insertData = 1
+            ATagTitle.field = subtitle // title
+            stdWrap.htmlSpecialChars = 1
           }
         }
+        
         2 = TMENU
         2 {
-          wrap = <ul class="dropdown-menu" role="menu">|</ul>
+          wrap = <ul class="dropdown-menu shadow" aria-labelledby="nav-dropdown-{field:pid}">|</ul>
+          wrap.insertData = 1
+          
+          NO = 1
           NO {
-            wrapItemAndSub = <li role="none">|</li>
-            ATagParams = class="dropdown-item" role="menuitem"
+            wrapItemAndSub = <li>|</li>
+            ATagParams = class="dropdown-item"
+            ATagTitle.field = subtitle // title
+            stdWrap.htmlSpecialChars = 1
           }
+          
           ACT = 1
           ACT {
-            wrapItemAndSub = <li role="none">|</li>
-            ATagParams = class="dropdown-item active" role="menuitem" aria-current="page"
+            wrapItemAndSub = <li>|</li>
+            ATagParams = class="dropdown-item active" aria-current="page"
+            ATagTitle.field = subtitle // title
+            stdWrap.htmlSpecialChars = 1
           }
         }
       }
-
-      # Menu secondaire / Navigation latérale pour sous-pages
+      
+      # Menu d'accès rapide (Pied de page / Entête)
+      quickAccessMenu = HMENU
+      quickAccessMenu {
+        special = directory
+        special.value = {$commune.pages.quickAccess}
+        1 = TMENU
+        1 {
+          NO = 1
+          NO {
+            wrapItemAndSub = <li class="quick-access-item">|</li>
+            ATagParams = class="quick-access-link"
+            stdWrap.htmlSpecialChars = 1
+          }
+        }
+      }
+      
+      # Menu du pied de page (Mentions légales, RGAA, Plan du site, etc.)
+      footerNavigation = HMENU
+      footerNavigation {
+        special = directory
+        special.value = {$commune.pages.footer}
+        1 = TMENU
+        1 {
+          NO = 1
+          NO {
+            wrapItemAndSub = <li class="footer-nav-item">|</li>
+            ATagParams = class="footer-nav-link"
+            stdWrap.htmlSpecialChars = 1
+          }
+        }
+      }
+      
+      # Fil d'Ariane accessible (Critère 12.8 RGAA)
+      breadcrumb = HMENU
+      breadcrumb {
+        special = rootline
+        special.range = 0|-1
+        1 = TMENU
+        1 {
+          wrap = <nav aria-label="Fil d'Ariane" class="commune-breadcrumb"><ol class="breadcrumb mb-0" itemscope itemtype="https://schema.org/BreadcrumbList">|</ol></nav>
+          NO = 1
+          NO {
+            wrapItemAndSub = <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">|</li>
+            ATagParams = itemprop="item"
+            stdWrap.htmlSpecialChars = 1
+            stdWrap.wrap = <span itemprop="name">|</span>
+          }
+          CUR = 1
+          CUR {
+            wrapItemAndSub = <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">|</span></li>
+            stdWrap.htmlSpecialChars = 1
+            doNotLinkIt = 1
+          }
+        }
+      }
+      
+      # Sous-navigation contextuelle (Page standard avec menu latéral)
       subNavigation = HMENU
       subNavigation {
         entryLevel = 1
         1 = TMENU
         1 {
-          wrap = <ul class="list-group list-group-flush commune-sidebar-menu">|</ul>
+          wrap = <nav aria-label="Menu de la rubrique" class="commune-subnav"><ul class="nav flex-column subnav-list">|</ul></nav>
+          NO = 1
           NO {
-            wrapItemAndSub = <li class="list-group-item">|</li>
-            ATagParams = class="text-decoration-none"
+            wrapItemAndSub = <li class="nav-item">|</li>
+            ATagParams = class="nav-link subnav-link"
+            stdWrap.htmlSpecialChars = 1
           }
           ACT = 1
           ACT {
-            wrapItemAndSub = <li class="list-group-item active-page" aria-current="page">|</li>
-            ATagParams = class="text-decoration-none fw-bold"
-          }
-        }
-      }
-
-      # Menu dynamique de bas de page (généré depuis le dossier configuré, ex: [13] Pied de page)
-      footerNavigation = HMENU
-      footerNavigation {
-        special = directory
-        special.value = {$commune.footer_folder_uid}
-        special.value.override.data = site:commune.footer_folder_uid
-        1 = TMENU
-        1 {
-          wrap = <ul class="list-inline mb-0">|</ul>
-          NO {
-            wrapItemAndSub = <li class="list-inline-item">|</li><li class="list-inline-item separator text-white-50" aria-hidden="true">·</li>
-            ATagParams = class="text-white-50 text-decoration-none"
-          }
-          ACT = 1
-          ACT {
-            wrapItemAndSub = <li class="list-inline-item">|</li><li class="list-inline-item separator text-white-50" aria-hidden="true">·</li>
-            ATagParams = class="text-white fw-bold text-decoration-none" aria-current="page"
-          }
-        }
-      }
-
-      # Plan du site pour la page d'accueil (Hiérarchisé jusqu'à 4 niveaux)
-      sitemapNavigation = HMENU
-      sitemapNavigation {
-        special = directory
-        special.value.data = site:rootPageId
-        ifEmpty.special.value = 1
-        excludeDoktypes = 199,254
-        1 = TMENU
-        1 {
-          expAll = 1
-          wrap = <div class="commune-sitemap-grid">|</div>
-          NO {
-            wrapItemAndSub = <div class="commune-sitemap-group"><div class="commune-sitemap-header">|</div></div>
-            stdWrap.wrap = <h3 class="commune-sitemap-title">|</h3>
-            ATagParams = class="commune-sitemap-title-link"
-          }
-          IFSUB = 1
-          IFSUB {
-            wrapItemAndSub = <div class="commune-sitemap-group"><div class="commune-sitemap-header">|</div></div>
-            stdWrap.wrap = <h3 class="commune-sitemap-title">|</h3>
-            ATagParams = class="commune-sitemap-title-link"
+            wrapItemAndSub = <li class="nav-item active">|</li>
+            ATagParams = class="nav-link subnav-link active" aria-current="page"
+            stdWrap.htmlSpecialChars = 1
           }
         }
         2 = TMENU
         2 {
-          expAll = 1
-          wrap = <ul class="commune-sitemap-list list-unstyled" role="list">|</ul>
+          wrap = <ul class="nav flex-column subnav-sublist ms-3">|</ul>
+          NO = 1
           NO {
-            wrapItemAndSub = <li class="commune-sitemap-item level-2">|</li>
-            ATagParams = class="commune-sitemap-link level-2"
+            wrapItemAndSub = <li class="nav-item">|</li>
+            ATagParams = class="nav-link subnav-sublink"
+            stdWrap.htmlSpecialChars = 1
           }
-          IFSUB = 1
-          IFSUB {
-            wrapItemAndSub = <li class="commune-sitemap-item level-2 has-children">|</li>
-            linkWrap = <span class="commune-sitemap-parent-label">| <span class="commune-sitemap-caret" aria-hidden="true">▾</span></span>
-            ATagParams = class="commune-sitemap-link level-2 is-parent"
+          ACT = 1
+          ACT {
+            wrapItemAndSub = <li class="nav-item active">|</li>
+            ATagParams = class="nav-link subnav-sublink active" aria-current="page"
+            stdWrap.htmlSpecialChars = 1
           }
         }
-        3 = TMENU
-        3 {
-          expAll = 1
-          wrap = <ul class="commune-sitemap-sublist list-unstyled" role="list">|</ul>
-          NO {
-            wrapItemAndSub = <li class="commune-sitemap-item level-3">|</li>
-            linkWrap = <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span><span class="commune-sitemap-item-text">|</span>
-            ATagParams = class="commune-sitemap-link level-3"
-          }
-          IFSUB = 1
-          IFSUB {
-            wrapItemAndSub = <li class="commune-sitemap-item level-3 has-children">|</li>
-            linkWrap = <span class="commune-sitemap-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span><span class="commune-sitemap-parent-label">| <span class="commune-sitemap-caret-sm" aria-hidden="true">▾</span></span>
-            ATagParams = class="commune-sitemap-link level-3 is-parent"
-          }
+      }
+      
+      # Contenu principal (colPos = 0)
+      mainContent = COA
+      mainContent {
+        10 =< styles.content.get
+        10.select.where = {#colPos}=0
+      }
+      
+      # Contenu Bandeau Hero / Carousel / Image d'en-tête (colPos = 100)
+      heroContent = COA
+      heroContent {
+        10 =< styles.content.get
+        10.select.where = {#colPos}=100
+      }
+      
+      # Contenu Mot du Maire (colPos = 110)
+      mayorContent = COA
+      mayorContent {
+        10 =< styles.content.get
+        10.select.where = {#colPos}=110
+      }
+
+      # Contenu Actualités à la une (colPos = 125)
+      featuredNewsContent = COA
+      featuredNewsContent {
+        10 =< styles.content.get
+        10.select.where = {#colPos}=125
+      }
+
+      # Contenu Accès Rapides (colPos = 120)
+      quickAccessContent = COA
+      quickAccessContent {
+        10 =< styles.content.get
+        10.select.where = {#colPos}=120
+      }
+      
+      # Contenu Kiosque / Démarches phares (colPos = 130)
+      kiosqueContent = COA
+      kiosqueContent {
+        10 =< styles.content.get
+        10.select.where = {#colPos}=130
+      }
+      
+      # Contenu Carte Interactive / Découverte (colPos = 140)
+      mapContent = COA
+      mapContent {
+        10 =< styles.content.get
+        10.select.where = {#colPos}=140
+      }
+      
+      # Contenu Événements / Agenda (colPos = 150)
+      eventsContent = COA
+      eventsContent {
+        10 =< styles.content.get
+        10.select.where = {#colPos}=150
+      }
+      
+      # Contenu Barre latérale (colPos = 1)
+      sidebarContent = COA
+      sidebarContent {
+        10 =< styles.content.get
+        10.select.where = {#colPos}=1
+      }
+      
+      # Contenu Pied de page (colPos = 2)
+      footerContent = COA
+      footerContent {
+        10 =< styles.content.get
+        10.select.where = {#colPos}=2
+      }
+    }
+  }
+}
+
+# Configuration du moteur de recherche Indexed Search conforme RGAA
+plugin.tx_indexedsearch {
+  templateRootPaths {
+    0 = EXT:indexed_search/Resources/Private/Templates/
+    1 = EXT:site_commune_rgaa/Resources/Private/Extensions/IndexedSearch/Templates/
+  }
+  partialRootPaths {
+    0 = EXT:indexed_search/Resources/Private/Partials/
+    1 = EXT:site_commune_rgaa/Resources/Private/Extensions/IndexedSearch/Partials/
+  }
+  _CSS_DEFAULT_STYLE >
+}
+
+# Configuration de l'extension EXT:news conforme RGAA
+plugin.tx_news {
+  view {
+    templateRootPaths {
+      0 = EXT:news/Resources/Private/Templates/
+      1 = EXT:site_commune_rgaa/Resources/Private/Extensions/News/Templates/
+    }
+    partialRootPaths {
+      0 = EXT:news/Resources/Private/Partials/
+      1 = EXT:site_commune_rgaa/Resources/Private/Extensions/News/Partials/
+    }
+    layoutRootPaths {
+      0 = EXT:news/Resources/Private/Layouts/
+      1 = EXT:site_commune_rgaa/Resources/Private/Extensions/News/Layouts/
+    }
+  }
+  settings {
+    cssFile >
+    displayDummyIfNoMedia = 1
+    list {
+      media {
+        image {
+          maxWidth = 600
+          maxHeight = 400
         }
-        4 = TMENU
-        4 {
-          expAll = 1
-          wrap = <ul class="commune-sitemap-subsublist list-unstyled" role="list">|</ul>
-          NO {
-            wrapItemAndSub = <li class="commune-sitemap-item level-4">|</li>
-            linkWrap = <span class="commune-sitemap-icon-dot" aria-hidden="true">•</span><span class="commune-sitemap-item-text">|</span>
-            ATagParams = class="commune-sitemap-link level-4"
-          }
+      }
+      paginate {
+        insertAbove = 0
+        insertBelow = 1
+        prevNextHeaderTags = 1
+      }
+    }
+    detail {
+      media {
+        image {
+          maxWidth = 1200
+          maxHeight = 800
         }
       }
     }
   }
 }
 
-# ------------------------------------------------------------------------------
-# Configuration de la surcouche pour EXT:news (georgringer/news)
-# ------------------------------------------------------------------------------
-plugin.tx_news {
-  view {
-    templateRootPaths {
-      100 = EXT:site_commune_rgaa/Resources/Private/Extensions/News/Templates/
-    }
-    partialRootPaths {
-      100 = EXT:site_commune_rgaa/Resources/Private/Extensions/News/Partials/
-    }
-    layoutRootPaths {
-      100 = EXT:site_commune_rgaa/Resources/Private/Extensions/News/Layouts/
-    }
-  }
+# Configuration de l'extension EXT:form conforme RGAA
+plugin.tx_form {
   settings {
-    listLayout = {$commune.news_list_layout}
+    yamlConfigurations {
+      100 = EXT:site_commune_rgaa/Configuration/Yaml/FormSetup.yaml
+    }
   }
 }
 
-# ------------------------------------------------------------------------------
-# Surcharges des gabarits d'éléments de contenu de bootstrap_package
-# ------------------------------------------------------------------------------
-lib.contentElement {
-  templateRootPaths {
-    100 = EXT:site_commune_rgaa/Resources/Private/OverriddenTemplates/BootstrapPackage/ContentElements/
+# ==============================================================================
+# Overrides pour le rendu des médias et images (Critères 1.1 à 1.9 RGAA)
+# ==============================================================================
+tt_content.image.20 {
+  1 {
+    altText {
+      field = alternative // title // description
+      htmlSpecialChars = 1
+    }
+    titleText {
+      field = title // alternative
+      htmlSpecialChars = 1
+    }
   }
-  partialRootPaths {
-    100 = EXT:site_commune_rgaa/Resources/Private/Partials/ContentElements/
+}
+
+tt_content.textmedia.dataProcessing {
+  20 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+  20 {
+    references.fieldName = assets
+    as = files
   }
 }
