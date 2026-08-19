@@ -2,142 +2,202 @@
 <f:switch expression="{extension -> f:format.case(mode: 'lower')}">
     <!-- Fichier PDF -->
     <f:case value="pdf">
-        <div class="commune-file-icon-badge file-icon-pdf" aria-hidden="true">
-            <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="10" fill="#FDE8E8"/>
-                <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#E02424" stroke-width="2"/>
-                <path d="M28 8V16H36" fill="#FBD5D5" stroke="#E02424" stroke-width="2" stroke-linejoin="round"/>
-                <rect x="11" y="24" width="26" height="12" rx="3" fill="#E02424"/>
-                <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">PDF</text>
-            </svg>
-        </div>
+        <f:render section="PdfIcon" arguments="{_all}" />
     </f:case>
 
     <!-- Fichiers Traitement de texte (Word, OpenDocument Text) -->
-    <f:case values="{0: 'doc', 1: 'docx', 2: 'odt', 3: 'rtf'}">
-        <div class="commune-file-icon-badge file-icon-word" aria-hidden="true">
-            <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="10" fill="#E6F6FD"/>
-                <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#1D7DAA" stroke-width="2"/>
-                <path d="M28 8V16H36" fill="#BAE6FD" stroke="#1D7DAA" stroke-width="2" stroke-linejoin="round"/>
-                <rect x="11" y="24" width="26" height="12" rx="3" fill="#1D7DAA"/>
-                <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">DOC</text>
-            </svg>
-        </div>
-    </f:case>
+    <f:case value="doc"><f:render section="WordIcon" arguments="{_all}" /></f:case>
+    <f:case value="docx"><f:render section="WordIcon" arguments="{_all}" /></f:case>
+    <f:case value="odt"><f:render section="WordIcon" arguments="{_all}" /></f:case>
+    <f:case value="rtf"><f:render section="WordIcon" arguments="{_all}" /></f:case>
 
     <!-- Fichiers Tableur (Excel, OpenDocument Spreadsheet, CSV) -->
-    <f:case values="{0: 'xls', 1: 'xlsx', 2: 'ods', 3: 'csv'}">
-        <div class="commune-file-icon-badge file-icon-excel" aria-hidden="true">
-            <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="10" fill="#E8F5E9"/>
-                <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#00703A" stroke-width="2"/>
-                <path d="M28 8V16H36" fill="#C8E6C9" stroke="#00703A" stroke-width="2" stroke-linejoin="round"/>
-                <rect x="11" y="24" width="26" height="12" rx="3" fill="#00703A"/>
-                <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">XLS</text>
-            </svg>
-        </div>
-    </f:case>
+    <f:case value="xls"><f:render section="ExcelIcon" arguments="{_all}" /></f:case>
+    <f:case value="xlsx"><f:render section="ExcelIcon" arguments="{_all}" /></f:case>
+    <f:case value="ods"><f:render section="ExcelIcon" arguments="{_all}" /></f:case>
+    <f:case value="csv"><f:render section="ExcelIcon" arguments="{_all}" /></f:case>
 
     <!-- Fichiers Présentation (PowerPoint, OpenDocument Presentation) -->
-    <f:case values="{0: 'ppt', 1: 'pptx', 2: 'odp'}">
-        <div class="commune-file-icon-badge file-icon-powerpoint" aria-hidden="true">
-            <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="10" fill="#FEF7E6"/>
-                <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#D97706" stroke-width="2"/>
-                <path d="M28 8V16H36" fill="#FDE68A" stroke="#D97706" stroke-width="2" stroke-linejoin="round"/>
-                <rect x="11" y="24" width="26" height="12" rx="3" fill="#D97706"/>
-                <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">PPT</text>
-            </svg>
-        </div>
-    </f:case>
+    <f:case value="ppt"><f:render section="PowerPointIcon" arguments="{_all}" /></f:case>
+    <f:case value="pptx"><f:render section="PowerPointIcon" arguments="{_all}" /></f:case>
+    <f:case value="odp"><f:render section="PowerPointIcon" arguments="{_all}" /></f:case>
 
     <!-- Fichiers Archives compressées (ZIP, RAR, 7Z, TAR, GZ) -->
-    <f:case values="{0: 'zip', 1: 'rar', 2: '7z', 3: 'tar', 4: 'gz'}">
-        <div class="commune-file-icon-badge file-icon-archive" aria-hidden="true">
-            <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="10" fill="#FEF3C7"/>
-                <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#B45309" stroke-width="2"/>
-                <path d="M28 8V16H36" fill="#FDE68A" stroke="#B45309" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M22 14H26M22 17H26M22 20H26" stroke="#B45309" stroke-width="1.5" stroke-linecap="round"/>
-                <rect x="11" y="24" width="26" height="12" rx="3" fill="#B45309"/>
-                <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">ZIP</text>
-            </svg>
-        </div>
-    </f:case>
+    <f:case value="zip"><f:render section="ArchiveIcon" arguments="{_all}" /></f:case>
+    <f:case value="rar"><f:render section="ArchiveIcon" arguments="{_all}" /></f:case>
+    <f:case value="7z"><f:render section="ArchiveIcon" arguments="{_all}" /></f:case>
+    <f:case value="tar"><f:render section="ArchiveIcon" arguments="{_all}" /></f:case>
+    <f:case value="gz"><f:render section="ArchiveIcon" arguments="{_all}" /></f:case>
 
     <!-- Fichiers Images (JPG, JPEG, PNG, WEBP, SVG, GIF) -->
-    <f:case values="{0: 'jpg', 1: 'jpeg', 2: 'png', 3: 'webp', 4: 'svg', 5: 'gif', 6: 'tiff', 7: 'bmp'}">
-        <div class="commune-file-icon-badge file-icon-image" aria-hidden="true">
-            <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="10" fill="#E0F2FE"/>
-                <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#0284C7" stroke-width="2"/>
-                <path d="M28 8V16H36" fill="#BAE6FD" stroke="#0284C7" stroke-width="2" stroke-linejoin="round"/>
-                <circle cx="21" cy="18" r="2" fill="#0284C7"/>
-                <path d="M18 28L22 23L27 28L31 24L33 26" stroke="#0284C7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <rect x="11" y="24" width="26" height="12" rx="3" fill="#0284C7"/>
-                <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">IMG</text>
-            </svg>
-        </div>
-    </f:case>
+    <f:case value="jpg"><f:render section="ImageIcon" arguments="{_all}" /></f:case>
+    <f:case value="jpeg"><f:render section="ImageIcon" arguments="{_all}" /></f:case>
+    <f:case value="png"><f:render section="ImageIcon" arguments="{_all}" /></f:case>
+    <f:case value="webp"><f:render section="ImageIcon" arguments="{_all}" /></f:case>
+    <f:case value="svg"><f:render section="ImageIcon" arguments="{_all}" /></f:case>
+    <f:case value="gif"><f:render section="ImageIcon" arguments="{_all}" /></f:case>
+    <f:case value="tiff"><f:render section="ImageIcon" arguments="{_all}" /></f:case>
+    <f:case value="bmp"><f:render section="ImageIcon" arguments="{_all}" /></f:case>
 
     <!-- Fichiers Audio (MP3, WAV, OGG, M4A, AAC, FLAC) -->
-    <f:case values="{0: 'mp3', 1: 'wav', 2: 'ogg', 3: 'm4a', 4: 'aac', 5: 'flac'}">
-        <div class="commune-file-icon-badge file-icon-audio" aria-hidden="true">
-            <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="10" fill="#F3E8FF"/>
-                <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#7E22CE" stroke-width="2"/>
-                <path d="M28 8V16H36" fill="#E9D5FF" stroke="#7E22CE" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M22 20V15L30 13V18" stroke="#7E22CE" stroke-width="1.5" stroke-linecap="round"/>
-                <circle cx="20" cy="20" r="2" fill="#7E22CE"/>
-                <circle cx="28" cy="18" r="2" fill="#7E22CE"/>
-                <rect x="11" y="24" width="26" height="12" rx="3" fill="#7E22CE"/>
-                <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">AUDIO</text>
-            </svg>
-        </div>
-    </f:case>
+    <f:case value="mp3"><f:render section="AudioIcon" arguments="{_all}" /></f:case>
+    <f:case value="wav"><f:render section="AudioIcon" arguments="{_all}" /></f:case>
+    <f:case value="ogg"><f:render section="AudioIcon" arguments="{_all}" /></f:case>
+    <f:case value="m4a"><f:render section="AudioIcon" arguments="{_all}" /></f:case>
+    <f:case value="aac"><f:render section="AudioIcon" arguments="{_all}" /></f:case>
+    <f:case value="flac"><f:render section="AudioIcon" arguments="{_all}" /></f:case>
 
     <!-- Fichiers Vidéo (MP4, WEBM, MKV, MOV, AVI) -->
-    <f:case values="{0: 'mp4', 1: 'webm', 2: 'mkv', 3: 'mov', 4: 'avi'}">
-        <div class="commune-file-icon-badge file-icon-video" aria-hidden="true">
-            <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="10" fill="#CCFBF1"/>
-                <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
-                <path d="M28 8V16H36" fill="#99F6E4" stroke="#0F766E" stroke-width="2" stroke-linejoin="round"/>
-                <polygon points="22,15 28,18.5 22,22" fill="#0F766E"/>
-                <rect x="11" y="24" width="26" height="12" rx="3" fill="#0F766E"/>
-                <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">VIDEO</text>
-            </svg>
-        </div>
-    </f:case>
+    <f:case value="mp4"><f:render section="VideoIcon" arguments="{_all}" /></f:case>
+    <f:case value="webm"><f:render section="VideoIcon" arguments="{_all}" /></f:case>
+    <f:case value="mkv"><f:render section="VideoIcon" arguments="{_all}" /></f:case>
+    <f:case value="mov"><f:render section="VideoIcon" arguments="{_all}" /></f:case>
+    <f:case value="avi"><f:render section="VideoIcon" arguments="{_all}" /></f:case>
 
     <!-- Fichiers Texte / Données (TXT, JSON, XML, HTML, MD) -->
-    <f:case values="{0: 'txt', 1: 'json', 2: 'xml', 3: 'html', 4: 'md'}">
-        <div class="commune-file-icon-badge file-icon-text" aria-hidden="true">
-            <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="10" fill="#F1F5F9"/>
-                <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#475569" stroke-width="2"/>
-                <path d="M28 8V16H36" fill="#CBD5E1" stroke="#475569" stroke-width="2" stroke-linejoin="round"/>
-                <line x1="18" y1="16" x2="25" y2="16" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
-                <line x1="18" y1="20" x2="30" y2="20" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
-                <rect x="11" y="24" width="26" height="12" rx="3" fill="#475569"/>
-                <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">TXT</text>
-            </svg>
-        </div>
-    </f:case>
+    <f:case value="txt"><f:render section="TextIcon" arguments="{_all}" /></f:case>
+    <f:case value="json"><f:render section="TextIcon" arguments="{_all}" /></f:case>
+    <f:case value="xml"><f:render section="TextIcon" arguments="{_all}" /></f:case>
+    <f:case value="html"><f:render section="TextIcon" arguments="{_all}" /></f:case>
+    <f:case value="md"><f:render section="TextIcon" arguments="{_all}" /></f:case>
 
-    <!-- Document générique / Défaut (Sauveterre Green) -->
+    <!-- Document générique / Défaut -->
     <f:defaultCase>
-        <div class="commune-file-icon-badge file-icon-generic" aria-hidden="true">
-            <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="10" fill="#E8F5E9"/>
-                <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#00703A" stroke-width="2"/>
-                <path d="M28 8V16H36" fill="#C8E6C9" stroke="#00703A" stroke-width="2" stroke-linejoin="round"/>
-                <line x1="19" y1="20" x2="29" y2="20" stroke="#00703A" stroke-width="2" stroke-linecap="round"/>
-                <rect x="11" y="24" width="26" height="12" rx="3" fill="#00703A"/>
-                <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="8" font-weight="800" text-anchor="middle" letter-spacing="0.5">{f:if(condition: extension, then: '{extension -> f:format.case(mode: \'upper\') -> f:format.crop(maxCharacters: 4, append: \'\')}', else: 'DOC')}</text>
-            </svg>
-        </div>
+        <f:render section="GenericIcon" arguments="{_all}" />
     </f:defaultCase>
 </f:switch>
+
+<!-- ==============================================================================
+     SECTIONS SVG PAR TYPE DE FICHIER
+     ============================================================================== -->
+
+<f:section name="PdfIcon">
+    <div class="commune-file-icon-badge file-icon-pdf" aria-hidden="true">
+        <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="10" fill="#FDE8E8"/>
+            <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#E02424" stroke-width="2"/>
+            <path d="M28 8V16H36" fill="#FBD5D5" stroke="#E02424" stroke-width="2" stroke-linejoin="round"/>
+            <rect x="11" y="24" width="26" height="12" rx="3" fill="#E02424"/>
+            <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">PDF</text>
+        </svg>
+    </div>
+</f:section>
+
+<f:section name="WordIcon">
+    <div class="commune-file-icon-badge file-icon-word" aria-hidden="true">
+        <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="10" fill="#E6F6FD"/>
+            <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#1D7DAA" stroke-width="2"/>
+            <path d="M28 8V16H36" fill="#BAE6FD" stroke="#1D7DAA" stroke-width="2" stroke-linejoin="round"/>
+            <rect x="11" y="24" width="26" height="12" rx="3" fill="#1D7DAA"/>
+            <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">DOC</text>
+        </svg>
+    </div>
+</f:section>
+
+<f:section name="ExcelIcon">
+    <div class="commune-file-icon-badge file-icon-excel" aria-hidden="true">
+        <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="10" fill="#E8F5E9"/>
+            <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#00703A" stroke-width="2"/>
+            <path d="M28 8V16H36" fill="#C8E6C9" stroke="#00703A" stroke-width="2" stroke-linejoin="round"/>
+            <rect x="11" y="24" width="26" height="12" rx="3" fill="#00703A"/>
+            <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">XLS</text>
+        </svg>
+    </div>
+</f:section>
+
+<f:section name="PowerPointIcon">
+    <div class="commune-file-icon-badge file-icon-powerpoint" aria-hidden="true">
+        <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="10" fill="#FEF7E6"/>
+            <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#D97706" stroke-width="2"/>
+            <path d="M28 8V16H36" fill="#FDE68A" stroke="#D97706" stroke-width="2" stroke-linejoin="round"/>
+            <rect x="11" y="24" width="26" height="12" rx="3" fill="#D97706"/>
+            <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">PPT</text>
+        </svg>
+    </div>
+</f:section>
+
+<f:section name="ArchiveIcon">
+    <div class="commune-file-icon-badge file-icon-archive" aria-hidden="true">
+        <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="10" fill="#FEF3C7"/>
+            <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#B45309" stroke-width="2"/>
+            <path d="M28 8V16H36" fill="#FDE68A" stroke="#B45309" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M22 14H26M22 17H26M22 20H26" stroke="#B45309" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="11" y="24" width="26" height="12" rx="3" fill="#B45309"/>
+            <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">ZIP</text>
+        </svg>
+    </div>
+</f:section>
+
+<f:section name="ImageIcon">
+    <div class="commune-file-icon-badge file-icon-image" aria-hidden="true">
+        <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="10" fill="#E0F2FE"/>
+            <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#0284C7" stroke-width="2"/>
+            <path d="M28 8V16H36" fill="#BAE6FD" stroke="#0284C7" stroke-width="2" stroke-linejoin="round"/>
+            <circle cx="21" cy="18" r="2" fill="#0284C7"/>
+            <path d="M18 28L22 23L27 28L31 24L33 26" stroke="#0284C7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="11" y="24" width="26" height="12" rx="3" fill="#0284C7"/>
+            <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">IMG</text>
+        </svg>
+    </div>
+</f:section>
+
+<f:section name="AudioIcon">
+    <div class="commune-file-icon-badge file-icon-audio" aria-hidden="true">
+        <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="10" fill="#F3E8FF"/>
+            <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#7E22CE" stroke-width="2"/>
+            <path d="M28 8V16H36" fill="#E9D5FF" stroke="#7E22CE" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M22 20V15L30 13V18" stroke="#7E22CE" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="20" cy="20" r="2" fill="#7E22CE"/>
+            <circle cx="28" cy="18" r="2" fill="#7E22CE"/>
+            <rect x="11" y="24" width="26" height="12" rx="3" fill="#7E22CE"/>
+            <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">AUDIO</text>
+        </svg>
+    </div>
+</f:section>
+
+<f:section name="VideoIcon">
+    <div class="commune-file-icon-badge file-icon-video" aria-hidden="true">
+        <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="10" fill="#CCFBF1"/>
+            <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+            <path d="M28 8V16H36" fill="#99F6E4" stroke="#0F766E" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="22,15 28,18.5 22,22" fill="#0F766E"/>
+            <rect x="11" y="24" width="26" height="12" rx="3" fill="#0F766E"/>
+            <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">VIDEO</text>
+        </svg>
+    </div>
+</f:section>
+
+<f:section name="TextIcon">
+    <div class="commune-file-icon-badge file-icon-text" aria-hidden="true">
+        <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="10" fill="#F1F5F9"/>
+            <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#475569" stroke-width="2"/>
+            <path d="M28 8V16H36" fill="#CBD5E1" stroke="#475569" stroke-width="2" stroke-linejoin="round"/>
+            <line x1="18" y1="16" x2="25" y2="16" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+            <line x1="18" y1="20" x2="30" y2="20" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+            <rect x="11" y="24" width="26" height="12" rx="3" fill="#475569"/>
+            <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="9" font-weight="800" text-anchor="middle" letter-spacing="0.5">TXT</text>
+        </svg>
+    </div>
+</f:section>
+
+<f:section name="GenericIcon">
+    <div class="commune-file-icon-badge file-icon-generic" aria-hidden="true">
+        <svg class="commune-file-svg" viewBox="0 0 48 48" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="10" fill="#E8F5E9"/>
+            <path d="M14 10C14 8.89543 14.8954 8 16 8H28L36 16V38C36 39.1046 35.1046 40 34 40H16C14.8954 40 14 39.1046 14 38V10Z" fill="#FFFFFF" stroke="#00703A" stroke-width="2"/>
+            <path d="M28 8V16H36" fill="#C8E6C9" stroke="#00703A" stroke-width="2" stroke-linejoin="round"/>
+            <line x1="19" y1="20" x2="29" y2="20" stroke="#00703A" stroke-width="2" stroke-linecap="round"/>
+            <rect x="11" y="24" width="26" height="12" rx="3" fill="#00703A"/>
+            <text x="24" y="33" fill="#FFFFFF" font-family="'Montserrat', sans-serif" font-size="8" font-weight="800" text-anchor="middle" letter-spacing="0.5">{f:if(condition: extension, then: '{extension -> f:format.case(mode: \'upper\') -> f:format.crop(maxCharacters: 4, append: \'\')}', else: 'DOC')}</text>
+        </svg>
+    </div>
+</f:section>
 </html>
