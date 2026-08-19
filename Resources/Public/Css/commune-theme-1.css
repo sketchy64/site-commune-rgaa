@@ -639,6 +639,7 @@ h1.page-title::before,
 .commune-news-card {
   background-color: #ffffff;
   border-radius: 8px;
+  overflow: hidden;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -654,6 +655,7 @@ h1.page-title::before,
   height: auto;
   overflow: hidden;
   background-color: var(--commune-bg-light);
+  border-radius: 8px 8px 0 0 !important;
 }
 
 @media (max-width: 767.98px) {
@@ -668,11 +670,36 @@ h1.page-title::before,
   object-fit: cover !important;
   object-position: center;
   display: block;
+  border-radius: 8px 8px 0 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
   transition: transform 0.35s ease;
 }
 
 .commune-news-card:hover .news-card-image {
   transform: scale(1.04);
+}
+
+/* Titres cliquables d'actualités en vert de thème avec variation au survol */
+.commune-news-card .card-title a,
+.commune-carousel-slide .card-title a,
+.news-title-link {
+  color: var(--sauveterre-green) !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.commune-news-card:hover .card-title a,
+.commune-news-card .card-title a:hover,
+.commune-news-card .card-title a:focus-visible,
+.commune-carousel-slide:hover .card-title a,
+.commune-carousel-slide .card-title a:hover,
+.commune-carousel-slide .card-title a:focus-visible,
+.news-title-link:hover,
+.news-title-link:focus-visible {
+  color: var(--sauveterre-green-dark) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
 }
 
 /* Icône de calendrier */
@@ -685,16 +712,44 @@ h1.page-title::before,
 /* Affichage en ligne / Horizontal (ItemRow) */
 .commune-news-card-horizontal {
   border-radius: 10px;
+  overflow: hidden;
+}
+
+.commune-news-card-horizontal .news-horizontal-image-col {
+  border-radius: 10px 0 0 10px;
+  overflow: hidden;
 }
 
 .commune-news-card-horizontal .news-media-wrapper-horizontal {
   min-height: 220px;
   height: 100%;
+  border-radius: 10px 0 0 10px !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.commune-news-card-horizontal .news-card-image {
+  border-radius: 10px 0 0 10px !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
 
 @media (max-width: 767.98px) {
+  .commune-news-card-horizontal .news-horizontal-image-col {
+    border-radius: 10px 10px 0 0;
+  }
+
   .commune-news-card-horizontal .news-media-wrapper-horizontal {
     height: 200px;
+    border-radius: 10px 10px 0 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+
+  .commune-news-card-horizontal .news-card-image {
+    border-radius: 10px 10px 0 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
   }
 }
 
@@ -856,6 +911,119 @@ h1.page-title::before,
   background-color: var(--sauveterre-gold);
   color: #ffffff;
   transform: scale(1.08);
+}
+
+/* Lightbox modal accessible */
+body.commune-lightbox-open {
+  overflow: hidden !important;
+}
+
+.commune-a11y-lightbox-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.commune-a11y-lightbox-modal.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.commune-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 15, 8, 0.88);
+  backdrop-filter: blur(8px);
+  cursor: zoom-out;
+}
+
+.commune-lightbox-container {
+  position: relative;
+  z-index: 2;
+  max-width: 92vw;
+  max-height: 92vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.commune-lightbox-close-btn {
+  position: absolute;
+  top: -22px;
+  right: -22px;
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border-radius: 50% !important;
+  background-color: #ffffff !important;
+  color: #1a1a1a !important;
+  border: 2px solid #ffffff !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.commune-lightbox-close-btn:hover {
+  transform: scale(1.1) rotate(90deg);
+  background-color: var(--sauveterre-gold) !important;
+  color: #ffffff !important;
+}
+
+.commune-lightbox-close-btn:focus-visible {
+  outline: 3px solid var(--sauveterre-gold) !important;
+  outline-offset: 3px;
+}
+
+.commune-lightbox-figure-wrapper {
+  max-height: calc(90vh - 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.commune-lightbox-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.commune-lightbox-image-container {
+  max-height: calc(85vh - 70px);
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+  background-color: #000000;
+}
+
+.commune-lightbox-image {
+  max-height: calc(85vh - 70px);
+  max-width: 88vw;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.commune-lightbox-caption {
+  color: #ffffff;
+  text-align: center;
+  margin-top: 0.85rem;
+  max-width: 800px;
+  padding: 0.5rem 1.25rem;
+  background-color: rgba(0, 0, 0, 0.65);
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
 }
 
 .news-detail-teaser {
@@ -2662,18 +2830,64 @@ figcaption,
 }
 
 /* ==============================================================================
-   13. Pagination (Page Browser)
+   13. Pagination (Page Browser & Actualités)
    ============================================================================== */
+.commune-news-pagination,
+.pagination-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 2.5rem auto 1rem;
+}
+
+.commune-news-pagination ul.pagination,
+.commune-page-content ul.pagination,
+article ul.pagination,
+.pagination {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 auto !important;
+  padding: 0.5rem 0.85rem !important;
+  background-color: #ffffff;
+  border: 1px solid var(--commune-border, #e2e8f0);
+  border-radius: 50rem !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  list-style: none !important;
+}
+
+.commune-news-pagination ul.pagination > li::before,
+.commune-page-content ul.pagination > li::before,
+article ul.pagination > li::before,
+.pagination > li::before {
+  display: none !important;
+  content: none !important;
+}
+
+.pagination .page-item {
+  margin: 0;
+}
+
 .pagination .page-link {
-  color: var(--sauveterre-green);
-  border: 1px solid var(--commune-border);
+  color: var(--sauveterre-green) !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
   font-weight: 600;
   font-family: var(--commune-font-title);
-  padding: 0.5rem 0.85rem;
-  border-radius: 4px;
-  margin: 0 2px;
+  font-size: 0.95rem;
+  padding: 0.45rem 1rem !important;
+  border-radius: 50rem !important;
+  margin: 0 !important;
   transition: all 0.2s ease;
   text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 40px;
+  text-align: center;
 }
 
 .pagination .page-item.active .page-link {
@@ -2681,12 +2895,20 @@ figcaption,
   border-color: var(--sauveterre-green) !important;
   color: #ffffff !important;
   font-weight: 700;
+  box-shadow: 0 3px 10px rgba(0, 112, 58, 0.3);
 }
 
 .pagination .page-link:hover {
-  background-color: var(--sauveterre-green-light);
-  color: var(--sauveterre-green-dark);
-  border-color: var(--sauveterre-green);
+  background-color: var(--sauveterre-green-light) !important;
+  color: var(--sauveterre-green-dark) !important;
+  border-color: rgba(0, 112, 58, 0.25) !important;
+  transform: translateY(-1px);
+}
+
+.pagination .page-item.disabled .page-link {
+  opacity: 0.45;
+  pointer-events: none;
+  color: var(--commune-text-muted, #6c757d) !important;
 }
 
 /* ==============================================================================

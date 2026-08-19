@@ -14,7 +14,12 @@
                     <f:else>
                         <f:if condition="{settings.displayDummyIfNoMedia}">
                             <div class="news-placeholder bg-light d-flex align-items-center justify-content-center h-100 py-5">
-                                <i class="bi bi-newspaper fs-1 text-muted opacity-50" aria-hidden="true"></i>
+                                <svg class="text-muted opacity-50" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
+                                    <path d="M18 14h-8"/>
+                                    <path d="M15 18h-5"/>
+                                    <path d="M10 6h8v4h-8V6Z"/>
+                                </svg>
                             </div>
                         </f:if>
                     </f:else>
@@ -47,7 +52,7 @@
 
                 <!-- Titre -->
                 <h3 id="news-title-{newsItem.uid}" class="h5 card-title mb-3 fw-bold">
-                    <n:link newsItem="{newsItem}" settings="{settings}" class="text-decoration-none text-dark stretched-link-hover">
+                    <n:link newsItem="{newsItem}" settings="{settings}" class="news-title-link stretched-link-hover">
                         {newsItem.title}
                     </n:link>
                 </h3>
@@ -66,9 +71,11 @@
 
                 <!-- Bouton d'action accessible (Critère 6.1 RGAA) -->
                 <div class="mt-auto pt-2 border-top d-flex justify-content-between align-items-center">
-                    <n:link newsItem="{newsItem}" settings="{settings}" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1" aria-label="Lire la suite de l'actualité : {newsItem.title}">
+                    <n:link newsItem="{newsItem}" settings="{settings}" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-2" aria-label="Lire la suite de l'actualité : {newsItem.title}">
                         <span>Lire la suite</span>
-                        <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                        <svg class="news-btn-icon flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
                     </n:link>
                 </div>
             </div>

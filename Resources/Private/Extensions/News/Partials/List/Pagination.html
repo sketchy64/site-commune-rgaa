@@ -1,0 +1,85 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:if condition="{paginator.numberOfPages} > 1">
+    <nav class="commune-news-pagination mt-5 mb-4 d-flex justify-content-center" aria-label="Pagination des actualités">
+        <ul class="pagination pagination-md justify-content-center flex-wrap gap-1 mb-0 shadow-sm p-2 bg-white rounded-pill border">
+            <!-- Bouton Précédent -->
+            <f:if condition="{pagination.previousPageNumber}">
+                <f:then>
+                    <li class="page-item">
+                        <a class="page-link rounded-pill d-inline-flex align-items-center gap-1 px-3"
+                           href="{f:uri.action(action:actionName, arguments:{currentPage: pagination.previousPageNumber})}"
+                           aria-label="Aller à la page précédente (page {pagination.previousPageNumber})">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                            <span class="d-none d-sm-inline">Précédent</span>
+                        </a>
+                    </li>
+                </f:then>
+                <f:else>
+                    <li class="page-item disabled" aria-hidden="true">
+                        <span class="page-link rounded-pill d-inline-flex align-items-center gap-1 px-3">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                            <span class="d-none d-sm-inline">Précédent</span>
+                        </span>
+                    </li>
+                </f:else>
+            </f:if>
+
+            <!-- Numéros de pages -->
+            <f:for each="{pagination.allPageNumbers}" as="page">
+                <f:if condition="{page} == {paginator.currentPageNumber}">
+                    <f:then>
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link rounded-pill px-3 fw-bold">
+                                {page}
+                                <span class="visually-hidden">(page actuelle)</span>
+                            </span>
+                        </li>
+                    </f:then>
+                    <f:else>
+                        <li class="page-item">
+                            <a class="page-link rounded-pill px-3"
+                               href="{f:uri.action(action:actionName, arguments:{currentPage: page})}"
+                               aria-label="Aller à la page {page}">
+                                {page}
+                            </a>
+                        </li>
+                    </f:else>
+                </f:if>
+            </f:for>
+
+            <!-- Bouton Suivant -->
+            <f:if condition="{pagination.nextPageNumber}">
+                <f:then>
+                    <li class="page-item">
+                        <a class="page-link rounded-pill d-inline-flex align-items-center gap-1 px-3"
+                           href="{f:uri.action(action:actionName, arguments:{currentPage: pagination.nextPageNumber})}"
+                           aria-label="Aller à la page suivante (page {pagination.nextPageNumber})">
+                            <span class="d-none d-sm-inline">Suivant</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </a>
+                    </li>
+                </f:then>
+                <f:else>
+                    <li class="page-item disabled" aria-hidden="true">
+                        <span class="page-link rounded-pill d-inline-flex align-items-center gap-1 px-3">
+                            <span class="d-none d-sm-inline">Suivant</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </span>
+                    </li>
+                </f:else>
+            </f:if>
+        </ul>
+    </nav>
+</f:if>
+</html>

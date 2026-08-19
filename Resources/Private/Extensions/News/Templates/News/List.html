@@ -27,8 +27,8 @@
                         </div>
 
                         <!-- Pagination accessible RGAA -->
-                        <f:if condition="{settings.list.paginate.insertAbove}">
-                            <f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+                        <f:if condition="{pagination}">
+                            <f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator, actionName: 'list'}" />
                         </f:if>
                     </div>
                 </f:case>
@@ -45,17 +45,21 @@
                         </div>
 
                         <!-- Pagination accessible RGAA -->
-                        <f:if condition="{settings.list.paginate.insertAbove}">
-                            <f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}" />
+                        <f:if condition="{pagination}">
+                            <f:render partial="List/Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator, actionName: 'list'}" />
                         </f:if>
                     </div>
                 </f:defaultCase>
             </f:switch>
         </f:then>
         <f:else>
-            <div class="alert alert-info" role="status">
-                <i class="bi bi-info-circle me-2" aria-hidden="true"></i>
-                <f:translate key="list_nonewsfound" default="Aucune actualité disponible pour le moment." />
+            <div class="alert alert-info d-flex align-items-center gap-2" role="status">
+                <svg class="flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span><f:translate key="list_nonewsfound" default="Aucune actualité disponible pour le moment." /></span>
             </div>
         </f:else>
     </f:if>

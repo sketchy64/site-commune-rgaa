@@ -256,3 +256,39 @@ body.a11y-high-contrast .commune-sitemap-header {
 body.a11y-high-contrast .commune-sitemap-sublist {
   border-left-color: #ffffff !important;
 }
+
+/* ==========================================================================
+   8. Actualités & Pagination & Lightbox accessible (RGAA 4.1.2)
+   ========================================================================== */
+body.a11y-high-contrast .commune-news-pagination ul.pagination {
+  background-color: #000000 !important;
+  border-color: #ffffff !important;
+}
+
+body.a11y-high-contrast .commune-news-pagination .page-link {
+  color: #00ffff !important;
+  border-color: #ffffff !important;
+}
+
+body.a11y-high-contrast .commune-news-pagination .page-item.active .page-link {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+  border-color: #ffff00 !important;
+}
+
+body.a11y-high-contrast .commune-news-pagination .page-link:hover {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border-color: #ffff00 !important;
+}
+
+body.a11y-high-contrast .commune-lightbox-container {
+  border: 2px solid #ffffff;
+}
+
+body.a11y-high-contrast .commune-lightbox-close-btn {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border-color: #ffff00 !important;
+}
+

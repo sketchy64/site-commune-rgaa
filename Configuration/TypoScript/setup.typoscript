@@ -61,6 +61,10 @@ page {
     commune_a11y_carousel {
       defer = 1
     }
+    commune_a11y_lightbox = EXT:site_commune_rgaa/Resources/Public/JavaScript/lightbox-a11y.js
+    commune_a11y_lightbox {
+      defer = 1
+    }
     commune_pwa_notify = EXT:site_commune_rgaa/Resources/Public/JavaScript/pwa-notifications.js
     commune_pwa_notify {
       defer = 1
