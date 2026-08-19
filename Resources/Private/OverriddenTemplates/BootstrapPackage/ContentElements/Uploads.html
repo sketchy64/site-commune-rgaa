@@ -20,13 +20,14 @@
                             <div class="commune-upload-visual flex-shrink-0" aria-hidden="true">
                                 <f:if condition="{data.uploads_type} == 2">
                                     <f:then>
-                                        <f:if condition="{file.type} == 2">
+                                        <f:if condition="{file.properties.type} == 2 || {file.type} == 2 || {file.extension -> f:format.case(mode: 'lower')} == 'jpg' || {file.extension -> f:format.case(mode: 'lower')} == 'jpeg' || {file.extension -> f:format.case(mode: 'lower')} == 'png' || {file.extension -> f:format.case(mode: 'lower')} == 'webp' || {file.extension -> f:format.case(mode: 'lower')} == 'gif' || {file.extension -> f:format.case(mode: 'lower')} == 'svg' || {file.properties.extension -> f:format.case(mode: 'lower')} == 'jpg' || {file.properties.extension -> f:format.case(mode: 'lower')} == 'jpeg' || {file.properties.extension -> f:format.case(mode: 'lower')} == 'png' || {file.properties.extension -> f:format.case(mode: 'lower')} == 'webp' || {file.properties.extension -> f:format.case(mode: 'lower')} == 'gif' || {file.properties.extension -> f:format.case(mode: 'lower')} == 'svg'">
                                             <f:then>
                                                 <f:image image="{file}"
                                                          width="48c"
                                                          height="48c"
                                                          class="commune-upload-thumbnail rounded shadow-sm"
-                                                         additionalAttributes="{rgaa:a11y.decorativeImage(alt: '', isDecorative: true)}" />
+                                                         alt=""
+                                                         additionalAttributes="{aria-hidden: 'true'}" />
                                             </f:then>
                                             <f:else>
                                                 <f:render partial="Media/FileIcon" arguments="{extension: file.extension}" />
@@ -75,9 +76,6 @@
                                         <line x1="12" y1="15" x2="12" y2="3"></line>
                                     </svg>
                                 </span>
-                                <f:if condition="{data.target} == '_blank'">
-                                    <rgaa:a11y.externalLinkAria target="{data.target}" message="ouvre une nouvelle fenêtre" />
-                                </f:if>
                             </div>
                         </a>
                     </li>
