@@ -41,7 +41,6 @@ page {
   # Inclusion des feuilles de styles de base conformes RGAA
   includeCSS {
     commune_accessibility = EXT:site_commune_rgaa/Resources/Public/Css/accessibility.css
-    commune_forms = EXT:site_commune_rgaa/Resources/Public/Css/forms.css
     commune_print = EXT:site_commune_rgaa/Resources/Public/Css/print.css
     commune_print {
       media = print
