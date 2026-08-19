@@ -14,6 +14,8 @@ $EM_CONF[$_EXTKEY] = [
             'bootstrap_package' => '14.0.0-16.9.99',
         ],
         'conflicts' => [],
-        'suggests' => [],
+        'suggests' => [
+            'hcaptcha' => '',
+        ],
     ],
 ];

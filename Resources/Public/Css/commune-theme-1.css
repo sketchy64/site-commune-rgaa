@@ -485,7 +485,7 @@ h1.page-title::before,
   padding-top: 0 !important;
 }
 
-#main-content > .visually-hidden:first-child {
+#main-content>.visually-hidden:first-child {
   position: absolute !important;
   width: 1px !important;
   height: 1px !important;
@@ -2958,10 +2958,10 @@ article ul.pagination,
   list-style: none !important;
 }
 
-.commune-news-pagination ul.pagination > li::before,
-.commune-page-content ul.pagination > li::before,
-article ul.pagination > li::before,
-.pagination > li::before {
+.commune-news-pagination ul.pagination>li::before,
+.commune-page-content ul.pagination>li::before,
+article ul.pagination>li::before,
+.pagination>li::before {
   display: none !important;
   content: none !important;
 }

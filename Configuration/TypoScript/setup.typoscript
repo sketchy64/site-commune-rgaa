@@ -562,3 +562,9 @@ lib.contentElement {
     100 = EXT:site_commune_rgaa/Resources/Private/Partials/ContentElements/
   }
 }
+
+# ------------------------------------------------------------------------------
+# Inclusion de la configuration de l'extension hCaptcha pour EXT:form
+# ------------------------------------------------------------------------------
+@import 'EXT:hcaptcha/Configuration/TypoScript/setup.typoscript'
+

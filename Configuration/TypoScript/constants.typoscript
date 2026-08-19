@@ -151,3 +151,9 @@ commune {
     youtube = https://youtube.com/
   }
 }
+
+# ------------------------------------------------------------------------------
+# Inclusion des constantes pour EXT:hcaptcha
+# ------------------------------------------------------------------------------
+@import 'EXT:hcaptcha/Configuration/TypoScript/constants.typoscript'
+

@@ -33,6 +33,9 @@
         "typo3/coding-standards": "^0.8.0",
         "phpstan/phpstan": "^1.10"
     },
+    "suggest": {
+        "dreistromland/typo3-hcaptcha": "Intégration d'hCaptcha pour la protection anti-spam des formulaires EXT:form"
+    },
     "autoload": {
         "psr-4": {
             "Commune\\SiteCommuneRgaa\\": "Classes/"
