@@ -723,62 +723,157 @@ h1.page-title::before,
 /* ==============================================================================
    Surcouche Actualités (EXT:news) - Sauveterre Style & RGAA
    ============================================================================== */
-.commune-news-card {
+/* ==============================================================================
+   Surcouche Actualités (EXT:news) - Style Océan & RGAA
+   ============================================================================== */
+
+/* 1. Carte d'actualité & Card-Body (Style Océan) */
+.commune-news-card,
+.commune-news-card-horizontal,
+.commune-carousel-slide {
   background-color: #ffffff;
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 91, 148, 0.06) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  border: 1px solid var(--commune-border, #e2e8f0) !important;
   overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.commune-news-card:hover {
+.commune-news-card:hover,
+.commune-news-card-horizontal:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 25px rgba(0, 91, 148, 0.12) !important;
+  box-shadow: 0 12px 28px rgba(0, 91, 148, 0.14) !important;
+  border-color: rgba(0, 91, 148, 0.25) !important;
 }
 
-/* ------------------------------------------------------------------------------
-   Surcouche Actualités (EXT:news) - Gestion dynamique des arrondis d'images
-   ------------------------------------------------------------------------------ */
+.commune-news-card .card-body,
+.commune-news-card-horizontal .card-body,
+.commune-carousel-slide .card-body {
+  background-color: #ffffff !important;
+  padding: 1.5rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border-left: 3px solid transparent;
+  transition: border-color 0.2s ease;
+}
 
-/* 1. Affichage en Grille (cartes verticales : image avant le texte) */
-.commune-news-card .news-media-wrapper,
-.commune-news-card .news-card-image,
+.commune-news-card:hover .card-body,
+.commune-news-card-horizontal:hover .card-body {
+  border-left-color: var(--commune-primary, #005b94);
+}
+
+/* Badge de catégorie */
+.news-category-badge {
+  background-color: var(--commune-primary, #005b94) !important;
+  color: #ffffff !important;
+  font-family: var(--commune-font-title);
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Méta-données (Date & Icône) */
+.news-meta {
+  color: var(--commune-primary, #005b94) !important;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.news-calendar-icon {
+  color: var(--commune-primary, #005b94);
+  vertical-align: -2px;
+  flex-shrink: 0;
+}
+
+/* Titres d'actualités cliquables */
+.commune-news-card .card-title a,
+.commune-news-card-horizontal .card-title a,
+.commune-carousel-slide .card-title a,
+.news-title-link {
+  color: var(--commune-primary, #005b94) !important;
+  text-decoration: none !important;
+  font-family: var(--commune-font-title);
+  font-weight: 700;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.commune-news-card:hover .card-title a,
+.commune-news-card .card-title a:hover,
+.commune-news-card .card-title a:focus-visible,
+.commune-news-card-horizontal:hover .card-title a,
+.commune-news-card-horizontal .card-title a:hover,
+.commune-carousel-slide:hover .card-title a,
+.commune-carousel-slide .card-title a:hover,
+.news-title-link:hover,
+.news-title-link:focus-visible {
+  color: var(--commune-primary-dark, #003b63) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+
+/* Extrait / Teaser texte */
+.commune-news-card .card-text,
+.commune-news-card-horizontal .card-text,
+.commune-carousel-slide .card-text {
+  color: #4a5568 !important;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Boutons d'action "Lire la suite" */
+.commune-news-card .btn-outline-primary,
+.commune-news-card-horizontal .btn-outline-primary,
+.commune-carousel-slide .btn-outline-primary {
+  color: var(--commune-primary, #005b94) !important;
+  border-color: var(--commune-primary, #005b94) !important;
+  background-color: transparent !important;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.commune-news-card .btn-outline-primary:hover,
+.commune-news-card:hover .btn-outline-primary,
+.commune-news-card-horizontal .btn-outline-primary:hover,
+.commune-news-card-horizontal:hover .btn-outline-primary,
+.commune-carousel-slide .btn-outline-primary:hover {
+  color: #ffffff !important;
+  background-color: var(--commune-primary, #005b94) !important;
+  border-color: var(--commune-primary, #005b94) !important;
+  box-shadow: 0 4px 12px rgba(0, 91, 148, 0.25);
+}
+
+/* 2. Gestion stricte et directe des arrondis sur l'élément <img> (et placeholder) */
+.commune-news-card img.news-card-image,
+.commune-news-card img.card-img-top,
 .commune-news-card .news-placeholder {
-  border-top-left-radius: 8px !important;
-  border-top-right-radius: 8px !important;
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }
 
-/* 2. Affichage en Ligne / Horizontal (ItemRow) & Carrousel (Carousel) */
-.commune-news-card-horizontal,
-.commune-carousel-slide {
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-/* Écran bureau (>= 768px) : Image à côté du texte (à gauche) -> suppression des arrondis de droite */
+/* Mode Ligne & Carrousel : Bureau (>= 768px) -> Image à GAUCHE du texte : 0 à droite sur l'image */
 @media (min-width: 768px) {
-  .commune-news-card-horizontal .news-horizontal-image-col,
-  .commune-news-card-horizontal .news-media-wrapper-horizontal,
-  .commune-news-card-horizontal .news-card-image,
+  .commune-news-card-horizontal img.news-card-image,
   .commune-news-card-horizontal .news-placeholder,
-  .commune-carousel-slide .carousel-media-col,
-  .commune-carousel-slide .carousel-media-wrapper,
-  .commune-carousel-slide .carousel-slide-image {
+  .commune-carousel-slide img.carousel-slide-image,
+  .commune-carousel-slide .news-placeholder {
     border-top-left-radius: 10px !important;
     border-bottom-left-radius: 10px !important;
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
   }
 
-  /* Cas inversé : Image à côté du texte (à droite) -> suppression des arrondis de gauche */
-  .commune-news-card-horizontal.flex-row-reverse .news-horizontal-image-col,
-  .commune-news-card-horizontal.flex-row-reverse .news-media-wrapper-horizontal,
-  .commune-news-card-horizontal.flex-row-reverse .news-card-image,
+  /* Si l'image est à DROITE du texte (cas inversé) */
+  .commune-news-card-horizontal.flex-row-reverse img.news-card-image,
   .commune-news-card-horizontal.flex-row-reverse .news-placeholder,
-  .commune-news-card-horizontal-reverse .news-horizontal-image-col,
-  .commune-news-card-horizontal-reverse .news-media-wrapper-horizontal,
-  .commune-news-card-horizontal-reverse .news-card-image,
+  .commune-news-card-horizontal-reverse img.news-card-image,
   .commune-news-card-horizontal-reverse .news-placeholder {
     border-top-right-radius: 10px !important;
     border-bottom-right-radius: 10px !important;
@@ -787,15 +882,12 @@ h1.page-title::before,
   }
 }
 
-/* Écran mobile (< 768px) : L'image passe au-dessus du texte -> suppression des arrondis du bas */
+/* Mode Ligne & Carrousel : Mobile (< 768px) -> Image au-dessus du texte : 0 en bas sur l'image */
 @media (max-width: 767.98px) {
-  .commune-news-card-horizontal .news-horizontal-image-col,
-  .commune-news-card-horizontal .news-media-wrapper-horizontal,
-  .commune-news-card-horizontal .news-card-image,
+  .commune-news-card-horizontal img.news-card-image,
   .commune-news-card-horizontal .news-placeholder,
-  .commune-carousel-slide .carousel-media-col,
-  .commune-carousel-slide .carousel-media-wrapper,
-  .commune-carousel-slide .carousel-slide-image {
+  .commune-carousel-slide img.carousel-slide-image,
+  .commune-carousel-slide .news-placeholder {
     border-top-left-radius: 10px !important;
     border-top-right-radius: 10px !important;
     border-bottom-left-radius: 0 !important;
