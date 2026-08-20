@@ -499,32 +499,36 @@ h1.page-title::before,
   font-weight: 700;
 }
 
-/* Icône d'indicateur + / - alignée à droite pour les éléments avec sous-niveaux */
-.sidebar-toggle-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  margin-left: auto;
-  font-size: 1.15rem;
-  font-weight: 600;
-  line-height: 1;
-  color: var(--commune-secondary, #f5b21e);
-  flex-shrink: 0;
-  transition: color 0.2s ease, transform 0.2s ease;
+/* Icône + / - alignée à droite sur les éléments avec sous-niveaux (has-children) */
+.commune-sidebar-menu .has-children > a,
+.commune-sidebar-submenu .has-children > a {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
 }
 
-.sidebar-toggle-icon::before {
+.commune-sidebar-menu .has-children > a::after,
+.commune-sidebar-submenu .has-children > a::after {
   content: "+";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--sauveterre-gold, #f5b21e) !important;
+  margin-left: auto;
+  padding-left: 0.5rem;
+  flex-shrink: 0;
+  display: inline-block;
 }
 
-.active-parent > .level-1-link .sidebar-toggle-icon::before,
-.active-parent > .level-2-link .sidebar-toggle-icon::before,
-.active-page.has-children > .level-1-link .sidebar-toggle-icon::before,
-.active-page.has-children > .level-2-link .sidebar-toggle-icon::before {
+/* En état active-parent has-children ou active-page has-children -> icône "-" (minus) en couleur jaune */
+.commune-sidebar-menu .has-children.active-parent > a::after,
+.commune-sidebar-menu .has-children.active-page > a::after,
+.commune-sidebar-submenu .has-children.active-parent > a::after,
+.commune-sidebar-submenu .has-children.active-page > a::after {
   content: "−";
-  color: var(--commune-primary, #00703a);
+  color: var(--sauveterre-gold, #f5b21e) !important;
 }
 
 /* --- Niveau 2 (Sous-menu imbriqué) --- */
