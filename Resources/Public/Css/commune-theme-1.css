@@ -862,6 +862,8 @@ h1.page-title::before,
 }
 
 /* 2. Gestion stricte et directe des arrondis sur l'élément <img> (et placeholder) */
+#main-content article.commune-news-card img,
+article.commune-news-card img,
 .commune-news-card img.news-card-image,
 .commune-news-card img.card-img-top,
 .commune-news-card .news-placeholder {
@@ -869,10 +871,15 @@ h1.page-title::before,
   border-top-right-radius: 10px !important;
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
+  box-shadow: none !important;
 }
 
 /* Mode Ligne & Carrousel : Bureau (>= 768px) -> Image à GAUCHE du texte : 0 à droite sur l'image */
 @media (min-width: 768px) {
+  #main-content article.commune-news-card-horizontal img,
+  #main-content article.commune-carousel-slide img,
+  article.commune-news-card-horizontal img,
+  article.commune-carousel-slide img,
   .commune-news-card-horizontal img.news-card-image,
   .commune-news-card-horizontal .news-placeholder,
   .commune-carousel-slide img.carousel-slide-image,
@@ -881,9 +888,12 @@ h1.page-title::before,
     border-bottom-left-radius: 10px !important;
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
+    box-shadow: none !important;
   }
 
   /* Si l'image est à DROITE du texte (cas inversé) */
+  #main-content article.commune-news-card-horizontal.flex-row-reverse img,
+  article.commune-news-card-horizontal.flex-row-reverse img,
   .commune-news-card-horizontal.flex-row-reverse img.news-card-image,
   .commune-news-card-horizontal.flex-row-reverse .news-placeholder,
   .commune-news-card-horizontal-reverse img.news-card-image,
@@ -892,11 +902,16 @@ h1.page-title::before,
     border-bottom-right-radius: 10px !important;
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
+    box-shadow: none !important;
   }
 }
 
 /* Mode Ligne & Carrousel : Mobile (< 768px) -> Image au-dessus du texte : 0 en bas sur l'image */
 @media (max-width: 767.98px) {
+  #main-content article.commune-news-card-horizontal img,
+  #main-content article.commune-carousel-slide img,
+  article.commune-news-card-horizontal img,
+  article.commune-carousel-slide img,
   .commune-news-card-horizontal img.news-card-image,
   .commune-news-card-horizontal .news-placeholder,
   .commune-carousel-slide img.carousel-slide-image,
@@ -905,6 +920,7 @@ h1.page-title::before,
     border-top-right-radius: 10px !important;
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
+    box-shadow: none !important;
   }
 }
 
@@ -2812,14 +2828,14 @@ blockquote p,
 /* ==============================================================================
    11. Images & Médias de Contenu (Style Édito appliqué à tout le site)
    ============================================================================== */
-#main-content img:not(.commune-logo-img):not(.navbar-brand img):not(.commune-back-to-top svg),
-.commune-page-content img,
+#main-content img:not(.commune-logo-img):not(.navbar-brand img):not(.commune-back-to-top svg):not(.news-card-image):not(.carousel-slide-image),
+.commune-page-content img:not(.news-card-image):not(.carousel-slide-image),
 .ce-image img,
 .ce-gallery img,
 .ce-textpic img,
 .ce-textmedia img,
-.figure-img,
-article img {
+.figure-img:not(.news-detail-img),
+article:not(.commune-news-card):not(.commune-news-card-horizontal):not(.commune-carousel-slide) img {
   border-radius: 8px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
   max-width: 100%;
