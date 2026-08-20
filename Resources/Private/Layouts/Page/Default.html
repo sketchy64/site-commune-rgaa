@@ -8,7 +8,7 @@
     <f:variable name="activeTheme" value="EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css" />
 </f:if>
 <f:if condition="{activeTheme} && {activeTheme} != 'none' && {activeTheme} != 'default'">
-    <f:asset.css identifier="commune-theme" href="{activeTheme}" priority="1" />
+    <f:asset.css identifier="commune-theme" href="{activeTheme}" />
 </f:if>
 
 <!-- Liens d'évitement / Skip Links obligatoires RGAA 4.1.2 (Critère 12.7) -->
