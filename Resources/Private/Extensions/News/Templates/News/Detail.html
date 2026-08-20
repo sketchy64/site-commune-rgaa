@@ -53,6 +53,7 @@
                         <figure class="figure w-100 mb-0">
                             <a href="{f:uri.image(image: detailMedia, maxWidth: 1920, maxHeight: 1200)}"
                                class="lightbox glightbox d-block position-relative news-detail-lightbox-link rounded overflow-hidden shadow-sm"
+                               rel="lightbox[news-{newsItem.uid}]"
                                data-lightbox="lightbox-news-{newsItem.uid}"
                                data-gallery="news-gallery-{newsItem.uid}"
                                data-glightbox="title: {f:if(condition: detailMedia.originalResource.title, then: detailMedia.originalResource.title, else: newsItem.title)}; description: {detailMedia.originalResource.description}"
