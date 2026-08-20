@@ -545,7 +545,7 @@ h1.page-title::before,
   line-height: 1;
   color: var(--sauveterre-gold, #f5b21e) !important;
   margin-left: auto !important;
-  padding-left: 0.5rem !important;
+  margin-right: 0.75rem !important;
   flex-shrink: 0 !important;
   display: inline-block !important;
 }
