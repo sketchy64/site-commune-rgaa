@@ -484,6 +484,7 @@ h1.page-title::before,
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
+  width: 100%;
   transition: color 0.2s ease, background-color 0.2s ease;
 }
 
@@ -516,22 +517,32 @@ h1.page-title::before,
   font-weight: 700;
 }
 
-/* Caret discret pour Niveau 1 avec enfants */
-.sidebar-caret-icon {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-right: 2px solid var(--commune-secondary, #f5b21e);
-  border-bottom: 2px solid var(--commune-secondary, #f5b21e);
-  transform: rotate(45deg);
-  margin-left: 0.5rem;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+/* Icône d'indicateur + / - alignée à droite pour les éléments avec sous-niveaux */
+.sidebar-toggle-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-left: auto;
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--commune-secondary, #f5b21e);
   flex-shrink: 0;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
-.level-1-item.active-parent .sidebar-caret-icon {
-  transform: rotate(-135deg);
-  border-color: var(--commune-primary, #00703a);
+.sidebar-toggle-icon::before {
+  content: "+";
+}
+
+.active-parent > .level-1-link .sidebar-toggle-icon::before,
+.active-parent > .level-2-link .sidebar-toggle-icon::before,
+.active-page.has-children > .level-1-link .sidebar-toggle-icon::before,
+.active-page.has-children > .level-2-link .sidebar-toggle-icon::before {
+  content: "−";
+  color: var(--commune-primary, #00703a);
 }
 
 /* --- Niveau 2 (Sous-menu imbriqué) --- */
@@ -549,11 +560,13 @@ h1.page-title::before,
 .commune-sidebar-submenu .level-2-link {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0.5rem 1.25rem 0.5rem 1.75rem;
   color: var(--commune-text-main, #334155);
   font-weight: 500;
   font-size: 0.9rem;
   text-decoration: none;
+  width: 100%;
   transition: all 0.2s ease;
 }
 
@@ -577,23 +590,6 @@ h1.page-title::before,
   opacity: 1;
   transform: scale(1.2);
   background-color: var(--commune-secondary, #f5b21e);
-}
-
-.sidebar-caret-icon-sm {
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  border-right: 1.5px solid var(--commune-text-muted, #94a3b8);
-  border-bottom: 1.5px solid var(--commune-text-muted, #94a3b8);
-  transform: rotate(45deg);
-  margin-left: 0.4rem;
-  transition: transform 0.2s ease;
-  flex-shrink: 0;
-}
-
-.level-2-item.active-parent .sidebar-caret-icon-sm {
-  transform: rotate(-135deg);
-  border-color: var(--commune-primary, #00703a);
 }
 
 .sidebar-item-text {
