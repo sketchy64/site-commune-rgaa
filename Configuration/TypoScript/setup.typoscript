@@ -432,7 +432,7 @@ page {
           IFSUB = 1
           IFSUB {
             wrapItemAndSub = <li class="list-group-item level-1-item has-children">|</li>
-            linkWrap = <span class="sidebar-title-text">|</span><span class="sidebar-caret" aria-hidden="true">▾</span>
+            linkWrap = <span class="sidebar-title-text">|</span><span class="sidebar-caret-icon" aria-hidden="true"></span>
             ATagParams = class="sidebar-link level-1-link is-parent"
           }
           ACT = 1
@@ -448,13 +448,13 @@ page {
           ACTIFSUB = 1
           ACTIFSUB {
             wrapItemAndSub = <li class="list-group-item level-1-item active-parent has-children">|</li>
-            linkWrap = <span class="sidebar-title-text">|</span><span class="sidebar-caret" aria-hidden="true">▾</span>
+            linkWrap = <span class="sidebar-title-text">|</span><span class="sidebar-caret-icon" aria-hidden="true"></span>
             ATagParams = class="sidebar-link level-1-link is-parent active-parent-link" aria-current="true"
           }
           CURIFSUB = 1
           CURIFSUB {
             wrapItemAndSub = <li class="list-group-item level-1-item active-page active-parent has-children">|</li>
-            linkWrap = <span class="sidebar-title-text">|</span><span class="sidebar-caret" aria-hidden="true">▾</span>
+            linkWrap = <span class="sidebar-title-text">|</span><span class="sidebar-caret-icon" aria-hidden="true"></span>
             ATagParams = class="sidebar-link level-1-link active-link is-parent" aria-current="page"
           }
         }
@@ -463,37 +463,37 @@ page {
           wrap = <ul class="commune-sidebar-submenu level-2 list-unstyled mb-0">|</ul>
           NO {
             wrapItemAndSub = <li class="sidebar-subitem level-2-item">|</li>
-            linkWrap = <span class="sidebar-bullet" aria-hidden="true">›</span><span class="sidebar-item-text">|</span>
+            linkWrap = <span class="sidebar-item-text">|</span>
             ATagParams = class="sidebar-sublink level-2-link"
           }
           IFSUB = 1
           IFSUB {
             wrapItemAndSub = <li class="sidebar-subitem level-2-item has-children">|</li>
-            linkWrap = <span class="sidebar-bullet" aria-hidden="true">›</span><span class="sidebar-item-text">|</span><span class="sidebar-caret-sm" aria-hidden="true">▾</span>
+            linkWrap = <span class="sidebar-item-text">|</span><span class="sidebar-caret-icon-sm" aria-hidden="true"></span>
             ATagParams = class="sidebar-sublink level-2-link is-parent"
           }
           ACT = 1
           ACT {
             wrapItemAndSub = <li class="sidebar-subitem level-2-item active-page">|</li>
-            linkWrap = <span class="sidebar-bullet" aria-hidden="true">›</span><span class="sidebar-item-text">|</span>
+            linkWrap = <span class="sidebar-item-text">|</span>
             ATagParams = class="sidebar-sublink level-2-link active-link" aria-current="page"
           }
           CUR = 1
           CUR {
             wrapItemAndSub = <li class="sidebar-subitem level-2-item active-page">|</li>
-            linkWrap = <span class="sidebar-bullet" aria-hidden="true">›</span><span class="sidebar-item-text">|</span>
+            linkWrap = <span class="sidebar-item-text">|</span>
             ATagParams = class="sidebar-sublink level-2-link active-link" aria-current="page"
           }
           ACTIFSUB = 1
           ACTIFSUB {
             wrapItemAndSub = <li class="sidebar-subitem level-2-item active-parent has-children">|</li>
-            linkWrap = <span class="sidebar-bullet" aria-hidden="true">›</span><span class="sidebar-item-text">|</span><span class="sidebar-caret-sm" aria-hidden="true">▾</span>
+            linkWrap = <span class="sidebar-item-text">|</span><span class="sidebar-caret-icon-sm" aria-hidden="true"></span>
             ATagParams = class="sidebar-sublink level-2-link is-parent active-parent-link" aria-current="true"
           }
           CURIFSUB = 1
           CURIFSUB {
             wrapItemAndSub = <li class="sidebar-subitem level-2-item active-page active-parent has-children">|</li>
-            linkWrap = <span class="sidebar-bullet" aria-hidden="true">›</span><span class="sidebar-item-text">|</span><span class="sidebar-caret-sm" aria-hidden="true">▾</span>
+            linkWrap = <span class="sidebar-item-text">|</span><span class="sidebar-caret-icon-sm" aria-hidden="true"></span>
             ATagParams = class="sidebar-sublink level-2-link active-link is-parent" aria-current="page"
           }
         }
@@ -502,19 +502,19 @@ page {
           wrap = <ul class="commune-sidebar-subsubmenu level-3 list-unstyled mb-0">|</ul>
           NO {
             wrapItemAndSub = <li class="sidebar-subsubitem level-3-item">|</li>
-            linkWrap = <span class="sidebar-dot" aria-hidden="true">•</span><span class="sidebar-item-text">|</span>
+            linkWrap = <span class="sidebar-item-text">|</span>
             ATagParams = class="sidebar-subsublink level-3-link"
           }
           ACT = 1
           ACT {
             wrapItemAndSub = <li class="sidebar-subsubitem level-3-item active-page">|</li>
-            linkWrap = <span class="sidebar-dot" aria-hidden="true">•</span><span class="sidebar-item-text">|</span>
+            linkWrap = <span class="sidebar-item-text">|</span>
             ATagParams = class="sidebar-subsublink level-3-link active-link" aria-current="page"
           }
           CUR = 1
           CUR {
             wrapItemAndSub = <li class="sidebar-subsubitem level-3-item active-page">|</li>
-            linkWrap = <span class="sidebar-dot" aria-hidden="true">•</span><span class="sidebar-item-text">|</span>
+            linkWrap = <span class="sidebar-item-text">|</span>
             ATagParams = class="sidebar-subsublink level-3-link active-link" aria-current="page"
           }
         }

@@ -516,11 +516,22 @@ h1.page-title::before,
   font-weight: 700;
 }
 
-.sidebar-caret {
-  font-size: 0.85rem;
-  color: var(--commune-primary, #00703a);
+/* Caret discret pour Niveau 1 avec enfants */
+.sidebar-caret-icon {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid var(--commune-secondary, #f5b21e);
+  border-bottom: 2px solid var(--commune-secondary, #f5b21e);
+  transform: rotate(45deg);
   margin-left: 0.5rem;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.level-1-item.active-parent .sidebar-caret-icon {
+  transform: rotate(-135deg);
+  border-color: var(--commune-primary, #00703a);
 }
 
 /* --- Niveau 2 (Sous-menu imbriqué) --- */
@@ -538,7 +549,7 @@ h1.page-title::before,
 .commune-sidebar-submenu .level-2-link {
   display: flex;
   align-items: center;
-  padding: 0.5rem 1.25rem 0.5rem 2rem;
+  padding: 0.5rem 1.25rem 0.5rem 1.75rem;
   color: var(--commune-text-main, #334155);
   font-weight: 500;
   font-size: 0.9rem;
@@ -546,23 +557,47 @@ h1.page-title::before,
   transition: all 0.2s ease;
 }
 
-.sidebar-bullet {
+/* Puce discrète Niveau 2 (décrochage élégant avec couleur secondaire ou gris) */
+.commune-sidebar-submenu .level-2-link::before {
+  content: '';
   display: inline-block;
-  margin-right: 0.5rem;
-  color: var(--commune-primary, #00703a);
-  font-weight: bold;
-  font-size: 1.1rem;
-  line-height: 1;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--commune-secondary, #f5b21e);
+  opacity: 0.8;
+  margin-right: 0.65rem;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.commune-sidebar-submenu .level-2-item:hover .level-2-link::before,
+.commune-sidebar-submenu .level-2-item.active-page .level-2-link::before,
+.commune-sidebar-submenu .level-2-item.active-parent .level-2-link::before {
+  opacity: 1;
+  transform: scale(1.2);
+  background-color: var(--commune-secondary, #f5b21e);
+}
+
+.sidebar-caret-icon-sm {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-right: 1.5px solid var(--commune-text-muted, #94a3b8);
+  border-bottom: 1.5px solid var(--commune-text-muted, #94a3b8);
+  transform: rotate(45deg);
+  margin-left: 0.4rem;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.level-2-item.active-parent .sidebar-caret-icon-sm {
+  transform: rotate(-135deg);
+  border-color: var(--commune-primary, #00703a);
 }
 
 .sidebar-item-text {
   flex-grow: 1;
-}
-
-.sidebar-caret-sm {
-  font-size: 0.75rem;
-  color: var(--commune-text-muted, #64748b);
-  margin-left: 0.35rem;
 }
 
 .commune-sidebar-submenu .level-2-item:hover {
@@ -592,9 +627,10 @@ h1.page-title::before,
 .commune-sidebar-subsubmenu {
   background-color: #ffffff;
   padding: 0.25rem 0;
-  border-left: 2px solid var(--commune-primary-light, #e8f5e9);
-  margin-left: 2.25rem;
+  border-left: 2px solid var(--commune-border, #e2e8f0);
+  margin-left: 1.75rem;
   margin-bottom: 0.35rem;
+  margin-top: 0.2rem;
 }
 
 .commune-sidebar-subsubmenu .level-3-item {
@@ -604,19 +640,26 @@ h1.page-title::before,
 .commune-sidebar-subsubmenu .level-3-link {
   display: flex;
   align-items: center;
-  padding: 0.4rem 1rem 0.4rem 0.75rem;
-  color: var(--commune-text-muted, #475569);
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  color: var(--commune-text-muted, #64748b);
   font-weight: 400;
   font-size: 0.85rem;
   text-decoration: none;
   transition: all 0.2s ease;
 }
 
-.sidebar-dot {
+/* Puce discrète Niveau 3 (petit anneau ou tiret subtil gris/secondaire) */
+.commune-sidebar-subsubmenu .level-3-link::before {
+  content: '';
   display: inline-block;
-  margin-right: 0.4rem;
-  color: var(--commune-secondary, #f5b21e);
-  font-size: 0.9rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  border: 1.5px solid var(--commune-text-muted, #94a3b8);
+  background-color: transparent;
+  margin-right: 0.55rem;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
 }
 
 .commune-sidebar-subsubmenu .level-3-item:hover {
@@ -625,6 +668,12 @@ h1.page-title::before,
 
 .commune-sidebar-subsubmenu .level-3-item:hover > .level-3-link {
   color: var(--commune-primary-dark, #00552c);
+}
+
+.commune-sidebar-subsubmenu .level-3-item:hover .level-3-link::before,
+.commune-sidebar-subsubmenu .level-3-item.active-page .level-3-link::before {
+  border-color: var(--commune-secondary, #f5b21e);
+  background-color: var(--commune-secondary, #f5b21e);
 }
 
 .commune-sidebar-subsubmenu .level-3-item.active-page {
