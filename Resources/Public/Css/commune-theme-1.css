@@ -463,12 +463,23 @@ h1.page-title::before,
   background-color: #ffffff;
 }
 
+/* Alignement strict à gauche de tous les titres de liens */
+.commune-sidebar-menu a,
+.commune-sidebar-menu .level-1-link,
+.commune-sidebar-submenu .level-2-link,
+.commune-sidebar-subsubmenu .level-3-link,
+.sidebar-title-text,
+.sidebar-item-text {
+  text-align: left !important;
+}
+
 /* --- Niveau 1 (Éléments principaux de la rubrique) --- */
 .commune-sidebar-menu .level-1-item {
   border-left: 4px solid transparent;
   border-bottom: 1px solid var(--commune-border, #e2e8f0);
   padding: 0;
   transition: all 0.2s ease;
+  text-align: left;
 }
 
 .commune-sidebar-menu .level-1-item:last-child {
@@ -476,21 +487,27 @@ h1.page-title::before,
 }
 
 .commune-sidebar-menu .level-1-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
   padding: 0.85rem 1.25rem;
   color: var(--commune-text-main, #212529);
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
-  width: 100%;
+  width: 100% !important;
+  text-align: left !important;
   transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.sidebar-title-text {
+  text-align: left;
+  flex-grow: 1;
 }
 
 .commune-sidebar-menu .level-1-item:hover {
   background-color: var(--commune-primary-light, #e8f5e9);
-  border-left-color: var(--commune-secondary, #f5b21e);
+  border-left-color: var(--sauveterre-gold, #f5b21e);
 }
 
 .commune-sidebar-menu .level-1-item:hover > .level-1-link {
@@ -517,17 +534,8 @@ h1.page-title::before,
   font-weight: 700;
 }
 
-/* Icône + / - alignée à droite sur les éléments avec sous-niveaux (has-children) */
-.commune-sidebar-menu .has-children > a,
-.commune-sidebar-submenu .has-children > a {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  width: 100% !important;
-}
-
-.commune-sidebar-menu .has-children > a::after,
-.commune-sidebar-submenu .has-children > a::after {
+/* Accordéon + / - sur Niveau 1 quand il a des sous-rubriques (level-2) */
+.commune-sidebar-menu .level-1-item.has-children > .level-1-link::after {
   content: "+";
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-weight: 700;
@@ -540,49 +548,50 @@ h1.page-title::before,
   display: inline-block;
 }
 
-/* En état active-parent has-children ou active-page has-children -> icône "-" (minus) en couleur jaune */
-.commune-sidebar-menu .has-children.active-parent > a::after,
-.commune-sidebar-menu .has-children.active-page > a::after,
-.commune-sidebar-submenu .has-children.active-parent > a::after,
-.commune-sidebar-submenu .has-children.active-page > a::after {
+/* Quand Niveau 1 ou l'une de ses sous-rubriques est active -> icône "-" (minus) jaune */
+.commune-sidebar-menu .level-1-item.has-children.active-parent > .level-1-link::after,
+.commune-sidebar-menu .level-1-item.has-children.active-page > .level-1-link::after {
   content: "−";
   color: var(--sauveterre-gold, #f5b21e) !important;
 }
 
-/* --- Niveau 2 (Sous-menu imbriqué) --- */
+/* --- Niveau 2 (Sous-menu imbriqué / sous-rubriques) --- */
 .commune-sidebar-submenu {
   background-color: #f8fafc;
   border-top: 1px dashed var(--commune-border, #e2e8f0);
   padding: 0.35rem 0;
+  text-align: left;
 }
 
 .commune-sidebar-submenu .level-2-item {
   position: relative;
   transition: background-color 0.2s ease;
+  text-align: left;
 }
 
 .commune-sidebar-submenu .level-2-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
   padding: 0.5rem 1.25rem 0.5rem 1.75rem;
   color: var(--commune-text-main, #334155);
   font-weight: 500;
   font-size: 0.9rem;
   text-decoration: none;
-  width: 100%;
+  width: 100% !important;
+  text-align: left !important;
   transition: all 0.2s ease;
 }
 
-/* Puce discrète Niveau 2 (décrochage élégant avec couleur secondaire ou gris) */
+/* Puce discrète dorée pour Niveau 2 */
 .commune-sidebar-submenu .level-2-link::before {
   content: '';
   display: inline-block;
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: var(--commune-secondary, #f5b21e);
-  opacity: 0.8;
+  background-color: var(--sauveterre-gold, #f5b21e);
+  opacity: 0.85;
   margin-right: 0.65rem;
   flex-shrink: 0;
   transition: all 0.2s ease;
@@ -592,12 +601,13 @@ h1.page-title::before,
 .commune-sidebar-submenu .level-2-item.active-page .level-2-link::before,
 .commune-sidebar-submenu .level-2-item.active-parent .level-2-link::before {
   opacity: 1;
-  transform: scale(1.2);
-  background-color: var(--commune-secondary, #f5b21e);
+  transform: scale(1.25);
+  background-color: var(--sauveterre-gold, #f5b21e);
 }
 
 .sidebar-item-text {
   flex-grow: 1;
+  text-align: left;
 }
 
 .commune-sidebar-submenu .level-2-item:hover {
@@ -631,20 +641,24 @@ h1.page-title::before,
   margin-left: 1.75rem;
   margin-bottom: 0.35rem;
   margin-top: 0.2rem;
+  text-align: left;
 }
 
 .commune-sidebar-subsubmenu .level-3-item {
   transition: background-color 0.2s ease;
+  text-align: left;
 }
 
 .commune-sidebar-subsubmenu .level-3-link {
-  display: flex;
-  align-items: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
   padding: 0.4rem 1rem 0.4rem 1rem;
   color: var(--commune-text-muted, #64748b);
   font-weight: 400;
   font-size: 0.85rem;
   text-decoration: none;
+  text-align: left !important;
   transition: all 0.2s ease;
 }
 
@@ -672,8 +686,8 @@ h1.page-title::before,
 
 .commune-sidebar-subsubmenu .level-3-item:hover .level-3-link::before,
 .commune-sidebar-subsubmenu .level-3-item.active-page .level-3-link::before {
-  border-color: var(--commune-secondary, #f5b21e);
-  background-color: var(--commune-secondary, #f5b21e);
+  border-color: var(--sauveterre-gold, #f5b21e);
+  background-color: var(--sauveterre-gold, #f5b21e);
 }
 
 .commune-sidebar-subsubmenu .level-3-item.active-page {
