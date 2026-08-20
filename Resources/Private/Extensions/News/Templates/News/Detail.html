@@ -51,16 +51,16 @@
                     <!-- Image principale avec Lightbox (alignée à droite sur bureau) -->
                     <div class="news-detail-media news-detail-media-float float-md-end ms-md-4 mb-4">
                         <figure class="figure w-100 mb-0">
-                            <a href="{f:uri.image(image: detailMedia, maxWidth: 1920, maxHeight: 1200)}"
-                               class="lightbox glightbox d-block position-relative news-detail-lightbox-link rounded overflow-hidden shadow-sm"
-                               rel="lightbox[news-{newsItem.uid}]"
-                               data-lightbox="lightbox-news-{newsItem.uid}"
-                               data-gallery="news-gallery-{newsItem.uid}"
-                               data-glightbox="title: {f:if(condition: detailMedia.originalResource.title, then: detailMedia.originalResource.title, else: newsItem.title)}; description: {detailMedia.originalResource.description}"
-                               data-title="{f:if(condition: detailMedia.originalResource.title, then: detailMedia.originalResource.title, else: newsItem.title)}"
-                               data-description="{detailMedia.originalResource.description}"
+                            <a class="lightbox d-block position-relative news-detail-lightbox-link rounded overflow-hidden shadow-sm"
+                               rel="lightbox-group-news-{newsItem.uid}"
+                               href="{f:uri.image(image: detailMedia, maxWidth: 1920, maxHeight: 1200)}"
+                               data-lightbox-width="1920"
+                               data-lightbox-height="1200"
+                               data-lightbox-title="{f:if(condition: detailMedia.originalResource.title, then: detailMedia.originalResource.title, else: newsItem.title)}"
+                               data-lightbox-alt="{f:if(condition: detailMedia.originalResource.alternative, then: detailMedia.originalResource.alternative, else: newsItem.title)}"
+                               data-lightbox-caption="{detailMedia.originalResource.description}"
                                aria-label="Agrandir l'image : {f:if(condition: detailMedia.originalResource.alternative, then: detailMedia.originalResource.alternative, else: newsItem.title)}"
-                               title="Cliquer pour agrandir l'image dans une lightbox">
+                               title="Cliquer pour agrandir l'image">
                                 
                                 <f:media file="{detailMedia}" width="550c" height="380c" class="figure-img img-fluid rounded w-100 mb-0 news-detail-img" alt="{f:if(condition: detailMedia.originalResource.alternative, then: detailMedia.originalResource.alternative, else: newsItem.title)}" />
                                 

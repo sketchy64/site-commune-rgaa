@@ -56,18 +56,4 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-
-  // Unification de la Lightbox native Bootstrap Package sur toutes les images du site
-  if (typeof window.GLightbox === 'function') {
-    try {
-      window.GLightbox({
-        selector: '.lightbox, .glightbox, [data-lightbox], [rel*="lightbox"]',
-        touchNavigation: true,
-        loop: false,
-        zoomable: true
-      });
-    } catch (e) {
-      // Ignorer si déjà initialisé
-    }
-  }
 });
