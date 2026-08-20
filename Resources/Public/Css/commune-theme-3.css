@@ -735,106 +735,69 @@ h1.page-title::before,
   box-shadow: 0 12px 25px rgba(45, 55, 72, 0.12) !important;
 }
 
-.commune-news-card .news-media-wrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  height: auto;
-  overflow: hidden;
-  background-color: var(--commune-bg-light);
-  border-radius: 8px 8px 0 0 !important;
-}
+/* ------------------------------------------------------------------------------
+   Surcouche Actualités (EXT:news) - Gestion dynamique des arrondis d'images
+   ------------------------------------------------------------------------------ */
 
-@media (max-width: 767.98px) {
-  .commune-news-card .news-media-wrapper {
-    aspect-ratio: 16 / 9;
-  }
-}
-
-.commune-news-card .news-card-image {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  object-position: center;
-  display: block;
-  border-radius: 8px 8px 0 0 !important;
+/* 1. Affichage en Grille (cartes verticales : image avant le texte) */
+.commune-news-card .news-media-wrapper,
+.commune-news-card .news-card-image,
+.commune-news-card .news-placeholder {
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
-  transition: transform 0.35s ease;
 }
 
-.commune-news-card:hover .news-card-image {
-  transform: scale(1.04);
-}
-
-/* Titres cliquables d'actualités en couleur du thème avec variation au survol */
-.commune-news-card .card-title a,
-.commune-carousel-slide .card-title a,
-.news-title-link {
-  color: var(--commune-primary, #2d3748) !important;
-  text-decoration: none !important;
-  transition: color 0.2s ease, text-decoration-color 0.2s ease;
-}
-
-.commune-news-card:hover .card-title a,
-.commune-news-card .card-title a:hover,
-.commune-news-card .card-title a:focus-visible,
-.commune-carousel-slide:hover .card-title a,
-.commune-carousel-slide .card-title a:hover,
-.commune-carousel-slide .card-title a:focus-visible,
-.news-title-link:hover,
-.news-title-link:focus-visible {
-  color: #1a202c !important;
-  text-decoration: underline !important;
-  text-underline-offset: 3px;
-}
-
-/* Icône de calendrier */
-.news-calendar-icon {
-  color: var(--commune-primary, #2d3748);
-  vertical-align: -2px;
-  flex-shrink: 0;
-}
-
-/* Affichage en ligne / Horizontal (ItemRow) */
-.commune-news-card-horizontal {
+/* 2. Affichage en Ligne / Horizontal (ItemRow) & Carrousel (Carousel) */
+.commune-news-card-horizontal,
+.commune-carousel-slide {
   border-radius: 10px;
   overflow: hidden;
 }
 
-.commune-news-card-horizontal .news-horizontal-image-col {
-  border-radius: 10px 0 0 10px;
-  overflow: hidden;
-}
-
-.commune-news-card-horizontal .news-media-wrapper-horizontal {
-  min-height: 220px;
-  height: 100%;
-  border-radius: 10px 0 0 10px !important;
-  border-top-right-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-}
-
-.commune-news-card-horizontal .news-card-image {
-  border-radius: 10px 0 0 10px !important;
-  border-top-right-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-}
-
-@media (max-width: 767.98px) {
-  .commune-news-card-horizontal .news-horizontal-image-col {
-    border-radius: 10px 10px 0 0;
-  }
-
-  .commune-news-card-horizontal .news-media-wrapper-horizontal {
-    height: 200px;
-    border-radius: 10px 10px 0 0 !important;
-    border-bottom-left-radius: 0 !important;
+/* Écran bureau (>= 768px) : Image à côté du texte (à gauche) -> suppression des arrondis de droite */
+@media (min-width: 768px) {
+  .commune-news-card-horizontal .news-horizontal-image-col,
+  .commune-news-card-horizontal .news-media-wrapper-horizontal,
+  .commune-news-card-horizontal .news-card-image,
+  .commune-news-card-horizontal .news-placeholder,
+  .commune-carousel-slide .carousel-media-col,
+  .commune-carousel-slide .carousel-media-wrapper,
+  .commune-carousel-slide .carousel-slide-image {
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+    border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
   }
 
-  .commune-news-card-horizontal .news-card-image {
-    border-radius: 10px 10px 0 0 !important;
+  /* Cas inversé : Image à côté du texte (à droite) -> suppression des arrondis de gauche */
+  .commune-news-card-horizontal.flex-row-reverse .news-horizontal-image-col,
+  .commune-news-card-horizontal.flex-row-reverse .news-media-wrapper-horizontal,
+  .commune-news-card-horizontal.flex-row-reverse .news-card-image,
+  .commune-news-card-horizontal.flex-row-reverse .news-placeholder,
+  .commune-news-card-horizontal-reverse .news-horizontal-image-col,
+  .commune-news-card-horizontal-reverse .news-media-wrapper-horizontal,
+  .commune-news-card-horizontal-reverse .news-card-image,
+  .commune-news-card-horizontal-reverse .news-placeholder {
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
+}
+
+/* Écran mobile (< 768px) : L'image passe au-dessus du texte -> suppression des arrondis du bas */
+@media (max-width: 767.98px) {
+  .commune-news-card-horizontal .news-horizontal-image-col,
+  .commune-news-card-horizontal .news-media-wrapper-horizontal,
+  .commune-news-card-horizontal .news-card-image,
+  .commune-news-card-horizontal .news-placeholder,
+  .commune-carousel-slide .carousel-media-col,
+  .commune-carousel-slide .carousel-media-wrapper,
+  .commune-carousel-slide .carousel-slide-image {
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
   }
