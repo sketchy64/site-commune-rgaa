@@ -3139,6 +3139,7 @@ figcaption,
    12. Formulaires & Champs de Saisie (EXT:form & Bootstrap Package) - Thème Océan / Côte Basque
    ============================================================================== */
 .frame-type-form_formframework,
+.frame-type-indexedsearch_pi2,
 .ce-formframework,
 .tx-form,
 form.form-horizontal,
@@ -3157,6 +3158,7 @@ form[data-identifier] {
 @media (max-width: 767.98px) {
 
   .frame-type-form_formframework,
+  .frame-type-indexedsearch_pi2,
   .ce-formframework,
   .tx-form,
   form.form-horizontal,
