@@ -243,6 +243,12 @@ page {
       communeHomeSitemapHideTitle.value = {$commune.home_sitemap_hide_title}
       communeHomeSitemapHideTitle.override.data = site:commune.home_sitemap_hide_title
 
+      # Page de recherche
+      communeSearchPageUid = TEXT
+      communeSearchPageUid.value = {$commune.search_page_uid}
+      communeSearchPageUid.override.data = site:commune.search_page_uid
+
+
       # Accessibilité RGAA
       communeRgaaTitre = TEXT
       communeRgaaTitre.value = {$commune.rgaa_titre}

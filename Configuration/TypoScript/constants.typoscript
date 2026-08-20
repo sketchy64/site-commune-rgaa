@@ -97,6 +97,10 @@ commune {
   # cat=commune_root/commune_home/110; type=boolean; label=Masquer titre Plan du site
   home_sitemap_hide_title = 0
 
+  # cat=commune_root/commune_home/120; type=int+; label=UID page de recherche
+  search_page_uid = 23
+
+
   # cat=commune_root/commune_news/010; type=options[En colonnes (Cartes)=cards, En ligne (Image à gauche)=rows]; label=Mode d'affichage des listes d'actualités
   news_list_layout = cards
 

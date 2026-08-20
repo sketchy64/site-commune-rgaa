@@ -306,6 +306,14 @@ settings:
     type: bool
     default: false
 
+  commune.search_page_uid:
+    label: 'Page de Recherche (ID / UID)'
+    description: 'Identifiant (UID) de la page contenant le formulaire et les résultats de recherche (Ex : 23)'
+    category: commune_home_sections
+    type: int
+    default: 23
+
+
   # ============================================================================
   # 5. ACTUALITÉS
   # ============================================================================
