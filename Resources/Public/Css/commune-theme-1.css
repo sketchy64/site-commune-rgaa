@@ -441,40 +441,207 @@ h1.page-title::before,
 }
 
 /* ==============================================================================
-   Navigation Latérale (Sous-pages)
+   Navigation Latérale (Sous-pages multi-niveaux 1, 2 et 3)
    ============================================================================== */
-.commune-sidebar-menu {
+.commune-sidebar-card {
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid var(--commune-border);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.commune-sidebar-menu .list-group-item {
+.commune-sidebar-card .card-header {
+  background-color: var(--commune-primary, #00703A);
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid var(--commune-secondary, #F5B21E);
+}
+
+.commune-sidebar-menu {
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+}
+
+/* --- Niveau 1 (Éléments principaux de la rubrique) --- */
+.commune-sidebar-menu .level-1-item {
   border-left: 4px solid transparent;
-  padding: 0.85rem 1.25rem;
-  font-weight: 500;
+  border-bottom: 1px solid var(--commune-border, #e2e8f0);
+  padding: 0;
   transition: all 0.2s ease;
 }
 
-.commune-sidebar-menu .list-group-item a {
-  color: var(--commune-text-main);
+.commune-sidebar-menu .level-1-item:last-child {
+  border-bottom: none;
+}
+
+.commune-sidebar-menu .level-1-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.25rem;
+  color: var(--commune-text-main, #212529);
   text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
 
-.commune-sidebar-menu .list-group-item:hover {
-  background-color: var(--sauveterre-green-light);
-  border-left-color: var(--sauveterre-gold);
+.commune-sidebar-menu .level-1-item:hover {
+  background-color: var(--commune-primary-light, #e8f5e9);
+  border-left-color: var(--commune-secondary, #f5b21e);
 }
 
-.commune-sidebar-menu .list-group-item.active-page {
-  background-color: var(--sauveterre-green-light);
-  border-left-color: var(--sauveterre-green);
+.commune-sidebar-menu .level-1-item:hover > .level-1-link {
+  color: var(--commune-primary-dark, #00552c);
+}
+
+.commune-sidebar-menu .level-1-item.active-parent {
+  border-left-color: var(--commune-primary, #00703a);
+  background-color: rgba(0, 112, 58, 0.03);
+}
+
+.commune-sidebar-menu .level-1-item.active-parent > .level-1-link {
+  color: var(--commune-primary-dark, #00552c);
   font-weight: 700;
 }
 
-.commune-sidebar-menu .list-group-item.active-page a {
-  color: var(--sauveterre-green-dark);
+.commune-sidebar-menu .level-1-item.active-page {
+  background-color: var(--commune-primary-light, #e8f5e9);
+  border-left-color: var(--commune-primary, #00703a);
+}
+
+.commune-sidebar-menu .level-1-item.active-page > .level-1-link {
+  color: var(--commune-primary-dark, #00552c);
+  font-weight: 700;
+}
+
+.sidebar-caret {
+  font-size: 0.85rem;
+  color: var(--commune-primary, #00703a);
+  margin-left: 0.5rem;
+  transition: transform 0.2s ease;
+}
+
+/* --- Niveau 2 (Sous-menu imbriqué) --- */
+.commune-sidebar-submenu {
+  background-color: #f8fafc;
+  border-top: 1px dashed var(--commune-border, #e2e8f0);
+  padding: 0.35rem 0;
+}
+
+.commune-sidebar-submenu .level-2-item {
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.commune-sidebar-submenu .level-2-link {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1.25rem 0.5rem 2rem;
+  color: var(--commune-text-main, #334155);
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.sidebar-bullet {
+  display: inline-block;
+  margin-right: 0.5rem;
+  color: var(--commune-primary, #00703a);
+  font-weight: bold;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.sidebar-item-text {
+  flex-grow: 1;
+}
+
+.sidebar-caret-sm {
+  font-size: 0.75rem;
+  color: var(--commune-text-muted, #64748b);
+  margin-left: 0.35rem;
+}
+
+.commune-sidebar-submenu .level-2-item:hover {
+  background-color: var(--commune-primary-light, #e8f5e9);
+}
+
+.commune-sidebar-submenu .level-2-item:hover > .level-2-link {
+  color: var(--commune-primary-dark, #00552c);
+}
+
+.commune-sidebar-submenu .level-2-item.active-parent > .level-2-link {
+  color: var(--commune-primary-dark, #00552c);
+  font-weight: 600;
+}
+
+.commune-sidebar-submenu .level-2-item.active-page {
+  background-color: var(--commune-primary-light, #e8f5e9);
+  border-left: 3px solid var(--commune-primary, #00703a);
+}
+
+.commune-sidebar-submenu .level-2-item.active-page > .level-2-link {
+  color: var(--commune-primary-dark, #00552c);
+  font-weight: 700;
+}
+
+/* --- Niveau 3 (Sous-sous-menu imbriqué) --- */
+.commune-sidebar-subsubmenu {
+  background-color: #ffffff;
+  padding: 0.25rem 0;
+  border-left: 2px solid var(--commune-primary-light, #e8f5e9);
+  margin-left: 2.25rem;
+  margin-bottom: 0.35rem;
+}
+
+.commune-sidebar-subsubmenu .level-3-item {
+  transition: background-color 0.2s ease;
+}
+
+.commune-sidebar-subsubmenu .level-3-link {
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 1rem 0.4rem 0.75rem;
+  color: var(--commune-text-muted, #475569);
+  font-weight: 400;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.sidebar-dot {
+  display: inline-block;
+  margin-right: 0.4rem;
+  color: var(--commune-secondary, #f5b21e);
+  font-size: 0.9rem;
+}
+
+.commune-sidebar-subsubmenu .level-3-item:hover {
+  background-color: var(--commune-primary-light, #e8f5e9);
+}
+
+.commune-sidebar-subsubmenu .level-3-item:hover > .level-3-link {
+  color: var(--commune-primary-dark, #00552c);
+}
+
+.commune-sidebar-subsubmenu .level-3-item.active-page {
+  background-color: var(--commune-primary-light, #e8f5e9);
+}
+
+.commune-sidebar-subsubmenu .level-3-item.active-page > .level-3-link {
+  color: var(--commune-primary-dark, #00552c);
+  font-weight: 700;
+}
+
+/* Focus accessible RGAA */
+.commune-sidebar-menu a:focus-visible {
+  outline: var(--commune-focus-outline, 3px solid #f5b21e);
+  outline-offset: -2px;
+  z-index: 2;
+  position: relative;
 }
 
 /* ==============================================================================

@@ -8,9 +8,14 @@
         <div class="row">
             <!-- Barre latérale / Navigation de rubrique (Landmark role="complementary") -->
             <aside class="col-lg-3 col-md-4 mb-4" role="complementary" aria-label="Navigation de la rubrique">
-                <div class="card border-0 shadow-sm mb-4">
-                    <div class="card-header bg-primary-commune text-white fw-bold py-2">
-                        Dans cette rubrique
+                <div class="card border-0 shadow-sm mb-4 commune-sidebar-card">
+                    <div class="card-header bg-primary-commune text-white fw-bold py-2.5 px-3 d-flex align-items-center">
+                        <svg class="me-2 flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                        <span>Dans cette rubrique</span>
                     </div>
                     <div class="card-body p-0">
                         <f:format.raw>{subNavigation}</f:format.raw>
