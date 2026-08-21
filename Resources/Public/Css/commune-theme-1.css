@@ -4053,3 +4053,124 @@ article ul.pagination>li::before,
   color: var(--sauveterre-green-dark);
   text-decoration: underline !important;
 }
+
+/* ==============================================================================
+   14. Éléments de Contenu : Groupes de cartes (Card Group / BK2K) - Sauveterre
+   ============================================================================== */
+.commune-card-group,
+.ce-card_group,
+.frame-type-card_group {
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.commune-card-group .commune-card,
+.ce-card_group .card,
+.frame-type-card_group .card {
+  position: relative;
+  background-color: #ffffff;
+  border: 1px solid var(--commune-border, #e2e8f0) !important;
+  border-top: 4px solid var(--sauveterre-green, #00703a) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 112, 58, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.commune-card-group .commune-card:hover,
+.ce-card_group .card:hover,
+.frame-type-card_group .card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0, 112, 58, 0.3) !important;
+  box-shadow: 0 12px 28px rgba(0, 112, 58, 0.15), 0 4px 10px rgba(0, 0, 0, 0.06) !important;
+}
+
+.commune-card-group .card-img-top,
+.ce-card_group .card-img-top,
+.frame-type-card_group .card-img-top {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  transition: transform 0.4s ease;
+}
+
+.commune-card-group .commune-card:hover .card-img-top,
+.ce-card_group .card:hover .card-img-top {
+  transform: scale(1.03);
+}
+
+.commune-card-group .card-body,
+.ce-card_group .card-body,
+.frame-type-card_group .card-body {
+  padding: 1.5rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.commune-card-group .card-title,
+.ce-card_group .card-title,
+.frame-type-card_group .card-title {
+  font-family: var(--commune-font-title);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--sauveterre-green-dark, #00552c) !important;
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+
+.commune-card-group .card-subtitle,
+.ce-card_group .card-subtitle,
+.frame-type-card_group .card-subtitle {
+  font-family: var(--commune-font-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--sauveterre-gold-dark, #d97706) !important;
+  margin-bottom: 0.85rem;
+}
+
+.commune-card-group .card-text,
+.ce-card_group .card-text,
+.frame-type-card_group .card-text {
+  font-family: var(--commune-font-body);
+  font-size: 0.95rem;
+  color: #334155;
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+}
+
+.commune-card-group .btn-outline-primary,
+.ce-card_group .btn-outline-primary,
+.frame-type-card_group .btn-outline-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: transparent !important;
+  border: 2px solid var(--sauveterre-green, #00703a) !important;
+  color: var(--sauveterre-green, #00703a) !important;
+  font-family: var(--commune-font-title);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  text-decoration: none !important;
+  transition: all 0.2s ease;
+}
+
+.commune-card-group .commune-card:hover .btn-outline-primary,
+.ce-card_group .card:hover .btn-outline-primary,
+.commune-card-group .btn-outline-primary:hover,
+.ce-card_group .btn-outline-primary:hover {
+  background-color: var(--sauveterre-green, #00703a) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.commune-card-group .btn-outline-primary:focus,
+.ce-card_group .btn-outline-primary:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 3.5px var(--sauveterre-gold, #f5b21e) !important;
+}
