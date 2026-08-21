@@ -54,6 +54,11 @@ categories:
     description: 'Numéros d''urgence républicains affichés dans le pied de page'
     parent: commune_root
 
+  commune_social:
+    label: 'Réseaux sociaux'
+    description: 'Liens d''accès vers les comptes officiels de réseaux sociaux et affichage'
+    parent: commune_root
+
   # ============================================================================
   # NIVEAU 3 : SOUS-SOUS-CATÉGORIES DÉTAILLÉES
   # ============================================================================
@@ -496,3 +501,49 @@ settings:
     category: commune_emergency
     type: string
     default: '114'
+
+  # ============================================================================
+  # 9. RÉSEAUX SOCIAUX INSTITUTIONNELS
+  # ============================================================================
+  commune.social_facebook:
+    label: 'Lien Facebook'
+    description: 'URL de la page Facebook officielle (Ex : https://facebook.com/Mairie)'
+    category: commune_social
+    type: string
+    default: ''
+
+  commune.social_instagram:
+    label: 'Lien Instagram'
+    description: 'URL du compte Instagram officiel (Ex : https://instagram.com/Mairie)'
+    category: commune_social
+    type: string
+    default: ''
+
+  commune.social_twitter:
+    label: 'Lien Twitter / X'
+    description: 'URL du compte Twitter / X officiel (Ex : https://x.com/Mairie)'
+    category: commune_social
+    type: string
+    default: ''
+
+  commune.social_youtube:
+    label: 'Lien YouTube'
+    description: 'URL de la chaîne YouTube officielle (Ex : https://youtube.com/@Mairie)'
+    category: commune_social
+    type: string
+    default: ''
+
+  commune.header_social_enable:
+    label: 'Afficher les réseaux sociaux dans l''en-tête'
+    description: 'Affiche les icônes de réseaux sociaux entre le logo et le moteur de recherche'
+    category: commune_social
+    type: bool
+    default: true
+
+  commune.footer_social_enable:
+    label: 'Afficher les réseaux sociaux dans le pied de page'
+    description: 'Affiche les icônes de réseaux sociaux sous le plan de localisation'
+    category: commune_social
+    type: bool
+    default: true
+

@@ -154,13 +154,18 @@ commune {
   # cat=commune_root/commune_emergency/050; type=string; label=Urgence sourds/malentendants
   sourds_malentendants = 114
 
-  # Réseaux sociaux institutionnels
-  social {
-    facebook = https://facebook.com/
-    x_twitter = https://x.com/
-    instagram = https://instagram.com/
-    youtube = https://youtube.com/
-  }
+  # cat=commune_root/commune_social/010; type=string; label=Lien Facebook
+  social_facebook = 
+  # cat=commune_root/commune_social/020; type=string; label=Lien Instagram
+  social_instagram = 
+  # cat=commune_root/commune_social/030; type=string; label=Lien Twitter / X
+  social_twitter = 
+  # cat=commune_root/commune_social/040; type=string; label=Lien YouTube
+  social_youtube = 
+  # cat=commune_root/commune_social/050; type=boolean; label=Afficher les réseaux sociaux dans l'en-tête
+  header_social_enable = 1
+  # cat=commune_root/commune_social/060; type=boolean; label=Afficher les réseaux sociaux dans le pied de page
+  footer_social_enable = 1
 }
 
 # ------------------------------------------------------------------------------

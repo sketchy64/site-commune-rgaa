@@ -484,3 +484,116 @@ body.a11y-high-contrast .commune-menu-search-overlay .form-control {
   border-color: #ffffff !important;
 }
 
+/* ==========================================================================
+   Réseaux Sociaux (Header & Footer)
+   ========================================================================== */
+
+/* En-tête : Couleurs officielles des marques */
+.commune-social-header .social-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #f4f5f7;
+  color: #495057;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.commune-social-header .social-icon-btn:hover,
+.commune-social-header .social-icon-btn:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Facebook (Bleu officiel #1877F2) */
+.commune-social-header .social-icon-facebook {
+  color: #1877f2;
+  background-color: #e7f1ff;
+}
+
+.commune-social-header .social-icon-facebook:hover,
+.commune-social-header .social-icon-facebook:focus {
+  background-color: #1877f2;
+  color: #ffffff;
+}
+
+/* Instagram (Rose/Degradé officiel #E4405F) */
+.commune-social-header .social-icon-instagram {
+  color: #e4405f;
+  background-color: #fceef1;
+}
+
+.commune-social-header .social-icon-instagram:hover,
+.commune-social-header .social-icon-instagram:focus {
+  background-color: #e4405f;
+  color: #ffffff;
+}
+
+/* Twitter / X (Noir officiel #111111) */
+.commune-social-header .social-icon-twitter {
+  color: #111111;
+  background-color: #e9e9e9;
+}
+
+.commune-social-header .social-icon-twitter:hover,
+.commune-social-header .social-icon-twitter:focus {
+  background-color: #111111;
+  color: #ffffff;
+}
+
+/* YouTube (Rouge officiel #FF0000) */
+.commune-social-header .social-icon-youtube {
+  color: #ff0000;
+  background-color: #ffe6e6;
+}
+
+.commune-social-header .social-icon-youtube:hover,
+.commune-social-header .social-icon-youtube:focus {
+  background-color: #ff0000;
+  color: #ffffff;
+}
+
+/* Pied de page : Couleur unie (Couleur secondaire du thème) */
+.commune-footer-social .footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--commune-secondary, #f5b21e);
+  color: var(--commune-secondary, #f5b21e);
+  background-color: rgba(255, 255, 255, 0.05);
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.commune-footer-social .footer-social-link:hover,
+.commune-footer-social .footer-social-link:focus {
+  background-color: var(--commune-secondary, #f5b21e);
+  color: #1a202c !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Mode Contraste Élevé RGAA */
+body.a11y-high-contrast .commune-social-header .social-icon-btn,
+body.a11y-high-contrast .commune-footer-social .footer-social-link {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border: 2px solid #ffff00 !important;
+}
+
+body.a11y-high-contrast .commune-social-header .social-icon-btn:hover,
+body.a11y-high-contrast .commune-social-header .social-icon-btn:focus,
+body.a11y-high-contrast .commune-footer-social .footer-social-link:hover,
+body.a11y-high-contrast .commune-footer-social .footer-social-link:focus {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+}
+
+

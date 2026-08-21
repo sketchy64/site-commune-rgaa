@@ -99,6 +99,24 @@
             <trans-unit id="carousel.play" xml:space="preserve">
                 <source>Reprendre le défilement automatique</source>
             </trans-unit>
+
+            <!-- Réseaux sociaux -->
+            <trans-unit id="social.title" xml:space="preserve">
+                <source>Réseaux sociaux</source>
+            </trans-unit>
+            <trans-unit id="social.facebook" xml:space="preserve">
+                <source>Page Facebook officielle (nouvelle fenêtre)</source>
+            </trans-unit>
+            <trans-unit id="social.instagram" xml:space="preserve">
+                <source>Compte Instagram officiel (nouvelle fenêtre)</source>
+            </trans-unit>
+            <trans-unit id="social.twitter" xml:space="preserve">
+                <source>Compte Twitter / X officiel (nouvelle fenêtre)</source>
+            </trans-unit>
+            <trans-unit id="social.youtube" xml:space="preserve">
+                <source>Chaîne YouTube officielle (nouvelle fenêtre)</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
+

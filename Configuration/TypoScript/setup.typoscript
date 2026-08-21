@@ -311,6 +311,31 @@ page {
       communeFooterFolderUid.value = {$commune.footer_folder_uid}
       communeFooterFolderUid.override.data = site:commune.footer_folder_uid
 
+      # Réseaux sociaux et options d'affichage
+      communeSocialFacebook = TEXT
+      communeSocialFacebook.value = {$commune.social_facebook}
+      communeSocialFacebook.override.data = site:commune.social_facebook
+
+      communeSocialInstagram = TEXT
+      communeSocialInstagram.value = {$commune.social_instagram}
+      communeSocialInstagram.override.data = site:commune.social_instagram
+
+      communeSocialTwitter = TEXT
+      communeSocialTwitter.value = {$commune.social_twitter}
+      communeSocialTwitter.override.data = site:commune.social_twitter
+
+      communeSocialYoutube = TEXT
+      communeSocialYoutube.value = {$commune.social_youtube}
+      communeSocialYoutube.override.data = site:commune.social_youtube
+
+      communeHeaderSocialEnable = TEXT
+      communeHeaderSocialEnable.value = {$commune.header_social_enable}
+      communeHeaderSocialEnable.override.data = site:commune.header_social_enable
+
+      communeFooterSocialEnable = TEXT
+      communeFooterSocialEnable.value = {$commune.footer_social_enable}
+      communeFooterSocialEnable.override.data = site:commune.footer_social_enable
+
       # Rendu standard direct et robuste de toutes les colonnes de contenu TYPO3
       emergencyAlertContent = CONTENT
       emergencyAlertContent {
