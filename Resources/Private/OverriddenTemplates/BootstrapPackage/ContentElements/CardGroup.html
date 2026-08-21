@@ -16,7 +16,8 @@
                             <f:image image="{image}"
                                      class="card-img-top"
                                      title="{image.title}"
-                                     additionalAttributes="{rgaa:a11y.decorativeImage(alt: image.alternative, isDecorative: false)}" />
+                                     alt="{f:if(condition: image.alternative, then: image.alternative, else: '')}"
+                                     additionalAttributes="{f:if(condition: image.alternative, then: {}, else: {role: 'presentation', aria-hidden: 'true'})}" />
                         </f:if>
 
                         <div class="card-body d-flex flex-column">
@@ -34,7 +35,7 @@
                                 <div class="mt-auto">
                                     <f:link.typolink parameter="{record.data.link}"
                                                      class="btn btn-outline-primary btn-sm stretched-link"
-                                                     additionalAttributes="{aria-label: '{rgaa:a11y.ariaLabel(action: \'En savoir plus sur\', context: record.data.header)}'}">
+                                                     additionalAttributes="{'aria-label': '{rgaa:a11y.ariaLabel(action: \'En savoir plus sur\', context: record.data.header)}'}">
                                         <f:if condition="{record.data.link_title}">
                                             <f:then>{record.data.link_title}</f:then>
                                             <f:else>En savoir plus</f:else>

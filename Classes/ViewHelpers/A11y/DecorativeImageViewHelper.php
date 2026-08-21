@@ -9,7 +9,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 /**
  * ViewHelper pour traiter les images selon le RGAA (Critères 1.1 à 1.9).
  * Si une image est purement décorative ou si son alternative est vide,
- * applique `alt=""` et `role="presentation"` ou `aria-hidden="true"`.
+ * retourne un tableau d'attributs HTML compatible avec additionalAttributes.
  */
 class DecorativeImageViewHelper extends AbstractViewHelper
 {
@@ -25,15 +25,21 @@ class DecorativeImageViewHelper extends AbstractViewHelper
         $this->registerArgument('isDecorative', 'bool', 'Forcer le statut décoratif', false, false);
     }
 
-    public function render(): string
+    public function render(): array
     {
         $alt = trim((string)$this->arguments['alt']);
         $isDecorative = (bool)$this->arguments['isDecorative'];
 
         if ($isDecorative || $alt === '') {
-            return 'alt="" role="presentation" aria-hidden="true"';
+            return [
+                'alt' => '',
+                'role' => 'presentation',
+                'aria-hidden' => 'true',
+            ];
         }
 
-        return 'alt="' . htmlspecialchars($alt, ENT_QUOTES, 'UTF-8') . '"';
+        return [
+            'alt' => $alt,
+        ];
     }
 }

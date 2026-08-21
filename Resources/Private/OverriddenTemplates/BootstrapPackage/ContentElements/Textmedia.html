@@ -15,7 +15,8 @@
                             <f:image image="{column.media}"
                                      class="figure-img img-fluid rounded"
                                      title="{column.media.title}"
-                                     additionalAttributes="{rgaa:a11y.decorativeImage(alt: column.media.alternative, isDecorative: false)}" />
+                                     alt="{f:if(condition: column.media.alternative, then: column.media.alternative, else: '')}"
+                                     additionalAttributes="{f:if(condition: column.media.alternative, then: {}, else: {role: 'presentation', aria-hidden: 'true'})}" />
                             <f:if condition="{column.media.description}">
                                 <figcaption class="figure-caption text-muted small mt-1">
                                     {column.media.description}
