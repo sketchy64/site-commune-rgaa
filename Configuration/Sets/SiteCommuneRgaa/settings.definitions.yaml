@@ -59,6 +59,11 @@ categories:
     description: 'Liens d''accès vers les comptes officiels de réseaux sociaux et affichage'
     parent: commune_root
 
+  commune_language:
+    label: 'Langues & Multilinguisme'
+    description: 'Configuration du sélecteur de langues avec drapeaux dans l''en-tête'
+    parent: commune_root
+
   # ============================================================================
   # NIVEAU 3 : SOUS-SOUS-CATÉGORIES DÉTAILLÉES
   # ============================================================================
@@ -568,4 +573,26 @@ settings:
     category: commune_social
     type: bool
     default: true
+
+  # ============================================================================
+  # 10. SÉLECTEUR DE LANGUES & MULTILINGUISME
+  # ============================================================================
+  commune.header_language_enable:
+    label: 'Afficher le sélecteur de langues dans l''en-tête'
+    description: 'Affiche les icônes de drapeaux pour le changement de langue dans l''en-tête'
+    category: commune_language
+    type: bool
+    default: false
+
+  commune.header_language_position:
+    label: 'Emplacement du sélecteur de langues'
+    description: 'Sélectionnez où afficher les drapeaux (brand : à côté du logo/marque, center : au centre avec les réseaux sociaux, menu : dans la barre de navigation)'
+    category: commune_language
+    type: string
+    default: 'brand'
+    enum:
+      - 'brand'
+      - 'center'
+      - 'menu'
+
 

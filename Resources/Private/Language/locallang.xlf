@@ -116,6 +116,17 @@
             <trans-unit id="social.youtube" xml:space="preserve">
                 <source>Chaîne YouTube officielle (nouvelle fenêtre)</source>
             </trans-unit>
+
+            <!-- Sélecteur de langues -->
+            <trans-unit id="nav.language" xml:space="preserve">
+                <source>Choix de la langue</source>
+            </trans-unit>
+            <trans-unit id="nav.language.current" xml:space="preserve">
+                <source>Langue active : %s</source>
+            </trans-unit>
+            <trans-unit id="nav.language.switch_to" xml:space="preserve">
+                <source>Changer la langue du site pour : %s</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

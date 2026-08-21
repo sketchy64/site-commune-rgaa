@@ -50,6 +50,15 @@
             <f:format.raw>{mainNavigation}</f:format.raw>
         </div>
 
+        <!-- Sélecteur de langue dans la barre de navigation (si mode intégré ou position = menu) -->
+        <f:if condition="{communeHeaderLanguageEnable} && {languageNavigation}">
+            <f:if condition="{communeHeaderLayout} == 'integrated' || {communeHeaderLanguagePosition} == 'menu'">
+                <div class="d-flex align-items-center commune-menu-language-wrapper py-2 me-2">
+                    <f:render partial="Navigation/LanguageMenu" arguments="{languageNavigation: languageNavigation}" />
+                </div>
+            </f:if>
+        </f:if>
+
         <!-- Bouton icône de recherche à droite du menu -->
         <f:if condition="{communeHeaderMenuSearchEnable}">
             <div class="d-flex align-items-center ms-auto ms-lg-0 commune-menu-search-wrapper py-2 me-2 me-lg-0">
