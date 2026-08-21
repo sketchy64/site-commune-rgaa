@@ -34,8 +34,29 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       }
+      // Fermeture de la zone de recherche du menu si ouverte
+      const menuSearchCollapse = document.getElementById('menu-search-collapse');
+      if (menuSearchCollapse && menuSearchCollapse.classList.contains('show')) {
+        const searchBtn = document.querySelector('.btn-menu-search');
+        if (window.bootstrap && window.bootstrap.Collapse) {
+          const bsCollapse = window.bootstrap.Collapse.getInstance(menuSearchCollapse);
+          if (bsCollapse) {
+            bsCollapse.hide();
+            if (searchBtn) searchBtn.focus();
+          }
+        }
+      }
     }
   });
+
+  // Focus automatique sur le champ de recherche lors de l'ouverture du volet
+  const menuSearchCollapseEl = document.getElementById('menu-search-collapse');
+  if (menuSearchCollapseEl) {
+    menuSearchCollapseEl.addEventListener('shown.bs.collapse', () => {
+      const searchInput = document.getElementById('menu-search-input');
+      if (searchInput) searchInput.focus();
+    });
+  }
 
   // Synchronisation des états aria-expanded et de l'accessibilité sur les Megamenus
   const megamenuToggles = navElement.querySelectorAll('[data-bs-toggle="dropdown"]');

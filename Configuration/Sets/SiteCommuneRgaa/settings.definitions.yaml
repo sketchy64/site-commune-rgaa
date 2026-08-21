@@ -146,6 +146,23 @@ settings:
     type: bool
     default: false
 
+  commune.header_layout:
+    label: 'Disposition de l''en-tête et du menu'
+    description: 'Sélectionnez le mode d''affichage de l''en-tête (Standard : logo/slogan + recherche dans l''en-tête, menu centré / Intégré : logo/slogan dans le menu à gauche, menu à droite avec bouton de recherche).'
+    category: commune_identity_logo
+    type: string
+    default: 'standard'
+    enum:
+      - 'standard'
+      - 'integrated'
+
+  commune.header_menu_search_enable:
+    label: 'Afficher le bouton de recherche à droite du menu principal'
+    description: 'Affiche une icône/bouton de recherche à droite du menu principal permettant d''ouvrir un volet de recherche au clic.'
+    category: commune_identity_logo
+    type: bool
+    default: true
+
   # ============================================================================
   # 2. IDENTITÉ & MARQUE : NOM & DEVISE
   # ============================================================================
@@ -211,6 +228,13 @@ settings:
   # ============================================================================
   # 4. PAGE D'ACCUEIL : TITRES DES ZONES
   # ============================================================================
+  commune.home_hero_search_enable:
+    label: 'Afficher la zone de recherche sur le carrousel (Accueil)'
+    description: 'Intègre un pavé de recherche au centre par-dessus le carrousel de la page d''accueil (style Ville de Tarnos).'
+    category: commune_home_sections
+    type: bool
+    default: false
+
   commune.home_quickaccess_title:
     label: 'Titre de la zone Accès rapides'
     description: 'Titre au-dessus des icônes ou démarches'

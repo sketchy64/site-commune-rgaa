@@ -56,6 +56,18 @@
             <trans-unit id="nav.search.button" xml:space="preserve">
                 <source>Lancer la recherche</source>
             </trans-unit>
+            <trans-unit id="nav.search.toggle" xml:space="preserve">
+                <source>Ouvrir ou fermer la zone de recherche</source>
+            </trans-unit>
+            <trans-unit id="nav.search.close" xml:space="preserve">
+                <source>Fermer la zone de recherche</source>
+            </trans-unit>
+            <trans-unit id="hero.search.title" xml:space="preserve">
+                <source>Que recherchez-vous ?</source>
+            </trans-unit>
+            <trans-unit id="hero.search.placeholder" xml:space="preserve">
+                <source>Rechercher une démarche, une actualité, un service...</source>
+            </trans-unit>
 
             <!-- Pied de page et Mentions Collectivité -->
             <trans-unit id="footer.contact_title" xml:space="preserve">

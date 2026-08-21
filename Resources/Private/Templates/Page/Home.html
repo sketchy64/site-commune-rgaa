@@ -8,11 +8,32 @@
 
     <!-- 1. Section Bandeau d'image / Carrousel Hero sous la navigation (colPos 110 - Pleine largeur sans padding) -->
     <f:if condition="{heroContent}">
-        <section class="commune-home-section commune-hero-section p-0 m-0"
+        <section class="commune-home-section commune-hero-section p-0 m-0 position-relative"
             aria-label="Bandeau principal et actualités à la une">
             <div class="container-fluid px-0">
                 <f:format.raw>{heroContent}</f:format.raw>
             </div>
+            <f:if condition="{communeHomeHeroSearchEnable}">
+                <div class="commune-hero-search-overlay position-absolute top-50 start-50 translate-middle w-100 px-3" style="z-index: 10; max-width: 680px;">
+                    <div class="card border-0 shadow-lg p-3 p-md-4 bg-white-overlay rounded-4 text-center">
+                        <h2 class="h4 mb-3 text-dark fw-bold">{f:translate(key: 'hero.search.title', extensionName: 'site_commune_rgaa')}</h2>
+                        <form class="commune-hero-search-form" role="search" method="get" action="{f:uri.page(pageUid: communeSearchPageUid)}">
+                            <div class="input-group input-group-lg">
+                                <label for="hero-search-input" class="visually-hidden">
+                                    {f:translate(key: 'nav.search.label', extensionName: 'site_commune_rgaa')}
+                                </label>
+                                <input type="search" id="hero-search-input" name="tx_indexedsearch_pi2[search][sword]" class="form-control rounded-start-pill ps-4" placeholder="{f:translate(key: 'hero.search.placeholder', extensionName: 'site_commune_rgaa')}" aria-label="{f:translate(key: 'nav.search.label', extensionName: 'site_commune_rgaa')}" required>
+                                <button class="btn btn-primary rounded-end-pill px-4 d-flex align-items-center justify-content-center" type="submit" aria-label="{f:translate(key: 'nav.search.button', extensionName: 'site_commune_rgaa')}">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </f:if>
         </section>
     </f:if>
 

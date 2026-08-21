@@ -156,6 +156,14 @@ page {
       communeHeaderHideSlogan.value = {$commune.header_hide_slogan}
       communeHeaderHideSlogan.override.data = site:commune.header_hide_slogan
 
+      communeHeaderLayout = TEXT
+      communeHeaderLayout.value = {$commune.header_layout}
+      communeHeaderLayout.override.data = site:commune.header_layout
+
+      communeHeaderMenuSearchEnable = TEXT
+      communeHeaderMenuSearchEnable.value = {$commune.header_menu_search_enable}
+      communeHeaderMenuSearchEnable.override.data = site:commune.header_menu_search_enable
+
       # Données de la commune
       communeNom = TEXT
       communeNom.value = {$commune.nom}
@@ -186,6 +194,10 @@ page {
       communeHoraires.override.data = site:commune.horaires
 
       # Titres et visibilité des sections de la page d'accueil
+      communeHomeHeroSearchEnable = TEXT
+      communeHomeHeroSearchEnable.value = {$commune.home_hero_search_enable}
+      communeHomeHeroSearchEnable.override.data = site:commune.home_hero_search_enable
+
       communeHomeQuickaccessTitle = TEXT
       communeHomeQuickaccessTitle.value = {$commune.home_quickaccess_title}
       communeHomeQuickaccessTitle.override.data = site:commune.home_quickaccess_title
@@ -388,7 +400,7 @@ page {
         1 = TMENU
         1 {
           expAll = 1
-          wrap = <ul class="navbar-nav me-auto mb-2 mb-lg-0" role="menubar">|</ul>
+          wrap = <ul class="navbar-nav mb-2 mb-lg-0" role="menubar">|</ul>
           NO {
             wrapItemAndSub = <li class="nav-item" role="none">|</li>
             ATagParams = class="nav-link" role="menuitem"

@@ -2,10 +2,41 @@
       data-namespace-typo3-fluid="true">
 
 <!-- Menu principal de navigation (Landmark role="navigation") -->
-<nav id="main-navigation" class="navbar navbar-expand-lg navbar-dark bg-primary-commune py-0 position-relative" role="navigation" aria-label="{f:translate(key: 'nav.main', extensionName: 'site_commune_rgaa')}">
-    <div class="container position-relative">
+<nav id="main-navigation" class="navbar navbar-expand-lg navbar-dark bg-primary-commune py-0 position-relative header-layout-{f:if(condition: communeHeaderLayout, then: communeHeaderLayout, else: 'standard')}" role="navigation" aria-label="{f:translate(key: 'nav.main', extensionName: 'site_commune_rgaa')}">
+    <div class="container position-relative d-flex align-items-center flex-wrap flex-lg-nowrap">
+        
+        <!-- En mode Intégré : Logo + Nom + Slogan à gauche de la barre de menu -->
+        <f:if condition="{communeHeaderLayout} == 'integrated'">
+            <f:link.page pageUid="{f:if(condition: site.rootPageId, then: site.rootPageId, else: 1)}" class="navbar-brand text-decoration-none d-flex align-items-center gap-2 py-2 text-white commune-brand-inline me-lg-4" title="Retour à la page d'accueil de {communeNom}">
+                <div class="commune-logo-wrapper" aria-hidden="true">
+                    <f:if condition="{communeLogoFile}">
+                        <f:then>
+                            <img src="{f:uri.image(src: communeLogoFile)}" height="45" style="max-height: 45px; width: auto;" alt="Logo {communeNom}" class="commune-logo-img img-fluid" />
+                        </f:then>
+                        <f:else>
+                            <div class="commune-marianne-badge marianne-badge-sm">
+                                <span class="marianne-bar red"></span>
+                                <span class="marianne-bar white"></span>
+                                <span class="marianne-bar blue"></span>
+                            </div>
+                        </f:else>
+                    </f:if>
+                </div>
+                <div class="lh-sm text-start">
+                    <f:if condition="!{communeHeaderHideTitle}">
+                        <span class="h6 mb-0 fw-bold d-block commune-title text-white">{communeNom}</span>
+                    </f:if>
+                    <f:if condition="!{communeHeaderHideSlogan}">
+                        <f:if condition="{communeSlogan}">
+                            <small class="text-white-50 d-block commune-slogan" style="font-size: 0.75rem;">{communeSlogan}</small>
+                        </f:if>
+                    </f:if>
+                </div>
+            </f:link.page>
+        </f:if>
+
         <!-- Bouton mobile accessible (masqué sur desktop >= 992px) -->
-        <button class="navbar-toggler d-lg-none my-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMainContent" aria-controls="navbarMainContent" aria-expanded="false" aria-label="Afficher ou masquer le menu de navigation">
+        <button class="navbar-toggler d-lg-none my-2 me-auto me-lg-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMainContent" aria-controls="navbarMainContent" aria-expanded="false" aria-label="Afficher ou masquer le menu de navigation">
             <svg class="navbar-toggler-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="3" y1="6" x2="21" y2="6"></line>
                 <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -14,9 +45,59 @@
             <span class="navbar-toggler-label">Menu</span>
         </button>
 
+        <!-- Contenu du menu principal -->
         <div class="collapse navbar-collapse" id="navbarMainContent">
             <f:format.raw>{mainNavigation}</f:format.raw>
         </div>
+
+        <!-- Bouton icône de recherche à droite du menu -->
+        <f:if condition="{communeHeaderMenuSearchEnable}">
+            <div class="d-flex align-items-center ms-auto ms-lg-0 commune-menu-search-wrapper py-2 me-2 me-lg-0">
+                <button class="btn btn-outline-light btn-sm px-3 py-2 d-flex align-items-center gap-2 btn-menu-search"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#menu-search-collapse"
+                        aria-expanded="false"
+                        aria-controls="menu-search-collapse"
+                        aria-label="{f:translate(key: 'nav.search.toggle', extensionName: 'site_commune_rgaa')}">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <span class="visually-hidden">{f:translate(key: 'nav.search.toggle', extensionName: 'site_commune_rgaa')}</span>
+                </button>
+            </div>
+        </f:if>
+
     </div>
+
+    <!-- Zone / Volet de recherche escamotable sous le menu -->
+    <f:if condition="{communeHeaderMenuSearchEnable}">
+        <div class="collapse commune-menu-search-overlay bg-white border-bottom shadow-lg position-absolute top-100 start-0 w-100" id="menu-search-collapse" style="z-index: 1050;">
+            <div class="container py-3">
+                <form id="menu-search-form" class="commune-search-form m-0" role="search" method="get" action="{f:uri.page(pageUid: communeSearchPageUid)}">
+                    <div class="input-group input-group-lg">
+                        <label for="menu-search-input" class="visually-hidden">
+                            {f:translate(key: 'nav.search.label', extensionName: 'site_commune_rgaa')}
+                        </label>
+                        <input type="search" id="menu-search-input" name="tx_indexedsearch_pi2[search][sword]" class="form-control" placeholder="{f:translate(key: 'nav.search.label', extensionName: 'site_commune_rgaa')}" aria-label="{f:translate(key: 'nav.search.label', extensionName: 'site_commune_rgaa')}" required>
+                        <button class="btn btn-primary px-4 d-flex align-items-center gap-2" type="submit" aria-label="{f:translate(key: 'nav.search.button', extensionName: 'site_commune_rgaa')}">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <span class="d-none d-sm-inline">{f:translate(key: 'nav.search.button', extensionName: 'site_commune_rgaa')}</span>
+                        </button>
+                        <button class="btn btn-outline-secondary px-3 d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#menu-search-collapse" aria-label="{f:translate(key: 'nav.search.close', extensionName: 'site_commune_rgaa')}">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </f:if>
 </nav>
 </html>

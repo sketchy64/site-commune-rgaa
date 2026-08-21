@@ -332,3 +332,140 @@ body.a11y-high-contrast .commune-news-pagination .page-link:hover {
   border-color: #ffff00 !important;
 }
 
+/* ==========================================================================
+   9. Disposition de l'en-tête, centrage du menu & recherche (RGAA)
+   ========================================================================== */
+
+/* Centrage du menu principal par défaut sur Desktop */
+@media (min-width: 992px) {
+  #main-navigation.header-layout-standard .navbar-nav,
+  #main-navigation:not(.header-layout-integrated) .navbar-nav {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    justify-content: center;
+  }
+
+  #main-navigation.header-layout-integrated .navbar-nav {
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    justify-content: flex-end;
+  }
+}
+
+/* En-tête en mode Intégré (Logo + Slogan dans la barre de menu) */
+#main-navigation.header-layout-integrated .commune-brand-inline {
+  flex-shrink: 0;
+}
+
+#main-navigation.header-layout-integrated .commune-brand-inline:focus-visible {
+  outline: 3px solid #ffffff !important;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.marianne-badge-sm {
+  height: 32px;
+  width: 20px;
+}
+
+/* Bouton de recherche à droite du menu principal */
+.btn-menu-search {
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+  transition: all 0.2s ease;
+}
+
+.btn-menu-search:hover,
+.btn-menu-search:focus {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+}
+
+.btn-menu-search:focus-visible {
+  outline: 3px solid #ffffff !important;
+  outline-offset: 2px;
+}
+
+/* Volet de recherche escamotable du menu */
+.commune-menu-search-overlay {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+  border-bottom: 3px solid var(--sauveterre-green, #00703A) !important;
+}
+
+.commune-menu-search-overlay .form-control {
+  border-color: var(--commune-border, #cbd5e1);
+}
+
+.commune-menu-search-overlay .form-control:focus {
+  border-color: var(--sauveterre-green, #00703A);
+  box-shadow: 0 0 0 0.25rem rgba(0, 112, 58, 0.25);
+}
+
+/* Zone de recherche superposée sur le carrousel de la page d'accueil (Style Tarnos) */
+.commune-hero-section {
+  position: relative;
+}
+
+.commune-hero-search-overlay .bg-white-overlay {
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2) !important;
+}
+
+.commune-hero-search-overlay .form-control {
+  background-color: #ffffff;
+  border: 2px solid var(--sauveterre-green, #00703A);
+  font-size: 1.05rem;
+}
+
+.commune-hero-search-overlay .form-control:focus {
+  border-color: var(--sauveterre-green, #00703A);
+  box-shadow: 0 0 0 0.25rem rgba(0, 112, 58, 0.3);
+}
+
+.commune-hero-search-overlay .btn-primary {
+  background-color: var(--sauveterre-green, #00703A);
+  border-color: var(--sauveterre-green, #00703A);
+}
+
+.commune-hero-search-overlay .btn-primary:hover,
+.commune-hero-search-overlay .btn-primary:focus {
+  background-color: var(--sauveterre-green-dark, #004d28);
+  border-color: var(--sauveterre-green-dark, #004d28);
+}
+
+/* Adaptations mode Contraste Élevé (RGAA) */
+body.a11y-high-contrast .commune-hero-search-overlay .bg-white-overlay {
+  background-color: #000000 !important;
+  border: 3px solid #ffff00 !important;
+}
+
+body.a11y-high-contrast .commune-hero-search-overlay h2 {
+  color: #ffffff !important;
+}
+
+body.a11y-high-contrast .commune-hero-search-overlay .form-control {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+body.a11y-high-contrast .commune-hero-search-overlay .btn-primary {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+  border-color: #ffff00 !important;
+}
+
+body.a11y-high-contrast .commune-menu-search-overlay {
+  background-color: #000000 !important;
+  border-bottom-color: #ffff00 !important;
+}
+
+body.a11y-high-contrast .commune-menu-search-overlay .form-control {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
