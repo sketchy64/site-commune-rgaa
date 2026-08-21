@@ -418,8 +418,7 @@ body.a11y-high-contrast .commune-news-pagination .page-link:hover {
 
 @media (max-width: 767.98px) {
   .commune-hero-search-overlay {
-    bottom: 40px !important;
-    max-width: 95%;
+    display: none !important;
   }
 }
 
