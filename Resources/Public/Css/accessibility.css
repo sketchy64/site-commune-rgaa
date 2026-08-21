@@ -404,7 +404,23 @@ body.a11y-high-contrast .commune-news-pagination .page-link:hover {
 
 /* Zone de recherche superposée sur le carrousel de la page d'accueil (Style Tarnos) */
 .commune-hero-section {
-  position: relative;
+  position: relative !important;
+}
+
+.commune-hero-search-overlay {
+  position: absolute !important;
+  bottom: 55px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 10 !important;
+  max-width: 680px;
+}
+
+@media (max-width: 767.98px) {
+  .commune-hero-search-overlay {
+    bottom: 40px !important;
+    max-width: 95%;
+  }
 }
 
 .commune-hero-search-overlay .bg-white-overlay {

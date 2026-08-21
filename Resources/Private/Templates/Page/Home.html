@@ -14,7 +14,7 @@
                 <f:format.raw>{heroContent}</f:format.raw>
             </div>
             <f:if condition="{communeHomeHeroSearchEnable}">
-                <div class="commune-hero-search-overlay position-absolute top-50 start-50 translate-middle w-100 px-3" style="z-index: 10; max-width: 680px;">
+                <div class="commune-hero-search-overlay position-absolute start-50 translate-middle-x w-100 px-3" style="z-index: 10; max-width: 680px;">
                     <div class="card border-0 shadow-lg p-3 p-md-4 bg-white-overlay rounded-4 text-center">
                         <h2 class="h4 mb-3 text-dark fw-bold">{f:translate(key: 'hero.search.title', extensionName: 'site_commune_rgaa')}</h2>
                         <form class="commune-hero-search-form" role="search" method="get" action="{f:uri.page(pageUid: communeSearchPageUid)}">
