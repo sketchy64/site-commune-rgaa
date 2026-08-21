@@ -123,7 +123,7 @@
                 <!-- Réseaux sociaux (Footer) sous la carte de localisation -->
                 <f:if condition="{communeFooterSocialEnable}">
                     <f:if condition="{communeSocialFacebook} || {communeSocialInstagram} || {communeSocialTwitter} || {communeSocialYoutube}">
-                        <div class="commune-footer-social mt-3 d-flex align-items-center gap-2">
+                        <div class="commune-footer-social mt-3 d-flex justify-content-center align-items-center gap-2 text-center w-100">
                             <span class="visually-hidden">{f:translate(key: 'social.title', extensionName: 'site_commune_rgaa')} :</span>
                             <f:if condition="{communeSocialFacebook}">
                                 <a href="{communeSocialFacebook}" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="{f:translate(key: 'social.facebook', extensionName: 'site_commune_rgaa')}">

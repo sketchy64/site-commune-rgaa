@@ -557,7 +557,25 @@ body.a11y-high-contrast .commune-menu-search-overlay .form-control {
   color: #ffffff;
 }
 
-/* Pied de page : Couleur unie (Couleur secondaire du thème) */
+/* Champ de recherche : arrondis identiques au bouton à gauche */
+.commune-search-form .form-control {
+  border-top-left-radius: 6px !important;
+  border-bottom-left-radius: 6px !important;
+}
+
+.commune-search-form .btn-primary {
+  border-top-right-radius: 6px !important;
+  border-bottom-right-radius: 6px !important;
+}
+
+/* Pied de page : Centrage horizontal des icônes réseaux sociaux */
+.commune-footer-social {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center;
+  width: 100% !important;
+}
+
 .commune-footer-social .footer-social-link {
   display: inline-flex;
   align-items: center;
@@ -595,5 +613,6 @@ body.a11y-high-contrast .commune-footer-social .footer-social-link:focus {
   background-color: #ffff00 !important;
   color: #000000 !important;
 }
+
 
 
