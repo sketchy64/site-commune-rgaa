@@ -123,8 +123,8 @@ page {
 
     # Processeurs de données pour les menus et arborescences (TYPO3 v12/v13)
     dataProcessing {
-      10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
-      10 {
+      110 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+      110 {
         special = directory
         special.value.data = site:rootPageId
         levels = 4
@@ -134,8 +134,8 @@ page {
         excludeDoktypes = 199,254
       }
 
-      20 = TYPO3\CMS\Frontend\DataProcessing\LanguageMenuProcessor
-      20 {
+      120 = TYPO3\CMS\Frontend\DataProcessing\LanguageMenuProcessor
+      120 {
         languages = auto
         as = languageNavigation
         addQueryString = 1
