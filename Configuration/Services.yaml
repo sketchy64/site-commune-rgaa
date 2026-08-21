@@ -7,3 +7,12 @@ services:
   Commune\SiteCommuneRgaa\:
     resource: '../Classes/*'
     exclude: '../Classes/Domain/Model/*'
+
+  Commune\SiteCommuneRgaa\EventListener\NewsPublishedEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'site-commune-rgaa/news-published-listener'
+        event: TYPO3\CMS\Core\DataHandling\Event\AfterDatabaseOperationsEvent
+      - name: event.listener
+        identifier: 'site-commune-rgaa/news-post-persist-listener'
+        event: GeorgRinger\News\Event\NewsPostPersistEvent

@@ -30,6 +30,12 @@ page {
   headerData {
     10 = TEXT
     10.value = <link rel="manifest" href="/manifest.webmanifest">
+    15 = TEXT
+    15 {
+      data = site:settings:commune.pwa_vapid_public_key
+      ifEmpty.value = BEl62iUYgUivxIkv69yViEuiBIj7EBA70z7_D7j5n_sW4K0r6-0f8K9vP5w0H1X4G5A4L2d6n9Y2K7j0_N2O9I8
+      wrap = <meta name="pwa-vapid-public-key" content="|">
+    }
     99 = TEXT
     99 {
       data = site:settings:commune.theme_css

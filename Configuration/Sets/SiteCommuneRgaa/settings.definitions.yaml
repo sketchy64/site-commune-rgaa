@@ -469,6 +469,28 @@ settings:
     type: string
     default: 'Mairie'
 
+  commune.pwa_vapid_public_key:
+    label: 'Clef VAPID Publique (Web Push)'
+    description: 'Clef publique pour l''abonnement aux notifications push dans les navigateurs'
+    category: commune_app
+    type: string
+    default: 'BEl62iUYgUivxIkv69yViEuiBIj7EBA70z7_D7j5n_sW4K0r6-0f8K9vP5w0H1X4G5A4L2d6n9Y2K7j0_N2O9I8'
+
+  commune.pwa_vapid_private_key:
+    label: 'Clef VAPID Privée (Web Push)'
+    description: 'Clef privée utilisée par le serveur pour signer les notifications push'
+    category: commune_app
+    type: string
+    default: 'priv_default_site_commune_rgaa_key'
+
+  commune.pwa_vapid_email:
+    label: 'Adresse e-mail de contact VAPID'
+    description: 'E-mail envoyé aux serveurs de push (Google/Apple) en tant que sujet de contact'
+    category: commune_app
+    type: string
+    default: 'contact@notre-commune.fr'
+
+
   # ============================================================================
   # 8. NUMÉROS D'URGENCE RÉPUBLICAINS
   # ============================================================================
