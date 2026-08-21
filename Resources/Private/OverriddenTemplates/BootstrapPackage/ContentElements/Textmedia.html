@@ -12,11 +12,21 @@
                 <f:for each="{gallery.rows}" as="row">
                     <f:for each="{row.columns}" as="column">
                         <f:if condition="{column.media}">
-                            <f:image image="{column.media}"
-                                     class="figure-img img-fluid rounded"
-                                     title="{column.media.title}"
-                                     alt="{f:if(condition: column.media.alternative, then: column.media.alternative, else: '')}"
-                                     additionalAttributes="{f:if(condition: column.media.alternative, then: {}, else: {role: 'presentation', aria-hidden: 'true'})}" />
+                            <f:if condition="{column.media.alternative}">
+                                <f:then>
+                                    <f:image image="{column.media}"
+                                             class="figure-img img-fluid rounded"
+                                             title="{column.media.title}"
+                                             alt="{column.media.alternative}" />
+                                </f:then>
+                                <f:else>
+                                    <f:image image="{column.media}"
+                                             class="figure-img img-fluid rounded"
+                                             title="{column.media.title}"
+                                             alt=""
+                                             additionalAttributes="{role: 'presentation', aria-hidden: 'true'}" />
+                                </f:else>
+                            </f:if>
                             <f:if condition="{column.media.description}">
                                 <figcaption class="figure-caption text-muted small mt-1">
                                     {column.media.description}

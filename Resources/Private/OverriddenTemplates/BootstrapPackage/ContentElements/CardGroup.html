@@ -13,11 +13,21 @@
                     <div class="card h-100 shadow-sm border-0 commune-card">
                         <f:if condition="{record.image.0}">
                             <f:variable name="image" value="{record.image.0}" />
-                            <f:image image="{image}"
-                                     class="card-img-top"
-                                     title="{image.title}"
-                                     alt="{f:if(condition: image.alternative, then: image.alternative, else: '')}"
-                                     additionalAttributes="{f:if(condition: image.alternative, then: {}, else: {role: 'presentation', aria-hidden: 'true'})}" />
+                            <f:if condition="{image.alternative}">
+                                <f:then>
+                                    <f:image image="{image}"
+                                             class="card-img-top"
+                                             title="{image.title}"
+                                             alt="{image.alternative}" />
+                                </f:then>
+                                <f:else>
+                                    <f:image image="{image}"
+                                             class="card-img-top"
+                                             title="{image.title}"
+                                             alt=""
+                                             additionalAttributes="{role: 'presentation', aria-hidden: 'true'}" />
+                                </f:else>
+                            </f:if>
                         </f:if>
 
                         <div class="card-body d-flex flex-column">
@@ -33,9 +43,10 @@
 
                             <f:if condition="{record.data.link}">
                                 <div class="mt-auto">
+                                    <f:variable name="cardAriaLabel" value="{rgaa:a11y.ariaLabel(action: 'En savoir plus sur', context: record.data.header)}" />
                                     <f:link.typolink parameter="{record.data.link}"
                                                      class="btn btn-outline-primary btn-sm stretched-link"
-                                                     additionalAttributes="{'aria-label': '{rgaa:a11y.ariaLabel(action: \'En savoir plus sur\', context: record.data.header)}'}">
+                                                     additionalAttributes="{aria-label: cardAriaLabel}">
                                         <f:if condition="{record.data.link_title}">
                                             <f:then>{record.data.link_title}</f:then>
                                             <f:else>En savoir plus</f:else>
