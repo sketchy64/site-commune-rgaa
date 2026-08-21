@@ -176,6 +176,56 @@ body.a11y-high-contrast input:focus-visible {
   outline-offset: 3px !important;
 }
 
+/* Megamenu 3 niveaux - Mode Contraste Élevé (RGAA 4.1.2) */
+body.a11y-high-contrast .megamenu-panel,
+body.a11y-high-contrast #main-navigation .dropdown-menu.megamenu-panel {
+  background-color: #000000 !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: none !important;
+}
+
+body.a11y-high-contrast .megamenu-category-header {
+  border-bottom-color: #ffffff !important;
+}
+
+body.a11y-high-contrast .megamenu-category-header::after {
+  background-color: #ffff00 !important;
+}
+
+body.a11y-high-contrast .megamenu-category-title,
+body.a11y-high-contrast .megamenu-category-link {
+  color: #ffff00 !important;
+}
+
+body.a11y-high-contrast .megamenu-category-title:hover,
+body.a11y-high-contrast .megamenu-category-title:focus,
+body.a11y-high-contrast .megamenu-category-link:hover,
+body.a11y-high-contrast .megamenu-category-link:focus {
+  color: #00ffff !important;
+  text-decoration: underline !important;
+}
+
+body.a11y-high-contrast .megamenu-sublink {
+  color: #ffffff !important;
+}
+
+body.a11y-high-contrast .megamenu-sublink::before {
+  background-color: #ffff00 !important;
+  border-color: #ffff00 !important;
+}
+
+body.a11y-high-contrast .megamenu-sublink:hover,
+body.a11y-high-contrast .megamenu-sublink:focus,
+body.a11y-high-contrast .megamenu-sublink.active {
+  background-color: #000000 !important;
+  color: #00ffff !important;
+  outline: 2px solid #00ffff !important;
+}
+
+body.a11y-high-contrast .megamenu-list {
+  border-left-color: #ffffff !important;
+}
+
 /* ==========================================================================
    6. Contrôles Carrousel Accessible (Critère 13.8)
    ========================================================================== */

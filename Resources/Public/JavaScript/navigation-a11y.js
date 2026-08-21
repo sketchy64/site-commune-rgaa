@@ -37,6 +37,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Synchronisation des états aria-expanded et de l'accessibilité sur les Megamenus
+  const megamenuToggles = navElement.querySelectorAll('[data-bs-toggle="dropdown"]');
+  megamenuToggles.forEach(toggle => {
+    const dropdownParent = toggle.parentElement;
+    
+    dropdownParent.addEventListener('show.bs.dropdown', () => {
+      toggle.setAttribute('aria-expanded', 'true');
+    });
+
+    dropdownParent.addEventListener('hide.bs.dropdown', () => {
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
   // Synchronisation des états aria-expanded sur les accordéons et boutons
   const collapseButtons = document.querySelectorAll('[data-bs-toggle="collapse"]');
   collapseButtons.forEach(btn => {

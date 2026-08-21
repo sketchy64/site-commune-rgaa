@@ -381,7 +381,7 @@ page {
         }
       }
 
-      # Menu principal accessible
+      # Menu principal accessible (Megamenu 3 niveaux)
       mainNavigation = HMENU
       mainNavigation {
         entryLevel = 0
@@ -400,26 +400,58 @@ page {
           }
           IFSUB = 1
           IFSUB {
-            wrapItemAndSub = <li class="nav-item dropdown" role="none">|</li>
+            wrapItemAndSub = <li class="nav-item dropdown megamenu-item" role="none">|</li>
             ATagParams = class="nav-link dropdown-toggle" role="menuitem" aria-expanded="false" data-bs-toggle="dropdown"
           }
           ACTIFSUB = 1
           ACTIFSUB {
-            wrapItemAndSub = <li class="nav-item dropdown active" role="none">|</li>
+            wrapItemAndSub = <li class="nav-item dropdown megamenu-item active" role="none">|</li>
             ATagParams = class="nav-link dropdown-toggle active" role="menuitem" aria-expanded="false" aria-current="true" data-bs-toggle="dropdown"
           }
         }
         2 = TMENU
         2 {
-          wrap = <ul class="dropdown-menu" role="menu">|</ul>
+          expAll = 1
+          wrap = <div class="dropdown-menu megamenu-panel shadow-lg" role="menu"><div class="container-fluid px-2 px-lg-4"><div class="row g-3 g-lg-4">|</div></div></div>
           NO {
-            wrapItemAndSub = <li role="none">|</li>
-            ATagParams = class="dropdown-item" role="menuitem"
+            wrapItemAndSub = <div class="col-12 col-md-6 col-lg-3 megamenu-col" role="none">|</div>
+            ATagParams = class="megamenu-category-link" role="menuitem"
           }
           ACT = 1
           ACT {
-            wrapItemAndSub = <li role="none">|</li>
-            ATagParams = class="dropdown-item active" role="menuitem" aria-current="page"
+            wrapItemAndSub = <div class="col-12 col-md-6 col-lg-3 megamenu-col active" role="none">|</div>
+            ATagParams = class="megamenu-category-link active" role="menuitem" aria-current="page"
+          }
+          IFSUB = 1
+          IFSUB {
+            wrapItemAndSub = <div class="col-12 col-md-6 col-lg-3 megamenu-col" role="none">|</div>
+            stdWrap.wrap = <div class="megamenu-category-header">|</div>
+            ATagParams = class="megamenu-category-title" role="menuitem"
+          }
+          ACTIFSUB = 1
+          ACTIFSUB {
+            wrapItemAndSub = <div class="col-12 col-md-6 col-lg-3 megamenu-col active" role="none">|</div>
+            stdWrap.wrap = <div class="megamenu-category-header">|</div>
+            ATagParams = class="megamenu-category-title active" role="menuitem" aria-current="true"
+          }
+        }
+        3 = TMENU
+        3 {
+          expAll = 1
+          wrap = <ul class="megamenu-list list-unstyled mb-0" role="menu">|</ul>
+          NO {
+            wrapItemAndSub = <li class="megamenu-item-l3" role="none">|</li>
+            ATagParams = class="megamenu-sublink" role="menuitem"
+          }
+          ACT = 1
+          ACT {
+            wrapItemAndSub = <li class="megamenu-item-l3 active" role="none">|</li>
+            ATagParams = class="megamenu-sublink active" role="menuitem" aria-current="page"
+          }
+          CUR = 1
+          CUR {
+            wrapItemAndSub = <li class="megamenu-item-l3 active" role="none">|</li>
+            ATagParams = class="megamenu-sublink active" role="menuitem" aria-current="page"
           }
         }
       }

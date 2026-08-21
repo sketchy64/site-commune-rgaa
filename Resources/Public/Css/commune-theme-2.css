@@ -208,7 +208,7 @@ a:focus {
   color: #ffffff !important;
 }
 
-/* Menus déroulants */
+/* Menus déroulants Megamenu (Desktop & Mobile) */
 #main-navigation .dropdown-menu {
   background-color: #ffffff;
   border: 1px solid var(--commune-border);
@@ -231,6 +231,220 @@ a:focus {
   background-color: var(--sauveterre-green-light);
   color: var(--sauveterre-green-dark);
   padding-left: 1.5rem;
+}
+
+/* --- Megamenu 3 niveaux (Desktop >= 992px) --- */
+@media (min-width: 992px) {
+  #main-navigation .nav-item.megamenu-item {
+    position: static !important;
+  }
+
+  #main-navigation .dropdown-menu.megamenu-panel {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    background-color: #ffffff !important;
+    border: none !important;
+    border-top: 4px solid var(--sauveterre-green) !important;
+    border-radius: 0 0 10px 10px !important;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.14) !important;
+    margin-top: 0 !important;
+    padding: 1.5rem 0 !important;
+  }
+
+  #main-navigation .nav-item.dropdown.megamenu-item:hover > .dropdown-menu.megamenu-panel,
+  #main-navigation .nav-item.dropdown.megamenu-item:focus-within > .dropdown-menu.megamenu-panel {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .megamenu-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .megamenu-category-header {
+    position: relative;
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 2px solid var(--commune-border, #e2e8f0);
+  }
+
+  .megamenu-category-header::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 35px;
+    height: 2px;
+    background-color: var(--sauveterre-gold);
+  }
+
+  .megamenu-category-title,
+  .megamenu-category-link {
+    font-family: var(--commune-font-title);
+    font-weight: 700 !important;
+    font-size: 1.05rem !important;
+    color: var(--sauveterre-green-dark, #003b63) !important;
+    text-decoration: none !important;
+    display: inline-block;
+    transition: color 0.2s ease;
+  }
+
+  .megamenu-category-title:hover,
+  .megamenu-category-title:focus,
+  .megamenu-category-link:hover,
+  .megamenu-category-link:focus {
+    color: var(--sauveterre-green, #005b94) !important;
+    text-decoration: underline !important;
+  }
+
+  .megamenu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .megamenu-sublink {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.45rem 0.65rem !important;
+    color: var(--commune-text-main, #212529) !important;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none !important;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+
+  .megamenu-sublink::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--sauveterre-gold);
+    margin-right: 0.6rem;
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .megamenu-sublink:hover,
+  .megamenu-sublink:focus,
+  .megamenu-sublink.active {
+    background-color: var(--sauveterre-green-light);
+    color: var(--sauveterre-green-dark) !important;
+    padding-left: 0.85rem !important;
+  }
+
+  .megamenu-sublink:hover::before,
+  .megamenu-sublink:focus::before,
+  .megamenu-sublink.active::before {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+/* --- Megamenu Mobile (< 991.98px) : Style similaire au menu latéral --- */
+@media (max-width: 991.98px) {
+  #main-navigation .dropdown-menu.megamenu-panel {
+    position: static !important;
+    float: none !important;
+    width: 100% !important;
+    background-color: #f8fafc !important;
+    border: none !important;
+    border-top: 1px dashed var(--commune-border, #e2e8f0) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0.75rem 0.5rem !important;
+    margin-top: 0.5rem !important;
+  }
+
+  .megamenu-col {
+    margin-bottom: 1rem;
+  }
+
+  .megamenu-col:last-child {
+    margin-bottom: 0;
+  }
+
+  .megamenu-category-header {
+    margin-bottom: 0.35rem;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .megamenu-category-title,
+  .megamenu-category-link {
+    display: flex !important;
+    align-items: center !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    color: var(--commune-primary-dark, #003b63) !important;
+    text-decoration: none !important;
+    padding: 0.4rem 0.5rem !important;
+  }
+
+  .megamenu-category-title::before,
+  .megamenu-category-link::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--sauveterre-gold, #e5a93c);
+    margin-right: 0.65rem;
+    flex-shrink: 0;
+  }
+
+  .megamenu-list {
+    background-color: #ffffff;
+    border-left: 2px solid var(--commune-border, #e2e8f0);
+    margin-left: 1.25rem;
+    padding: 0.25rem 0;
+  }
+
+  .megamenu-sublink {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.4rem 0.75rem !important;
+    color: var(--commune-text-muted, #64748b) !important;
+    font-size: 0.85rem !important;
+    font-weight: 400;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+  }
+
+  .megamenu-sublink::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    border: 1.5px solid var(--commune-text-muted, #94a3b8);
+    background-color: transparent;
+    margin-right: 0.55rem;
+    flex-shrink: 0;
+  }
+
+  .megamenu-sublink:hover,
+  .megamenu-sublink:focus,
+  .megamenu-sublink.active {
+    background-color: var(--commune-primary-light, #e1f0f8);
+    color: var(--commune-primary-dark, #003b63) !important;
+    font-weight: 600;
+  }
+
+  .megamenu-sublink:hover::before,
+  .megamenu-sublink:focus::before,
+  .megamenu-sublink.active::before {
+    border-color: var(--sauveterre-gold, #e5a93c);
+    background-color: var(--sauveterre-gold, #e5a93c);
+  }
 }
 
 /* ==============================================================================
