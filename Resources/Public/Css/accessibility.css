@@ -614,5 +614,125 @@ body.a11y-high-contrast .commune-footer-social .footer-social-link:focus {
   color: #000000 !important;
 }
 
+/* ==========================================================================
+   Sélecteur de Langue (Header & Navigation) - Conforme RGAA
+   ========================================================================== */
+
+.commune-language-menu {
+  display: inline-flex;
+  align-items: center;
+}
+
+.commune-language-menu .language-list {
+  margin: 0;
+  padding: 0;
+}
+
+.commune-language-menu .language-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #f4f5f7;
+  color: #495057;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  position: relative;
+  border: 2px solid transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.commune-language-menu .language-icon-btn:hover,
+.commune-language-menu .language-icon-btn:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border-color: #cbd5e1;
+}
+
+.commune-language-menu .language-icon-btn:focus-visible {
+  outline: 3px solid #005a9c;
+  outline-offset: 2px;
+}
+
+/* État actif (Langue sélectionnée) */
+.commune-language-menu .language-icon-btn.active {
+  border-color: var(--commune-primary, #00703a);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 1px var(--commune-primary, #00703a), 0 2px 5px rgba(0, 0, 0, 0.12);
+}
+
+.commune-language-menu .language-icon-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--commune-primary, #00703a);
+  border: 2px solid #ffffff;
+}
+
+/* Drapeau vectoriel à l'intérieur du bouton */
+.commune-language-menu .flag-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.commune-language-menu .flag-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Intégration dans la barre de navigation (Navbar) */
+.commune-menu-language-wrapper .language-icon-btn {
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.commune-menu-language-wrapper .language-icon-btn:hover,
+.commune-menu-language-wrapper .language-icon-btn:focus {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-color: #ffffff;
+}
+
+.commune-menu-language-wrapper .language-icon-btn.active {
+  border-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 2px #ffffff;
+}
+
+/* Mode Contraste Élevé pour les langues */
+body.a11y-high-contrast .commune-language-menu .language-icon-btn {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border: 2px solid #ffff00 !important;
+}
+
+body.a11y-high-contrast .commune-language-menu .language-icon-btn:hover,
+body.a11y-high-contrast .commune-language-menu .language-icon-btn:focus,
+body.a11y-high-contrast .commune-language-menu .language-icon-btn.active {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+}
+
+body.a11y-high-contrast .commune-language-menu .language-icon-btn.active::after {
+  background-color: #ffff00 !important;
+  border-color: #000000 !important;
+}
+
+
 
 

@@ -1,0 +1,212 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<!-- Sélecteur de langue accessible (Conforme RGAA 4.1.2 AA) -->
+<f:if condition="{languageNavigation}">
+    <nav class="commune-language-menu" role="navigation" aria-label="{f:translate(key: 'nav.language', extensionName: 'site_commune_rgaa')}">
+        <ul class="language-list list-unstyled d-flex align-items-center gap-2 mb-0" role="list">
+            <f:for each="{languageNavigation}" as="item">
+                <f:variable name="isoCode" value="{f:if(condition: item.twoLetterIsoCode, then: item.twoLetterIsoCode, else: '{item.flag}') -> f:format.case(mode: 'lower')}" />
+                <li class="language-item" role="listitem">
+                    <a href="{item.link}"
+                       hreflang="{item.twoLetterIsoCode}"
+                       lang="{item.twoLetterIsoCode}"
+                       class="language-icon-btn language-icon-{isoCode} {f:if(condition: item.active, then: 'active')}{f:if(condition: '!{item.available}', then: ' disabled')}"
+                       title="{f:if(condition: item.active, then: '{f:translate(key: \'nav.language.current\', extensionName: \'site_commune_rgaa\', arguments: {0: item.title})}', else: '{f:translate(key: \'nav.language.switch_to\', extensionName: \'site_commune_rgaa\', arguments: {0: item.title})}')}"
+                       aria-label="{f:if(condition: item.active, then: '{f:translate(key: \'nav.language.current\', extensionName: \'site_commune_rgaa\', arguments: {0: item.title})}', else: '{f:translate(key: \'nav.language.switch_to\', extensionName: \'site_commune_rgaa\', arguments: {0: item.title})}')}"
+                       {f:if(condition: item.active, then: 'aria-current="true"')}
+                       {f:if(condition: '!{item.available}', then: 'aria-disabled="true" tabindex="-1"')}>
+                        
+                        <!-- Rendu vectoriel SVG du drapeau -->
+                        <span class="flag-icon-wrapper" aria-hidden="true">
+                            <f:switch expression="{isoCode}">
+                                <!-- Français (FR) -->
+                                <f:case value="fr">
+                                    <svg class="flag-svg flag-fr" viewBox="0 0 32 32" width="24" height="24">
+                                        <clipPath id="flag-circle-fr"><circle cx="16" cy="16" r="16"/></clipPath>
+                                        <g clip-path="url(#flag-circle-fr)">
+                                            <rect width="10.66" height="32" x="0" fill="#002395"/>
+                                            <rect width="10.66" height="32" x="10.66" fill="#FFFFFF"/>
+                                            <rect width="10.68" height="32" x="21.32" fill="#ED2939"/>
+                                        </g>
+                                    </svg>
+                                </f:case>
+
+                                <!-- Basque / Ikurriña (EU / BQ) -->
+                                <f:case value="eu">
+                                    <svg class="flag-svg flag-eu" viewBox="0 0 32 32" width="24" height="24">
+                                        <clipPath id="flag-circle-eu"><circle cx="16" cy="16" r="16"/></clipPath>
+                                        <g clip-path="url(#flag-circle-eu)">
+                                            <rect width="32" height="32" fill="#D81E05"/>
+                                            <!-- Croix de Saint-André verte -->
+                                            <line x1="0" y1="0" x2="32" y2="32" stroke="#009543" stroke-width="4.5"/>
+                                            <line x1="32" y1="0" x2="0" y2="32" stroke="#009543" stroke-width="4.5"/>
+                                            <!-- Croix blanche centrale -->
+                                            <rect x="13.75" y="0" width="4.5" height="32" fill="#FFFFFF"/>
+                                            <rect x="0" y="13.75" width="32" height="4.5" fill="#FFFFFF"/>
+                                        </g>
+                                    </svg>
+                                </f:case>
+                                <f:case value="bq">
+                                    <svg class="flag-svg flag-eu" viewBox="0 0 32 32" width="24" height="24">
+                                        <clipPath id="flag-circle-bq"><circle cx="16" cy="16" r="16"/></clipPath>
+                                        <g clip-path="url(#flag-circle-bq)">
+                                            <rect width="32" height="32" fill="#D81E05"/>
+                                            <line x1="0" y1="0" x2="32" y2="32" stroke="#009543" stroke-width="4.5"/>
+                                            <line x1="32" y1="0" x2="0" y2="32" stroke="#009543" stroke-width="4.5"/>
+                                            <rect x="13.75" y="0" width="4.5" height="32" fill="#FFFFFF"/>
+                                            <rect x="0" y="13.75" width="32" height="4.5" fill="#FFFFFF"/>
+                                        </g>
+                                    </svg>
+                                </f:case>
+                                <f:case value="flags-basque">
+                                    <svg class="flag-svg flag-eu" viewBox="0 0 32 32" width="24" height="24">
+                                        <clipPath id="flag-circle-fbe"><circle cx="16" cy="16" r="16"/></clipPath>
+                                        <g clip-path="url(#flag-circle-fbe)">
+                                            <rect width="32" height="32" fill="#D81E05"/>
+                                            <line x1="0" y1="0" x2="32" y2="32" stroke="#009543" stroke-width="4.5"/>
+                                            <line x1="32" y1="0" x2="0" y2="32" stroke="#009543" stroke-width="4.5"/>
+                                            <rect x="13.75" y="0" width="4.5" height="32" fill="#FFFFFF"/>
+                                            <rect x="0" y="13.75" width="32" height="4.5" fill="#FFFFFF"/>
+                                        </g>
+                                    </svg>
+                                </f:case>
+
+                                <!-- Occitan / Gascon / Béarnais (OC) -->
+                                <f:case value="oc">
+                                    <svg class="flag-svg flag-oc" viewBox="0 0 32 32" width="24" height="24">
+                                        <clipPath id="flag-circle-oc"><circle cx="16" cy="16" r="16"/></clipPath>
+                                        <g clip-path="url(#flag-circle-oc)">
+                                            <rect width="32" height="32" fill="#C01B22"/>
+                                            <!-- Croix Occitane stylisée dorée -->
+                                            <path d="M16 6 L18 10 L22 6 L20 12 L26 10 L22 14 L26 16 L22 18 L26 22 L20 20 L22 26 L18 22 L16 26 L14 22 L10 26 L12 20 L6 22 L10 18 L6 16 L10 14 L6 10 L12 12 L10 6 L14 10 Z" fill="#FED000" stroke="#C01B22" stroke-width="0.8"/>
+                                            <circle cx="16" cy="16" r="2" fill="#C01B22"/>
+                                        </g>
+                                    </svg>
+                                </f:case>
+
+                                <!-- Anglais / Royaume-Uni (EN / GB) -->
+                                <f:case value="en">
+                                    <svg class="flag-svg flag-gb" viewBox="0 0 32 32" width="24" height="24">
+                                        <clipPath id="flag-circle-en"><circle cx="16" cy="16" r="16"/></clipPath>
+                                        <g clip-path="url(#flag-circle-en)">
+                                            <rect width="32" height="32" fill="#012169"/>
+                                            <line x1="0" y1="0" x2="32" y2="32" stroke="#FFFFFF" stroke-width="5"/>
+                                            <line x1="32" y1="0" x2="0" y2="32" stroke="#FFFFFF" stroke-width="5"/>
+                                            <line x1="0" y1="0" x2="32" y2="32" stroke="#C8102E" stroke-width="2.5"/>
+                                            <line x1="32" y1="0" x2="0" y2="32" stroke="#C8102E" stroke-width="2.5"/>
+                                            <rect x="13" y="0" width="6" height="32" fill="#FFFFFF"/>
+                                            <rect x="0" y="13" width="32" height="6" fill="#FFFFFF"/>
+                                            <rect x="14.25" y="0" width="3.5" height="32" fill="#C8102E"/>
+                                            <rect x="0" y="14.25" width="32" height="3.5" fill="#C8102E"/>
+                                        </g>
+                                    </svg>
+                                </f:case>
+                                <f:case value="gb">
+                                    <svg class="flag-svg flag-gb" viewBox="0 0 32 32" width="24" height="24">
+                                        <clipPath id="flag-circle-gb"><circle cx="16" cy="16" r="16"/></clipPath>
+                                        <g clip-path="url(#flag-circle-gb)">
+                                            <rect width="32" height="32" fill="#012169"/>
+                                            <line x1="0" y1="0" x2="32" y2="32" stroke="#FFFFFF" stroke-width="5"/>
+                                            <line x1="32" y1="0" x2="0" y2="32" stroke="#FFFFFF" stroke-width="5"/>
+                                            <line x1="0" y1="0" x2="32" y2="32" stroke="#C8102E" stroke-width="2.5"/>
+                                            <line x1="32" y1="0" x2="0" y2="32" stroke="#C8102E" stroke-width="2.5"/>
+                                            <rect x="13" y="0" width="6" height="32" fill="#FFFFFF"/>
+                                            <rect x="0" y="13" width="32" height="6" fill="#FFFFFF"/>
+                                            <rect x="14.25" y="0" width="3.5" height="32" fill="#C8102E"/>
+                                            <rect x="0" y="14.25" width="32" height="3.5" fill="#C8102E"/>
+                                        </g>
+                                    </svg>
+                                </f:case>
+
+                                <!-- Espagnol (ES) -->
+                                <f:case value="es">
+                                    <svg class="flag-svg flag-es" viewBox="0 0 32 32" width="24" height="24">
+                                        <clipPath id="flag-circle-es"><circle cx="16" cy="16" r="16"/></clipPath>
+                                        <g clip-path="url(#flag-circle-es)">
+                                            <rect width="32" height="8" y="0" fill="#AA151B"/>
+                                            <rect width="32" height="16" y="8" fill="#F1BF00"/>
+                                            <rect width="32" height="8" y="24" fill="#AA151B"/>
+                                        </g>
+                                    </svg>
+                                </f:case>
+
+                                <!-- Allemand (DE) -->
+                                <f:case value="de">
+                                    <svg class="flag-svg flag-de" viewBox="0 0 32 32" width="24" height="24">
+                                        <clipPath id="flag-circle-de"><circle cx="16" cy="16" r="16"/></clipPath>
+                                        <g clip-path="url(#flag-circle-de)">
+                                            <rect width="32" height="10.66" y="0" fill="#000000"/>
+                                            <rect width="32" height="10.66" y="10.66" fill="#DD0000"/>
+                                            <rect width="32" height="10.68" y="21.32" fill="#FFCE00"/>
+                                        </g>
+                                    </svg>
+                                </f:case>
+
+                                <!-- Italien (IT) -->
+                                <f:case value="it">
+                                    <svg class="flag-svg flag-it" viewBox="0 0 32 32" width="24" height="24">
+                                        <clipPath id="flag-circle-it"><circle cx="16" cy="16" r="16"/></clipPath>
+                                        <g clip-path="url(#flag-circle-it)">
+                                            <rect width="10.66" height="32" x="0" fill="#009246"/>
+                                            <rect width="10.66" height="32" x="10.66" fill="#FFFFFF"/>
+                                            <rect width="10.68" height="32" x="21.32" fill="#CE2B37"/>
+                                        </g>
+                                    </svg>
+                                </f:case>
+
+                                <!-- Breton (BR) -->
+                                <f:case value="br">
+                                    <svg class="flag-svg flag-br" viewBox="0 0 32 32" width="24" height="24">
+                                        <clipPath id="flag-circle-br"><circle cx="16" cy="16" r="16"/></clipPath>
+                                        <g clip-path="url(#flag-circle-br)">
+                                            <rect width="32" height="3.55" y="0" fill="#000000"/>
+                                            <rect width="32" height="3.55" y="3.55" fill="#FFFFFF"/>
+                                            <rect width="32" height="3.55" y="7.1" fill="#000000"/>
+                                            <rect width="32" height="3.55" y="10.65" fill="#FFFFFF"/>
+                                            <rect width="32" height="3.55" y="14.2" fill="#000000"/>
+                                            <rect width="32" height="3.55" y="17.75" fill="#FFFFFF"/>
+                                            <rect width="32" height="3.55" y="21.3" fill="#000000"/>
+                                            <rect width="32" height="3.55" y="24.85" fill="#FFFFFF"/>
+                                            <rect width="32" height="3.55" y="28.4" fill="#000000"/>
+                                            <!-- Canton hermines -->
+                                            <rect width="14" height="14.2" x="0" y="0" fill="#FFFFFF"/>
+                                            <circle cx="7" cy="7" r="3.5" fill="#000000"/>
+                                        </g>
+                                    </svg>
+                                </f:case>
+
+                                <!-- Catalan (CA) -->
+                                <f:case value="ca">
+                                    <svg class="flag-svg flag-ca" viewBox="0 0 32 32" width="24" height="24">
+                                        <clipPath id="flag-circle-ca"><circle cx="16" cy="16" r="16"/></clipPath>
+                                        <g clip-path="url(#flag-circle-ca)">
+                                            <rect width="32" height="32" fill="#FCD116"/>
+                                            <rect width="32" height="3.5" y="3.5" fill="#DA121A"/>
+                                            <rect width="32" height="3.5" y="10.5" fill="#DA121A"/>
+                                            <rect width="32" height="3.5" y="17.5" fill="#DA121A"/>
+                                            <rect width="32" height="3.5" y="24.5" fill="#DA121A"/>
+                                        </g>
+                                    </svg>
+                                </f:case>
+
+                                <!-- Fallback générique : Badge code ISO ou Globe -->
+                                <f:defaultCase>
+                                    <svg class="flag-svg flag-generic" viewBox="0 0 32 32" width="24" height="24">
+                                        <circle cx="16" cy="16" r="15" fill="#f4f5f7" stroke="#cbd5e1" stroke-width="2"/>
+                                        <text x="16" y="20" font-size="11" font-weight="bold" font-family="sans-serif" text-anchor="middle" fill="#475569">
+                                            {f:if(condition: item.twoLetterIsoCode, then: '{item.twoLetterIsoCode -> f:format.case(mode: \'upper\')}', else: '{item.languageId}')}
+                                        </text>
+                                    </svg>
+                                </f:defaultCase>
+                            </f:switch>
+                        </span>
+                        
+                        <span class="visually-hidden">{item.title}</span>
+                    </a>
+                </li>
+            </f:for>
+        </ul>
+    </nav>
+</f:if>
+</html>

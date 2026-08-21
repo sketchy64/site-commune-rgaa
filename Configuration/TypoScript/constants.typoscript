@@ -32,6 +32,8 @@ commune {
   # customsubcategory=commune_footer=7. Pied de page
   # customsubcategory=commune_app=8. Application mobile
   # customsubcategory=commune_emergency=9. Numéros d'urgence
+  # customsubcategory=commune_social=10. Réseaux sociaux
+  # customsubcategory=commune_language=11. Sélecteur de langues
   
   # cat=commune_root/commune_theme/010; type=options[Thème 1 - Sauveterre (Vert & Or)=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css, Thème 2 - Océan / Côte Basque (Bleu & Sable)=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-2.css, Thème 3 - Pyrénées / Montagne (Ardoise & Terracotta)=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-3.css, Bootstrap Package standard (Sans surcouche)=]; label=Thème graphique du site
   theme_css = EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css
@@ -166,6 +168,11 @@ commune {
   header_social_enable = 1
   # cat=commune_root/commune_social/060; type=boolean; label=Afficher les réseaux sociaux dans le pied de page
   footer_social_enable = 1
+
+  # cat=commune_root/commune_language/010; type=boolean; label=Afficher le sélecteur de langues dans l'en-tête
+  header_language_enable = 0
+  # cat=commune_root/commune_language/020; type=options[À côté du logo (En-tête)=brand, Au centre avec les réseaux sociaux=center, Dans la barre de menu=menu]; label=Position du sélecteur de langues
+  header_language_position = brand
 }
 
 # ------------------------------------------------------------------------------

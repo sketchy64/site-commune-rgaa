@@ -133,6 +133,13 @@ page {
         as = sitemapTree
         excludeDoktypes = 199,254
       }
+
+      20 = TYPO3\CMS\Frontend\DataProcessing\LanguageMenuProcessor
+      20 {
+        languages = auto
+        as = languageNavigation
+        addQueryString = 1
+      }
     }
 
     # Variables injectées dans les templates Fluid
@@ -341,6 +348,14 @@ page {
       communeFooterSocialEnable = TEXT
       communeFooterSocialEnable.value = {$commune.footer_social_enable}
       communeFooterSocialEnable.override.data = site:commune.footer_social_enable
+
+      communeHeaderLanguageEnable = TEXT
+      communeHeaderLanguageEnable.value = {$commune.header_language_enable}
+      communeHeaderLanguageEnable.override.data = site:commune.header_language_enable
+
+      communeHeaderLanguagePosition = TEXT
+      communeHeaderLanguagePosition.value = {$commune.header_language_position}
+      communeHeaderLanguagePosition.override.data = site:commune.header_language_position
 
       # Rendu standard direct et robuste de toutes les colonnes de contenu TYPO3
       emergencyAlertContent = CONTENT
