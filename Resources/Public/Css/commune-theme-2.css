@@ -254,8 +254,8 @@ a:focus {
     padding: 1.5rem 0 !important;
   }
 
-  #main-navigation .nav-item.dropdown.megamenu-item:hover > .dropdown-menu.megamenu-panel,
-  #main-navigation .nav-item.dropdown.megamenu-item:focus-within > .dropdown-menu.megamenu-panel {
+  #main-navigation .nav-item.dropdown.megamenu-item:hover>.dropdown-menu.megamenu-panel,
+  #main-navigation .nav-item.dropdown.megamenu-item:focus-within>.dropdown-menu.megamenu-panel {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -365,7 +365,8 @@ a:focus {
   }
 
   .megamenu-col {
-    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
   }
 
   .megamenu-col:last-child {
