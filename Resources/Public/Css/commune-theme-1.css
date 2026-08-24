@@ -1199,13 +1199,11 @@ h1.page-title::before,
 
 /* Méta-données (Date & Icône) */
 .news-meta {
-  color: var(--commune-primary) !important;
   font-weight: 600;
   font-size: 0.85rem;
 }
 
 .news-calendar-icon {
-  color: var(--commune-primary);
   vertical-align: -2px;
   flex-shrink: 0;
 }
@@ -1416,9 +1414,19 @@ article.commune-news-card img,
   }
 }
 
-.news-detail-header .page-title {
+.news-detail-header h2,
+.news-detail-header .news-detail-title {
   font-size: 2.2rem;
   line-height: 1.25;
+}
+
+.news-detail-meta {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+}
+
+.news-detail-content-wrapper {
+  margin-bottom: 1.5rem !important;
 }
 
 /* Image d'actualité flottante à droite sur bureau */
