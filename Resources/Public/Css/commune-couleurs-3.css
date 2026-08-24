@@ -18,15 +18,77 @@
   --commune-accent-dark: #14351d;
   --commune-accent-light: #e6f4ea;
 
+  /* Couleurs de texte */
   --commune-text-main: #212529;
   --commune-text-muted: #595959;
+  --commune-text-light: #ffffff;
+  --commune-text-inverse: #ffffff;
+  --commune-text-dark: #0f172a;
+
+  /* Arrière-plans neutres et surfaces */
+  --commune-bg-main: #ffffff;
+  --commune-bg-surface: #ffffff;
   --commune-bg-light: #f4f5f7;
+  --commune-bg-subtle: #f8fafc;
+  --commune-bg-dark: #111827;
+  --commune-bg-footer: #1a202c;
+  --commune-bg-overlay: rgba(26, 32, 44, 0.85);
+
+  /* Bordures */
   --commune-border: #e2e8f0;
+  --commune-border-dark: #1e293b;
+  --commune-border-light: rgba(255, 255, 255, 0.2);
+
+  /* Ombres & Transparences */
+  --commune-shadow-light: rgba(0, 0, 0, 0.05);
+  --commune-shadow-medium: rgba(0, 0, 0, 0.12);
+  --commune-shadow-dark: rgba(0, 0, 0, 0.25);
+  --commune-shadow-primary: rgba(45, 55, 72, 0.15);
 
   /* Focus accessible renforcé (RGAA 10.7) */
   --commune-focus-color: #1a202c;
   --commune-focus-outline: 3px solid var(--commune-secondary);
   --commune-focus-offset: 3px;
+
+  /* États & Messages (Danger, Success, Warning, Info) */
+  --commune-danger: #dc2626;
+  --commune-danger-dark: #991b1b;
+  --commune-danger-light: #fef2f2;
+  --commune-danger-border: #fca5a5;
+
+  --commune-success: #16a34a;
+  --commune-success-dark: #15803d;
+  --commune-success-light: #f0fdf4;
+  --commune-success-border: #86efac;
+
+  --commune-warning: #d97706;
+  --commune-warning-dark: #92400e;
+  --commune-warning-light: #fffbeb;
+  --commune-warning-border: #fde68a;
+
+  --commune-info: #0284c7;
+  --commune-info-dark: #075985;
+  --commune-info-light: #f0f9ff;
+  --commune-info-border: #bae6fd;
+
+  /* Badge Républicain Marianne */
+  --commune-marianne-blue: #002395;
+  --commune-marianne-white: #ffffff;
+  --commune-marianne-red: #ed2939;
+
+  /* Formats de fichiers & Badges d'uploads */
+  --commune-format-pdf-bg: #fde8e8;
+  --commune-format-pdf-color: #9b1c1c;
+  --commune-format-doc-bg: #e6f6fd;
+  --commune-format-doc-color: #1d7daa;
+  --commune-format-xls-bg: #e8f5e9;
+  --commune-format-xls-color: #00703a;
+  --commune-format-ppt-bg: #fef7e6;
+  --commune-format-ppt-color: #b45309;
+  --commune-format-zip-bg: #fef3c7;
+  --commune-format-zip-color: #92400e;
+  --commune-format-media-bg: #ccfbf1;
+  --commune-format-media-color: #0f766e;
 
   /* Typographie */
   --commune-font-title: 'Montserrat', 'Century Gothic', -apple-system, BlinkMacSystemFont, sans-serif;
