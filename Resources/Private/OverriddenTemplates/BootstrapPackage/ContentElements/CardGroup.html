@@ -20,12 +20,16 @@
 
         <!-- Détermination dynamique de l'alignement du texte (header_position) -->
         <f:variable name="cardTextAlignClass" value="text-start" />
+<<<<<<< HEAD
+        <f:variable name="cardButtonAlignClass" value="text-start" />
         <f:variable name="headerPos" value="{data.header_position -> f:or(alternative: options.header_position)}" />
         <f:if condition="{headerPos} == 'center' || {headerPos} == '2'">
             <f:variable name="cardTextAlignClass" value="text-center align-items-center" />
+            <f:variable name="cardButtonAlignClass" value="text-center" />
         </f:if>
         <f:if condition="{headerPos} == 'right' || {headerPos} == '3'">
             <f:variable name="cardTextAlignClass" value="text-end align-items-end" />
+            <f:variable name="cardButtonAlignClass" value="text-end" />
         </f:if>
 
         <div class="row {cardColumnsClass} g-4 commune-card-group">
@@ -63,7 +67,7 @@
                             </f:if>
 
                             <f:if condition="{record.data.link}">
-                                <div class="mt-auto w-100 {f:if(condition: '{headerPos} == \"center\" || {headerPos} == \"2\"', then: 'text-center', else: '')} {f:if(condition: '{headerPos} == \"right\" || {headerPos} == \"3\"', then: 'text-end', else: '')}">
+                                <div class="mt-auto w-100 {cardButtonAlignClass}">
                                     <f:variable name="cardAriaLabel" value="{rgaa:a11y.ariaLabel(action: 'En savoir plus sur', context: record.data.header)}" />
                                     <f:link.typolink parameter="{record.data.link}"
                                                      class="btn btn-outline-primary btn-sm stretched-link"
