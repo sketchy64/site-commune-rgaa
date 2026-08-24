@@ -4068,10 +4068,10 @@ article ul.pagination>li::before,
 .ce-card_group .card,
 .frame-type-card_group .card {
   background-color: #ffffff;
-  border-radius: 10px !important;
-  box-shadow: 0 4px 15px rgba(0, 112, 58, 0.06) !important;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 112, 58, 0.06);
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-  border: 1px solid var(--commune-border, #e2e8f0) !important;
+  border: 1px solid var(--commune-border, #e2e8f0);
   overflow: hidden;
 }
 
@@ -4079,17 +4079,17 @@ article ul.pagination>li::before,
 .ce-card_group .card:hover,
 .frame-type-card_group .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(0, 112, 58, 0.14) !important;
-  border-color: rgba(0, 112, 58, 0.25) !important;
+  box-shadow: 0 12px 28px rgba(0, 112, 58, 0.14);
+  border-color: rgba(0, 112, 58, 0.25);
 }
 
 .commune-card-group .card-body,
 .ce-card_group .card-body,
 .frame-type-card_group .card-body {
-  background-color: #ffffff !important;
-  padding: 1.5rem !important;
-  display: flex !important;
-  flex-direction: column !important;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
   border-left: 3px solid transparent;
   transition: border-color 0.2s ease;
 }
@@ -4106,10 +4106,10 @@ article ul.pagination>li::before,
   height: 220px;
   object-fit: cover;
   object-position: center top;
-  border-top-left-radius: 10px !important;
-  border-top-right-radius: 10px !important;
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .commune-card-group .card-title,
@@ -4118,8 +4118,8 @@ article ul.pagination>li::before,
   font-family: var(--commune-font-title);
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--sauveterre-green, #00703a) !important;
-  margin-top: 0 !important;
+  color: var(--sauveterre-green, #00703a);
+  margin-top: 0;
   margin-bottom: 0.4rem;
   line-height: 1.35;
 }
@@ -4130,7 +4130,7 @@ article ul.pagination>li::before,
   font-family: var(--commune-font-body);
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--sauveterre-gold-dark, #cf9619) !important;
-  margin-top: 0 !important;
+  color: var(--sauveterre-gold-dark, #cf9619);
+  margin-top: 0;
   margin-bottom: 0.75rem;
 }
