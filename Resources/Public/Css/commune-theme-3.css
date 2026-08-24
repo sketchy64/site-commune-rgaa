@@ -4143,3 +4143,26 @@ article ul.pagination>li::before,
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }
+
+.commune-card-group .card-title,
+.ce-card_group .card-title,
+.frame-type-card_group .card-title {
+  font-family: var(--commune-font-title);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--sauveterre-green, #2d3748) !important;
+  margin-top: 0 !important;
+  margin-bottom: 0.4rem;
+  line-height: 1.35;
+}
+
+.commune-card-group .card-subtitle,
+.ce-card_group .card-subtitle,
+.frame-type-card_group .card-subtitle {
+  font-family: var(--commune-font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--sauveterre-gold-dark, #9c4221) !important;
+  margin-top: 0 !important;
+  margin-bottom: 0.75rem;
+}
