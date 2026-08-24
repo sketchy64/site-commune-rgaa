@@ -4060,36 +4060,47 @@ article ul.pagination>li::before,
 .commune-card-group,
 .ce-card_group,
 .frame-type-card_group {
-  margin-top: 1.5rem;
-  margin-bottom: 2rem;
+  margin-top: 3.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .commune-card-group .commune-card,
 .ce-card_group .card,
 .frame-type-card_group .card {
   position: relative;
+  margin-top: 2.75rem;
   background-color: #ffffff;
   border: 1px solid var(--commune-border, #e2e8f0) !important;
   border-top: 4px solid var(--sauveterre-green, #00703a) !important;
-  border-radius: 16px !important;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 112, 58, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04) !important;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border-radius: 20px !important;
+  overflow: visible !important;
+  box-shadow: 0 6px 24px rgba(0, 112, 58, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04) !important;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .commune-card-group .commune-card:hover,
 .ce-card_group .card:hover,
 .frame-type-card_group .card:hover {
   transform: translateY(-6px);
-  border-color: rgba(0, 112, 58, 0.35) !important;
-  box-shadow: 0 14px 32px rgba(0, 112, 58, 0.16), 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+  border-color: rgba(0, 112, 58, 0.4) !important;
+  box-shadow: 0 16px 36px rgba(0, 112, 58, 0.18), 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+}
+
+.commune-card-group .commune-card-header {
+  position: relative;
+  overflow: visible;
+  padding: 0;
 }
 
 .commune-card-group .commune-card-avatar-wrapper {
-  display: inline-block;
   position: relative;
-  margin-top: 1.25rem;
-  margin-bottom: 0.5rem;
+  width: 84%;
+  max-width: 250px;
+  aspect-ratio: 1 / 1;
+  margin-top: -3.75rem;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: visible;
 }
 
 .commune-card-group .card-img-top,
@@ -4097,29 +4108,33 @@ article ul.pagination>li::before,
 .commune-card-group .card-img-avatar,
 .ce-card_group .card-img-top,
 .frame-type-card_group .card-img-top {
-  width: 140px;
-  height: 140px;
+  width: 100% !important;
+  height: 100% !important;
   border-radius: 50% !important;
   object-fit: cover;
   object-position: center top;
-  margin: 1.25rem auto 0.5rem auto;
   display: block;
-  border: 4px solid #ffffff;
-  box-shadow: 0 6px 16px rgba(0, 112, 58, 0.15), 0 0 0 3px var(--sauveterre-green-light, #e8f5e9);
+  margin: 0 !important;
+  border: 5px solid #ffffff;
+  box-shadow: 0 10px 28px rgba(0, 112, 58, 0.18),
+              0 0 0 3px var(--sauveterre-green, #00703a),
+              0 0 0 7px var(--sauveterre-gold-light, #fef7e6);
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .commune-card-group .commune-card:hover .card-img-top,
 .commune-card-group .commune-card:hover .card-img-avatar,
 .ce-card_group .card:hover .card-img-top {
-  transform: scale(1.05);
-  box-shadow: 0 8px 24px rgba(0, 112, 58, 0.22), 0 0 0 3px var(--sauveterre-gold, #f5b21e);
+  transform: scale(1.04) translateY(-2px);
+  box-shadow: 0 14px 32px rgba(0, 112, 58, 0.25),
+              0 0 0 4px var(--sauveterre-gold, #f5b21e),
+              0 0 0 8px var(--sauveterre-green-light, #e8f5e9);
 }
 
 .commune-card-group .card-body,
 .ce-card_group .card-body,
 .frame-type-card_group .card-body {
-  padding: 1.25rem 1.5rem 1.6rem 1.5rem;
+  padding: 1.25rem 1.5rem 1.75rem 1.5rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -4129,10 +4144,11 @@ article ul.pagination>li::before,
 .ce-card_group .card-title,
 .frame-type-card_group .card-title {
   font-family: var(--commune-font-title);
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: var(--sauveterre-green-dark, #00552c) !important;
-  margin-bottom: 0.35rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.4rem;
   line-height: 1.3;
 }
 
@@ -4140,16 +4156,17 @@ article ul.pagination>li::before,
 .ce-card_group .card-subtitle,
 .frame-type-card_group .card-subtitle {
   display: inline-block;
+  align-self: center;
   font-family: var(--commune-font-body);
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--sauveterre-green-dark, #00552c) !important;
-  background-color: var(--sauveterre-green-light, #e8f5e9);
-  border: 1px solid rgba(0, 112, 58, 0.15);
-  padding: 0.3rem 0.85rem;
+  color: var(--sauveterre-gold-dark, #cf9619) !important;
+  background-color: var(--sauveterre-gold-light, #fef7e6);
+  border: 1px solid rgba(245, 178, 30, 0.4);
+  padding: 0.35rem 1rem;
   border-radius: 50rem;
   margin-bottom: 0.85rem;
-  margin-top: 0.15rem;
+  margin-top: 0.2rem;
 }
 
 .commune-card-group .card-text,
@@ -4159,7 +4176,7 @@ article ul.pagination>li::before,
   font-size: 0.935rem;
   color: #334155;
   line-height: 1.6;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.35rem;
 }
 
 .commune-card-group .btn-outline-primary,
@@ -4176,7 +4193,7 @@ article ul.pagination>li::before,
   font-family: var(--commune-font-title);
   font-weight: 700;
   font-size: 0.875rem;
-  padding: 0.5rem 1.35rem;
+  padding: 0.55rem 1.4rem;
   border-radius: 50rem !important;
   text-decoration: none !important;
   transition: all 0.25s ease-in-out;
@@ -4192,7 +4209,7 @@ article ul.pagination>li::before,
   color: #ffffff !important;
   border-color: var(--sauveterre-green, #00703a) !important;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 112, 58, 0.25);
+  box-shadow: 0 6px 16px rgba(0, 112, 58, 0.25);
 }
 
 .commune-card-group .btn-outline-primary:focus,
