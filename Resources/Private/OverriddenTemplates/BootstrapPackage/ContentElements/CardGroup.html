@@ -21,14 +21,19 @@
                 <f:if condition="{options.cols}">
                     <f:then><f:variable name="colsCount" value="{options.cols}" /></f:then>
                     <f:else>
-                        <f:if condition="{data.imagecols} && {data.imagecols} > 0">
-                            <f:then><f:variable name="colsCount" value="{data.imagecols}" /></f:then>
+                        <f:if condition="{options.card_columns}">
+                            <f:then><f:variable name="colsCount" value="{options.card_columns}" /></f:then>
                             <f:else>
                                 <f:if condition="{data.cols} && {data.cols} > 0">
                                     <f:then><f:variable name="colsCount" value="{data.cols}" /></f:then>
                                     <f:else>
                                         <f:if condition="{options.imagecols}">
                                             <f:then><f:variable name="colsCount" value="{options.imagecols}" /></f:then>
+                                            <f:else>
+                                                <f:if condition="{data.imagecols} && {data.imagecols} > 1">
+                                                    <f:then><f:variable name="colsCount" value="{data.imagecols}" /></f:then>
+                                                </f:if>
+                                            </f:else>
                                         </f:if>
                                     </f:else>
                                 </f:if>
@@ -56,14 +61,19 @@
                 <f:if condition="{options.alignment}">
                     <f:then><f:variable name="headerPos" value="{options.alignment}" /></f:then>
                     <f:else>
-                        <f:if condition="{data.header_position}">
-                            <f:then><f:variable name="headerPos" value="{data.header_position}" /></f:then>
+                        <f:if condition="{options.text_alignment}">
+                            <f:then><f:variable name="headerPos" value="{options.text_alignment}" /></f:then>
                             <f:else>
-                                <f:if condition="{data.subheader_position}">
-                                    <f:then><f:variable name="headerPos" value="{data.subheader_position}" /></f:then>
+                                <f:if condition="{data.header_position}">
+                                    <f:then><f:variable name="headerPos" value="{data.header_position}" /></f:then>
                                     <f:else>
-                                        <f:if condition="{data.alignment}">
-                                            <f:then><f:variable name="headerPos" value="{data.alignment}" /></f:then>
+                                        <f:if condition="{data.subheader_position}">
+                                            <f:then><f:variable name="headerPos" value="{data.subheader_position}" /></f:then>
+                                            <f:else>
+                                                <f:if condition="{data.alignment}">
+                                                    <f:then><f:variable name="headerPos" value="{data.alignment}" /></f:then>
+                                                </f:if>
+                                            </f:else>
                                         </f:if>
                                     </f:else>
                                 </f:if>
