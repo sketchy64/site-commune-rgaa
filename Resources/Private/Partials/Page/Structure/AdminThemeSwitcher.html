@@ -1,0 +1,287 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<!-- Panneau d'administration d'aperçu dynamique du Thème et des Couleurs (Visible uniquement pour les utilisateurs BE) -->
+<f:if condition="{rgaa:beUserLoggedIn()}">
+    <aside id="commune-admin-switcher" class="commune-admin-switcher" role="region" aria-label="Panneau Administration - Testeur de Thèmes et Couleurs">
+        <!-- Bouton Toggle / Badge Admin -->
+        <button type="button" id="admin-switcher-toggle" class="admin-switcher-toggle" aria-expanded="false" aria-controls="admin-switcher-panel" title="Ouvrir le testeur de thèmes et couleurs en direct">
+            <span class="admin-switcher-icon" aria-hidden="true">⚙️</span>
+            <span class="admin-switcher-label">Admin : Thème & Couleurs</span>
+            <span id="admin-switcher-indicator" class="admin-switcher-badge d-none">Aperçu active</span>
+        </button>
+
+        <!-- Contenu du Panneau -->
+        <div id="admin-switcher-panel" class="admin-switcher-panel d-none" aria-hidden="true">
+            <div class="admin-switcher-header">
+                <h3 class="admin-switcher-title">⚙️ Testeur de Thème & Couleurs</h3>
+                <button type="button" id="admin-switcher-close" class="admin-switcher-close" aria-label="Fermer le panneau admin">✕</button>
+            </div>
+            
+            <div class="admin-switcher-body">
+                <!-- Choix du Thème CSS -->
+                <div class="admin-switcher-field">
+                    <label for="admin-theme-select" class="admin-switcher-field-label">Style de Thème (Structure & Formes) :</label>
+                    <select id="admin-theme-select" class="form-select form-select-sm">
+                        <option value="commune-theme-1.css">Thème 1 (Classique : Arrondis, Ombres & Dégradés)</option>
+                        <option value="commune-theme-2.css">Thème 2 (Moderne : Angles Droits, Lignes Nettes & Blocs)</option>
+                    </select>
+                </div>
+
+                <!-- Choix de la Palette de Couleurs CSS -->
+                <div class="admin-switcher-field">
+                    <label for="admin-color-select" class="admin-switcher-field-label">Jeu de Couleurs (Palette institutionnelle) :</label>
+                    <select id="admin-color-select" class="form-select form-select-sm">
+                        <option value="commune-couleurs-1.css">Jeu 1 (Vert Institutionnel & Or)</option>
+                        <option value="commune-couleurs-2.css">Jeu 2 (Bleu Océan & Sable)</option>
+                        <option value="commune-couleurs-3.css">Jeu 3 (Ardoise Montagne & Terracotta)</option>
+                    </select>
+                </div>
+
+                <!-- Bouton de réinitialisation -->
+                <div class="admin-switcher-actions">
+                    <button type="button" id="admin-switcher-reset" class="btn btn-sm btn-outline-danger w-100">
+                        🔄 Réinitialiser aux constantes TYPO3
+                    </button>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- JavaScript & CSS intégrés pour le sélecteur admin -->
+    <script>
+    (function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            var toggleBtn = document.getElementById('admin-switcher-toggle');
+            var closeBtn = document.getElementById('admin-switcher-close');
+            var panel = document.getElementById('admin-switcher-panel');
+            var themeSelect = document.getElementById('admin-theme-select');
+            var colorSelect = document.getElementById('admin-color-select');
+            var resetBtn = document.getElementById('admin-switcher-reset');
+            var indicator = document.getElementById('admin-switcher-indicator');
+
+            if (!toggleBtn || !panel || !themeSelect || !colorSelect) return;
+
+            // Fonction pour trouver la balise <link> du thème
+            function getThemeLink() {
+                var links = document.querySelectorAll('link[rel="stylesheet"]');
+                for (var i = 0; i < links.length; i++) {
+                    if (links[i].href && links[i].href.indexOf('commune-theme-') !== -1) {
+                        return links[i];
+                    }
+                }
+                return null;
+            }
+
+            // Fonction pour trouver la balise <link> de la palette
+            function getColorLink() {
+                var links = document.querySelectorAll('link[rel="stylesheet"]');
+                for (var i = 0; i < links.length; i++) {
+                    if (links[i].href && links[i].href.indexOf('commune-couleurs-') !== -1) {
+                        return links[i];
+                    }
+                }
+                return null;
+            }
+
+            // Initialiser les valeurs du sélecteur à partir du href actuel
+            var currentThemeLink = getThemeLink();
+            if (currentThemeLink) {
+                var m = currentThemeLink.href.match(/commune-theme-\d+\.css/);
+                if (m) themeSelect.value = m[0];
+            }
+
+            var currentColorLink = getColorLink();
+            if (currentColorLink) {
+                var mColor = currentColorLink.href.match(/commune-couleurs-\d+\.css/);
+                if (mColor) colorSelect.value = mColor[0];
+            }
+
+            // Appliquer les prédictions stockées en localStorage si elles existent
+            var savedTheme = localStorage.getItem('commune_admin_theme');
+            var savedColor = localStorage.getItem('commune_admin_color');
+
+            if (savedTheme) {
+                applyTheme(savedTheme, false);
+                themeSelect.value = savedTheme;
+            }
+            if (savedColor) {
+                applyColor(savedColor, false);
+                colorSelect.value = savedColor;
+            }
+
+            updateIndicator();
+
+            function updateIndicator() {
+                if (localStorage.getItem('commune_admin_theme') || localStorage.getItem('commune_admin_color')) {
+                    if (indicator) indicator.classList.remove('d-none');
+                } else {
+                    if (indicator) indicator.classList.add('d-none');
+                }
+            }
+
+            function applyTheme(themeFileName, save) {
+                var link = getThemeLink();
+                if (link) {
+                    link.href = link.href.replace(/commune-theme-\d+\.css/, themeFileName);
+                    if (save) {
+                        localStorage.setItem('commune_admin_theme', themeFileName);
+                    }
+                    updateIndicator();
+                }
+            }
+
+            function applyColor(colorFileName, save) {
+                var link = getColorLink();
+                if (link) {
+                    link.href = link.href.replace(/commune-couleurs-\d+\.css/, colorFileName);
+                    if (save) {
+                        localStorage.setItem('commune_admin_color', colorFileName);
+                    }
+                    updateIndicator();
+                }
+            }
+
+            // Événements de clics et changements
+            toggleBtn.addEventListener('click', function() {
+                var isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+                toggleBtn.setAttribute('aria-expanded', !isExpanded);
+                if (isExpanded) {
+                    panel.classList.add('d-none');
+                    panel.setAttribute('aria-hidden', 'true');
+                } else {
+                    panel.classList.remove('d-none');
+                    panel.setAttribute('aria-hidden', 'false');
+                }
+            });
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    toggleBtn.setAttribute('aria-expanded', 'false');
+                    panel.classList.add('d-none');
+                    panel.setAttribute('aria-hidden', 'true');
+                });
+            }
+
+            themeSelect.addEventListener('change', function() {
+                applyTheme(this.value, true);
+            });
+
+            colorSelect.addEventListener('change', function() {
+                applyColor(this.value, true);
+            });
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
+                    localStorage.removeItem('commune_admin_theme');
+                    localStorage.removeItem('commune_admin_color');
+                    window.location.reload();
+                });
+            }
+        });
+    })();
+    </script>
+
+    <style>
+    .commune-admin-switcher {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 10000;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .admin-switcher-toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #0f172a;
+        color: #ffffff;
+        border: 2px solid #38bdf8;
+        padding: 8px 14px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+        transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .admin-switcher-toggle:hover,
+    .admin-switcher-toggle:focus {
+        background: #1e293b;
+        transform: translateY(-2px);
+        outline: 3px solid #38bdf8;
+    }
+    .admin-switcher-badge {
+        background: #eab308;
+        color: #0f172a;
+        font-size: 10px;
+        padding: 2px 6px;
+        border-radius: 10px;
+        text-transform: uppercase;
+        font-weight: 800;
+    }
+    .admin-switcher-panel {
+        position: absolute;
+        bottom: 50px;
+        left: 0;
+        width: 320px;
+        background: #ffffff;
+        border: 2px solid #0f172a;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        overflow: hidden;
+        animation: adminPanelSlide 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes adminPanelSlide {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .admin-switcher-header {
+        background: #0f172a;
+        color: #ffffff;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .admin-switcher-title {
+        font-size: 13px;
+        font-weight: 700;
+        margin: 0;
+        color: #ffffff !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .admin-switcher-close {
+        background: transparent;
+        border: none;
+        color: #94a3b8;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 0 4px;
+        line-height: 1;
+    }
+    .admin-switcher-close:hover {
+        color: #ffffff;
+    }
+    .admin-switcher-body {
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .admin-switcher-field-label {
+        display: block;
+        font-size: 12px;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 4px;
+    }
+    .admin-switcher-actions {
+        margin-top: 4px;
+    }
+    </style>
+</f:if>
+</html>
