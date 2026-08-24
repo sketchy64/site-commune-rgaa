@@ -2282,63 +2282,63 @@ main h1:not(.commune-title):not(.page-title)::before {
 }
 
 /* Titres H2 : Vert foncé, 1.45rem, bordure gauche or */
-.commune-page-content h2,
-.ce-header h2,
-article h2,
-main h2:not(.commune-section-title):not(.panel-title) {
-  font-family: var(--commune-font-title) !important;
-  font-size: 1.45rem !important;
-  font-weight: 700 !important;
-  color: var(--sauveterre-green-dark) !important;
-  border-left: 4px solid var(--sauveterre-gold) !important;
-  padding-left: 0.65rem !important;
-  margin-top: 1.75rem !important;
-  margin-bottom: 1rem !important;
-  line-height: 1.35 !important;
+.commune-page-content h2:not(.card-title),
+.ce-header h2:not(.card-title),
+article h2:not(.card-title),
+main h2:not(.commune-section-title):not(.panel-title):not(.card-title) {
+  font-family: var(--commune-font-title);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--sauveterre-green-dark);
+  border-left: 4px solid var(--sauveterre-gold);
+  padding-left: 0.65rem;
+  margin-top: 1.75rem;
+  margin-bottom: 1rem;
+  line-height: 1.35;
 }
 
 /* Titres H3 : Couleur noir/texte principal, 1.25rem */
-.commune-page-content h3,
-.ce-header h3,
-article h3,
-main h3:not(.commune-sitemap-root-title):not(.accordion-header):not(.panel-title) {
-  font-family: var(--commune-font-title) !important;
-  font-size: 1.25rem !important;
-  font-weight: 700 !important;
-  color: var(--commune-text-main) !important;
-  border-left: none !important;
-  padding-left: 0 !important;
-  margin-top: 1.5rem !important;
-  margin-bottom: 0.75rem !important;
-  line-height: 1.35 !important;
+.commune-page-content h3:not(.card-title),
+.ce-header h3:not(.card-title),
+article h3:not(.card-title),
+main h3:not(.commune-sitemap-root-title):not(.accordion-header):not(.panel-title):not(.card-title) {
+  font-family: var(--commune-font-title);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--commune-text-main);
+  border-left: none;
+  padding-left: 0;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.35;
 }
 
 /* Titres H4 : 1.15rem inchangé */
-.commune-page-content h4,
-.ce-header h4,
-article h4,
-main h4 {
-  font-family: var(--commune-font-title) !important;
-  font-size: 1.15rem !important;
-  font-weight: 600 !important;
-  color: var(--commune-text-main) !important;
-  margin-top: 1.25rem !important;
-  margin-bottom: 0.5rem !important;
+.commune-page-content h4:not(.card-subtitle),
+.ce-header h4:not(.card-subtitle),
+article h4:not(.card-subtitle),
+main h4:not(.card-subtitle) {
+  font-family: var(--commune-font-title);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--commune-text-main);
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Titres H5 : 1rem majuscules inchangé */
-.commune-page-content h5,
-.ce-header h5,
-article h5,
-main h5 {
-  font-family: var(--commune-font-title) !important;
-  font-size: 1rem !important;
-  font-weight: 600 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.5px !important;
-  color: var(--sauveterre-green-dark) !important;
-  margin-top: 1rem !important;
-  margin-bottom: 0.4rem !important;
+.commune-page-content h5:not(.card-title):not(.card-subtitle),
+.ce-header h5:not(.card-title):not(.card-subtitle),
+article h5:not(.card-title):not(.card-subtitle),
+main h5:not(.card-title):not(.card-subtitle) {
+  font-family: var(--commune-font-title);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--sauveterre-green-dark);
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
 }
 
 /* Titres H6 : 1rem */
