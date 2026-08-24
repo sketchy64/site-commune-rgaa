@@ -3,13 +3,43 @@
       xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
+<!--
+    OVERRIDE: EXT:bootstrap_package/Resources/Private/Templates/ContentElements/CardGroup.html
+    REASON: RGAA 4.1 Compliance & Dynamic Column Count and Alignment Options Fix
+    TARGET EXT VERSION: bootstrap_package ^14.0 || ^15.0 || ^16.0
+-->
+
 <f:layout name="Default" />
 
 <f:section name="Main">
     <f:if condition="{records}">
         <!-- Détermination dynamique du nombre de colonnes de la grille -->
+        <f:variable name="colsCount" value="" />
+        <f:if condition="{options.columns}">
+            <f:then><f:variable name="colsCount" value="{options.columns}" /></f:then>
+            <f:else>
+                <f:if condition="{options.cols}">
+                    <f:then><f:variable name="colsCount" value="{options.cols}" /></f:then>
+                    <f:else>
+                        <f:if condition="{data.imagecols} && {data.imagecols} > 0">
+                            <f:then><f:variable name="colsCount" value="{data.imagecols}" /></f:then>
+                            <f:else>
+                                <f:if condition="{data.cols} && {data.cols} > 0">
+                                    <f:then><f:variable name="colsCount" value="{data.cols}" /></f:then>
+                                    <f:else>
+                                        <f:if condition="{options.imagecols}">
+                                            <f:then><f:variable name="colsCount" value="{options.imagecols}" /></f:then>
+                                        </f:if>
+                                    </f:else>
+                                </f:if>
+                            </f:else>
+                        </f:if>
+                    </f:else>
+                </f:if>
+            </f:else>
+        </f:if>
+
         <f:variable name="cardColumnsClass" value="row-cols-1 row-cols-md-2 row-cols-lg-3" />
-        <f:variable name="colsCount" value="{data.imagecols -> f:or(alternative: options.columns -> f:or(alternative: data.cols))}" />
         <f:switch expression="{colsCount}">
             <f:case value="1"><f:variable name="cardColumnsClass" value="row-cols-1" /></f:case>
             <f:case value="2"><f:variable name="cardColumnsClass" value="row-cols-1 row-cols-md-2" /></f:case>
@@ -18,16 +48,39 @@
             <f:case value="6"><f:variable name="cardColumnsClass" value="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6" /></f:case>
         </f:switch>
 
-        <!-- Détermination dynamique de l'alignement du texte (header_position) -->
+        <!-- Détermination dynamique de l'alignement du texte et des boutons (header_position / alignment) -->
+        <f:variable name="headerPos" value="" />
+        <f:if condition="{options.header_position}">
+            <f:then><f:variable name="headerPos" value="{options.header_position}" /></f:then>
+            <f:else>
+                <f:if condition="{options.alignment}">
+                    <f:then><f:variable name="headerPos" value="{options.alignment}" /></f:then>
+                    <f:else>
+                        <f:if condition="{data.header_position}">
+                            <f:then><f:variable name="headerPos" value="{data.header_position}" /></f:then>
+                            <f:else>
+                                <f:if condition="{data.subheader_position}">
+                                    <f:then><f:variable name="headerPos" value="{data.subheader_position}" /></f:then>
+                                    <f:else>
+                                        <f:if condition="{data.alignment}">
+                                            <f:then><f:variable name="headerPos" value="{data.alignment}" /></f:then>
+                                        </f:if>
+                                    </f:else>
+                                </f:if>
+                            </f:else>
+                        </f:if>
+                    </f:else>
+                </f:if>
+            </f:else>
+        </f:if>
+
         <f:variable name="cardTextAlignClass" value="text-start" />
-<<<<<<< HEAD
         <f:variable name="cardButtonAlignClass" value="text-start" />
-        <f:variable name="headerPos" value="{data.header_position -> f:or(alternative: options.header_position)}" />
-        <f:if condition="{headerPos} == 'center' || {headerPos} == '2'">
+        <f:if condition="{headerPos} == 'center' || {headerPos} == '2' || {headerPos} == 'middle' || {headerPos} == 'center-align'">
             <f:variable name="cardTextAlignClass" value="text-center align-items-center" />
             <f:variable name="cardButtonAlignClass" value="text-center" />
         </f:if>
-        <f:if condition="{headerPos} == 'right' || {headerPos} == '3'">
+        <f:if condition="{headerPos} == 'right' || {headerPos} == '3' || {headerPos} == 'end' || {headerPos} == 'right-align'">
             <f:variable name="cardTextAlignClass" value="text-end align-items-end" />
             <f:variable name="cardButtonAlignClass" value="text-end" />
         </f:if>
