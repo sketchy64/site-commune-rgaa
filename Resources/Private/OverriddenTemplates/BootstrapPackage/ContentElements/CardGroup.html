@@ -13,35 +13,37 @@
 
 <f:section name="Main">
     <f:if condition="{records}">
-        <!-- Détermination dynamique du nombre de colonnes de la grille -->
+        <!-- Détermination dynamique du nombre de colonnes de la grille (columns / cols / imagecols) -->
         <f:variable name="colsCount" value="" />
         <f:if condition="{options.columns}">
             <f:then><f:variable name="colsCount" value="{options.columns}" /></f:then>
-            <f:else>
-                <f:if condition="{options.cols}">
-                    <f:then><f:variable name="colsCount" value="{options.cols}" /></f:then>
-                    <f:else>
-                        <f:if condition="{options.card_columns}">
-                            <f:then><f:variable name="colsCount" value="{options.card_columns}" /></f:then>
-                            <f:else>
-                                <f:if condition="{data.cols} && {data.cols} > 0">
-                                    <f:then><f:variable name="colsCount" value="{data.cols}" /></f:then>
-                                    <f:else>
-                                        <f:if condition="{options.imagecols}">
+            <f:else><f:if condition="{data.pi_flexform.columns}">
+                <f:then><f:variable name="colsCount" value="{data.pi_flexform.columns}" /></f:then>
+                <f:else><f:if condition="{flexform.columns}">
+                    <f:then><f:variable name="colsCount" value="{flexform.columns}" /></f:then>
+                    <f:else><f:if condition="{pi_flexform.columns}">
+                        <f:then><f:variable name="colsCount" value="{pi_flexform.columns}" /></f:then>
+                        <f:else><f:if condition="{data.pi_flexform.data.sDEF.lDEF.columns.vDEF}">
+                            <f:then><f:variable name="colsCount" value="{data.pi_flexform.data.sDEF.lDEF.columns.vDEF}" /></f:then>
+                            <f:else><f:if condition="{options.cols}">
+                                <f:then><f:variable name="colsCount" value="{options.cols}" /></f:then>
+                                <f:else><f:if condition="{options.card_columns}">
+                                    <f:then><f:variable name="colsCount" value="{options.card_columns}" /></f:then>
+                                    <f:else><f:if condition="{data.cols} && {data.cols} > 0">
+                                        <f:then><f:variable name="colsCount" value="{data.cols}" /></f:then>
+                                        <f:else><f:if condition="{options.imagecols}">
                                             <f:then><f:variable name="colsCount" value="{options.imagecols}" /></f:then>
-                                            <f:else>
-                                                <f:if condition="{data.imagecols} && {data.imagecols} > 1">
-                                                    <f:then><f:variable name="colsCount" value="{data.imagecols}" /></f:then>
-                                                </f:if>
-                                            </f:else>
-                                        </f:if>
-                                    </f:else>
-                                </f:if>
-                            </f:else>
-                        </f:if>
-                    </f:else>
-                </f:if>
-            </f:else>
+                                            <f:else><f:if condition="{data.imagecols} && {data.imagecols} > 1">
+                                                <f:then><f:variable name="colsCount" value="{data.imagecols}" /></f:then>
+                                            </f:if></f:else>
+                                        </f:if></f:else>
+                                    </f:if></f:else>
+                                </f:if></f:else>
+                            </f:if></f:else>
+                        </f:if></f:else>
+                    </f:if></f:else>
+                </f:if></f:else>
+            </f:if></f:else>
         </f:if>
 
         <f:variable name="cardColumnsClass" value="row-cols-1 row-cols-md-2 row-cols-lg-3" />
@@ -53,35 +55,40 @@
             <f:case value="6"><f:variable name="cardColumnsClass" value="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6" /></f:case>
         </f:switch>
 
-        <!-- Détermination dynamique de l'alignement du texte et des boutons (header_position / alignment) -->
+        <!-- Détermination dynamique de l'alignement du texte et des boutons (align / header_position / alignment) -->
         <f:variable name="headerPos" value="" />
-        <f:if condition="{options.header_position}">
-            <f:then><f:variable name="headerPos" value="{options.header_position}" /></f:then>
-            <f:else>
-                <f:if condition="{options.alignment}">
-                    <f:then><f:variable name="headerPos" value="{options.alignment}" /></f:then>
-                    <f:else>
-                        <f:if condition="{options.text_alignment}">
-                            <f:then><f:variable name="headerPos" value="{options.text_alignment}" /></f:then>
-                            <f:else>
-                                <f:if condition="{data.header_position}">
-                                    <f:then><f:variable name="headerPos" value="{data.header_position}" /></f:then>
-                                    <f:else>
-                                        <f:if condition="{data.subheader_position}">
-                                            <f:then><f:variable name="headerPos" value="{data.subheader_position}" /></f:then>
-                                            <f:else>
-                                                <f:if condition="{data.alignment}">
+        <f:if condition="{options.align}">
+            <f:then><f:variable name="headerPos" value="{options.align}" /></f:then>
+            <f:else><f:if condition="{data.pi_flexform.align}">
+                <f:then><f:variable name="headerPos" value="{data.pi_flexform.align}" /></f:then>
+                <f:else><f:if condition="{flexform.align}">
+                    <f:then><f:variable name="headerPos" value="{flexform.align}" /></f:then>
+                    <f:else><f:if condition="{pi_flexform.align}">
+                        <f:then><f:variable name="headerPos" value="{pi_flexform.align}" /></f:then>
+                        <f:else><f:if condition="{data.pi_flexform.data.sDEF.lDEF.align.vDEF}">
+                            <f:then><f:variable name="headerPos" value="{data.pi_flexform.data.sDEF.lDEF.align.vDEF}" /></f:then>
+                            <f:else><f:if condition="{options.header_position}">
+                                <f:then><f:variable name="headerPos" value="{options.header_position}" /></f:then>
+                                <f:else><f:if condition="{options.alignment}">
+                                    <f:then><f:variable name="headerPos" value="{options.alignment}" /></f:then>
+                                    <f:else><f:if condition="{options.text_alignment}">
+                                        <f:then><f:variable name="headerPos" value="{options.text_alignment}" /></f:then>
+                                        <f:else><f:if condition="{data.header_position}">
+                                            <f:then><f:variable name="headerPos" value="{data.header_position}" /></f:then>
+                                            <f:else><f:if condition="{data.subheader_position}">
+                                                <f:then><f:variable name="headerPos" value="{data.subheader_position}" /></f:then>
+                                                <f:else><f:if condition="{data.alignment}">
                                                     <f:then><f:variable name="headerPos" value="{data.alignment}" /></f:then>
-                                                </f:if>
-                                            </f:else>
-                                        </f:if>
-                                    </f:else>
-                                </f:if>
-                            </f:else>
-                        </f:if>
-                    </f:else>
-                </f:if>
-            </f:else>
+                                                </f:if></f:else>
+                                            </f:if></f:else>
+                                        </f:if></f:else>
+                                    </f:if></f:else>
+                                </f:if></f:else>
+                            </f:if></f:else>
+                        </f:if></f:else>
+                    </f:if></f:else>
+                </f:if></f:else>
+            </f:if></f:else>
         </f:if>
 
         <f:variable name="cardTextAlignClass" value="text-start" />
