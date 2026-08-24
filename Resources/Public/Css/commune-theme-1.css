@@ -3607,13 +3607,7 @@ span.error::before,
 .form-navigation,
 .form-group.actions,
 .form-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem;
   margin-top: 2rem;
-  padding-top: 1.75rem;
-  border-top: 1px solid #E2E8F0;
 }
 
 .form-navigation .btn-primary,
