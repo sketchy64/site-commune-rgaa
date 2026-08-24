@@ -2001,14 +2001,6 @@ a.icon-group-item:hover {
    ============================================================================== */
 
 /* 1. frame-background-none : Gris clair par défaut */
-.commune-emergency-alert-container .frame-background-none,
-.frame-background-none.frame-type-panel,
-.frame-type-panel.frame-background-none {
-  background-color: var(--commune-bg-light) !important;
-  color: var(--commune-text-main) !important;
-  border-bottom: 1px solid var(--commune-border) !important;
-}
-
 .frame-background-none .commune-panel,
 .frame-background-none .panel {
   background-color: #ffffff !important;
