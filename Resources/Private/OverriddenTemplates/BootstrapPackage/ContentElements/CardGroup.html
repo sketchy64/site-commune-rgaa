@@ -5,7 +5,7 @@
 
 <!--
     OVERRIDE: EXT:bootstrap_package/Resources/Private/Templates/ContentElements/CardGroup.html
-    REASON: RGAA 4.1 Compliance & Dynamic Column Count and Alignment Options Fix
+    REASON: RGAA 4.1 Compliance & Page-level Grid Alignment Fix for Card Group
     TARGET EXT VERSION: bootstrap_package ^14.0 || ^15.0 || ^16.0
 -->
 
@@ -55,7 +55,7 @@
             <f:case value="6"><f:variable name="cardColumnsClass" value="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6" /></f:case>
         </f:switch>
 
-        <!-- Détermination dynamique de l'alignement du texte et des boutons (align / header_position / alignment) -->
+        <!-- Détermination dynamique de l'alignement du groupe de cartes sur la page (justify-content-*) -->
         <f:variable name="headerPos" value="" />
         <f:if condition="{options.align}">
             <f:then><f:variable name="headerPos" value="{options.align}" /></f:then>
@@ -91,21 +91,18 @@
             </f:if></f:else>
         </f:if>
 
-        <f:variable name="cardTextAlignClass" value="text-start" />
-        <f:variable name="cardButtonAlignClass" value="text-start" />
+        <f:variable name="gridJustifyClass" value="" />
         <f:if condition="{headerPos} == 'center' || {headerPos} == '2' || {headerPos} == 'middle' || {headerPos} == 'center-align'">
-            <f:variable name="cardTextAlignClass" value="text-center align-items-center" />
-            <f:variable name="cardButtonAlignClass" value="text-center" />
+            <f:variable name="gridJustifyClass" value="justify-content-center" />
         </f:if>
         <f:if condition="{headerPos} == 'right' || {headerPos} == '3' || {headerPos} == 'end' || {headerPos} == 'right-align'">
-            <f:variable name="cardTextAlignClass" value="text-end align-items-end" />
-            <f:variable name="cardButtonAlignClass" value="text-end" />
+            <f:variable name="gridJustifyClass" value="justify-content-end" />
         </f:if>
 
-        <div class="row {cardColumnsClass} g-4 commune-card-group">
+        <div class="row {cardColumnsClass} {gridJustifyClass} g-4 commune-card-group">
             <f:for each="{records}" as="record">
                 <div class="col">
-                    <div class="card h-100 shadow-sm border-0 commune-card {cardTextAlignClass}">
+                    <div class="card h-100 shadow-sm border-0 commune-card">
                         <f:if condition="{record.image.0}">
                             <f:variable name="image" value="{record.image.0}" />
                             <f:if condition="{image.alternative}">
@@ -125,7 +122,7 @@
                             </f:if>
                         </f:if>
 
-                        <div class="card-body d-flex flex-column {cardTextAlignClass}">
+                        <div class="card-body d-flex flex-column">
                             <h3 class="card-title h5 text-primary-commune">{record.data.header}</h3>
                             <f:if condition="{record.data.subheader}">
                                 <h4 class="card-subtitle mb-2 text-muted h6">{record.data.subheader}</h4>
@@ -137,7 +134,7 @@
                             </f:if>
 
                             <f:if condition="{record.data.link}">
-                                <div class="mt-auto w-100 {cardButtonAlignClass}">
+                                <div class="mt-auto w-100">
                                     <f:variable name="cardAriaLabel" value="{rgaa:a11y.ariaLabel(action: 'En savoir plus sur', context: record.data.header)}" />
                                     <f:link.typolink parameter="{record.data.link}"
                                                      class="btn btn-outline-primary btn-sm stretched-link"
