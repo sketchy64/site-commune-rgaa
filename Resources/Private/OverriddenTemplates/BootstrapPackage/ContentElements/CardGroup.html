@@ -102,30 +102,34 @@
         <div class="row {cardColumnsClass} {gridJustifyClass} g-4 commune-card-group">
             <f:for each="{records}" as="record">
                 <div class="col">
-                    <div class="card h-100 shadow-sm border-0 commune-card">
+                    <div class="card h-100 shadow-sm border-0 commune-card commune-card-person">
                         <f:if condition="{record.image.0}">
                             <f:variable name="image" value="{record.image.0}" />
-                            <f:if condition="{image.alternative}">
-                                <f:then>
-                                    <f:image image="{image}"
-                                             class="card-img-top"
-                                             title="{image.title}"
-                                             alt="{image.alternative}" />
-                                </f:then>
-                                <f:else>
-                                    <f:image image="{image}"
-                                             class="card-img-top"
-                                             title="{image.title}"
-                                             alt=""
-                                             additionalAttributes="{role: 'presentation', aria-hidden: 'true'}" />
-                                </f:else>
-                            </f:if>
+                            <div class="commune-card-header text-center pt-3 pb-1">
+                                <div class="commune-card-avatar-wrapper mx-auto">
+                                    <f:if condition="{image.alternative}">
+                                        <f:then>
+                                            <f:image image="{image}"
+                                                     class="card-img-top card-img-circle card-img-avatar"
+                                                     title="{image.title}"
+                                                     alt="{image.alternative}" />
+                                        </f:then>
+                                        <f:else>
+                                            <f:image image="{image}"
+                                                     class="card-img-top card-img-circle card-img-avatar"
+                                                     title="{image.title}"
+                                                     alt=""
+                                                     additionalAttributes="{role: 'presentation', aria-hidden: 'true'}" />
+                                        </f:else>
+                                    </f:if>
+                                </div>
+                            </div>
                         </f:if>
 
-                        <div class="card-body d-flex flex-column">
+                        <div class="card-body d-flex flex-column text-center">
                             <h3 class="card-title h5 text-primary-commune">{record.data.header}</h3>
                             <f:if condition="{record.data.subheader}">
-                                <h4 class="card-subtitle mb-2 text-muted h6">{record.data.subheader}</h4>
+                                <h4 class="card-subtitle mb-2 h6">{record.data.subheader}</h4>
                             </f:if>
                             <f:if condition="{record.data.bodytext}">
                                 <div class="card-text mb-3">
@@ -134,10 +138,10 @@
                             </f:if>
 
                             <f:if condition="{record.data.link}">
-                                <div class="mt-auto w-100">
+                                <div class="mt-auto w-100 pt-2">
                                     <f:variable name="cardAriaLabel" value="{rgaa:a11y.ariaLabel(action: 'En savoir plus sur', context: record.data.header)}" />
                                     <f:link.typolink parameter="{record.data.link}"
-                                                     class="btn btn-outline-primary btn-sm stretched-link"
+                                                     class="btn btn-outline-primary btn-sm stretched-link commune-card-btn"
                                                      additionalAttributes="{aria-label: cardAriaLabel}">
                                         <f:if condition="{record.data.link_title}">
                                             <f:then>{record.data.link_title}</f:then>
