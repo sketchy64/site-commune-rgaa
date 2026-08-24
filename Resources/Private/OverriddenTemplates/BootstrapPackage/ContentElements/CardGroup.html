@@ -5,7 +5,7 @@
 
 <!--
     OVERRIDE: EXT:bootstrap_package/Resources/Private/Templates/ContentElements/CardGroup.html
-    REASON: RGAA 4.1 Compliance & Page-level Grid Alignment Fix for Card Group
+    REASON: News-style layout & RGAA 4.1 Compliance for Card Group / Trombinoscopes
     TARGET EXT VERSION: bootstrap_package ^14.0 || ^15.0 || ^16.0
 -->
 
@@ -98,55 +98,58 @@
         <f:if condition="{headerPos} == 'right' || {headerPos} == '3' || {headerPos} == 'end' || {headerPos} == 'right-align'">
             <f:variable name="gridJustifyClass" value="justify-content-end" />
         </f:if>
+
         <div class="row {cardColumnsClass} {gridJustifyClass} g-4 commune-card-group">
             <f:for each="{records}" as="record">
                 <div class="col">
-                    <div class="card h-100 shadow-sm border-0 commune-card">
+                    <article class="commune-news-card card h-100 border-0 shadow-sm overflow-hidden d-flex flex-column commune-card">
                         <f:if condition="{record.image.0}">
                             <f:variable name="image" value="{record.image.0}" />
-                            <f:if condition="{image.alternative}">
-                                <f:then>
-                                    <f:image image="{image}"
-                                             class="card-img-top"
-                                             title="{image.title}"
-                                             alt="{image.alternative}" />
-                                </f:then>
-                                <f:else>
-                                    <f:image image="{image}"
-                                             class="card-img-top"
-                                             title="{image.title}"
-                                             alt=""
-                                             additionalAttributes="{role: 'presentation', aria-hidden: 'true'}" />
-                                </f:else>
-                            </f:if>
+                            <div class="news-media-wrapper position-relative">
+                                <f:if condition="{image.alternative}">
+                                    <f:then>
+                                        <f:image image="{image}"
+                                                 class="card-img-top news-card-image"
+                                                 title="{image.title}"
+                                                 alt="{image.alternative}" />
+                                    </f:then>
+                                    <f:else>
+                                        <f:image image="{image}"
+                                                 class="card-img-top news-card-image"
+                                                 title="{image.title}"
+                                                 alt=""
+                                                 additionalAttributes="{role: 'presentation', aria-hidden: 'true'}" />
+                                    </f:else>
+                                </f:if>
+                            </div>
                         </f:if>
 
-                        <div class="card-body d-flex flex-column">
-                            <h3 class="card-title h5 text-primary-commune">{record.data.header}</h3>
+                        <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                            <h3 class="card-title h5 mb-2 fw-bold text-primary-commune">{record.data.header}</h3>
                             <f:if condition="{record.data.subheader}">
-                                <h4 class="card-subtitle mb-2 text-muted h6">{record.data.subheader}</h4>
+                                <h4 class="card-subtitle mb-3 text-muted h6">{record.data.subheader}</h4>
                             </f:if>
                             <f:if condition="{record.data.bodytext}">
-                                <div class="card-text mb-3">
+                                <div class="card-text text-muted mb-4 flex-grow-1">
                                     <f:format.html>{record.data.bodytext}</f:format.html>
                                 </div>
                             </f:if>
 
                             <f:if condition="{record.data.link}">
-                                <div class="mt-auto w-100">
+                                <div class="mt-auto pt-3 border-top">
                                     <f:variable name="cardAriaLabel" value="{rgaa:a11y.ariaLabel(action: 'En savoir plus sur', context: record.data.header)}" />
                                     <f:link.typolink parameter="{record.data.link}"
-                                                     class="btn btn-outline-primary btn-sm stretched-link"
+                                                     class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-2 stretched-link"
                                                      additionalAttributes="{aria-label: cardAriaLabel}">
-                                        <f:if condition="{record.data.link_title}">
-                                            <f:then>{record.data.link_title}</f:then>
-                                            <f:else>En savoir plus</f:else>
-                                        </f:if>
+                                        <span><f:if condition="{record.data.link_title}"><f:then>{record.data.link_title}</f:then><f:else>En savoir plus</f:else></f:if></span>
+                                        <svg class="news-btn-icon flex-shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                                        </svg>
                                     </f:link.typolink>
                                 </div>
                             </f:if>
                         </div>
-                    </div>
+                    </article>
                 </div>
             </f:for>
         </div>

@@ -4063,3 +4063,51 @@ article ul.pagination>li::before,
   margin-top: 1.5rem;
   margin-bottom: 2rem;
 }
+
+.commune-card-group .commune-card,
+.ce-card_group .card,
+.frame-type-card_group .card {
+  background-color: #ffffff;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 15px rgba(0, 112, 58, 0.06) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  border: 1px solid var(--commune-border, #e2e8f0) !important;
+  overflow: hidden;
+}
+
+.commune-card-group .commune-card:hover,
+.ce-card_group .card:hover,
+.frame-type-card_group .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 112, 58, 0.14) !important;
+  border-color: rgba(0, 112, 58, 0.25) !important;
+}
+
+.commune-card-group .card-body,
+.ce-card_group .card-body,
+.frame-type-card_group .card-body {
+  background-color: #ffffff !important;
+  padding: 1.5rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border-left: 3px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.commune-card-group .commune-card:hover .card-body,
+.ce-card_group .card:hover .card-body {
+  border-left-color: var(--sauveterre-green, #00703a);
+}
+
+.commune-card-group .card-img-top,
+.ce-card_group .card-img-top,
+.frame-type-card_group .card-img-top {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center top;
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
