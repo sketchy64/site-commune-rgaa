@@ -1,0 +1,34 @@
+/**
+ * Site Commune RGAA - Jeu de couleurs 2 (Bleu Océan & Sable)
+ * Couleurs : Bleu Océan (#005B94), Sable Doré (#E5A93C), Bleu Ciel (#0284C7)
+ * Conforme RGAA 4.1.2 / WCAG 2.1 AA
+ */
+
+:root {
+  /* Palette institutionnelle 2 */
+  --commune-primary: #005b94;
+  --commune-primary-dark: #003b63;
+  --commune-primary-light: #e1f0f8;
+
+  --commune-secondary: #e5a93c;
+  --commune-secondary-dark: #c48b26;
+  --commune-secondary-light: #fdf5e6;
+
+  --commune-accent: #0284c7;
+  --commune-accent-dark: #0369a1;
+  --commune-accent-light: #e0f2fe;
+
+  --commune-text-main: #212529;
+  --commune-text-muted: #595959;
+  --commune-bg-light: #f4f5f7;
+  --commune-border: #e2e8f0;
+
+  /* Focus accessible renforcé (RGAA 10.7) */
+  --commune-focus-color: #003b63;
+  --commune-focus-outline: 3px solid var(--commune-secondary);
+  --commune-focus-offset: 3px;
+
+  /* Typographie */
+  --commune-font-title: 'Montserrat', 'Century Gothic', -apple-system, BlinkMacSystemFont, sans-serif;
+  --commune-font-body: 'Outfit', 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+}

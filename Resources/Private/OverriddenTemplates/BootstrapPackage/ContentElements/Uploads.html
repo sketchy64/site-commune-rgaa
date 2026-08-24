@@ -16,7 +16,7 @@
                            {f:if(condition: data.target, then: 'target="{data.target}" rel="noopener noreferrer"')}
                            aria-label="{rgaa:a11y.ariaLabel(action: 'Télécharger', context: '{file.properties.title -> f:or(alternative: file.name)}', extra: '{file.extension -> f:format.case(mode: \'upper\')}, {file.size -> f:format.bytes(decimals: 1)}')}">
                             
-                            <!-- Vignette miniature ou Pictogramme vectoriel moderne Sauveterre -->
+                            <!-- Vignette miniature ou Pictogramme vectoriel moderne -->
                             <div class="commune-upload-visual flex-shrink-0" aria-hidden="true">
                                 <f:if condition="{data.uploads_type} == 2">
                                     <f:then>

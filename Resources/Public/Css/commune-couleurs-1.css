@@ -1,0 +1,34 @@
+/**
+ * Site Commune RGAA - Jeu de couleurs 1 (Vert Institutionnel & Or)
+ * Couleurs : Vert (#00703A), Or (#F5B21E), Bleu Ciel (#25A1D9)
+ * Conforme RGAA 4.1.2 / WCAG 2.1 AA
+ */
+
+:root {
+  /* Palette institutionnelle 1 */
+  --commune-primary: #00703a;
+  --commune-primary-dark: #00552c;
+  --commune-primary-light: #e8f5e9;
+
+  --commune-secondary: #f5b21e;
+  --commune-secondary-dark: #cf9619;
+  --commune-secondary-light: #fef7e6;
+
+  --commune-accent: #25a1d9;
+  --commune-accent-dark: #1d7daa;
+  --commune-accent-light: #e6f6fd;
+
+  --commune-text-main: #212529;
+  --commune-text-muted: #595959;
+  --commune-bg-light: #f4f5f7;
+  --commune-border: #e2e8f0;
+
+  /* Focus accessible renforcé (RGAA 10.7) */
+  --commune-focus-color: #00552c;
+  --commune-focus-outline: 3px solid var(--commune-secondary);
+  --commune-focus-offset: 3px;
+
+  /* Typographie */
+  --commune-font-title: 'Montserrat', 'Century Gothic', -apple-system, BlinkMacSystemFont, sans-serif;
+  --commune-font-body: 'Outfit', 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+}

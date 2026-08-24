@@ -1,0 +1,34 @@
+/**
+ * Site Commune RGAA - Jeu de couleurs 3 (Ardoise Montagne & Terracotta)
+ * Couleurs : Ardoise Bleutée (#2D3748), Ocre / Terracotta (#C05621), Vert Sapin (#1E4D2B)
+ * Conforme RGAA 4.1.2 / WCAG 2.1 AA
+ */
+
+:root {
+  /* Palette institutionnelle 3 */
+  --commune-primary: #2d3748;
+  --commune-primary-dark: #1a202c;
+  --commune-primary-light: #edf2f7;
+
+  --commune-secondary: #c05621;
+  --commune-secondary-dark: #9c4221;
+  --commune-secondary-light: #feebc8;
+
+  --commune-accent: #1e4d2b;
+  --commune-accent-dark: #14351d;
+  --commune-accent-light: #e6f4ea;
+
+  --commune-text-main: #212529;
+  --commune-text-muted: #595959;
+  --commune-bg-light: #f4f5f7;
+  --commune-border: #e2e8f0;
+
+  /* Focus accessible renforcé (RGAA 10.7) */
+  --commune-focus-color: #1a202c;
+  --commune-focus-outline: 3px solid var(--commune-secondary);
+  --commune-focus-offset: 3px;
+
+  /* Typographie */
+  --commune-font-title: 'Montserrat', 'Century Gothic', -apple-system, BlinkMacSystemFont, sans-serif;
+  --commune-font-body: 'Outfit', 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+}

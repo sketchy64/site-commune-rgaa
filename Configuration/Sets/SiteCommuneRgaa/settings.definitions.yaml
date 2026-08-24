@@ -116,15 +116,24 @@ settings:
   # ============================================================================
   commune.theme_css:
     label: 'Thème graphique du site'
-    description: 'Sélectionnez la charte graphique à appliquer (Thème 1 Sauveterre, Thème 2 Océan, Thème 3 Pyrénées, etc.). Choisissez vide pour Bootstrap Package standard.'
+    description: 'Sélectionnez le style graphique (ex: Thème 1 - Style classique avec arrondis et ombres). Choisissez vide pour Bootstrap Package standard.'
     category: commune_theme
     type: string
     default: 'EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css'
     enum:
       - 'EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css'
-      - 'EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-2.css'
-      - 'EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-3.css'
       - ''
+
+  commune.color_scheme_css:
+    label: 'Jeu de couleurs institutionnel'
+    description: 'Sélectionnez la palette de couleurs à appliquer (Jeux de couleurs 1 Vert/Or, 2 Océan/Sable, 3 Montagne/Terracotta, etc.).'
+    category: commune_theme
+    type: string
+    default: 'EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css'
+    enum:
+      - 'EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css'
+      - 'EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-2.css'
+      - 'EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-3.css'
 
   # ============================================================================
   # 2. IDENTITÉ & MARQUE : LOGO & EN-TÊTE

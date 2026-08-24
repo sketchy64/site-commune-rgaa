@@ -152,6 +152,14 @@ page {
         ifEmpty.ifEmpty.value = {$commune.theme_css}
       }
 
+      # Jeu de couleurs sélectionné
+      communeColorScheme = TEXT
+      communeColorScheme {
+        data = site:settings:commune.color_scheme_css
+        ifEmpty.data = site:settings.commune.color_scheme_css
+        ifEmpty.ifEmpty.value = {$commune.color_scheme_css}
+      }
+
       # Logo et personnalisation de marque
       communeLogoFile = TEXT
       communeLogoFile.value = {$commune.logo_file}

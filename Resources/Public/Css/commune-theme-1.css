@@ -1,45 +1,12 @@
 /**
- * Site Commune RGAA - Thème Sauveterre
- * Inspiré de la charte graphique de la Ville de Sauveterre (https://mairiesauveterre.fr/fr)
- * Couleurs : Vert (#00703A), Or (#F5B21E), Bleu Ciel (#25A1D9)
+ * Site Commune RGAA - Thème 1 (Style Classique : Arrondis, Ombres & Dégradés)
+ * Définition du style graphique (les palettes de couleurs sont gérées dans commune-couleurs-*.css)
  * Conforme RGAA 4.1.2 / WCAG 2.1 AA
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Outfit:wght@400;500;600;700;800&display=swap');
 
-:root {
-  /* Palette officielle Sauveterre */
-  --sauveterre-green: #00703a;
-  --sauveterre-green-dark: #00552c;
-  --sauveterre-green-light: #e8f5e9;
-  --sauveterre-gold: #f5b21e;
-  --sauveterre-gold-dark: #cf9619;
-  --sauveterre-gold-light: #fef7e6;
-  --sauveterre-blue: #25a1d9;
-  --sauveterre-blue-dark: #1d7daa;
-  --sauveterre-blue-light: #e6f6fd;
-
-  /* Variables institutionnelles standard */
-  --commune-primary: var(--sauveterre-green);
-  --commune-primary-dark: var(--sauveterre-green-dark);
-  --commune-primary-light: var(--sauveterre-green-light);
-  --commune-secondary: var(--sauveterre-gold);
-  --commune-accent: var(--sauveterre-blue);
-
-  --commune-text-main: #212529;
-  --commune-text-muted: #595959;
-  --commune-bg-light: #f4f5f7;
-  --commune-border: #e2e8f0;
-
-  /* Focus accessible renforcé (RGAA 10.7) */
-  --commune-focus-color: #00552c;
-  --commune-focus-outline: 3px solid var(--sauveterre-gold);
-  --commune-focus-offset: 3px;
-
-  /* Typographie */
-  --commune-font-title: 'Montserrat', 'Century Gothic', -apple-system, BlinkMacSystemFont, sans-serif;
-  --commune-font-body: 'Outfit', 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
-}
+/* Remarque : Les variables de couleurs (:root) sont importées via la feuille de style de couleurs active (commune-couleurs-*.css) */
 
 /* ==============================================================================
    Typographie & Styles Généraux
@@ -85,7 +52,7 @@ a:focus {
 }
 
 /* ==============================================================================
-   En-tête Institutionnel (Header Sauveterre)
+   En-tête Institutionnel (Header Institutionnel)
    ============================================================================== */
 .commune-header {
   background-color: #ffffff;
@@ -99,7 +66,7 @@ a:focus {
 }
 
 .commune-title {
-  color: var(--sauveterre-green);
+  color: var(--commune-primary);
   font-family: var(--commune-font-title);
   font-size: 1.55rem;
   font-weight: 800;
@@ -150,13 +117,13 @@ a:focus {
 }
 
 .commune-search-form .form-control:focus {
-  border-color: var(--sauveterre-green);
+  border-color: var(--commune-primary);
   box-shadow: 0 0 0 3px rgba(0, 112, 58, 0.2);
 }
 
 .commune-search-form .btn-primary {
-  background-color: var(--sauveterre-green);
-  border-color: var(--sauveterre-green);
+  background-color: var(--commune-primary);
+  border-color: var(--commune-primary);
   border-radius: 0 6px 6px 0;
   font-weight: 600;
   color: #ffffff;
@@ -165,15 +132,15 @@ a:focus {
 
 .commune-search-form .btn-primary:hover,
 .commune-search-form .btn-primary:focus {
-  background-color: var(--sauveterre-green-dark);
-  border-color: var(--sauveterre-green-dark);
+  background-color: var(--commune-primary-dark);
+  border-color: var(--commune-primary-dark);
 }
 
 /* ==============================================================================
-   Navigation Principale (Bandeau Vert Sauveterre)
+   Navigation Principale (Bandeau de Navigation Principal)
    ============================================================================== */
 #main-navigation {
-  background-color: var(--sauveterre-green) !important;
+  background-color: var(--commune-primary) !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
@@ -196,15 +163,15 @@ a:focus {
 
 #main-navigation .nav-link:hover,
 #main-navigation .nav-link:focus {
-  background-color: var(--sauveterre-green-dark);
-  border-bottom-color: var(--sauveterre-gold);
+  background-color: var(--commune-primary-dark);
+  border-bottom-color: var(--commune-secondary);
   color: #ffffff !important;
 }
 
 #main-navigation .nav-link.active,
 #main-navigation .nav-item.active .nav-link {
-  background-color: var(--sauveterre-green-dark);
-  border-bottom-color: var(--sauveterre-gold);
+  background-color: var(--commune-primary-dark);
+  border-bottom-color: var(--commune-secondary);
   color: #ffffff !important;
 }
 
@@ -212,7 +179,7 @@ a:focus {
 #main-navigation .dropdown-menu {
   background-color: #ffffff;
   border: 1px solid var(--commune-border);
-  border-top: 4px solid var(--sauveterre-green);
+  border-top: 4px solid var(--commune-primary);
   border-radius: 0 0 8px 8px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
   padding: 0.5rem 0;
@@ -228,8 +195,8 @@ a:focus {
 
 #main-navigation .dropdown-item:hover,
 #main-navigation .dropdown-item:focus {
-  background-color: var(--sauveterre-green-light);
-  color: var(--sauveterre-green-dark);
+  background-color: var(--commune-primary-light);
+  color: var(--commune-primary-dark);
   padding-left: 1.5rem;
 }
 
@@ -247,7 +214,7 @@ a:focus {
     width: 100% !important;
     background-color: #ffffff !important;
     border: none !important;
-    border-top: 4px solid var(--sauveterre-green) !important;
+    border-top: 4px solid var(--commune-primary) !important;
     border-radius: 0 0 10px 10px !important;
     box-shadow: 0 16px 36px rgba(0, 0, 0, 0.14) !important;
     margin-top: 0 !important;
@@ -273,7 +240,7 @@ a:focus {
     left: 0;
     width: 35px;
     height: 2px;
-    background-color: var(--sauveterre-gold);
+    background-color: var(--commune-secondary);
   }
 
   .megamenu-category-title,
@@ -281,7 +248,7 @@ a:focus {
     font-family: var(--commune-font-title);
     font-weight: 700 !important;
     font-size: 1.05rem !important;
-    color: var(--sauveterre-green-dark, #00552c) !important;
+    color: var(--commune-primary-dark, #00552c) !important;
     text-decoration: none !important;
     display: inline-block;
     transition: color 0.2s ease;
@@ -291,7 +258,7 @@ a:focus {
   .megamenu-category-title:focus,
   .megamenu-category-link:hover,
   .megamenu-category-link:focus {
-    color: var(--sauveterre-green, #00703a) !important;
+    color: var(--commune-primary, #00703a) !important;
     text-decoration: underline !important;
   }
 
@@ -319,7 +286,7 @@ a:focus {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: var(--sauveterre-gold);
+    background-color: var(--commune-secondary);
     margin-right: 0.6rem;
     flex-shrink: 0;
     opacity: 0.7;
@@ -329,8 +296,8 @@ a:focus {
   .megamenu-sublink:hover,
   .megamenu-sublink:focus,
   .megamenu-sublink.active {
-    background-color: var(--sauveterre-green-light);
-    color: var(--sauveterre-green-dark) !important;
+    background-color: var(--commune-primary-light);
+    color: var(--commune-primary-dark) !important;
     padding-left: 0.85rem !important;
   }
 
@@ -390,7 +357,7 @@ a:focus {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: var(--sauveterre-gold, #f5b21e);
+    background-color: var(--commune-secondary, #f5b21e);
     margin-right: 0.65rem;
     flex-shrink: 0;
   }
@@ -436,13 +403,13 @@ a:focus {
   .megamenu-sublink:hover::before,
   .megamenu-sublink:focus::before,
   .megamenu-sublink.active::before {
-    border-color: var(--sauveterre-gold, #f5b21e);
-    background-color: var(--sauveterre-gold, #f5b21e);
+    border-color: var(--commune-secondary, #f5b21e);
+    background-color: var(--commune-secondary, #f5b21e);
   }
 }
 
 /* ==============================================================================
-   Boutons & Éléments d'Action (Sauveterre Style)
+   Boutons & Éléments d'Action (Style Institutionnel)
    ============================================================================== */
 .btn {
   font-family: var(--commune-font-title);
@@ -454,23 +421,23 @@ a:focus {
 }
 
 .btn-primary {
-  background-color: var(--sauveterre-green) !important;
-  border-color: var(--sauveterre-green) !important;
+  background-color: var(--commune-primary) !important;
+  border-color: var(--commune-primary) !important;
   color: #ffffff !important;
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-  background-color: var(--sauveterre-green-dark) !important;
-  border-color: var(--sauveterre-green-dark) !important;
+  background-color: var(--commune-primary-dark) !important;
+  border-color: var(--commune-primary-dark) !important;
   transform: translateY(-1px);
   box-shadow: 0 4px 10px rgba(0, 112, 58, 0.25);
 }
 
 .btn-secondary,
 .btn-warning {
-  background-color: var(--sauveterre-gold) !important;
-  border-color: var(--sauveterre-gold) !important;
+  background-color: var(--commune-secondary) !important;
+  border-color: var(--commune-secondary) !important;
   color: #212529 !important;
   font-weight: 700;
 }
@@ -479,37 +446,37 @@ a:focus {
 .btn-secondary:focus,
 .btn-warning:hover,
 .btn-warning:focus {
-  background-color: var(--sauveterre-gold-dark) !important;
-  border-color: var(--sauveterre-gold-dark) !important;
+  background-color: var(--commune-secondary-dark) !important;
+  border-color: var(--commune-secondary-dark) !important;
   color: #000000 !important;
 }
 
 .btn-info {
-  background-color: var(--sauveterre-blue) !important;
-  border-color: var(--sauveterre-blue) !important;
+  background-color: var(--commune-accent) !important;
+  border-color: var(--commune-accent) !important;
   color: #ffffff !important;
 }
 
 .btn-info:hover,
 .btn-info:focus {
-  background-color: var(--sauveterre-blue-dark) !important;
-  border-color: var(--sauveterre-blue-dark) !important;
+  background-color: var(--commune-accent-dark) !important;
+  border-color: var(--commune-accent-dark) !important;
 }
 
 .btn-outline-primary {
-  border: 2px solid var(--sauveterre-green) !important;
-  color: var(--sauveterre-green) !important;
+  border: 2px solid var(--commune-primary) !important;
+  color: var(--commune-primary) !important;
   background-color: transparent;
 }
 
 .btn-outline-primary:hover,
 .btn-outline-primary:focus {
-  background-color: var(--sauveterre-green) !important;
+  background-color: var(--commune-primary) !important;
   color: #ffffff !important;
 }
 
 /* ==============================================================================
-   Titres de Section & Titres H1 de Pages (Style harmonisé Sauveterre)
+   Titres de Section & Titres H1 de Pages (Style harmonisé Classique)
    ============================================================================== */
 .commune-section-title,
 .page-title,
@@ -537,7 +504,7 @@ h1.page-title::after,
   left: 0;
   width: 50px;
   height: 4px;
-  background-color: var(--sauveterre-green);
+  background-color: var(--commune-primary);
   border-radius: 2px;
 }
 
@@ -551,7 +518,7 @@ h1.page-title::before,
   left: 55px;
   width: 12px;
   height: 4px;
-  background-color: var(--sauveterre-gold);
+  background-color: var(--commune-secondary);
   border-radius: 2px;
 }
 
@@ -593,7 +560,7 @@ h1.page-title::before,
 
 .commune-quickaccess-card:hover {
   transform: translateY(-4px);
-  border-color: var(--sauveterre-green);
+  border-color: var(--commune-primary);
   box-shadow: 0 10px 20px rgba(0, 112, 58, 0.12);
 }
 
@@ -604,15 +571,15 @@ h1.page-title::before,
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: var(--sauveterre-green-light);
-  color: var(--sauveterre-green);
+  background-color: var(--commune-primary-light);
+  color: var(--commune-primary);
   font-size: 1.6rem;
   margin-bottom: 1rem;
   transition: all 0.25s ease;
 }
 
 .commune-quickaccess-card:hover .commune-quickaccess-icon {
-  background-color: var(--sauveterre-green);
+  background-color: var(--commune-primary);
   color: #ffffff;
   transform: scale(1.08);
 }
@@ -638,7 +605,7 @@ h1.page-title::before,
 }
 
 .card .badge-category {
-  background-color: var(--sauveterre-green);
+  background-color: var(--commune-primary);
   color: #ffffff;
   font-family: var(--commune-font-title);
   font-weight: 600;
@@ -717,7 +684,7 @@ h1.page-title::before,
 
 .commune-sidebar-menu .level-1-item:hover {
   background-color: var(--commune-primary-light, #e8f5e9);
-  border-left-color: var(--sauveterre-gold, #f5b21e);
+  border-left-color: var(--commune-secondary, #f5b21e);
 }
 
 .commune-sidebar-menu .level-1-item:hover>.level-1-link {
@@ -751,7 +718,7 @@ h1.page-title::before,
   font-weight: 700;
   font-size: 1.25rem;
   line-height: 1;
-  color: var(--sauveterre-gold, #f5b21e) !important;
+  color: var(--commune-secondary, #f5b21e) !important;
   margin-left: auto !important;
   margin-right: 0.75rem !important;
   flex-shrink: 0 !important;
@@ -762,7 +729,7 @@ h1.page-title::before,
 .commune-sidebar-menu .level-1-item.has-children.active-parent .sidebar-title-text::after,
 .commune-sidebar-menu .level-1-item.has-children.active-page .sidebar-title-text::after {
   content: "−";
-  color: var(--sauveterre-gold, #f5b21e) !important;
+  color: var(--commune-secondary, #f5b21e) !important;
 }
 
 /* --- Niveau 2 (Sous-menu imbriqué / sous-rubriques) --- */
@@ -801,7 +768,7 @@ h1.page-title::before,
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: var(--sauveterre-gold, #f5b21e) !important;
+  background-color: var(--commune-secondary, #f5b21e) !important;
   opacity: 0.85;
   margin-right: 0.65rem;
   flex-shrink: 0;
@@ -813,7 +780,7 @@ h1.page-title::before,
 .commune-sidebar-submenu .level-2-item.active-parent .level-2-link::before {
   opacity: 1;
   transform: scale(1.25);
-  background-color: var(--sauveterre-gold, #f5b21e) !important;
+  background-color: var(--commune-secondary, #f5b21e) !important;
 }
 
 .sidebar-item-text {
@@ -897,8 +864,8 @@ h1.page-title::before,
 
 .commune-sidebar-subsubmenu .level-3-item:hover .level-3-link::before,
 .commune-sidebar-subsubmenu .level-3-item.active-page .level-3-link::before {
-  border-color: var(--sauveterre-gold, #f5b21e);
-  background-color: var(--sauveterre-gold, #f5b21e);
+  border-color: var(--commune-secondary, #f5b21e);
+  background-color: var(--commune-secondary, #f5b21e);
 }
 
 .commune-sidebar-subsubmenu .level-3-item.active-page {
@@ -1106,12 +1073,12 @@ h1.page-title::before,
 }
 
 /* ==============================================================================
-   Pied de Page Institutionnel (Footer Vert Sauveterre)
+   Pied de Page Institutionnel (Footer Vert Classique)
    ============================================================================== */
 .commune-footer {
-  background-color: var(--sauveterre-green-dark) !important;
+  background-color: var(--commune-primary-dark) !important;
   color: #ffffff;
-  border-top: 4px solid var(--sauveterre-gold);
+  border-top: 4px solid var(--commune-secondary);
 }
 
 .commune-footer h2,
@@ -1134,7 +1101,7 @@ h1.page-title::before,
 
 .commune-footer a:hover,
 .commune-footer a:focus {
-  color: var(--sauveterre-gold) !important;
+  color: var(--commune-secondary) !important;
   text-decoration: underline !important;
 }
 
@@ -1144,12 +1111,12 @@ h1.page-title::before,
 }
 
 .commune-footer .emergency-list li strong {
-  color: var(--sauveterre-gold);
+  color: var(--commune-secondary);
   font-size: 1.05rem;
 }
 
 .commune-footer .badge-rgaa {
-  background-color: var(--sauveterre-gold) !important;
+  background-color: var(--commune-secondary) !important;
   color: #212529 !important;
   font-weight: 700;
   font-size: 0.85rem;
@@ -1161,27 +1128,27 @@ h1.page-title::before,
    Accessibilité RGAA & Focus Outline
    ============================================================================== */
 :focus-visible {
-  outline: 3px solid var(--sauveterre-gold) !important;
+  outline: 3px solid var(--commune-secondary) !important;
   outline-offset: 3px !important;
 }
 
 .skip-links a {
-  background: var(--sauveterre-green-dark);
+  background: var(--commune-primary-dark);
   color: #ffffff;
   padding: 0.75rem 1.25rem;
   font-weight: 700;
-  border: 2px solid var(--sauveterre-gold);
+  border: 2px solid var(--commune-secondary);
   border-radius: 0 0 6px 6px;
 }
 
 /* ==============================================================================
-   Surcouche Actualités (EXT:news) - Sauveterre Style & RGAA
+   Surcouche Actualités (EXT:news) - Style Institutionnel & RGAA
    ============================================================================== */
 /* ==============================================================================
-   Surcouche Actualités (EXT:news) - Sauveterre Style & RGAA
+   Surcouche Actualités (EXT:news) - Style Institutionnel & RGAA
    ============================================================================== */
 
-/* 1. Carte d'actualité & Card-Body (Style Sauveterre) */
+/* 1. Carte d'actualité & Card-Body (Style Classique) */
 .commune-news-card,
 .commune-news-card-horizontal,
 .commune-carousel-slide {
@@ -1213,12 +1180,12 @@ h1.page-title::before,
 
 .commune-news-card:hover .card-body,
 .commune-news-card-horizontal:hover .card-body {
-  border-left-color: var(--sauveterre-green);
+  border-left-color: var(--commune-primary);
 }
 
 /* Badge de catégorie */
 .news-category-badge {
-  background-color: var(--sauveterre-green) !important;
+  background-color: var(--commune-primary) !important;
   color: #ffffff !important;
   font-family: var(--commune-font-title);
   font-weight: 700;
@@ -1232,13 +1199,13 @@ h1.page-title::before,
 
 /* Méta-données (Date & Icône) */
 .news-meta {
-  color: var(--sauveterre-green) !important;
+  color: var(--commune-primary) !important;
   font-weight: 600;
   font-size: 0.85rem;
 }
 
 .news-calendar-icon {
-  color: var(--sauveterre-green);
+  color: var(--commune-primary);
   vertical-align: -2px;
   flex-shrink: 0;
 }
@@ -1248,7 +1215,7 @@ h1.page-title::before,
 .commune-news-card-horizontal .card-title a,
 .commune-carousel-slide .card-title a,
 .news-title-link {
-  color: var(--sauveterre-green) !important;
+  color: var(--commune-primary) !important;
   text-decoration: none !important;
   font-family: var(--commune-font-title);
   font-weight: 700;
@@ -1264,7 +1231,7 @@ h1.page-title::before,
 .commune-carousel-slide .card-title a:hover,
 .news-title-link:hover,
 .news-title-link:focus-visible {
-  color: var(--sauveterre-green-dark) !important;
+  color: var(--commune-primary-dark) !important;
   text-decoration: underline !important;
   text-underline-offset: 3px;
 }
@@ -1282,8 +1249,8 @@ h1.page-title::before,
 .commune-news-card .btn-outline-primary,
 .commune-news-card-horizontal .btn-outline-primary,
 .commune-carousel-slide .btn-outline-primary {
-  color: var(--sauveterre-green) !important;
-  border-color: var(--sauveterre-green) !important;
+  color: var(--commune-primary) !important;
+  border-color: var(--commune-primary) !important;
   background-color: transparent !important;
   font-weight: 600;
   border-radius: 6px;
@@ -1297,8 +1264,8 @@ h1.page-title::before,
 .commune-news-card-horizontal:hover .btn-outline-primary,
 .commune-carousel-slide .btn-outline-primary:hover {
   color: #ffffff !important;
-  background-color: var(--sauveterre-green) !important;
-  border-color: var(--sauveterre-green) !important;
+  background-color: var(--commune-primary) !important;
+  border-color: var(--commune-primary) !important;
   box-shadow: 0 4px 12px rgba(0, 112, 58, 0.25);
 }
 
@@ -1368,7 +1335,7 @@ article.commune-news-card img,
 }
 
 .news-category-badge {
-  background-color: var(--sauveterre-green) !important;
+  background-color: var(--commune-primary) !important;
   color: #ffffff !important;
   font-family: var(--commune-font-title);
   font-weight: 700;
@@ -1408,21 +1375,21 @@ article.commune-news-card img,
 
 .commune-news-carousel .carousel-indicators-custom .carousel-indicator-bullet.active {
   width: 32px;
-  background-color: var(--sauveterre-green);
+  background-color: var(--commune-primary);
 }
 
 .commune-news-carousel .carousel-indicators-custom .carousel-indicator-bullet:hover:not(.active) {
-  background-color: var(--sauveterre-gold);
+  background-color: var(--commune-secondary);
 }
 
 .commune-news-carousel .carousel-controls-group .carousel-play-pause-btn {
   font-size: 0.8rem;
   border-color: rgba(0, 112, 58, 0.3);
-  color: var(--sauveterre-green);
+  color: var(--commune-primary);
 }
 
 .commune-news-carousel .carousel-controls-group .carousel-play-pause-btn:hover {
-  background-color: var(--sauveterre-green);
+  background-color: var(--commune-primary);
   color: #ffffff;
 }
 
@@ -1522,7 +1489,7 @@ article.commune-news-card img,
 }
 
 .news-detail-lightbox-link:hover .news-lightbox-badge {
-  background-color: var(--sauveterre-gold);
+  background-color: var(--commune-secondary);
   color: #ffffff;
   transform: scale(1.08);
 }
@@ -1531,7 +1498,7 @@ article.commune-news-card img,
   font-size: 1.15rem;
   line-height: 1.7;
   color: var(--commune-text-main);
-  border-left: 4px solid var(--sauveterre-green);
+  border-left: 4px solid var(--commune-primary);
   padding-left: 1.25rem;
 }
 
@@ -1541,19 +1508,19 @@ article.commune-news-card img,
 }
 
 .news-related-files {
-  border-left: 4px solid var(--sauveterre-gold) !important;
+  border-left: 4px solid var(--commune-secondary) !important;
 }
 
 /* Application mobile PWA & Notifications */
 .pwa-install-banner {
-  background-color: var(--sauveterre-green-light);
-  border: 1px solid var(--sauveterre-green);
+  background-color: var(--commune-primary-light);
+  border: 1px solid var(--commune-primary);
   border-radius: 8px;
   padding: 1rem;
 }
 
 /* ==============================================================================
-   Élément de contenu "Groupe d'icônes" (Bootstrap Package) - Style Sauveterre
+   Élément de contenu "Groupe d'icônes" (Bootstrap Package) - Style Classique
    Blocs avec bordure colorée à gauche, légère box-shadow, titres en majuscule
    Disposition équilibrée automatique par nombre d'éléments
    ============================================================================== */
@@ -1651,7 +1618,7 @@ a.icon-group-item {
   width: 100% !important;
   background-color: #ffffff !important;
   border: 1px solid var(--commune-border) !important;
-  border-left: 5px solid var(--sauveterre-green) !important;
+  border-left: 5px solid var(--commune-primary) !important;
   border-radius: 6px !important;
   padding: 1.2rem 1.4rem !important;
   text-align: left !important;
@@ -1671,9 +1638,9 @@ a.icon-group-item {
 .frame-type-icon_group a.icon-group-item:hover,
 a.icon-group-item:hover {
   transform: translateY(-4px) !important;
-  border-left-color: var(--sauveterre-gold) !important;
+  border-left-color: var(--commune-secondary) !important;
   box-shadow: 0 8px 22px rgba(0, 112, 58, 0.12) !important;
-  color: var(--sauveterre-green-dark) !important;
+  color: var(--commune-primary-dark) !important;
 }
 
 /* Icônes agrandies pour un impact visuel optimal */
@@ -1688,8 +1655,8 @@ a.icon-group-item:hover {
   height: 54px !important;
   min-width: 54px !important;
   border-radius: 50% !important;
-  background-color: var(--sauveterre-green-light) !important;
-  color: var(--sauveterre-green) !important;
+  background-color: var(--commune-primary-light) !important;
+  color: var(--commune-primary) !important;
   font-size: 1.65rem !important;
   margin: 0 !important;
   transition: all 0.25s ease !important;
@@ -1699,7 +1666,7 @@ a.icon-group-item:hover {
 .icon-group-item:hover .icon-group-item-icon,
 .icon-group-item:hover .icon,
 .icon-group-item:hover .icon-provider {
-  background-color: var(--sauveterre-green) !important;
+  background-color: var(--commune-primary) !important;
   color: #ffffff !important;
   transform: scale(1.08) !important;
 }
@@ -1729,7 +1696,7 @@ a.icon-group-item:hover {
 
 .frame-type-icon_group .icon-group-item:hover .icon-group-item-title,
 .icon-group-item:hover .icon-group-item-title {
-  color: var(--sauveterre-green-dark) !important;
+  color: var(--commune-primary-dark) !important;
 }
 
 .frame-type-icon_group .icon-group-item-text,
@@ -1800,7 +1767,7 @@ a.icon-group-item:hover {
 .edito-content-wrapper {
   background: linear-gradient(to right, #ffffff, var(--commune-bg-light));
   border: 1px solid var(--commune-border);
-  border-left: 5px solid var(--sauveterre-green);
+  border-left: 5px solid var(--commune-primary);
   border-radius: 8px;
   padding: 1.75rem 2rem;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
@@ -1856,8 +1823,8 @@ a.icon-group-item:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--sauveterre-green) !important;
-  border: 2px solid var(--sauveterre-gold) !important;
+  background-color: var(--commune-primary) !important;
+  border: 2px solid var(--commune-secondary) !important;
   color: #ffffff !important;
   z-index: 1050;
   opacity: 0;
@@ -1883,9 +1850,9 @@ a.icon-group-item:hover {
 
 .commune-back-to-top:hover,
 .commune-back-to-top:focus {
-  background-color: var(--sauveterre-green-dark) !important;
+  background-color: var(--commune-primary-dark) !important;
   border-color: #ffffff !important;
-  color: var(--sauveterre-gold) !important;
+  color: var(--commune-secondary) !important;
   transform: translateY(-4px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35) !important;
 }
@@ -1894,7 +1861,7 @@ a.icon-group-item:hover {
 .commune-back-to-top:focus svg,
 .commune-back-to-top:hover .back-to-top-arrow,
 .commune-back-to-top:focus .back-to-top-arrow {
-  stroke: var(--sauveterre-gold) !important;
+  stroke: var(--commune-secondary) !important;
 }
 
 /* ==============================================================================
@@ -1932,7 +1899,7 @@ a.icon-group-item:hover {
 
   .navbar-dark .navbar-toggler:focus,
   .navbar-toggler:focus {
-    outline: 3px solid var(--sauveterre-gold) !important;
+    outline: 3px solid var(--commune-secondary) !important;
     box-shadow: none !important;
   }
 
@@ -2038,28 +2005,28 @@ a.icon-group-item:hover {
 .frame-background-none .panel {
   background-color: #ffffff !important;
   border: 1px solid var(--commune-border) !important;
-  border-left: 6px solid var(--sauveterre-green) !important;
+  border-left: 6px solid var(--commune-primary) !important;
   color: var(--commune-text-main) !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
 }
 
 .frame-background-none .commune-panel a,
 .frame-background-none .panel a {
-  color: var(--sauveterre-green) !important;
+  color: var(--commune-primary) !important;
   text-decoration: underline !important;
   font-weight: 700 !important;
 }
 
 .frame-background-none .commune-panel a:hover,
 .frame-background-none .panel a:hover {
-  color: var(--sauveterre-green-dark) !important;
+  color: var(--commune-primary-dark) !important;
 }
 
 /* 2. frame-background-primary : Vert du template (#00703A) */
 .commune-emergency-alert-container .frame-background-primary,
 .frame-background-primary.frame-type-panel,
 .frame-type-panel.frame-background-primary {
-  background-color: var(--sauveterre-green) !important;
+  background-color: var(--commune-primary) !important;
   color: #ffffff !important;
 }
 
@@ -2101,7 +2068,7 @@ a.icon-group-item:hover {
 .commune-emergency-alert-container .frame-background-secondary,
 .frame-background-secondary.frame-type-panel,
 .frame-type-panel.frame-background-secondary {
-  background-color: var(--sauveterre-gold) !important;
+  background-color: var(--commune-secondary) !important;
   color: #1A1A1A !important;
 }
 
@@ -2235,7 +2202,7 @@ a.icon-group-item:hover {
 }
 
 /* ==============================================================================
-   1. Hiérarchie Typographique (Niveaux de Titres H1 à H6 - Thème 1 Sauveterre)
+   1. Hiérarchie Typographique (Niveaux de Titres H1 à H6 - Thème 1 Classique)
    ============================================================================== */
 .commune-page-content h1:not(.card-title):not(.card-subtitle),
 .ce-header h1:not(.card-title):not(.card-subtitle),
@@ -2263,7 +2230,7 @@ main h1:not(.commune-title):not(.page-title)::after {
   left: 0;
   width: 50px;
   height: 4px;
-  background-color: var(--sauveterre-green);
+  background-color: var(--commune-primary);
   border-radius: 2px;
 }
 
@@ -2277,7 +2244,7 @@ main h1:not(.commune-title):not(.page-title)::before {
   left: 55px;
   width: 12px;
   height: 4px;
-  background-color: var(--sauveterre-gold);
+  background-color: var(--commune-secondary);
   border-radius: 2px;
 }
 
@@ -2289,8 +2256,8 @@ main h2:not(.commune-section-title):not(.panel-title):not(.card-title):not(.card
   font-family: var(--commune-font-title);
   font-size: 1.45rem;
   font-weight: 700;
-  color: var(--sauveterre-green-dark);
-  border-left: 4px solid var(--sauveterre-gold);
+  color: var(--commune-primary-dark);
+  border-left: 4px solid var(--commune-secondary);
   padding-left: 0.65rem;
   margin-top: 1.75rem;
   margin-bottom: 1rem;
@@ -2336,7 +2303,7 @@ main h5:not(.card-title):not(.card-subtitle) {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--sauveterre-green-dark);
+  color: var(--commune-primary-dark);
   margin-top: 1rem;
   margin-bottom: 0.4rem;
 }
@@ -2351,7 +2318,7 @@ main h6:not(.card-title):not(.card-subtitle) {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--sauveterre-gold-dark);
+  color: var(--commune-secondary-dark);
   margin-top: 0.85rem;
   margin-bottom: 0.35rem;
 }
@@ -2386,7 +2353,7 @@ article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(
   position: absolute !important;
   left: 0 !important;
   top: 0 !important;
-  color: var(--sauveterre-gold) !important;
+  color: var(--commune-secondary) !important;
   font-size: 1.15rem !important;
   font-weight: 700 !important;
   line-height: 1.4 !important;
@@ -2397,7 +2364,7 @@ article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(
 article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"])>li:hover::before,
 .ce-bodytext ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(.ce-uploads):not(.commune-uploads-list):not(.file-list):not([class*="uploads"])>li:hover::before {
   transform: translateX(3px) !important;
-  color: var(--sauveterre-green) !important;
+  color: var(--commune-primary) !important;
 }
 
 /* Neutralisation explicite totale des puces pour toutes les listes de fichiers */
@@ -2425,7 +2392,7 @@ article ul:not(.nav):not(.pagination):not(.dropdown-menu):not(.list-inline):not(
 article ul ul,
 .ce-bodytext ul ul,
 .ce-textmedia ul ul {
-  border-left: 2px solid var(--sauveterre-green-light) !important;
+  border-left: 2px solid var(--commune-primary-light) !important;
   padding-left: 0.6rem !important;
   margin: 0.4rem 0 0.4rem 0.5rem !important;
 }
@@ -2435,7 +2402,7 @@ article ul ul>li::before,
 .ce-bodytext ul ul>li::before,
 .ce-textmedia ul ul>li::before {
   content: "•" !important;
-  color: var(--sauveterre-green) !important;
+  color: var(--commune-primary) !important;
   font-size: 1.1rem !important;
 }
 
@@ -2471,7 +2438,7 @@ article ol>li::before,
   top: 0.15rem !important;
   width: 1.45rem !important;
   height: 1.45rem !important;
-  background-color: var(--sauveterre-green) !important;
+  background-color: var(--commune-primary) !important;
   color: #ffffff !important;
   font-family: var(--commune-font-title) !important;
   font-size: 0.78rem !important;
@@ -2498,7 +2465,7 @@ table {
 
 .table thead th,
 table thead th {
-  background-color: var(--sauveterre-green-dark) !important;
+  background-color: var(--commune-primary-dark) !important;
   color: #ffffff !important;
   font-family: var(--commune-font-title);
   font-weight: 600;
@@ -2610,21 +2577,21 @@ table tbody tr:hover {
   color: var(--commune-text-main);
   background-color: #ffffff;
   padding: 1.1rem 1.35rem;
-  border-left: 5px solid var(--sauveterre-green);
+  border-left: 5px solid var(--commune-primary);
   transition: all 0.2s ease;
   width: 100%;
   text-align: left;
 }
 
 .accordion-button:not(.collapsed) {
-  background-color: var(--sauveterre-green-light) !important;
-  color: var(--sauveterre-green-dark) !important;
-  border-left: 6px solid var(--sauveterre-green);
+  background-color: var(--commune-primary-light) !important;
+  color: var(--commune-primary-dark) !important;
+  border-left: 6px solid var(--commune-primary);
   box-shadow: none !important;
 }
 
 .accordion-button:focus {
-  outline: 3px solid var(--sauveterre-gold) !important;
+  outline: 3px solid var(--commune-secondary) !important;
   box-shadow: none !important;
 }
 
@@ -2640,7 +2607,7 @@ table tbody tr:hover {
    5. Onglets & Pilules (Tabs / Pills / Navs - Bootstrap Package)
    ============================================================================== */
 .nav-tabs {
-  border-bottom: 2px solid var(--sauveterre-green);
+  border-bottom: 2px solid var(--commune-primary);
   gap: 4px;
 }
 
@@ -2657,15 +2624,15 @@ table tbody tr:hover {
 
 .nav-tabs .nav-link:hover,
 .nav-tabs .nav-link:focus {
-  color: var(--sauveterre-green-dark);
-  background-color: var(--sauveterre-green-light);
-  border-color: var(--sauveterre-green-light);
+  color: var(--commune-primary-dark);
+  background-color: var(--commune-primary-light);
+  border-color: var(--commune-primary-light);
 }
 
 .nav-tabs .nav-link.active {
-  background-color: var(--sauveterre-green) !important;
+  background-color: var(--commune-primary) !important;
   color: #ffffff !important;
-  border-color: var(--sauveterre-green) var(--sauveterre-green) transparent !important;
+  border-color: var(--commune-primary) var(--commune-primary) transparent !important;
   font-weight: 700;
 }
 
@@ -2679,7 +2646,7 @@ table tbody tr:hover {
 }
 
 .nav-pills .nav-link.active {
-  background-color: var(--sauveterre-green) !important;
+  background-color: var(--commune-primary) !important;
   color: #ffffff !important;
 }
 
@@ -2694,7 +2661,7 @@ table tbody tr:hover {
 }
 
 /* ==============================================================================
-   6. Listes de Fichiers & Téléchargements (File List / Uploads) - Thème Sauveterre
+   6. Listes de Fichiers & Téléchargements (File List / Uploads) - Thème Classique
    ============================================================================== */
 .frame-type-uploads,
 .commune-uploads-container {
@@ -2721,7 +2688,7 @@ ul.ce-uploads {
 .ce-uploads .ce-uploads-item {
   background-color: #ffffff !important;
   border: 1px solid var(--commune-border) !important;
-  border-left: 5px solid var(--sauveterre-green) !important;
+  border-left: 5px solid var(--commune-primary) !important;
   border-radius: 8px !important;
   padding: 0 !important;
   margin: 0 !important;
@@ -2736,7 +2703,7 @@ ul.ce-uploads {
 .ce-uploads .ce-uploads-item:hover {
   transform: translateY(-2px) !important;
   box-shadow: 0 8px 24px rgba(0, 112, 58, 0.12) !important;
-  border-left-color: var(--sauveterre-gold) !important;
+  border-left-color: var(--commune-secondary) !important;
 }
 
 /* Lien englobant accessible */
@@ -2761,7 +2728,7 @@ ul.ce-uploads {
 }
 
 .commune-upload-link:focus-visible {
-  outline: 3px solid var(--sauveterre-gold) !important;
+  outline: 3px solid var(--commune-secondary) !important;
   outline-offset: -2px !important;
   border-radius: 7px !important;
 }
@@ -2816,7 +2783,7 @@ ul.ce-uploads {
   font-family: var(--commune-font-title) !important;
   font-weight: 700 !important;
   font-size: 1.02rem !important;
-  color: var(--sauveterre-green-dark) !important;
+  color: var(--commune-primary-dark) !important;
   line-height: 1.35 !important;
   transition: color 0.2s ease !important;
   word-break: break-word;
@@ -2824,7 +2791,7 @@ ul.ce-uploads {
 
 .commune-upload-item:hover .commune-upload-title,
 .commune-upload-item:hover .ce-uploads-fileName {
-  color: var(--sauveterre-green) !important;
+  color: var(--commune-primary) !important;
   text-decoration: underline !important;
   text-underline-offset: 3px !important;
 }
@@ -2935,8 +2902,8 @@ ul.ce-uploads {
 }
 
 .commune-upload-badge.format-badge:not([class*="format-p"]):not([class*="format-d"]):not([class*="format-x"]):not([class*="format-z"]):not([class*="format-j"]):not([class*="format-m"]) {
-  background-color: var(--sauveterre-green-light);
-  color: var(--sauveterre-green-dark);
+  background-color: var(--commune-primary-light);
+  color: var(--commune-primary-dark);
   border: 1px solid rgba(0, 112, 58, 0.2);
 }
 
@@ -2964,8 +2931,8 @@ ul.ce-uploads {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  background-color: var(--sauveterre-green-light);
-  color: var(--sauveterre-green-dark);
+  background-color: var(--commune-primary-light);
+  color: var(--commune-primary-dark);
   border: 1px solid rgba(0, 112, 58, 0.25);
   font-family: var(--commune-font-title);
   font-weight: 700;
@@ -2981,9 +2948,9 @@ ul.ce-uploads {
 }
 
 .commune-upload-item:hover .commune-upload-btn {
-  background-color: var(--sauveterre-green);
+  background-color: var(--commune-primary);
   color: #ffffff;
-  border-color: var(--sauveterre-green);
+  border-color: var(--commune-primary);
   box-shadow: 0 4px 12px rgba(0, 112, 58, 0.25);
 }
 
@@ -3168,7 +3135,7 @@ blockquote,
 .blockquote {
   position: relative;
   background: linear-gradient(135deg, #ffffff 0%, var(--commune-bg-light) 100%);
-  border-left: 5px solid var(--sauveterre-gold);
+  border-left: 5px solid var(--commune-secondary);
   border-radius: 0 8px 8px 0;
   padding: 1.5rem 2rem;
   margin: 1.75rem 0;
@@ -3188,14 +3155,14 @@ blockquote p,
   font-family: var(--commune-font-title);
   font-size: 0.92rem;
   font-weight: 600;
-  color: var(--sauveterre-green-dark);
+  color: var(--commune-primary-dark);
   font-style: normal;
   margin-top: 0.6rem;
 }
 
 .blockquote-footer::before {
   content: "— ";
-  color: var(--sauveterre-gold);
+  color: var(--commune-secondary);
   font-weight: 700;
 }
 
@@ -3217,10 +3184,10 @@ blockquote p,
 
 .card-header {
   background-color: var(--commune-bg-light);
-  border-bottom: 2px solid var(--sauveterre-green);
+  border-bottom: 2px solid var(--commune-primary);
   font-family: var(--commune-font-title);
   font-weight: 700;
-  color: var(--sauveterre-green-dark);
+  color: var(--commune-primary-dark);
   padding: 0.9rem 1.25rem;
 }
 
@@ -3244,7 +3211,7 @@ blockquote p,
 }
 
 .callout-primary {
-  border-left-color: var(--sauveterre-green) !important;
+  border-left-color: var(--commune-primary) !important;
   background-color: #F0FDF4 !important;
   color: #166534 !important;
 }
@@ -3256,7 +3223,7 @@ blockquote p,
 }
 
 .callout-warning {
-  border-left-color: var(--sauveterre-gold) !important;
+  border-left-color: var(--commune-secondary) !important;
   background-color: #FFFBEB !important;
   color: #92400E !important;
 }
@@ -3304,14 +3271,14 @@ figcaption,
   font-size: 0.88rem;
   font-style: italic;
   color: var(--commune-text-muted);
-  border-left: 3px solid var(--sauveterre-gold);
+  border-left: 3px solid var(--commune-secondary);
   padding-left: 0.6rem;
   margin-top: 0.45rem;
   line-height: 1.4;
 }
 
 /* ==============================================================================
-   12. Formulaires & Champs de Saisie (EXT:form & Bootstrap Package) - Thème Sauveterre
+   12. Formulaires & Champs de Saisie (EXT:form & Bootstrap Package) - Thème Classique
    ============================================================================== */
 .frame-type-form_formframework,
 .frame-type-indexedsearch_pi2,
@@ -3322,7 +3289,7 @@ form[data-identifier] {
   position: relative;
   background-color: #ffffff;
   border: 1px solid var(--commune-border, #e2e8f0);
-  border-top: 4px solid var(--sauveterre-green);
+  border-top: 4px solid var(--commune-primary);
   border-radius: 12px;
   padding: 2.25rem 2.5rem;
   margin: 2rem 0;
@@ -3360,10 +3327,10 @@ legend,
   font-family: var(--commune-font-title);
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--sauveterre-green-dark);
+  color: var(--commune-primary-dark);
   padding-bottom: 0.65rem;
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid var(--sauveterre-gold-light);
+  border-bottom: 2px solid var(--commune-secondary-light);
   line-height: 1.3;
 }
 
@@ -3373,7 +3340,7 @@ legend::before,
   display: inline-block;
   width: 8px;
   height: 18px;
-  background: linear-gradient(180deg, var(--sauveterre-gold) 0%, var(--sauveterre-green) 100%);
+  background: linear-gradient(180deg, var(--commune-secondary) 0%, var(--commune-primary) 100%);
   border-radius: 4px;
 }
 
@@ -3402,7 +3369,7 @@ span.required,
 .required-asterisk,
 label.required::after,
 .form-label.required::after {
-  color: var(--sauveterre-gold-dark) !important;
+  color: var(--commune-secondary-dark) !important;
   font-weight: 700;
   font-size: 1.05rem;
   margin-left: 0.3rem;
@@ -3436,14 +3403,14 @@ label.required::after,
 .form-control:hover,
 .form-select:hover {
   background-color: #E9F0EC;
-  border-bottom-color: var(--sauveterre-green);
+  border-bottom-color: var(--commune-primary);
 }
 
 .form-control:focus,
 .form-select:focus {
   background-color: #FFFFFF !important;
-  border-color: var(--sauveterre-green) !important;
-  border-bottom-color: var(--sauveterre-green) !important;
+  border-color: var(--commune-primary) !important;
+  border-bottom-color: var(--commune-primary) !important;
   box-shadow: 0 0 0 3.5px rgba(0, 112, 58, 0.2), 0 4px 14px rgba(0, 112, 58, 0.08) !important;
   outline: none;
 }
@@ -3494,13 +3461,13 @@ textarea.form-control {
 }
 
 .form-check-input:hover {
-  border-color: var(--sauveterre-green);
-  background-color: var(--sauveterre-green-light);
+  border-color: var(--commune-primary);
+  background-color: var(--commune-primary-light);
 }
 
 .form-check-input:checked {
-  background-color: var(--sauveterre-green) !important;
-  border-color: var(--sauveterre-green) !important;
+  background-color: var(--commune-primary) !important;
+  border-color: var(--commune-primary) !important;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
   background-position: center center;
   background-repeat: no-repeat;
@@ -3512,7 +3479,7 @@ textarea.form-control {
 }
 
 .form-check-input:focus {
-  border-color: var(--sauveterre-green);
+  border-color: var(--commune-primary);
   box-shadow: 0 0 0 3.5px rgba(0, 112, 58, 0.22) !important;
   outline: none;
 }
@@ -3533,8 +3500,8 @@ input[type="file"].form-control {
 
 input[type="file"].form-control::file-selector-button {
   border: 1px solid rgba(0, 112, 58, 0.25);
-  background-color: var(--sauveterre-green-light);
-  color: var(--sauveterre-green-dark);
+  background-color: var(--commune-primary-light);
+  color: var(--commune-primary-dark);
   padding: 0.45rem 1rem;
   margin-right: 1rem;
   border-radius: 6px;
@@ -3546,9 +3513,9 @@ input[type="file"].form-control::file-selector-button {
 }
 
 input[type="file"].form-control:hover::file-selector-button {
-  background-color: var(--sauveterre-green);
+  background-color: var(--commune-primary);
   color: #ffffff;
-  border-color: var(--sauveterre-green);
+  border-color: var(--commune-primary);
 }
 
 /* Textes d'aide & Indications */
@@ -3620,10 +3587,10 @@ span.error::before,
 }
 
 .alert.alert-success {
-  background-color: var(--sauveterre-green-light);
+  background-color: var(--commune-primary-light);
   border-color: #86EFAC;
-  color: var(--sauveterre-green-dark);
-  border-left: 5px solid var(--sauveterre-green);
+  color: var(--commune-primary-dark);
+  border-left: 5px solid var(--commune-primary);
 }
 
 /* Intégration du bloc hCaptcha */
@@ -3652,7 +3619,7 @@ span.error::before,
 }
 
 .progress-bar {
-  background: linear-gradient(90deg, var(--sauveterre-green) 0%, var(--sauveterre-gold) 100%);
+  background: linear-gradient(90deg, var(--commune-primary) 0%, var(--commune-secondary) 100%);
   border-radius: 50rem;
   transition: width 0.4s ease;
 }
@@ -3678,8 +3645,8 @@ form input[type="submit"],
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background-color: var(--sauveterre-green) !important;
-  border: 2px solid var(--sauveterre-green) !important;
+  background-color: var(--commune-primary) !important;
+  border: 2px solid var(--commune-primary) !important;
   color: #ffffff !important;
   font-family: var(--commune-font-title);
   font-weight: 700;
@@ -3696,8 +3663,8 @@ form input[type="submit"],
 form button[type="submit"]:hover,
 form input[type="submit"]:hover,
 .btn-primary.form-submit-btn:hover {
-  background-color: var(--sauveterre-green-dark) !important;
-  border-color: var(--sauveterre-green-dark) !important;
+  background-color: var(--commune-primary-dark) !important;
+  border-color: var(--commune-primary-dark) !important;
   color: #ffffff !important;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 112, 58, 0.38);
@@ -3707,7 +3674,7 @@ form input[type="submit"]:hover,
 form button[type="submit"]:focus,
 form input[type="submit"]:focus {
   outline: none !important;
-  box-shadow: 0 0 0 3.5px var(--sauveterre-gold) !important;
+  box-shadow: 0 0 0 3.5px var(--commune-secondary) !important;
 }
 
 .form-navigation .btn-secondary,
@@ -3779,7 +3746,7 @@ article ul.pagination>li::before,
 }
 
 .pagination .page-link {
-  color: var(--sauveterre-green) !important;
+  color: var(--commune-primary) !important;
   border: 1px solid transparent !important;
   background: transparent !important;
   font-weight: 600;
@@ -3799,16 +3766,16 @@ article ul.pagination>li::before,
 }
 
 .pagination .page-item.active .page-link {
-  background-color: var(--sauveterre-green) !important;
-  border-color: var(--sauveterre-green) !important;
+  background-color: var(--commune-primary) !important;
+  border-color: var(--commune-primary) !important;
   color: #ffffff !important;
   font-weight: 700;
   box-shadow: 0 3px 10px rgba(0, 112, 58, 0.3);
 }
 
 .pagination .page-link:hover {
-  background-color: var(--sauveterre-green-light) !important;
-  color: var(--sauveterre-green-dark) !important;
+  background-color: var(--commune-primary-light) !important;
+  color: var(--commune-primary-dark) !important;
   border-color: rgba(0, 112, 58, 0.25) !important;
   transform: translateY(-1px);
 }
@@ -3897,11 +3864,11 @@ article ul.pagination>li::before,
 
 .commune-sitemap-title-link:hover,
 .commune-sitemap-title-link:focus {
-  color: var(--sauveterre-green);
+  color: var(--commune-primary);
 }
 
 .commune-sitemap-dot {
-  color: var(--sauveterre-gold);
+  color: var(--commune-secondary);
   font-weight: 800;
   margin-left: 1px;
 }
@@ -3923,7 +3890,7 @@ article ul.pagination>li::before,
   font-family: var(--commune-font-body);
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--sauveterre-green);
+  color: var(--commune-primary);
   text-decoration: none !important;
   display: inline-flex;
   align-items: center;
@@ -3934,7 +3901,7 @@ article ul.pagination>li::before,
 
 .commune-sitemap-link.level-2:hover,
 .commune-sitemap-link.level-2:focus {
-  color: var(--sauveterre-green-dark);
+  color: var(--commune-primary-dark);
   text-decoration: underline !important;
   text-underline-offset: 2px;
 }
@@ -3947,14 +3914,14 @@ article ul.pagination>li::before,
 
 .commune-sitemap-caret {
   font-size: 0.72rem;
-  color: var(--sauveterre-green);
+  color: var(--commune-primary);
   opacity: 0.85;
   transition: transform 0.2s ease;
 }
 
 .commune-sitemap-link.level-2:hover .commune-sitemap-caret {
   transform: translateY(1px);
-  color: var(--sauveterre-green-dark);
+  color: var(--commune-primary-dark);
 }
 
 /* Niveau 3 : Sous-pages / Feuilles avec icônes chevrons */
@@ -3990,7 +3957,7 @@ article ul.pagination>li::before,
   justify-content: center;
   width: 13px;
   height: 13px;
-  color: var(--sauveterre-green);
+  color: var(--commune-primary);
   flex-shrink: 0;
   transition: transform 0.2s ease, color 0.2s ease;
 }
@@ -4002,20 +3969,20 @@ article ul.pagination>li::before,
 
 .commune-sitemap-caret-sm {
   font-size: 0.65rem;
-  color: var(--sauveterre-green);
+  color: var(--commune-primary);
   margin-left: 0.25rem;
 }
 
 .commune-sitemap-link.level-3:hover,
 .commune-sitemap-link.level-3:focus {
-  color: var(--sauveterre-green-dark);
+  color: var(--commune-primary-dark);
   text-decoration: underline !important;
   text-underline-offset: 2px;
 }
 
 .commune-sitemap-link.level-3:hover .commune-sitemap-icon {
   transform: translateX(3px);
-  color: var(--sauveterre-gold);
+  color: var(--commune-secondary);
 }
 
 /* Niveau 4 : Sous-sous-pages */
@@ -4043,19 +4010,19 @@ article ul.pagination>li::before,
 }
 
 .commune-sitemap-icon-dot {
-  color: var(--sauveterre-gold);
+  color: var(--commune-secondary);
   font-size: 0.85rem;
   line-height: 1;
 }
 
 .commune-sitemap-link.level-4:hover,
 .commune-sitemap-link.level-4:focus {
-  color: var(--sauveterre-green-dark);
+  color: var(--commune-primary-dark);
   text-decoration: underline !important;
 }
 
 /* ==============================================================================
-   14. Éléments de Contenu : Groupes de cartes (Card Group / BK2K) - Sauveterre
+   14. Éléments de Contenu : Groupes de cartes (Card Group / BK2K) - Classique
    ============================================================================== */
 .commune-card-group,
 .ce-card_group,
@@ -4096,7 +4063,7 @@ article ul.pagination>li::before,
 
 .commune-card-group .commune-card:hover .card-body,
 .ce-card_group .card:hover .card-body {
-  border-left-color: var(--sauveterre-green, #00703a);
+  border-left-color: var(--commune-primary, #00703a);
 }
 
 .commune-card-group .card-img-top,
@@ -4118,7 +4085,7 @@ article ul.pagination>li::before,
   font-family: var(--commune-font-title);
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--sauveterre-green, #00703a);
+  color: var(--commune-primary, #00703a);
   margin-top: 0;
   margin-bottom: 0.4rem;
   line-height: 1.35;
@@ -4130,7 +4097,7 @@ article ul.pagination>li::before,
   font-family: var(--commune-font-body);
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--sauveterre-gold-dark, #cf9619);
+  color: var(--commune-secondary-dark, #cf9619);
   margin-top: 0;
   margin-bottom: 0.75rem;
 }

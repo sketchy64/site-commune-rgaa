@@ -2,6 +2,15 @@
       xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
+<!-- Chargement dynamique de la palette de couleurs sélectionnée (Paramètres de site ou Constantes) -->
+<f:variable name="activeColorScheme" value="{rgaa:siteSetting(key: 'commune.color_scheme_css', default: communeColorScheme)}" />
+<f:if condition="!{activeColorScheme}">
+    <f:variable name="activeColorScheme" value="EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css" />
+</f:if>
+<f:if condition="{activeColorScheme} && {activeColorScheme} != 'none'">
+    <f:asset.css identifier="commune-color-scheme" href="{activeColorScheme}" priority="true" />
+</f:if>
+
 <!-- Chargement dynamique de la feuille de style du thème sélectionné (Paramètres de site ou Constantes) -->
 <f:variable name="activeTheme" value="{rgaa:siteSetting(key: 'commune.theme_css', default: communeTheme)}" />
 <f:if condition="!{activeTheme}">

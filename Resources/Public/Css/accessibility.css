@@ -258,7 +258,7 @@ body.a11y-high-contrast .megamenu-list {
    7. Plan du site accessible (RGAA 4.1.2)
    ========================================================================== */
 .commune-sitemap-nav a:focus-visible {
-  outline: 3px solid var(--sauveterre-gold, #f5b21e) !important;
+  outline: 3px solid var(--commune-secondary, #f5b21e) !important;
   outline-offset: 2px !important;
   border-radius: 2px;
 }
@@ -390,7 +390,7 @@ body.a11y-high-contrast .commune-news-pagination .page-link:hover {
 /* Volet de recherche escamotable du menu */
 .commune-menu-search-overlay {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
-  border-bottom: 3px solid var(--sauveterre-green, #00703A) !important;
+  border-bottom: 3px solid var(--commune-primary, #00703A) !important;
 }
 
 .commune-menu-search-overlay .form-control {
@@ -398,7 +398,7 @@ body.a11y-high-contrast .commune-news-pagination .page-link:hover {
 }
 
 .commune-menu-search-overlay .form-control:focus {
-  border-color: var(--sauveterre-green, #00703A);
+  border-color: var(--commune-primary, #00703A);
   box-shadow: 0 0 0 0.25rem rgba(0, 112, 58, 0.25);
 }
 
@@ -431,24 +431,24 @@ body.a11y-high-contrast .commune-news-pagination .page-link:hover {
 
 .commune-hero-search-overlay .form-control {
   background-color: #ffffff;
-  border: 2px solid var(--sauveterre-green, #00703A);
+  border: 2px solid var(--commune-primary, #00703A);
   font-size: 1.05rem;
 }
 
 .commune-hero-search-overlay .form-control:focus {
-  border-color: var(--sauveterre-green, #00703A);
+  border-color: var(--commune-primary, #00703A);
   box-shadow: 0 0 0 0.25rem rgba(0, 112, 58, 0.3);
 }
 
 .commune-hero-search-overlay .btn-primary {
-  background-color: var(--sauveterre-green, #00703A);
-  border-color: var(--sauveterre-green, #00703A);
+  background-color: var(--commune-primary, #00703A);
+  border-color: var(--commune-primary, #00703A);
 }
 
 .commune-hero-search-overlay .btn-primary:hover,
 .commune-hero-search-overlay .btn-primary:focus {
-  background-color: var(--sauveterre-green-dark, #004d28);
-  border-color: var(--sauveterre-green-dark, #004d28);
+  background-color: var(--commune-primary-dark, #004d28);
+  border-color: var(--commune-primary-dark, #004d28);
 }
 
 /* Adaptations mode Contraste Élevé (RGAA) */
