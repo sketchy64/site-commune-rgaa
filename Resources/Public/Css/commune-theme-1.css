@@ -1426,80 +1426,116 @@ article.commune-news-card img,
   outline-offset: 2px;
 }
 
-/* Slide sur-mesure (sans style de Carte Bootstrap) */
+/* Slide Présentation "Top News" Sur-mesure - Thème 1 */
 .commune-carousel-slide {
   background: transparent;
+  padding: 0.5rem 0;
 }
 
 .commune-carousel-slide .carousel-media-container {
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  min-height: 360px;
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+  min-height: 380px;
   height: 100%;
-  background-color: var(--commune-bg-light, #f8f9fa);
+  background: var(--commune-bg-light, #f8f9fa);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  position: relative;
 }
 
 .commune-carousel-slide .carousel-slide-img {
   object-fit: cover;
-  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .commune-carousel-slide:hover .carousel-slide-img {
-  transform: scale(1.03);
+  transform: scale(1.05);
+}
+
+.commune-carousel-slide .carousel-media-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.25) 0%, transparent 40%);
+  pointer-events: none;
 }
 
 .commune-carousel-slide .carousel-category-tag {
+  z-index: 2;
   background-color: var(--commune-primary);
   color: #ffffff;
-  border-radius: 20px;
+  border-radius: 30px;
   font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+.commune-carousel-slide .carousel-content-container {
+  background-color: var(--commune-bg-main, #ffffff);
+  border-radius: 20px;
+  padding: 2rem !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .commune-carousel-slide .carousel-date-meta {
   color: var(--commune-primary);
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .commune-carousel-slide .commune-carousel-title {
-  font-size: 1.65rem;
-  font-weight: 700;
-  line-height: 1.3;
-  color: var(--commune-text-main, #1a1a1a);
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--commune-text-main, #111827);
+  letter-spacing: -0.02em;
 }
 
 .commune-carousel-slide .carousel-title-link {
   color: inherit;
   text-decoration: none;
-  transition: color 0.2s ease;
+  background-image: linear-gradient(var(--commune-primary), var(--commune-primary));
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  transition: background-size 0.3s ease, color 0.2s ease;
 }
 
 .commune-carousel-slide .carousel-title-link:hover,
 .commune-carousel-slide .carousel-title-link:focus {
   color: var(--commune-primary);
+  background-size: 100% 2px;
 }
 
 .commune-carousel-slide .commune-carousel-teaser {
-  color: #555555;
-  font-size: 1rem;
-  line-height: 1.6;
+  color: #4b5563;
+  font-size: 1.05rem;
+  line-height: 1.65;
 }
 
 .commune-carousel-slide .commune-carousel-action-btn {
-  color: var(--commune-primary);
+  background-color: var(--commune-primary);
+  color: #ffffff !important;
   font-weight: 600;
   font-size: 0.95rem;
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  transition: all 0.25s ease;
+  padding: 0.65rem 1.6rem;
+  border-radius: 30px;
+  text-decoration: none !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .commune-carousel-slide .commune-carousel-action-btn:hover,
 .commune-carousel-slide .commune-carousel-action-btn:focus {
-  color: var(--commune-secondary);
-  border-bottom-color: var(--commune-secondary);
+  background-color: var(--commune-secondary);
+  color: #111827 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
 }
 
 .commune-carousel-slide .commune-carousel-action-btn svg {
