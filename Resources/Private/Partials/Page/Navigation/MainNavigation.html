@@ -50,18 +50,9 @@
             <f:format.raw>{mainNavigation}</f:format.raw>
         </div>
 
-        <!-- Sélecteur de langue dans la barre de navigation (si mode intégré ou position = menu) -->
-        <f:if condition="{communeHeaderLanguageEnable} && {languageNavigation}">
-            <f:if condition="{communeHeaderLayout} == 'integrated' || {communeHeaderLayout} == '1' || {communeHeaderLanguagePosition} == 'menu'">
-                <div class="d-flex align-items-center commune-menu-language-wrapper py-2 me-2">
-                    <f:render partial="Navigation/LanguageMenu" arguments="{languageNavigation: languageNavigation}" />
-                </div>
-            </f:if>
-        </f:if>
-
         <!-- Bouton icône de recherche à droite du menu (affiché uniquement en mode intégré) -->
         <f:if condition="{communeHeaderLayout} == 'integrated' || {communeHeaderLayout} == '1'">
-            <div class="d-flex align-items-center ms-auto ms-lg-2 commune-menu-search-wrapper py-2 me-2 me-lg-0">
+            <div class="d-flex align-items-center ms-auto ms-lg-2 commune-menu-search-wrapper py-2 me-2">
                 <button class="btn btn-outline-light btn-sm px-3 py-2 d-flex align-items-center gap-2 btn-menu-search"
                         type="button"
                         data-bs-toggle="collapse"
@@ -76,6 +67,15 @@
                     <span class="visually-hidden">{f:translate(key: 'nav.search.toggle', extensionName: 'site_commune_rgaa')}</span>
                 </button>
             </div>
+        </f:if>
+
+        <!-- Sélecteur de langue dans la barre de navigation (si mode intégré ou position = menu) -->
+        <f:if condition="{communeHeaderLanguageEnable} && {languageNavigation}">
+            <f:if condition="{communeHeaderLayout} == 'integrated' || {communeHeaderLayout} == '1' || {communeHeaderLanguagePosition} == 'menu'">
+                <div class="d-flex align-items-center commune-menu-language-wrapper py-2 ms-2 me-lg-0">
+                    <f:render partial="Navigation/LanguageMenu" arguments="{languageNavigation: languageNavigation}" />
+                </div>
+            </f:if>
         </f:if>
 
     </div>
