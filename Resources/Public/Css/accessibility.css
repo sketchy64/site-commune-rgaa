@@ -354,9 +354,19 @@ body.a11y-high-contrast .commune-news-pagination .page-link:hover {
 }
 
 /* En-tête en mode Intégré (Logo + Slogan dans la barre de menu) */
+#main-navigation.header-layout-integrated .commune-brand-container,
+#main-navigation.header-layout-1 .commune-brand-container,
 #main-navigation.header-layout-integrated .commune-brand-inline,
 #main-navigation.header-layout-1 .commune-brand-inline {
   flex-shrink: 0;
+}
+
+.commune-brand-language-wrapper {
+  margin-top: 2px;
+}
+
+.commune-brand-language-wrapper .language-list {
+  gap: 4px !important;
 }
 
 #main-navigation.header-layout-integrated .navbar-collapse,

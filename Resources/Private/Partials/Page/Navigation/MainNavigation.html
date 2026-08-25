@@ -3,36 +3,45 @@
 
 <!-- Menu principal de navigation (Landmark role="navigation") -->
 <nav id="main-navigation" class="navbar navbar-expand-lg navbar-dark bg-primary-commune py-0 position-relative header-layout-{f:if(condition: '{communeHeaderLayout} == \'integrated\' || {communeHeaderLayout} == 1', then: 'integrated', else: 'standard')}" role="navigation" aria-label="{f:translate(key: 'nav.main', extensionName: 'site_commune_rgaa')}">
-    <div class="container position-relative d-flex align-items-center flex-wrap flex-lg-nowrap">
+    <div class="{f:if(condition: '{communeHeaderLayout} == \'integrated\' || {communeHeaderLayout} == 1', then: 'container-fluid px-3 px-lg-4', else: 'container')} position-relative d-flex align-items-center flex-wrap flex-lg-nowrap">
         
-        <!-- En mode Intégré : Logo + Nom + Slogan à gauche de la barre de menu -->
+        <!-- En mode Intégré : Logo + Nom + Slogan à gauche de la barre de menu + Sélecteur de langue en dessous -->
         <f:if condition="{communeHeaderLayout} == 'integrated' || {communeHeaderLayout} == '1'">
-            <f:link.page pageUid="{f:if(condition: site.rootPageId, then: site.rootPageId, else: 1)}" class="navbar-brand text-decoration-none d-flex align-items-center gap-2 py-2 text-white commune-brand-inline me-lg-4" title="Retour à la page d'accueil de {communeNom}">
-                <div class="commune-logo-wrapper" aria-hidden="true">
-                    <f:if condition="{communeLogoFile}">
-                        <f:then>
-                            <img src="{f:uri.image(src: communeLogoFile)}" height="45" style="max-height: 45px; width: auto;" alt="Logo {communeNom}" class="commune-logo-img img-fluid" />
-                        </f:then>
-                        <f:else>
-                            <div class="commune-marianne-badge marianne-badge-sm">
-                                <span class="marianne-bar red"></span>
-                                <span class="marianne-bar white"></span>
-                                <span class="marianne-bar blue"></span>
-                            </div>
-                        </f:else>
-                    </f:if>
-                </div>
-                <div class="lh-sm text-start">
-                    <f:if condition="!{communeHeaderHideTitle}">
-                        <span class="h6 mb-0 fw-bold d-block commune-title text-white">{communeNom}</span>
-                    </f:if>
-                    <f:if condition="!{communeHeaderHideSlogan}">
-                        <f:if condition="{communeSlogan}">
-                            <small class="text-white-50 d-block commune-slogan" style="font-size: 0.75rem;">{communeSlogan}</small>
+            <div class="d-flex flex-column align-items-start py-2 me-lg-4 commune-brand-container">
+                <f:link.page pageUid="{f:if(condition: site.rootPageId, then: site.rootPageId, else: 1)}" class="navbar-brand text-decoration-none d-flex align-items-center gap-2 py-0 text-white commune-brand-inline me-0" title="Retour à la page d'accueil de {communeNom}">
+                    <div class="commune-logo-wrapper" aria-hidden="true">
+                        <f:if condition="{communeLogoFile}">
+                            <f:then>
+                                <img src="{f:uri.image(src: communeLogoFile)}" height="45" style="max-height: 45px; width: auto;" alt="Logo {communeNom}" class="commune-logo-img img-fluid" />
+                            </f:then>
+                            <f:else>
+                                <div class="commune-marianne-badge marianne-badge-sm">
+                                    <span class="marianne-bar red"></span>
+                                    <span class="marianne-bar white"></span>
+                                    <span class="marianne-bar blue"></span>
+                                </div>
+                            </f:else>
                         </f:if>
-                    </f:if>
-                </div>
-            </f:link.page>
+                    </div>
+                    <div class="lh-sm text-start">
+                        <f:if condition="!{communeHeaderHideTitle}">
+                            <span class="h6 mb-0 fw-bold d-block commune-title text-white">{communeNom}</span>
+                        </f:if>
+                        <f:if condition="!{communeHeaderHideSlogan}">
+                            <f:if condition="{communeSlogan}">
+                                <small class="text-white-50 d-block commune-slogan" style="font-size: 0.75rem;">{communeSlogan}</small>
+                            </f:if>
+                        </f:if>
+                    </div>
+                </f:link.page>
+
+                <!-- Sélecteur de langue placé sous le logo / nom (si activé et disponible) -->
+                <f:if condition="{communeHeaderLanguageEnable} && {languageNavigation}">
+                    <div class="commune-brand-language-wrapper mt-1">
+                        <f:render partial="Navigation/LanguageMenu" arguments="{languageNavigation: languageNavigation}" />
+                    </div>
+                </f:if>
+            </div>
         </f:if>
 
         <!-- Bouton mobile accessible (masqué sur desktop >= 992px) -->
@@ -50,9 +59,9 @@
             <f:format.raw>{mainNavigation}</f:format.raw>
         </div>
 
-        <!-- Sélecteur de langue dans la barre de navigation (si mode intégré ou position = menu) -->
+        <!-- Sélecteur de langue en mode standard (si position = menu) -->
         <f:if condition="{communeHeaderLanguageEnable} && {languageNavigation}">
-            <f:if condition="{communeHeaderLayout} == 'integrated' || {communeHeaderLayout} == '1' || {communeHeaderLanguagePosition} == 'menu'">
+            <f:if condition="{communeHeaderLayout} != 'integrated' && {communeHeaderLayout} != '1' && {communeHeaderLanguagePosition} == 'menu'">
                 <div class="d-flex align-items-center commune-menu-language-wrapper py-2 me-2">
                     <f:render partial="Navigation/LanguageMenu" arguments="{languageNavigation: languageNavigation}" />
                 </div>
@@ -83,7 +92,7 @@
     <!-- Zone / Volet de recherche escamotable sous le menu -->
     <f:if condition="{communeHeaderLayout} == 'integrated' || {communeHeaderLayout} == '1'">
         <div class="collapse commune-menu-search-overlay bg-white border-bottom shadow-lg position-absolute top-100 start-0 w-100" id="menu-search-collapse" style="z-index: 1050;">
-            <div class="container py-3">
+            <div class="{f:if(condition: '{communeHeaderLayout} == \'integrated\' || {communeHeaderLayout} == 1', then: 'container-fluid px-3 px-lg-4', else: 'container')} py-3">
                 <form id="menu-search-form" class="commune-search-form m-0" role="search" method="get" action="{f:uri.page(pageUid: communeSearchPageUid)}">
                     <div class="input-group input-group-lg">
                         <label for="menu-search-input" class="visually-hidden">
