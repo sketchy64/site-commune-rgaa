@@ -2,6 +2,17 @@
       xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
+<!-- Chargement dynamique de la disposition de l'en-tête et des paramètres de marque (Paramètres de site ou Constantes) -->
+<f:variable name="communeHeaderLayout" value="{rgaa:siteSetting(key: 'commune.header_layout', default: communeHeaderLayout)}" />
+<f:variable name="communeHeaderMenuSearchEnable" value="{rgaa:siteSetting(key: 'commune.header_menu_search_enable', default: communeHeaderMenuSearchEnable)}" />
+<f:variable name="communeLogoFile" value="{rgaa:siteSetting(key: 'commune.logo_file', default: communeLogoFile)}" />
+<f:variable name="communeLogoHeight" value="{rgaa:siteSetting(key: 'commune.logo_height', default: communeLogoHeight)}" />
+<f:variable name="communeNom" value="{rgaa:siteSetting(key: 'commune.nom', default: communeNom)}" />
+<f:variable name="communeSlogan" value="{rgaa:siteSetting(key: 'commune.slogan', default: communeSlogan)}" />
+<f:variable name="communeHeaderHideTitle" value="{rgaa:siteSetting(key: 'commune.header_hide_title', default: communeHeaderHideTitle)}" />
+<f:variable name="communeHeaderHideSlogan" value="{rgaa:siteSetting(key: 'commune.header_hide_slogan', default: communeHeaderHideSlogan)}" />
+<f:variable name="communeSearchPageUid" value="{rgaa:siteSetting(key: 'commune.search_page_uid', default: communeSearchPageUid)}" />
+
 <!-- Chargement dynamique de la palette de couleurs sélectionnée (Paramètres de site ou Constantes) -->
 <f:variable name="activeColorScheme" value="{rgaa:siteSetting(key: 'commune.color_scheme_css', default: communeColorScheme)}" />
 <f:if condition="!{activeColorScheme}">

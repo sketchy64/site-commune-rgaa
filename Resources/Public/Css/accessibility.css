@@ -357,6 +357,14 @@ body.a11y-high-contrast .commune-news-pagination .page-link:hover {
   flex-shrink: 0;
 }
 
+#main-navigation.header-layout-integrated .navbar-collapse {
+  flex-grow: 1;
+}
+
+#main-navigation.header-layout-integrated .commune-menu-search-wrapper {
+  flex-shrink: 0;
+}
+
 #main-navigation.header-layout-integrated .commune-brand-inline:focus-visible {
   outline: 3px solid #ffffff !important;
   outline-offset: 2px;

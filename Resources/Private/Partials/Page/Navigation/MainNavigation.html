@@ -60,8 +60,8 @@
         </f:if>
 
         <!-- Bouton icône de recherche à droite du menu -->
-        <f:if condition="{communeHeaderMenuSearchEnable}">
-            <div class="d-flex align-items-center ms-auto ms-lg-0 commune-menu-search-wrapper py-2 me-2 me-lg-0">
+        <f:if condition="{communeHeaderMenuSearchEnable} || {communeHeaderLayout} == 'integrated'">
+            <div class="d-flex align-items-center ms-auto ms-lg-2 commune-menu-search-wrapper py-2 me-2 me-lg-0">
                 <button class="btn btn-outline-light btn-sm px-3 py-2 d-flex align-items-center gap-2 btn-menu-search"
                         type="button"
                         data-bs-toggle="collapse"
@@ -81,7 +81,7 @@
     </div>
 
     <!-- Zone / Volet de recherche escamotable sous le menu -->
-    <f:if condition="{communeHeaderMenuSearchEnable}">
+    <f:if condition="{communeHeaderMenuSearchEnable} || {communeHeaderLayout} == 'integrated'">
         <div class="collapse commune-menu-search-overlay bg-white border-bottom shadow-lg position-absolute top-100 start-0 w-100" id="menu-search-collapse" style="z-index: 1050;">
             <div class="container py-3">
                 <form id="menu-search-form" class="commune-search-form m-0" role="search" method="get" action="{f:uri.page(pageUid: communeSearchPageUid)}">

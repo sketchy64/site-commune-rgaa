@@ -170,208 +170,354 @@ page {
 
       # Logo et personnalisation de marque
       communeLogoFile = TEXT
-      communeLogoFile.value = {$commune.logo_file}
-      communeLogoFile.override.data = site:commune.logo_file
+      communeLogoFile {
+        data = site:settings:commune.logo_file
+        ifEmpty.data = site:settings.commune.logo_file
+        ifEmpty.ifEmpty.value = {$commune.logo_file}
+      }
 
       communeLogoHeight = TEXT
-      communeLogoHeight.value = {$commune.logo_height}
-      communeLogoHeight.override.data = site:commune.logo_height
+      communeLogoHeight {
+        data = site:settings:commune.logo_height
+        ifEmpty.data = site:settings.commune.logo_height
+        ifEmpty.ifEmpty.value = {$commune.logo_height}
+      }
 
       communeHeaderHideTitle = TEXT
-      communeHeaderHideTitle.value = {$commune.header_hide_title}
-      communeHeaderHideTitle.override.data = site:commune.header_hide_title
+      communeHeaderHideTitle {
+        data = site:settings:commune.header_hide_title
+        ifEmpty.data = site:settings.commune.header_hide_title
+        ifEmpty.ifEmpty.value = {$commune.header_hide_title}
+      }
 
       communeHeaderHideSlogan = TEXT
-      communeHeaderHideSlogan.value = {$commune.header_hide_slogan}
-      communeHeaderHideSlogan.override.data = site:commune.header_hide_slogan
+      communeHeaderHideSlogan {
+        data = site:settings:commune.header_hide_slogan
+        ifEmpty.data = site:settings.commune.header_hide_slogan
+        ifEmpty.ifEmpty.value = {$commune.header_hide_slogan}
+      }
 
       communeHeaderLayout = TEXT
-      communeHeaderLayout.value = {$commune.header_layout}
-      communeHeaderLayout.override.data = site:commune.header_layout
+      communeHeaderLayout {
+        data = site:settings:commune.header_layout
+        ifEmpty.data = site:settings.commune.header_layout
+        ifEmpty.ifEmpty.value = {$commune.header_layout}
+      }
 
       communeHeaderMenuSearchEnable = TEXT
-      communeHeaderMenuSearchEnable.value = {$commune.header_menu_search_enable}
-      communeHeaderMenuSearchEnable.override.data = site:commune.header_menu_search_enable
+      communeHeaderMenuSearchEnable {
+        data = site:settings:commune.header_menu_search_enable
+        ifEmpty.data = site:settings.commune.header_menu_search_enable
+        ifEmpty.ifEmpty.value = {$commune.header_menu_search_enable}
+      }
 
       # Données de la commune
       communeNom = TEXT
-      communeNom.value = {$commune.nom}
-      communeNom.override.data = site:commune.nom
+      communeNom {
+        data = site:settings:commune.nom
+        ifEmpty.data = site:settings.commune.nom
+        ifEmpty.ifEmpty.value = {$commune.nom}
+      }
 
       communeSlogan = TEXT
-      communeSlogan.value = {$commune.slogan}
-      communeSlogan.override.data = site:commune.slogan
+      communeSlogan {
+        data = site:settings:commune.slogan
+        ifEmpty.data = site:settings.commune.slogan
+        ifEmpty.ifEmpty.value = {$commune.slogan}
+      }
 
       communeDepartement = TEXT
-      communeDepartement.value = {$commune.departement}
-      communeDepartement.override.data = site:commune.departement
+      communeDepartement {
+        data = site:settings:commune.departement
+        ifEmpty.data = site:settings.commune.departement
+        ifEmpty.ifEmpty.value = {$commune.departement}
+      }
 
       communeAdresse = TEXT
-      communeAdresse.value = {$commune.adresse}
-      communeAdresse.override.data = site:commune.adresse
+      communeAdresse {
+        data = site:settings:commune.adresse
+        ifEmpty.data = site:settings.commune.adresse
+        ifEmpty.ifEmpty.value = {$commune.adresse}
+      }
 
       communeTelephone = TEXT
-      communeTelephone.value = {$commune.telephone}
-      communeTelephone.override.data = site:commune.telephone
+      communeTelephone {
+        data = site:settings:commune.telephone
+        ifEmpty.data = site:settings.commune.telephone
+        ifEmpty.ifEmpty.value = {$commune.telephone}
+      }
 
       communeEmail = TEXT
-      communeEmail.value = {$commune.email}
-      communeEmail.override.data = site:commune.email
+      communeEmail {
+        data = site:settings:commune.email
+        ifEmpty.data = site:settings.commune.email
+        ifEmpty.ifEmpty.value = {$commune.email}
+      }
 
       communeHoraires = TEXT
-      communeHoraires.value = {$commune.horaires}
-      communeHoraires.override.data = site:commune.horaires
+      communeHoraires {
+        data = site:settings:commune.horaires
+        ifEmpty.data = site:settings.commune.horaires
+        ifEmpty.ifEmpty.value = {$commune.horaires}
+      }
 
       # Titres et visibilité des sections de la page d'accueil
       communeHomeHeroSearchEnable = TEXT
-      communeHomeHeroSearchEnable.value = {$commune.home_hero_search_enable}
-      communeHomeHeroSearchEnable.override.data = site:commune.home_hero_search_enable
+      communeHomeHeroSearchEnable {
+        data = site:settings:commune.home_hero_search_enable
+        ifEmpty.data = site:settings.commune.home_hero_search_enable
+        ifEmpty.ifEmpty.value = {$commune.home_hero_search_enable}
+      }
 
       communeHomeQuickaccessTitle = TEXT
-      communeHomeQuickaccessTitle.value = {$commune.home_quickaccess_title}
-      communeHomeQuickaccessTitle.override.data = site:commune.home_quickaccess_title
+      communeHomeQuickaccessTitle {
+        data = site:settings:commune.home_quickaccess_title
+        ifEmpty.data = site:settings.commune.home_quickaccess_title
+        ifEmpty.ifEmpty.value = {$commune.home_quickaccess_title}
+      }
 
       communeHomeQuickaccessHideTitle = TEXT
-      communeHomeQuickaccessHideTitle.value = {$commune.home_quickaccess_hide_title}
-      communeHomeQuickaccessHideTitle.override.data = site:commune.home_quickaccess_hide_title
+      communeHomeQuickaccessHideTitle {
+        data = site:settings:commune.home_quickaccess_hide_title
+        ifEmpty.data = site:settings.commune.home_quickaccess_hide_title
+        ifEmpty.ifEmpty.value = {$commune.home_quickaccess_hide_title}
+      }
 
       communeHomeEditoTitle = TEXT
-      communeHomeEditoTitle.value = {$commune.home_edito_title}
-      communeHomeEditoTitle.override.data = site:commune.home_edito_title
+      communeHomeEditoTitle {
+        data = site:settings:commune.home_edito_title
+        ifEmpty.data = site:settings.commune.home_edito_title
+        ifEmpty.ifEmpty.value = {$commune.home_edito_title}
+      }
 
       communeHomeEditoHideTitle = TEXT
-      communeHomeEditoHideTitle.value = {$commune.home_edito_hide_title}
-      communeHomeEditoHideTitle.override.data = site:commune.home_edito_hide_title
+      communeHomeEditoHideTitle {
+        data = site:settings:commune.home_edito_hide_title
+        ifEmpty.data = site:settings.commune.home_edito_hide_title
+        ifEmpty.ifEmpty.value = {$commune.home_edito_hide_title}
+      }
 
       # Titre et visibilité de la section Actualités à la une (Accueil)
       communeHomeFeaturedNewsTitle = TEXT
-      communeHomeFeaturedNewsTitle.value = {$commune.home_featured_news_title}
-      communeHomeFeaturedNewsTitle.override.data = site:commune.home_featured_news_title
+      communeHomeFeaturedNewsTitle {
+        data = site:settings:commune.home_featured_news_title
+        ifEmpty.data = site:settings.commune.home_featured_news_title
+        ifEmpty.ifEmpty.value = {$commune.home_featured_news_title}
+      }
 
       communeHomeFeaturedNewsHideTitle = TEXT
-      communeHomeFeaturedNewsHideTitle.value = {$commune.home_featured_news_hide_title}
-      communeHomeFeaturedNewsHideTitle.override.data = site:commune.home_featured_news_hide_title
+      communeHomeFeaturedNewsHideTitle {
+        data = site:settings:commune.home_featured_news_hide_title
+        ifEmpty.data = site:settings.commune.home_featured_news_hide_title
+        ifEmpty.ifEmpty.value = {$commune.home_featured_news_hide_title}
+      }
 
       communeHomeFeaturedNewsHideSection = TEXT
-      communeHomeFeaturedNewsHideSection.value = {$commune.home_featured_news_hide_section}
-      communeHomeFeaturedNewsHideSection.override.data = site:commune.home_featured_news_hide_section
+      communeHomeFeaturedNewsHideSection {
+        data = site:settings:commune.home_featured_news_hide_section
+        ifEmpty.data = site:settings.commune.home_featured_news_hide_section
+        ifEmpty.ifEmpty.value = {$commune.home_featured_news_hide_section}
+      }
 
       communeHomeNewsTitle = TEXT
-      communeHomeNewsTitle.value = {$commune.home_news_title}
-      communeHomeNewsTitle.override.data = site:commune.home_news_title
+      communeHomeNewsTitle {
+        data = site:settings:commune.home_news_title
+        ifEmpty.data = site:settings.commune.home_news_title
+        ifEmpty.ifEmpty.value = {$commune.home_news_title}
+      }
 
       communeHomeNewsHideTitle = TEXT
-      communeHomeNewsHideTitle.value = {$commune.home_news_hide_title}
-      communeHomeNewsHideTitle.override.data = site:commune.home_news_hide_title
+      communeHomeNewsHideTitle {
+        data = site:settings:commune.home_news_hide_title
+        ifEmpty.data = site:settings.commune.home_news_hide_title
+        ifEmpty.ifEmpty.value = {$commune.home_news_hide_title}
+      }
 
       communeHomeMapTitle = TEXT
-      communeHomeMapTitle.value = {$commune.home_map_title}
-      communeHomeMapTitle.override.data = site:commune.home_map_title
+      communeHomeMapTitle {
+        data = site:settings:commune.home_map_title
+        ifEmpty.data = site:settings.commune.home_map_title
+        ifEmpty.ifEmpty.value = {$commune.home_map_title}
+      }
 
       communeHomeMapHideTitle = TEXT
-      communeHomeMapHideTitle.value = {$commune.home_map_hide_title}
-      communeHomeMapHideTitle.override.data = site:commune.home_map_hide_title
+      communeHomeMapHideTitle {
+        data = site:settings:commune.home_map_hide_title
+        ifEmpty.data = site:settings.commune.home_map_hide_title
+        ifEmpty.ifEmpty.value = {$commune.home_map_hide_title}
+      }
 
       communeHomeSitemapEnable = TEXT
-      communeHomeSitemapEnable.value = {$commune.home_sitemap_enable}
-      communeHomeSitemapEnable.override.data = site:commune.home_sitemap_enable
+      communeHomeSitemapEnable {
+        data = site:settings:commune.home_sitemap_enable
+        ifEmpty.data = site:settings.commune.home_sitemap_enable
+        ifEmpty.ifEmpty.value = {$commune.home_sitemap_enable}
+      }
 
       communeHomeSitemapTitle = TEXT
-      communeHomeSitemapTitle.value = {$commune.home_sitemap_title}
-      communeHomeSitemapTitle.override.data = site:commune.home_sitemap_title
+      communeHomeSitemapTitle {
+        data = site:settings:commune.home_sitemap_title
+        ifEmpty.data = site:settings.commune.home_sitemap_title
+        ifEmpty.ifEmpty.value = {$commune.home_sitemap_title}
+      }
 
       communeHomeSitemapHideTitle = TEXT
-      communeHomeSitemapHideTitle.value = {$commune.home_sitemap_hide_title}
-      communeHomeSitemapHideTitle.override.data = site:commune.home_sitemap_hide_title
+      communeHomeSitemapHideTitle {
+        data = site:settings:commune.home_sitemap_hide_title
+        ifEmpty.data = site:settings.commune.home_sitemap_hide_title
+        ifEmpty.ifEmpty.value = {$commune.home_sitemap_hide_title}
+      }
 
       # Page de recherche
       communeSearchPageUid = TEXT
-      communeSearchPageUid.value = {$commune.search_page_uid}
-      communeSearchPageUid.override.data = site:commune.search_page_uid
-
+      communeSearchPageUid {
+        data = site:settings:commune.search_page_uid
+        ifEmpty.data = site:settings.commune.search_page_uid
+        ifEmpty.ifEmpty.value = {$commune.search_page_uid}
+      }
 
       # Accessibilité RGAA
       communeRgaaTitre = TEXT
-      communeRgaaTitre.value = {$commune.rgaa_titre}
-      communeRgaaTitre.override.data = site:commune.rgaa_titre
+      communeRgaaTitre {
+        data = site:settings:commune.rgaa_titre
+        ifEmpty.data = site:settings.commune.rgaa_titre
+        ifEmpty.ifEmpty.value = {$commune.rgaa_titre}
+      }
 
       communeRgaaStatut = TEXT
-      communeRgaaStatut.value = {$commune.rgaa_statut}
-      communeRgaaStatut.override.data = site:commune.rgaa_statut
+      communeRgaaStatut {
+        data = site:settings:commune.rgaa_statut
+        ifEmpty.data = site:settings.commune.rgaa_statut
+        ifEmpty.ifEmpty.value = {$commune.rgaa_statut}
+      }
 
       communeRgaaTaux = TEXT
-      communeRgaaTaux.value = {$commune.rgaa_taux}
-      communeRgaaTaux.override.data = site:commune.rgaa_taux
+      communeRgaaTaux {
+        data = site:settings:commune.rgaa_taux
+        ifEmpty.data = site:settings.commune.rgaa_taux
+        ifEmpty.ifEmpty.value = {$commune.rgaa_taux}
+      }
 
       communeRgaaPageUid = TEXT
-      communeRgaaPageUid.value = {$commune.rgaa_page_uid}
-      communeRgaaPageUid.override.data = site:commune.rgaa_page_uid
+      communeRgaaPageUid {
+        data = site:settings:commune.rgaa_page_uid
+        ifEmpty.data = site:settings.commune.rgaa_page_uid
+        ifEmpty.ifEmpty.value = {$commune.rgaa_page_uid}
+      }
 
       # Pied de page
       communeFooterCol1Title = TEXT
-      communeFooterCol1Title.value = {$commune.footer_col1_title}
-      communeFooterCol1Title.override.data = site:commune.footer_col1_title
+      communeFooterCol1Title {
+        data = site:settings:commune.footer_col1_title
+        ifEmpty.data = site:settings.commune.footer_col1_title
+        ifEmpty.ifEmpty.value = {$commune.footer_col1_title}
+      }
 
       communeFooterContactBtnTitle = TEXT
-      communeFooterContactBtnTitle.value = {$commune.footer_contact_btn_title}
-      communeFooterContactBtnTitle.override.data = site:commune.footer_contact_btn_title
+      communeFooterContactBtnTitle {
+        data = site:settings:commune.footer_contact_btn_title
+        ifEmpty.data = site:settings.commune.footer_contact_btn_title
+        ifEmpty.ifEmpty.value = {$commune.footer_contact_btn_title}
+      }
 
       communeFooterContactPageUid = TEXT
-      communeFooterContactPageUid.value = {$commune.footer_contact_page_uid}
-      communeFooterContactPageUid.override.data = site:commune.footer_contact_page_uid
+      communeFooterContactPageUid {
+        data = site:settings:commune.footer_contact_page_uid
+        ifEmpty.data = site:settings.commune.footer_contact_page_uid
+        ifEmpty.ifEmpty.value = {$commune.footer_contact_page_uid}
+      }
 
       communeFooterCol2Title = TEXT
-      communeFooterCol2Title.value = {$commune.footer_col2_title}
-      communeFooterCol2Title.override.data = site:commune.footer_col2_title
+      communeFooterCol2Title {
+        data = site:settings:commune.footer_col2_title
+        ifEmpty.data = site:settings.commune.footer_col2_title
+        ifEmpty.ifEmpty.value = {$commune.footer_col2_title}
+      }
 
       communeFooterCol3Title = TEXT
-      communeFooterCol3Title.value = {$commune.footer_col3_title}
-      communeFooterCol3Title.override.data = site:commune.footer_col3_title
+      communeFooterCol3Title {
+        data = site:settings:commune.footer_col3_title
+        ifEmpty.data = site:settings.commune.footer_col3_title
+        ifEmpty.ifEmpty.value = {$commune.footer_col3_title}
+      }
 
       communeFooterMapImage = TEXT
-      communeFooterMapImage.value = {$commune.footer_map_image}
-      communeFooterMapImage.override.data = site:commune.footer_map_image
+      communeFooterMapImage {
+        data = site:settings:commune.footer_map_image
+        ifEmpty.data = site:settings.commune.footer_map_image
+        ifEmpty.ifEmpty.value = {$commune.footer_map_image}
+      }
 
       communeFooterMapPageUid = TEXT
-      communeFooterMapPageUid.value = {$commune.footer_map_page_uid}
-      communeFooterMapPageUid.override.data = site:commune.footer_map_page_uid
+      communeFooterMapPageUid {
+        data = site:settings:commune.footer_map_page_uid
+        ifEmpty.data = site:settings.commune.footer_map_page_uid
+        ifEmpty.ifEmpty.value = {$commune.footer_map_page_uid}
+      }
 
       communeFooterFolderUid = TEXT
-      communeFooterFolderUid.value = {$commune.footer_folder_uid}
-      communeFooterFolderUid.override.data = site:commune.footer_folder_uid
+      communeFooterFolderUid {
+        data = site:settings:commune.footer_folder_uid
+        ifEmpty.data = site:settings.commune.footer_folder_uid
+        ifEmpty.ifEmpty.value = {$commune.footer_folder_uid}
+      }
 
       # Réseaux sociaux et options d'affichage
       communeSocialFacebook = TEXT
-      communeSocialFacebook.value = {$commune.social_facebook}
-      communeSocialFacebook.override.data = site:commune.social_facebook
+      communeSocialFacebook {
+        data = site:settings:commune.social_facebook
+        ifEmpty.data = site:settings.commune.social_facebook
+        ifEmpty.ifEmpty.value = {$commune.social_facebook}
+      }
 
       communeSocialInstagram = TEXT
-      communeSocialInstagram.value = {$commune.social_instagram}
-      communeSocialInstagram.override.data = site:commune.social_instagram
+      communeSocialInstagram {
+        data = site:settings:commune.social_instagram
+        ifEmpty.data = site:settings.commune.social_instagram
+        ifEmpty.ifEmpty.value = {$commune.social_instagram}
+      }
 
       communeSocialTwitter = TEXT
-      communeSocialTwitter.value = {$commune.social_twitter}
-      communeSocialTwitter.override.data = site:commune.social_twitter
+      communeSocialTwitter {
+        data = site:settings:commune.social_twitter
+        ifEmpty.data = site:settings.commune.social_twitter
+        ifEmpty.ifEmpty.value = {$commune.social_twitter}
+      }
 
       communeSocialYoutube = TEXT
-      communeSocialYoutube.value = {$commune.social_youtube}
-      communeSocialYoutube.override.data = site:commune.social_youtube
+      communeSocialYoutube {
+        data = site:settings:commune.social_youtube
+        ifEmpty.data = site:settings.commune.social_youtube
+        ifEmpty.ifEmpty.value = {$commune.social_youtube}
+      }
 
       communeHeaderSocialEnable = TEXT
-      communeHeaderSocialEnable.value = {$commune.header_social_enable}
-      communeHeaderSocialEnable.override.data = site:commune.header_social_enable
+      communeHeaderSocialEnable {
+        data = site:settings:commune.header_social_enable
+        ifEmpty.data = site:settings.commune.header_social_enable
+        ifEmpty.ifEmpty.value = {$commune.header_social_enable}
+      }
 
       communeFooterSocialEnable = TEXT
-      communeFooterSocialEnable.value = {$commune.footer_social_enable}
-      communeFooterSocialEnable.override.data = site:commune.footer_social_enable
+      communeFooterSocialEnable {
+        data = site:settings:commune.footer_social_enable
+        ifEmpty.data = site:settings.commune.footer_social_enable
+        ifEmpty.ifEmpty.value = {$commune.footer_social_enable}
+      }
 
       communeHeaderLanguageEnable = TEXT
-      communeHeaderLanguageEnable.value = {$commune.header_language_enable}
-      communeHeaderLanguageEnable.override.data = site:commune.header_language_enable
+      communeHeaderLanguageEnable {
+        data = site:settings:commune.header_language_enable
+        ifEmpty.data = site:settings.commune.header_language_enable
+        ifEmpty.ifEmpty.value = {$commune.header_language_enable}
+      }
 
       communeHeaderLanguagePosition = TEXT
-      communeHeaderLanguagePosition.value = {$commune.header_language_position}
-      communeHeaderLanguagePosition.override.data = site:commune.header_language_position
+      communeHeaderLanguagePosition {
+        data = site:settings:commune.header_language_position
+        ifEmpty.data = site:settings.commune.header_language_position
+        ifEmpty.ifEmpty.value = {$commune.header_language_position}
+      }
 
       # Rendu standard direct et robuste de toutes les colonnes de contenu TYPO3
       emergencyAlertContent = CONTENT
