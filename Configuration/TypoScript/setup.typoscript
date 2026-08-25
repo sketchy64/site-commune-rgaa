@@ -160,6 +160,14 @@ page {
         ifEmpty.ifEmpty.value = {$commune.color_scheme_css}
       }
 
+      # Activer le sélecteur de thème & couleurs en frontend (Live Preview)
+      communeEnableThemeSwitcher = TEXT
+      communeEnableThemeSwitcher {
+        data = site:settings:commune.enable_theme_switcher
+        ifEmpty.data = site:settings.commune.enable_theme_switcher
+        ifEmpty.ifEmpty.value = {$commune.enable_theme_switcher}
+      }
+
       # Logo et personnalisation de marque
       communeLogoFile = TEXT
       communeLogoFile.value = {$commune.logo_file}

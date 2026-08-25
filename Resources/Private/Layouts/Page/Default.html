@@ -55,7 +55,9 @@
         </svg>
     </button>
 
-    <!-- Panneau Admin flottant de sélection du thème et des couleurs (Visible uniquement si connecté en Admin BE) -->
-    <f:render partial="Structure/AdminThemeSwitcher" arguments="{_all}" />
+    <!-- Panneau flottant de sélection du thème et des couleurs en direct (Activé par la constante TypoScript commune.enable_theme_switcher) -->
+    <f:if condition="{communeEnableThemeSwitcher} == 1 || {communeEnableThemeSwitcher} == 'true'">
+        <f:render partial="Structure/AdminThemeSwitcher" arguments="{_all}" />
+    </f:if>
 </div>
 </html>

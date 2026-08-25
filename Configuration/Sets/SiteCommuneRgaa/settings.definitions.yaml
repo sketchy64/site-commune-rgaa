@@ -135,6 +135,13 @@ settings:
       - 'EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-2.css'
       - 'EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-3.css'
 
+  commune.enable_theme_switcher:
+    label: 'Activer le sélecteur de thème & couleurs sur le frontend (Live Preview)'
+    description: 'Affiche un panneau flottant sur toutes les pages frontend permettant de tester en direct les différents thèmes et jeux de couleurs.'
+    category: commune_theme
+    type: bool
+    default: true
+
   # ============================================================================
   # 2. IDENTITÉ & MARQUE : LOGO & EN-TÊTE
   # ============================================================================

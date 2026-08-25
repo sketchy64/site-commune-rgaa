@@ -41,6 +41,9 @@ commune {
   # cat=commune_root/commune_theme/020; type=options[Jeu de couleurs 1 (Vert Institutionnel & Or)=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css, Jeu de couleurs 2 (Bleu Océan & Sable)=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-2.css, Jeu de couleurs 3 (Ardoise Montagne & Terracotta)=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-3.css]; label=Jeu de couleurs institutionnel
   color_scheme_css = EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css
 
+  # cat=commune_root/commune_theme/030; type=boolean; label=Activer le sélecteur de thème & couleurs en frontend (Live Preview)
+  enable_theme_switcher = 1
+
   # cat=commune_root/commune_identity/010; type=string; label=Chemin du logo
   logo_file = 
   # cat=commune_root/commune_identity/020; type=int+; label=Hauteur du logo (px)
