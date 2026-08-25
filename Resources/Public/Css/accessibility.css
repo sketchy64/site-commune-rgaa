@@ -751,6 +751,51 @@ body.a11y-high-contrast .commune-language-menu .language-icon-btn.active::after 
   border-color: #000000 !important;
 }
 
+/* ==========================================================================
+   Support RGAA 4.1 : Réduction de mouvement & Contraste Élevé pour Carrousel
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .commune-news-carousel .carousel-item {
+    transition: none !important;
+  }
 
+  .commune-carousel-slide .carousel-slide-image {
+    transition: none !important;
+    transform: none !important;
+  }
+}
 
+body.a11y-high-contrast .commune-news-carousel {
+  background-color: #000000 !important;
+  border: 2px solid #ffffff !important;
+}
 
+body.a11y-high-contrast .commune-news-carousel .carousel-header-controls {
+  background-color: #000000 !important;
+  border-bottom: 2px solid #ffffff !important;
+}
+
+body.a11y-high-contrast .commune-news-carousel .carousel-indicator-bullet {
+  background-color: #ffffff !important;
+  border: 1px solid #000000 !important;
+}
+
+body.a11y-high-contrast .commune-news-carousel .carousel-indicator-bullet.active {
+  background-color: #ffff00 !important;
+  border: 2px solid #ffffff !important;
+}
+
+body.a11y-high-contrast .commune-carousel-slide {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+body.a11y-high-contrast .commune-carousel-slide .news-title-link {
+  color: #ffff00 !important;
+}
+
+body.a11y-high-contrast .commune-carousel-slide .commune-carousel-btn {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+  border: 2px solid #ffffff !important;
+}

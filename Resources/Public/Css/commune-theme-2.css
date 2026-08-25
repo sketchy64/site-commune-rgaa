@@ -1364,21 +1364,28 @@ article.commune-news-card img,
   border-bottom: 1px solid var(--commune-shadow-primary);
 }
 
+.commune-news-carousel-wrapper {
+  position: relative;
+}
+
 .commune-news-carousel {
   border: 1px solid var(--commune-shadow-primary);
   border-radius: 0 !important;
+  box-shadow: none;
 }
 
-.commune-news-carousel .carousel-accessibility-header {
+.commune-news-carousel .carousel-header-controls {
   background-color: var(--commune-bg-subtle);
-  border-color: var(--commune-shadow-primary) !important;
+  border-bottom: 1px solid var(--commune-shadow-primary) !important;
+  border-radius: 0 !important;
 }
 
+/* Indicateurs de type Bootstrap Package pour Thème 2 */
 .commune-news-carousel .carousel-indicators-custom .carousel-indicator-bullet {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 0 !important;
-  border: none;
+  border: 2px solid transparent;
   background-color: var(--commune-shadow-primary);
   padding: 0;
   cursor: pointer;
@@ -1386,30 +1393,106 @@ article.commune-news-card img,
 }
 
 .commune-news-carousel .carousel-indicators-custom .carousel-indicator-bullet.active {
-  width: 32px;
+  width: 36px;
   background-color: var(--commune-primary);
+  border-color: var(--commune-primary);
 }
 
 .commune-news-carousel .carousel-indicators-custom .carousel-indicator-bullet:hover:not(.active) {
   background-color: var(--commune-secondary);
 }
 
-.commune-news-carousel .carousel-controls-group .carousel-play-pause-btn {
-  font-size: 0.8rem;
-  border-color: var(--commune-shadow-primary);
-  color: var(--commune-primary);
+.commune-news-carousel .carousel-indicators-custom .carousel-indicator-bullet:focus-visible {
+  outline: 3px solid var(--commune-focus-outer-color, #ffbf00) !important;
+  outline-offset: 2px;
 }
 
-.commune-news-carousel .carousel-controls-group .carousel-play-pause-btn:hover {
+/* Boutons de contrôle (Pause / Navigation Flèches) Thème 2 */
+.commune-news-carousel .carousel-actions-group .carousel-play-pause-btn {
+  font-size: 0.85rem;
+  border-color: var(--commune-shadow-primary);
+  color: var(--commune-primary);
+  border-radius: 0 !important;
+  transition: all 0.2s ease;
+}
+
+.commune-news-carousel .carousel-actions-group .carousel-play-pause-btn:hover {
   background-color: var(--commune-primary);
   color: var(--commune-bg-main);
 }
 
+.commune-news-carousel .carousel-nav-btn-group .btn {
+  border-color: var(--commune-shadow-primary);
+  color: var(--commune-primary);
+  border-radius: 0 !important;
+  transition: all 0.2s ease;
+}
+
+.commune-news-carousel .carousel-nav-btn-group .btn:hover {
+  background-color: var(--commune-primary);
+  color: var(--commune-bg-main);
+  border-color: var(--commune-primary);
+}
+
+/* Slide Card "À la une" Thème 2 */
+.commune-carousel-slide {
+  background-color: var(--commune-bg-main);
+  border-radius: 0 !important;
+}
+
 .commune-carousel-slide .carousel-media-wrapper {
-  min-height: 340px;
+  min-height: 380px;
   height: 100%;
   background-color: var(--commune-bg-light);
   overflow: hidden;
+  border-radius: 0 !important;
+}
+
+.commune-carousel-slide .carousel-slide-image {
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  border-radius: 0 !important;
+}
+
+.commune-carousel-slide:hover .carousel-slide-image {
+  transform: scale(1.04);
+}
+
+.commune-carousel-slide .news-category-badge {
+  background-color: var(--commune-primary);
+  color: var(--commune-bg-main);
+  border-radius: 0 !important;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.commune-carousel-slide .news-title-link {
+  color: var(--commune-text-main, #1a1a1a);
+  transition: color 0.2s ease;
+}
+
+.commune-carousel-slide .news-title-link:hover,
+.commune-carousel-slide .news-title-link:focus {
+  color: var(--commune-primary);
+  text-decoration: underline !important;
+}
+
+.commune-carousel-slide .commune-carousel-btn {
+  border-radius: 0 !important;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.commune-carousel-slide .commune-carousel-btn:hover {
+  background-color: var(--commune-secondary);
+  border-color: var(--commune-secondary);
+}
+
+@media (max-width: 767.98px) {
+  .commune-carousel-slide .carousel-media-wrapper {
+    height: 240px;
+    min-height: 240px;
+  }
 }
 
 .commune-carousel-slide .carousel-slide-image {
