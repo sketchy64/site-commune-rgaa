@@ -122,7 +122,6 @@ settings:
     default: 'EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css'
     enum:
       - 'EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css'
-      - 'EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-3.css'
       - ''
 
   commune.color_scheme_css:

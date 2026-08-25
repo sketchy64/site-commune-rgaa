@@ -35,7 +35,7 @@ commune {
   # customsubcategory=commune_social=10. Réseaux sociaux
   # customsubcategory=commune_language=11. Sélecteur de langues
   
-  # cat=commune_root/commune_theme/010; type=options[Thème 1 - Style classique (Ombres & Arrondis)=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css, Thème 3 - Style Eaux-Bonnes (Vallées & Thermal)=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-3.css, Bootstrap Package standard (Sans surcouche)=]; label=Thème graphique (style de la commune)
+  # cat=commune_root/commune_theme/010; type=options[Thème 1 - Style classique (Ombres & Arrondis)=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css, Bootstrap Package standard (Sans surcouche)=]; label=Thème graphique (style de la commune)
   theme_css = EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css
 
   # cat=commune_root/commune_theme/020; type=options[Jeu de couleurs 1 (Vert Institutionnel & Or)=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css, Jeu de couleurs 2 (Bleu Océan & Sable)=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-2.css, Jeu de couleurs 3 (Ardoise Montagne & Terracotta)=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-3.css]; label=Jeu de couleurs institutionnel
