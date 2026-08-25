@@ -4,26 +4,26 @@
 
 <!--
     OVERRIDE: EXT:news/Resources/Private/Partials/List/Carousel.html
-    REASON: RGAA 4.1 Compliance (Critères 1.1, 6.1, 12.8, 13.8) & Modern Municipality "À la une" Carousel Design
+    REASON: RGAA 4.1 Compliance & Sleek Municipality "À la une" Carousel Design
     TARGET EXT VERSION: news ^11.0 || ^12.0
 -->
 
 <f:variable name="carouselId" value="news-carousel-{f:if(condition: contentObjectData.uid, then: contentObjectData.uid, else: 'featured')}" />
 
-<div class="commune-news-carousel-wrapper position-relative my-3">
+<div class="commune-news-carousel-wrapper position-relative my-2">
     <div id="{carouselId}"
-         class="carousel slide commune-news-carousel shadow-sm rounded-4 overflow-hidden bg-white"
+         class="carousel slide commune-news-carousel"
          data-bs-ride="carousel"
          data-bs-interval="6000"
          role="region"
          aria-roledescription="carrousel"
          aria-label="{f:if(condition: settings.carouselAriaLabel, then: settings.carouselAriaLabel, else: 'Actualités à la une')}">
 
-        <!-- Barre supérieure de contrôle d'accessibilité & navigation -->
-        <div class="carousel-header-controls d-flex flex-wrap align-items-center justify-content-between px-3 px-md-4 py-2 bg-light border-bottom gap-2">
+        <!-- Barre supérieure de contrôle d'accessibilité & navigation (Épurée) -->
+        <div class="carousel-header-controls d-flex align-items-center justify-content-between py-2 mb-3 gap-3">
             
-            <!-- Indicateurs de diapositives de type Bootstrap Package -->
-            <div class="carousel-indicators-wrapper d-flex align-items-center gap-2">
+            <!-- Indicateurs & Compteur épurés -->
+            <div class="d-flex align-items-center gap-3">
                 <div class="carousel-indicators-custom d-flex align-items-center gap-2 mb-0" role="tablist" aria-label="Sélection des actualités">
                     <f:for each="{news}" as="newsItem" iteration="iterator">
                         <button type="button"
@@ -39,54 +39,52 @@
                     </f:for>
                 </div>
                 
-                <!-- Compteur de diapositives visible -->
-                <span class="carousel-slide-counter badge bg-white text-dark border ms-2 small d-none d-sm-inline-block" aria-hidden="true">
-                    <span class="carousel-counter-current">1</span> / <span class="carousel-counter-total">{news -> f:count()}</span>
+                <!-- Compteur typographique minimaliste -->
+                <span class="carousel-slide-counter small text-muted font-monospace" aria-hidden="true">
+                    <span class="carousel-counter-current fw-bold text-dark">01</span> / <span class="carousel-counter-total">{news -> f:count() -> f:format.printf(arguments: {0: '%02d'})}</span>
                 </span>
             </div>
 
-            <!-- Boutons de commande : Pause/Lecture (RGAA 13.8) & Flèches de défilement -->
+            <!-- Boutons de commande épurés (Pause + Flèches) -->
             <div class="carousel-actions-group d-flex align-items-center gap-2">
-                <!-- Bouton Pause/Lecture pour contrôle d'animation (RGAA 13.8) -->
+                <!-- Bouton Pause/Lecture (RGAA 13.8) -->
                 <button type="button"
-                        class="btn btn-sm btn-outline-secondary carousel-play-pause-btn d-inline-flex align-items-center gap-1 px-3 py-1"
+                        class="carousel-play-pause-btn btn-icon-only"
                         data-carousel-id="{carouselId}"
                         aria-pressed="false"
                         aria-label="Mettre en pause le défilement automatique du carrousel"
                         title="Mettre en pause le défilement automatique">
-                    <span class="btn-icon flex-shrink-0" aria-hidden="true">⏸</span>
-                    <span class="btn-text small fw-medium">Pause</span>
+                    <span class="btn-icon" aria-hidden="true">⏸</span>
+                    <span class="visually-hidden">Pause</span>
                 </button>
 
-                <!-- Boutons de navigation Flèche Gauche et Flèche Droite -->
-                <div class="btn-group btn-group-sm carousel-nav-btn-group" role="group" aria-label="Défiler les actualités">
-                    <button class="btn btn-outline-primary carousel-nav-prev d-inline-flex align-items-center justify-content-center p-2"
+                <!-- Boutons de navigation Flèches épurées -->
+                <div class="carousel-nav-controls d-flex align-items-center gap-1" role="group" aria-label="Défiler les actualités">
+                    <button class="carousel-nav-btn carousel-nav-prev"
                             type="button"
                             data-bs-target="#{carouselId}"
                             data-bs-slide="prev"
                             aria-label="Actualité précédente"
                             title="Actualité précédente">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <polyline points="15 18 9 12 15 6"></polyline>
                         </svg>
-                        <span class="visually-hidden">Actualité précédente</span>
                     </button>
-                    <button class="btn btn-outline-primary carousel-nav-next d-inline-flex align-items-center justify-content-center p-2"
+                    <button class="carousel-nav-btn carousel-nav-next"
                             type="button"
                             data-bs-target="#{carouselId}"
                             data-bs-slide="next"
                             aria-label="Actualité suivante"
                             title="Actualité suivante">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <span class="visually-hidden">Actualité suivante</span>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Diapositives du carrousel d'actualités -->
+        <!-- Diapositives du carrousel (Design Sur-mesure sans .card) -->
         <div class="carousel-inner">
             <f:for each="{news}" as="newsItem" iteration="iterator">
                 <div class="carousel-item {f:if(condition: iterator.isFirst, then: 'active')}"
@@ -94,18 +92,18 @@
                      aria-roledescription="diapositive"
                      aria-label="Actualité {iterator.cycle} sur {iterator.total} : {newsItem.title}">
                     
-                    <article class="commune-carousel-slide card border-0 h-100" aria-labelledby="carousel-news-title-{newsItem.uid}">
-                        <div class="row g-0 align-items-stretch">
-                            <!-- Bloc Image "À la une" -->
-                            <div class="col-md-5 col-lg-6 position-relative carousel-media-col">
-                                <div class="carousel-media-wrapper h-100 position-relative">
+                    <article class="commune-carousel-slide" aria-labelledby="carousel-news-title-{newsItem.uid}">
+                        <div class="row g-4 align-items-center">
+                            <!-- Bloc Media / Visual HD -->
+                            <div class="col-md-6 col-lg-7">
+                                <div class="carousel-media-container position-relative overflow-hidden">
                                     <f:if condition="{newsItem.mediaPreviews}">
                                         <f:then>
-                                            <f:media file="{newsItem.mediaPreviews.0}" width="750c" height="480c" class="carousel-slide-image img-fluid w-100 h-100" alt="{f:if(condition: newsItem.mediaPreviews.0.originalResource.alternative, then: newsItem.mediaPreviews.0.originalResource.alternative, else: newsItem.title)}" />
+                                            <f:media file="{newsItem.mediaPreviews.0}" width="800c" height="500c" class="carousel-slide-img img-fluid w-100 h-100" alt="{f:if(condition: newsItem.mediaPreviews.0.originalResource.alternative, then: newsItem.mediaPreviews.0.originalResource.alternative, else: newsItem.title)}" />
                                         </f:then>
                                         <f:else>
-                                            <div class="news-placeholder bg-light d-flex flex-column align-items-center justify-content-center h-100 py-5">
-                                                <svg class="text-muted opacity-50 mb-2" width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <div class="carousel-media-placeholder d-flex flex-column align-items-center justify-content-center py-5">
+                                                <svg class="text-muted opacity-40 mb-2" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                                     <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
                                                     <path d="M18 14h-8"/>
                                                     <path d="M15 18h-5"/>
@@ -116,21 +114,19 @@
                                         </f:else>
                                     </f:if>
 
-                                    <!-- Badge de catégorie -->
                                     <f:if condition="{newsItem.firstCategory}">
-                                        <span class="badge news-category-badge position-absolute top-0 start-0 m-3 shadow-sm px-3 py-2 fs-6">
+                                        <span class="carousel-category-tag position-absolute top-0 start-0 m-3 px-3 py-1">
                                             {newsItem.firstCategory.title}
                                         </span>
                                     </f:if>
                                 </div>
                             </div>
 
-                            <!-- Bloc Contenu texte -->
-                            <div class="col-md-7 col-lg-6 d-flex flex-column carousel-content-col">
-                                <div class="card-body p-4 p-lg-5 d-flex flex-column flex-grow-1 justify-content-center">
-                                    <!-- Date de publication -->
-                                    <div class="news-meta text-muted small mb-3 d-flex align-items-center gap-2">
-                                        <svg class="news-calendar-icon flex-shrink-0 text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <!-- Bloc Content / Typographies aérées -->
+                            <div class="col-md-6 col-lg-5">
+                                <div class="carousel-content-container p-2 p-lg-4 d-flex flex-column justify-content-center h-100">
+                                    <div class="carousel-date-meta mb-2 small d-flex align-items-center gap-2">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                                             <line x1="16" y1="2" x2="16" y2="6"></line>
                                             <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -141,32 +137,30 @@
                                         </time>
                                     </div>
 
-                                    <!-- Titre de l'actualité -->
-                                    <h3 id="carousel-news-title-{newsItem.uid}" class="h3 card-title fw-bold mb-3">
-                                        <n:link newsItem="{newsItem}" settings="{settings}" class="news-title-link text-decoration-none">
+                                    <h3 id="carousel-news-title-{newsItem.uid}" class="commune-carousel-title mb-3">
+                                        <n:link newsItem="{newsItem}" settings="{settings}" class="carousel-title-link">
                                             {newsItem.title}
                                         </n:link>
                                     </h3>
 
-                                    <!-- Chapeau / Teaser -->
-                                    <div class="card-text text-muted mb-4 fs-6 lh-base">
+                                    <p class="commune-carousel-teaser mb-4">
                                         <f:if condition="{newsItem.teaser}">
                                             <f:then>
-                                                {newsItem.teaser -> f:format.crop(maxCharacters: '240', respectWordBoundaries: '1')}
+                                                {newsItem.teaser -> f:format.crop(maxCharacters: '220', respectWordBoundaries: '1')}
                                             </f:then>
                                             <f:else>
-                                                {newsItem.bodytext -> f:format.stripTags() -> f:format.crop(maxCharacters: '240', respectWordBoundaries: '1')}
+                                                {newsItem.bodytext -> f:format.stripTags() -> f:format.crop(maxCharacters: '220', respectWordBoundaries: '1')}
                                             </f:else>
                                         </f:if>
-                                    </div>
+                                    </p>
 
-                                    <!-- Bouton d'action avec libellé explicite RGAA -->
-                                    <div class="pt-2 mt-auto">
-                                        <n:link newsItem="{newsItem}" settings="{settings}" class="btn btn-primary commune-carousel-btn d-inline-flex align-items-center gap-2 px-4 py-2 text-decoration-none fw-semibold">
+                                    <div>
+                                        <n:link newsItem="{newsItem}" settings="{settings}" class="commune-carousel-action-btn d-inline-flex align-items-center gap-2">
                                             <span>Lire la suite</span>
                                             <span class="visually-hidden"> concernant l'actualité : {newsItem.title}</span>
-                                            <svg class="news-btn-icon flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                <polyline points="12 5 19 12 12 19"></polyline>
                                             </svg>
                                         </n:link>
                                     </div>
