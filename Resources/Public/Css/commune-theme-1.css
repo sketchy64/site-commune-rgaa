@@ -1357,7 +1357,8 @@ article.commune-news-card img,
 .commune-news-carousel {
   border: none;
   background: transparent;
-  box-shadow: none;
+  box-shadow: none !important;
+  margin: 0 !important;
 }
 
 /* Barre de contrôle supérieure épurée */
@@ -1432,7 +1433,6 @@ article.commune-news-card img,
   border-radius: 16px !important;
   border: 1px solid var(--commune-shadow-primary, rgba(0, 0, 0, 0.08)) !important;
   box-shadow: none;
-  margin: 0;
   overflow: hidden;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
