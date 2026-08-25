@@ -42,6 +42,8 @@ class SiteSettingViewHelper extends AbstractViewHelper
             return $default;
         }
 
+        $rawValue = null;
+
         // 1. Recherche via l'objet SiteSettings
         if (method_exists($site, 'getSettings')) {
             $settings = $site->getSettings();
@@ -50,50 +52,72 @@ class SiteSettingViewHelper extends AbstractViewHelper
             if (method_exists($settings, 'get')) {
                 $val = $settings->get($key);
                 if ($val !== null && $val !== '') {
-                    return $val;
+                    $rawValue = $val;
                 }
             }
 
             // b. Accès par sous-tableau (ex: get('commune')['header_layout'])
-            if (str_contains($key, '.') && method_exists($settings, 'get')) {
+            if ($rawValue === null && str_contains($key, '.') && method_exists($settings, 'get')) {
                 $parts = explode('.', $key, 2);
                 $section = $settings->get($parts[0]);
                 if (is_array($section)) {
                     $val = $this->getValueByDotPath($section, $parts[1]);
                     if ($val !== null && $val !== '') {
-                        return $val;
+                        $rawValue = $val;
                     }
                 }
             }
 
             // c. Parcours de l'ensemble des réglages si getAll() disponible
-            if (method_exists($settings, 'getAll')) {
+            if ($rawValue === null && method_exists($settings, 'getAll')) {
                 $all = $settings->getAll();
                 if (is_array($all)) {
                     $val = $this->getValueByDotPath($all, $key);
                     if ($val !== null && $val !== '') {
-                        return $val;
+                        $rawValue = $val;
                     }
                 }
             }
         }
 
         // 2. Recherche directe dans la configuration brute du site (Fallback)
-        if (method_exists($site, 'getConfiguration')) {
+        if ($rawValue === null && method_exists($site, 'getConfiguration')) {
             $config = $site->getConfiguration();
             if (isset($config['settings']) && is_array($config['settings'])) {
                 $val = $this->getValueByDotPath($config['settings'], $key);
                 if ($val !== null && $val !== '') {
-                    return $val;
+                    $rawValue = $val;
                 }
             }
-            $val = $this->getValueByDotPath($config, $key);
-            if ($val !== null && $val !== '') {
-                return $val;
+            if ($rawValue === null) {
+                $val = $this->getValueByDotPath($config, $key);
+                if ($val !== null && $val !== '') {
+                    $rawValue = $val;
+                }
             }
         }
 
-        return $default;
+        $normalized = $this->normalizeSettingValue($key, $rawValue);
+        return $normalized !== null ? $normalized : $default;
+    }
+
+    /**
+     * Normalise les valeurs d'énumération TYPO3 (0/1 -> standard/integrated)
+     */
+    private function normalizeSettingValue(string $key, mixed $value): mixed
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+        if ($key === 'commune.header_layout') {
+            if ($value === '1' || $value === 1 || $value === 'integrated') {
+                return 'integrated';
+            }
+            if ($value === '0' || $value === 0 || $value === 'standard') {
+                return 'standard';
+            }
+        }
+        return $value;
     }
 
     /**

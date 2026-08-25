@@ -3,8 +3,8 @@
 
 <!-- [DEBUG TYPO3 SITE SETTINGS] communeHeaderLayout: "{communeHeaderLayout}" -->
 <!-- En-tête institutionnel républicain (Landmark role="banner") -->
-<header id="main-header" class="commune-header bg-white header-layout-{f:if(condition: communeHeaderLayout, then: communeHeaderLayout, else: 'standard')}" role="banner">
-    <f:if condition="{communeHeaderLayout} != 'integrated'">
+<header id="main-header" class="commune-header bg-white header-layout-{f:if(condition: '{communeHeaderLayout} == \'integrated\' || {communeHeaderLayout} == 1', then: 'integrated', else: 'standard')}" role="banner">
+    <f:if condition="{communeHeaderLayout} != 'integrated' && {communeHeaderLayout} != '1'">
         <div class="container py-3 commune-header-top">
             <f:variable name="showSocialHeader" value="0" />
             <f:if condition="{communeHeaderSocialEnable}">

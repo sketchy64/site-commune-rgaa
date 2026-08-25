@@ -2,11 +2,11 @@
       data-namespace-typo3-fluid="true">
 
 <!-- Menu principal de navigation (Landmark role="navigation") -->
-<nav id="main-navigation" class="navbar navbar-expand-lg navbar-dark bg-primary-commune py-0 position-relative header-layout-{f:if(condition: communeHeaderLayout, then: communeHeaderLayout, else: 'standard')}" role="navigation" aria-label="{f:translate(key: 'nav.main', extensionName: 'site_commune_rgaa')}">
+<nav id="main-navigation" class="navbar navbar-expand-lg navbar-dark bg-primary-commune py-0 position-relative header-layout-{f:if(condition: '{communeHeaderLayout} == \'integrated\' || {communeHeaderLayout} == 1', then: 'integrated', else: 'standard')}" role="navigation" aria-label="{f:translate(key: 'nav.main', extensionName: 'site_commune_rgaa')}">
     <div class="container position-relative d-flex align-items-center flex-wrap flex-lg-nowrap">
         
         <!-- En mode Intégré : Logo + Nom + Slogan à gauche de la barre de menu -->
-        <f:if condition="{communeHeaderLayout} == 'integrated'">
+        <f:if condition="{communeHeaderLayout} == 'integrated' || {communeHeaderLayout} == '1'">
             <f:link.page pageUid="{f:if(condition: site.rootPageId, then: site.rootPageId, else: 1)}" class="navbar-brand text-decoration-none d-flex align-items-center gap-2 py-2 text-white commune-brand-inline me-lg-4" title="Retour à la page d'accueil de {communeNom}">
                 <div class="commune-logo-wrapper" aria-hidden="true">
                     <f:if condition="{communeLogoFile}">
@@ -52,7 +52,7 @@
 
         <!-- Sélecteur de langue dans la barre de navigation (si mode intégré ou position = menu) -->
         <f:if condition="{communeHeaderLanguageEnable} && {languageNavigation}">
-            <f:if condition="{communeHeaderLayout} == 'integrated' || {communeHeaderLanguagePosition} == 'menu'">
+            <f:if condition="{communeHeaderLayout} == 'integrated' || {communeHeaderLayout} == '1' || {communeHeaderLanguagePosition} == 'menu'">
                 <div class="d-flex align-items-center commune-menu-language-wrapper py-2 me-2">
                     <f:render partial="Navigation/LanguageMenu" arguments="{languageNavigation: languageNavigation}" />
                 </div>
@@ -60,7 +60,7 @@
         </f:if>
 
         <!-- Bouton icône de recherche à droite du menu (affiché uniquement en mode intégré) -->
-        <f:if condition="{communeHeaderLayout} == 'integrated'">
+        <f:if condition="{communeHeaderLayout} == 'integrated' || {communeHeaderLayout} == '1'">
             <div class="d-flex align-items-center ms-auto ms-lg-2 commune-menu-search-wrapper py-2 me-2 me-lg-0">
                 <button class="btn btn-outline-light btn-sm px-3 py-2 d-flex align-items-center gap-2 btn-menu-search"
                         type="button"
@@ -81,7 +81,7 @@
     </div>
 
     <!-- Zone / Volet de recherche escamotable sous le menu -->
-    <f:if condition="{communeHeaderLayout} == 'integrated'">
+    <f:if condition="{communeHeaderLayout} == 'integrated' || {communeHeaderLayout} == '1'">
         <div class="collapse commune-menu-search-overlay bg-white border-bottom shadow-lg position-absolute top-100 start-0 w-100" id="menu-search-collapse" style="z-index: 1050;">
             <div class="container py-3">
                 <form id="menu-search-form" class="commune-search-form m-0" role="search" method="get" action="{f:uri.page(pageUid: communeSearchPageUid)}">

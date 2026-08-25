@@ -4,6 +4,10 @@
 
 <!-- Chargement dynamique de la disposition de l'en-tête et des paramètres de marque (Paramètres de site ou Constantes) -->
 <f:variable name="communeHeaderLayout" value="{rgaa:siteSetting(key: 'commune.header_layout', default: communeHeaderLayout)}" />
+<f:if condition="{communeHeaderLayout} == '1' || {communeHeaderLayout} == 'integrated'">
+    <f:then><f:variable name="communeHeaderLayout" value="integrated" /></f:then>
+    <f:else><f:variable name="communeHeaderLayout" value="standard" /></f:else>
+</f:if>
 <f:variable name="communeLogoFile" value="{rgaa:siteSetting(key: 'commune.logo_file', default: communeLogoFile)}" />
 <f:variable name="communeLogoHeight" value="{rgaa:siteSetting(key: 'commune.logo_height', default: communeLogoHeight)}" />
 <f:variable name="communeNom" value="{rgaa:siteSetting(key: 'commune.nom', default: communeNom)}" />

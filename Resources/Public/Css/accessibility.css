@@ -339,13 +339,14 @@ body.a11y-high-contrast .commune-news-pagination .page-link:hover {
 /* Centrage du menu principal par défaut sur Desktop */
 @media (min-width: 992px) {
   #main-navigation.header-layout-standard .navbar-nav,
-  #main-navigation:not(.header-layout-integrated) .navbar-nav {
+  #main-navigation:not(.header-layout-integrated):not(.header-layout-1) .navbar-nav {
     margin-left: auto !important;
     margin-right: auto !important;
     justify-content: center;
   }
 
-  #main-navigation.header-layout-integrated .navbar-nav {
+  #main-navigation.header-layout-integrated .navbar-nav,
+  #main-navigation.header-layout-1 .navbar-nav {
     margin-left: auto !important;
     margin-right: 0 !important;
     justify-content: flex-end;
@@ -353,19 +354,23 @@ body.a11y-high-contrast .commune-news-pagination .page-link:hover {
 }
 
 /* En-tête en mode Intégré (Logo + Slogan dans la barre de menu) */
-#main-navigation.header-layout-integrated .commune-brand-inline {
+#main-navigation.header-layout-integrated .commune-brand-inline,
+#main-navigation.header-layout-1 .commune-brand-inline {
   flex-shrink: 0;
 }
 
-#main-navigation.header-layout-integrated .navbar-collapse {
+#main-navigation.header-layout-integrated .navbar-collapse,
+#main-navigation.header-layout-1 .navbar-collapse {
   flex-grow: 1;
 }
 
-#main-navigation.header-layout-integrated .commune-menu-search-wrapper {
+#main-navigation.header-layout-integrated .commune-menu-search-wrapper,
+#main-navigation.header-layout-1 .commune-menu-search-wrapper {
   flex-shrink: 0;
 }
 
-#main-navigation.header-layout-integrated .commune-brand-inline:focus-visible {
+#main-navigation.header-layout-integrated .commune-brand-inline:focus-visible,
+#main-navigation.header-layout-1 .commune-brand-inline:focus-visible {
   outline: 3px solid #ffffff !important;
   outline-offset: 2px;
   border-radius: 4px;
