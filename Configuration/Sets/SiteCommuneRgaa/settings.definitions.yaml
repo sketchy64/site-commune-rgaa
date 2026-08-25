@@ -182,13 +182,6 @@ settings:
       - 'standard'
       - 'integrated'
 
-  commune.header_menu_search_enable:
-    label: 'Afficher le bouton de recherche à droite du menu principal'
-    description: 'Affiche une icône/bouton de recherche à droite du menu principal permettant d''ouvrir un volet de recherche au clic.'
-    category: commune_identity_logo
-    type: bool
-    default: true
-
   # ============================================================================
   # 2. IDENTITÉ & MARQUE : NOM & DEVISE
   # ============================================================================

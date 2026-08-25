@@ -54,8 +54,6 @@ commune {
   header_hide_slogan = 0
   # cat=commune_root/commune_identity/045; type=options[Standard (Logo/slogan/recherche dans l'en-tête, menu centré)=standard, Intégré (Logo/slogan à gauche du menu, menu à droite)=integrated]; label=Disposition de l'en-tête et du menu
   header_layout = standard
-  # cat=commune_root/commune_identity/046; type=boolean; label=Afficher le bouton de recherche à droite du menu principal
-  header_menu_search_enable = 1
 
   # cat=commune_root/commune_identity/050; type=string; label=Nom officiel de la commune
   nom = Mairie de Notre-Commune

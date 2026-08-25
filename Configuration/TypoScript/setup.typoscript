@@ -199,16 +199,10 @@ page {
 
       communeHeaderLayout = TEXT
       communeHeaderLayout {
-        data = site:settings:commune.header_layout
-        ifEmpty.data = site:settings.commune.header_layout
-        ifEmpty.ifEmpty.value = {$commune.header_layout}
-      }
-
-      communeHeaderMenuSearchEnable = TEXT
-      communeHeaderMenuSearchEnable {
-        data = site:settings:commune.header_menu_search_enable
-        ifEmpty.data = site:settings.commune.header_menu_search_enable
-        ifEmpty.ifEmpty.value = {$commune.header_menu_search_enable}
+        data = site:settings:commune:header_layout
+        ifEmpty.data = site:settings:commune.header_layout
+        ifEmpty.ifEmpty.data = site:settings.commune.header_layout
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.header_layout}
       }
 
       # Données de la commune
