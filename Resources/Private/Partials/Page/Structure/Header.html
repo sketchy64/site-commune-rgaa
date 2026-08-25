@@ -1,6 +1,7 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
+<!-- [DEBUG TYPO3 SITE SETTINGS] communeHeaderLayout: "{communeHeaderLayout}" -->
 <!-- En-tête institutionnel républicain (Landmark role="banner") -->
 <header id="main-header" class="commune-header bg-white header-layout-{f:if(condition: communeHeaderLayout, then: communeHeaderLayout, else: 'standard')}" role="banner">
     <f:if condition="{communeHeaderLayout} != 'integrated'">
