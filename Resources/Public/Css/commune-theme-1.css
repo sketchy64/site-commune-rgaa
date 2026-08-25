@@ -1357,12 +1357,12 @@ article.commune-news-card img,
 .commune-news-carousel {
   border: none;
   background: transparent;
+  box-shadow: none;
 }
 
 /* Barre de contrôle supérieure épurée */
 .commune-news-carousel .carousel-header-controls {
   background-color: transparent;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   padding: 0.5rem 0;
 }
 
@@ -1431,7 +1431,7 @@ article.commune-news-card img,
   background-color: var(--commune-bg-main, #ffffff);
   border-radius: 16px !important;
   border: 1px solid var(--commune-shadow-primary, rgba(0, 0, 0, 0.08)) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+  box-shadow: none;
   overflow: hidden;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }

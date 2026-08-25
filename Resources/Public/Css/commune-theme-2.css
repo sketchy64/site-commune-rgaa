@@ -1371,12 +1371,12 @@ article.commune-news-card img,
 .commune-news-carousel {
   border: none;
   background: transparent;
+  box-shadow: none;
 }
 
 /* Barre de contrôle supérieure épurée */
 .commune-news-carousel .carousel-header-controls {
   background-color: transparent;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   padding: 0.5rem 0;
 }
 
