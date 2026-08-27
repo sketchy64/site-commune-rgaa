@@ -42,7 +42,7 @@ class PwaMiddleware implements MiddlewareInterface
 
         // 4. API de Test de Notification Push (/api/pwa/test-notification)
         if ($path === '/api/pwa/test-notification') {
-            return $this->handleTestNotificationRequest();
+            return $this->handleTestNotificationRequest($request);
         }
 
         return $handler->handle($request);
@@ -166,8 +166,20 @@ class PwaMiddleware implements MiddlewareInterface
         return new JsonResponse(['error' => 'Method not allowed'], 405);
     }
 
-    private function handleTestNotificationRequest(): ResponseInterface
+    private function handleTestNotificationRequest(ServerRequestInterface $request): ResponseInterface
     {
+        $queryParams = $request->getQueryParams();
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable('tx_sitecommunergaa_push_subscription');
+
+        // Réactivation optionnelle des abonnements masqués via ?reactivate=1
+        if (!empty($queryParams['reactivate'])) {
+            $connection->update('tx_sitecommunergaa_push_subscription', ['hidden' => 0], ['hidden' => 1]);
+        }
+
+        $totalCount = (int)$connection->select(['COUNT(*)'], 'tx_sitecommunergaa_push_subscription')->fetchOne();
+        $activeCount = (int)$connection->select(['COUNT(*)'], 'tx_sitecommunergaa_push_subscription', ['hidden' => 0])->fetchOne();
+
         $webPushService = $this->webPushService ?? GeneralUtility::makeInstance(WebPushService::class);
         $sentCount = $webPushService->notifyAllSubscribers(
             'Mairie : Test de Notification Push',
@@ -175,12 +187,20 @@ class PwaMiddleware implements MiddlewareInterface
             '/'
         );
 
+        $message = $sentCount > 0
+            ? 'Notification de test envoyée avec succès à ' . $sentCount . ' abonné(s).'
+            : ($activeCount === 0
+                ? ($totalCount > 0
+                    ? 'Aucun abonné actif (' . $totalCount . ' abonnement(s) masqué(s) en base). Ajoutez ?reactivate=1 ou réactivez sur le site.'
+                    : 'Aucun abonné enregistré en base. Veuillez cliquer sur "Activer les notifications" sur le site.')
+                : 'Échec de la livraison de la notification push aux abonnés actifs.');
+
         return new JsonResponse([
             'success' => true,
             'sent' => $sentCount,
-            'message' => $sentCount > 0
-                ? 'Notification de test envoyée avec succès à ' . $sentCount . ' abonné(s).'
-                : 'Aucun abonné actif trouvé ou échec de la livraison.'
+            'active_subscriptions' => $activeCount,
+            'total_subscriptions' => $totalCount,
+            'message' => $message
         ]);
     }
 }
