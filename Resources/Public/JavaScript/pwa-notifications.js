@@ -58,7 +58,11 @@
   window.CommuneApp = {
     getVapidPublicKey: function () {
       const meta = document.querySelector('meta[name="pwa-vapid-public-key"]');
-      return meta ? meta.getAttribute('content') : 'BLQcfzIu2XgG6fT4vVsRY6BYy1LgVkyKH8XYYJajIUts74MKtdOlZOZt2ZCs62LmUIUnaunEZPevfxIxIHzn_iY';
+      const val = meta ? (meta.getAttribute('content') || '').trim() : '';
+      if (val && val.length > 20) {
+        return val;
+      }
+      return 'BLQcfzIu2XgG6fT4vVsRY6BYy1LgVkyKH8XYYJajIUts74MKtdOlZOZt2ZCs62LmUIUnaunEZPevfxIxIHzn_iY';
     },
 
     subscribeUserToPush: function (registration) {
