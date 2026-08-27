@@ -84,7 +84,8 @@ class WebPushService
     public function notifyAllSubscribers(string $title, string $body, string $url = '/', string $icon = '/_assets/site_commune_rgaa/Icons/pwa-192x192.png'): int
     {
         $connection = $this->connectionPool->getConnectionForTable('tx_sitecommunergaa_push_subscription');
-        $subscriptions = $connection->selectAll(
+        $subscriptions = $connection->select(
+            ['*'],
             'tx_sitecommunergaa_push_subscription',
             ['hidden' => 0]
         )->fetchAllAssociative();
