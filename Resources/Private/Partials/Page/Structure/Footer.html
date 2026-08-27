@@ -16,32 +16,32 @@
                 <address class="mb-3 text-light-50">
                     <p class="mb-2"><strong>{communeNom}</strong></p>
                     
-                    <!-- Adresse avec icône dorée -->
+                    <!-- Adresse avec icône dorée/secondaire -->
                     <p class="mb-2 d-flex align-items-start gap-2">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F5B21E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--commune-secondary, currentColor)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1 commune-footer-svg" aria-hidden="true">
                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                             <circle cx="12" cy="10" r="3"></circle>
                         </svg>
                         <span>{communeAdresse}</span>
                     </p>
 
-                    <!-- Téléphone avec icône dorée -->
+                    <!-- Téléphone avec icône dorée/secondaire -->
                     <p class="mb-2 d-flex align-items-center gap-2">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F5B21E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--commune-secondary, currentColor)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 commune-footer-svg" aria-hidden="true">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                         </svg>
-                        <a href="tel:{communeTelephone}" class="text-white text-decoration-none">
+                        <a href="tel:{communeTelephone}" class="commune-footer-link text-decoration-none">
                             <span class="visually-hidden">Téléphoner à la mairie : </span>{communeTelephone}
                         </a>
                     </p>
 
-                    <!-- Courriel avec icône dorée -->
+                    <!-- Courriel avec icône dorée/secondaire -->
                     <p class="mb-2 d-flex align-items-center gap-2">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F5B21E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--commune-secondary, currentColor)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 commune-footer-svg" aria-hidden="true">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                             <polyline points="22,6 12,13 2,6"></polyline>
                         </svg>
-                        <a href="mailto:{communeEmail}" class="text-white text-decoration-none">
+                        <a href="mailto:{communeEmail}" class="commune-footer-link text-decoration-none">
                             <span class="visually-hidden">Envoyer un courriel à la mairie : </span>{communeEmail}
                         </a>
                     </p>
@@ -179,7 +179,7 @@
                     </strong> 
                     <span class="badge badge-rgaa mx-1">{communeRgaaStatut} ({communeRgaaTaux})</span>
                     <f:if condition="{communeRgaaPageUid}">
-                        <f:link.page pageUid="{communeRgaaPageUid}" class="text-white text-decoration-underline ms-1">
+                        <f:link.page pageUid="{communeRgaaPageUid}" class="commune-footer-link text-decoration-underline ms-1">
                             Consulter la déclaration d'accessibilité
                         </f:link.page>
                     </f:if>
@@ -195,19 +195,19 @@
                     <f:else>
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item">
-                                <f:link.page pageUid="{rootLine.0.uid}" class="text-white-50 text-decoration-none">Accueil</f:link.page>
+                                <f:link.page pageUid="{rootLine.0.uid}" class="commune-footer-link text-decoration-none">Accueil</f:link.page>
                             </li>
                             <li class="list-inline-item separator text-white-50" aria-hidden="true">·</li>
                             <li class="list-inline-item">
-                                <f:link.page pageUid="18" class="text-white-50 text-decoration-none">Mentions Légales</f:link.page>
+                                <f:link.page pageUid="18" class="commune-footer-link text-decoration-none">Mentions Légales</f:link.page>
                             </li>
                             <li class="list-inline-item separator text-white-50" aria-hidden="true">·</li>
                             <li class="list-inline-item">
-                                <f:link.page pageUid="19" class="text-white-50 text-decoration-none">Politique des cookies</f:link.page>
+                                <f:link.page pageUid="19" class="commune-footer-link text-decoration-none">Politique des cookies</f:link.page>
                             </li>
                             <li class="list-inline-item separator text-white-50" aria-hidden="true">·</li>
                             <li class="list-inline-item">
-                                <f:link.page pageUid="20" class="text-white-50 text-decoration-none">Plan du site</f:link.page>
+                                <f:link.page pageUid="20" class="commune-footer-link text-decoration-none">Plan du site</f:link.page>
                             </li>
                         </ul>
                     </f:else>

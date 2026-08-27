@@ -427,27 +427,49 @@ a:focus {
   letter-spacing: 1.2px !important;
   font-size: 0.88rem;
   box-shadow: 4px 4px 0px var(--commune-shadow-medium) !important;
+  color: var(--commune-secondary) !important;
+}
+
+.btn svg {
+  stroke: var(--commune-secondary);
+  transition: stroke 0.2s ease, fill 0.2s ease, color 0.2s ease;
+}
+
+.btn:hover,
+.btn:focus {
+  color: var(--commune-secondary-light) !important;
+}
+
+.btn:hover svg,
+.btn:focus svg {
+  stroke: var(--commune-secondary-light);
 }
 
 .btn-primary {
   background-color: var(--commune-primary) !important;
   border-color: var(--commune-primary) !important;
-  color: var(--commune-bg-main) !important;
+  color: var(--commune-secondary) !important;
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
   background-color: var(--commune-primary-dark) !important;
   border-color: var(--commune-primary-dark) !important;
+  color: var(--commune-secondary-light) !important;
   transform: translateY(-1px);
   box-shadow: 4px 4px 0px var(--commune-shadow-medium) !important;
+}
+
+.btn-primary:hover svg,
+.btn-primary:focus svg {
+  stroke: var(--commune-secondary-light) !important;
 }
 
 .btn-secondary,
 .btn-warning {
   background-color: var(--commune-secondary) !important;
   border-color: var(--commune-secondary) !important;
-  color: var(--commune-text-main) !important;
+  color: var(--commune-primary-dark) !important;
   font-weight: 700;
 }
 
@@ -457,25 +479,49 @@ a:focus {
 .btn-warning:focus {
   background-color: var(--commune-secondary-dark) !important;
   border-color: var(--commune-secondary-dark) !important;
-  color: var(--commune-text-dark) !important;
+  color: var(--commune-bg-main) !important;
 }
 
 .btn-info {
   background-color: var(--commune-accent) !important;
   border-color: var(--commune-accent) !important;
-  color: var(--commune-bg-main) !important;
+  color: var(--commune-secondary) !important;
 }
 
 .btn-info:hover,
 .btn-info:focus {
   background-color: var(--commune-accent-dark) !important;
   border-color: var(--commune-accent-dark) !important;
+  color: var(--commune-secondary-light) !important;
 }
 
 .btn-outline-primary {
   border: 2px solid var(--commune-primary) !important;
-  color: var(--commune-primary) !important;
+  color: var(--commune-secondary) !important;
   background-color: transparent;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: var(--commune-primary) !important;
+  color: var(--commune-secondary-light) !important;
+}
+
+.btn-outline-light {
+  border: 1.5px solid var(--commune-secondary) !important;
+  color: var(--commune-secondary) !important;
+  background-color: transparent;
+}
+
+.btn-outline-light:hover,
+.btn-outline-light:focus {
+  background-color: var(--commune-secondary) !important;
+  color: var(--commune-primary-dark) !important;
+}
+
+.btn-outline-light:hover svg,
+.btn-outline-light:focus svg {
+  stroke: var(--commune-primary-dark) !important;
 }
 
 .btn-outline-primary:hover,
@@ -1107,16 +1153,62 @@ h1.page-title::before,
   border-bottom: 2px solid var(--commune-secondary-dark) !important;
 }
 
-.commune-footer a {
-  color: var(--commune-border-light) !important;
+.commune-footer a,
+.commune-footer .commune-footer-link {
+  color: var(--commune-secondary) !important;
   text-decoration: none;
-  transition: color 0.15s ease;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
 }
 
 .commune-footer a:hover,
-.commune-footer a:focus {
-  color: var(--commune-secondary) !important;
+.commune-footer a:focus,
+.commune-footer .commune-footer-link:hover,
+.commune-footer .commune-footer-link:focus {
+  color: var(--commune-secondary-light) !important;
   text-decoration: underline !important;
+}
+
+.commune-footer svg,
+.commune-footer-svg {
+  stroke: var(--commune-secondary);
+  color: var(--commune-secondary);
+  transition: stroke 0.2s ease, fill 0.2s ease, color 0.2s ease;
+}
+
+.commune-footer a:hover svg,
+.commune-footer a:focus svg {
+  stroke: var(--commune-secondary-light);
+  color: var(--commune-secondary-light);
+}
+
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 0 !important;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--commune-secondary) !important;
+  transition: all 0.2s ease;
+}
+
+.footer-social-link svg {
+  fill: var(--commune-secondary);
+  transition: fill 0.2s ease, color 0.2s ease;
+}
+
+.footer-social-link:hover,
+.footer-social-link:focus {
+  background-color: var(--commune-secondary);
+  color: var(--commune-primary-dark) !important;
+  transform: translateY(-2px);
+}
+
+.footer-social-link:hover svg,
+.footer-social-link:focus svg {
+  fill: var(--commune-primary-dark) !important;
+  color: var(--commune-primary-dark) !important;
 }
 
 .commune-footer .emergency-list li {

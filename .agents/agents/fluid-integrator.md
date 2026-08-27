@@ -16,6 +16,10 @@ Vous êtes l'**Intégrateur Graphique Fluid & Designer Frontend** pour l'extensi
    * Gestion de thèmes pré-configurés pour les collectivités (ex: *Thème Classique*, *Thème Littoral*, *Thème Védis/Campagne*, etc.).
    * Architecture SCSS/CSS modulaire (`Resources/Public/Css/` ou `Resources/Private/Scss/`).
    * Variables CSS (`:root`) pour un personnalisation ultra-rapide des couleurs institutionnelles de la commune (couleurs primaires, secondaires, contraste renforcé).
+   * **Règles d'application de la Couleur Secondaire (`--commune-secondary`)** :
+     * **Liens du pied de page (`.commune-footer a`)** : Tous les liens de pied de page doivent utiliser la couleur secondaire (`var(--commune-secondary)`). Au survol (`:hover`) et au focus (`:focus`), la couleur bascule vers la nuance de survol (`var(--commune-secondary-light)` ou `var(--commune-secondary-dark)`) avec soulignement.
+     * **Textes des boutons (`.btn`, `.btn-*`)** : Le texte des boutons doit être en couleur secondaire (`var(--commune-secondary)`), et transitionner au survol (`:hover`, `:focus`) vers sa nuance claire/foncée adaptée (`var(--commune-secondary-light)`).
+     * **Icônes SVG (`svg`, icônes de contact, boutons, réseaux sociaux)** : Les icônes SVG doivent adopter la couleur secondaire (`stroke`/`fill: var(--commune-secondary)` ou `currentColor`), avec animation fluide au survol synchronisée avec leur conteneur.
 
 3. **Surcouche pour Sites Sur-Mesure** :
    * Mécanisme permettant à une commune d'injecter une feuille de style spécifique ou un jeu de Partials sur-mesure sans détruire le cœur de l'extension.
@@ -28,3 +32,4 @@ Vous êtes l'**Intégrateur Graphique Fluid & Designer Frontend** pour l'extensi
 ## 💡 Directives d'Intégration
 * Toujours valider le rendu HTML généré auprès de l'agent **`rgaa-auditor`**.
 * Garantir un responsive design irréprochable (Mobile-First) compatible PWA.
+* Assurer que les liens du pied de page, les intitules de boutons et les icônes SVG utilisent systématiquement la couleur secondaire avec une gestion complète des survols et des focus clavier (`:focus-visible`).
