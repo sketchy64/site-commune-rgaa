@@ -33,18 +33,54 @@ class WebPushService
     }
 
     /**
+     * Helper sécurisé pour la lecture d'un paramètre de site (Compatible TYPO3 v12 et v13 SiteSettings)
+     */
+    private function getSiteSetting(string $key): mixed
+    {
+        try {
+            $site = current($this->siteFinder->getAllSites());
+            if ($site && method_exists($site, 'getSettings')) {
+                $settings = $site->getSettings();
+                if (is_object($settings) && method_exists($settings, 'get')) {
+                    $val = $settings->get($key);
+                    if ($val !== null && $val !== '') {
+                        return $val;
+                    }
+                    if (str_contains($key, '.')) {
+                        $parts = explode('.', $key, 2);
+                        $section = $settings->get($parts[0]);
+                        if (is_array($section) && isset($section[$parts[1]])) {
+                            return $section[$parts[1]];
+                        }
+                    }
+                } elseif (is_array($settings)) {
+                    $parts = explode('.', $key);
+                    $curr = $settings;
+                    foreach ($parts as $part) {
+                        if (is_array($curr) && isset($curr[$part])) {
+                            $curr = $curr[$part];
+                        } else {
+                            $curr = null;
+                            break;
+                        }
+                    }
+                    if ($curr !== null) {
+                        return $curr;
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+        }
+        return null;
+    }
+
+    /**
      * Récupère la clef VAPID publique configurée dans le site ou la clef par défaut
      */
     public function getVapidPublicKey(): string
     {
-        $site = current($this->siteFinder->getAllSites());
-        if ($site && method_exists($site, 'getSettings')) {
-            $settings = $site->getSettings();
-            if (!empty($settings['commune']['pwa_vapid_public_key'] ?? '')) {
-                return (string)$settings['commune']['pwa_vapid_public_key'];
-            }
-        }
-        return self::DEFAULT_PUBLIC_KEY;
+        $val = (string)($this->getSiteSetting('commune.pwa_vapid_public_key') ?? '');
+        return (!empty($val) && strlen($val) > 20) ? $val : self::DEFAULT_PUBLIC_KEY;
     }
 
     /**
@@ -52,14 +88,8 @@ class WebPushService
      */
     public function getVapidPrivateKey(): string
     {
-        $site = current($this->siteFinder->getAllSites());
-        if ($site && method_exists($site, 'getSettings')) {
-            $settings = $site->getSettings();
-            if (!empty($settings['commune']['pwa_vapid_private_key'] ?? '')) {
-                return (string)$settings['commune']['pwa_vapid_private_key'];
-            }
-        }
-        return self::DEFAULT_PRIVATE_KEY;
+        $val = (string)($this->getSiteSetting('commune.pwa_vapid_private_key') ?? '');
+        return (!empty($val) && strlen($val) > 10) ? $val : self::DEFAULT_PRIVATE_KEY;
     }
 
     /**
@@ -67,13 +97,9 @@ class WebPushService
      */
     public function getVapidSubject(): string
     {
-        $site = current($this->siteFinder->getAllSites());
-        if ($site && method_exists($site, 'getSettings')) {
-            $settings = $site->getSettings();
-            if (!empty($settings['commune']['pwa_vapid_email'] ?? '')) {
-                $email = (string)$settings['commune']['pwa_vapid_email'];
-                return str_starts_with($email, 'mailto:') ? $email : 'mailto:' . $email;
-            }
+        $val = (string)($this->getSiteSetting('commune.pwa_vapid_email') ?? '');
+        if (!empty($val)) {
+            return str_starts_with($val, 'mailto:') ? $val : 'mailto:' . $val;
         }
         return self::DEFAULT_SUBJECT;
     }
