@@ -167,9 +167,9 @@
         <hr class="border-secondary my-4">
 
         <!-- Mentions légales, Déclaration RGAA obligatoire et Menu personnalisé de bas de page -->
-        <div class="row align-items-center small text-light-50 gy-3">
+        <div class="row align-items-center small gy-3 commune-footer-bottom-bar">
             <!-- Mention légale RGAA personnalisable (Statut, Taux, Titre, Lien) -->
-            <div class="col-lg-6 col-12 text-center text-lg-start">
+            <div class="col-lg-6 col-12 text-center text-lg-start commune-footer-rgaa">
                 <p class="mb-0">
                     <strong>
                         <f:if condition="{communeRgaaTitre}">
@@ -179,7 +179,7 @@
                     </strong> 
                     <span class="badge badge-rgaa mx-1">{communeRgaaStatut} ({communeRgaaTaux})</span>
                     <f:if condition="{communeRgaaPageUid}">
-                        <f:link.page pageUid="{communeRgaaPageUid}" class="commune-footer-link text-decoration-underline ms-1">
+                        <f:link.page pageUid="{communeRgaaPageUid}" class="commune-footer-subtle-link text-decoration-underline ms-1">
                             Consulter la déclaration d'accessibilité
                         </f:link.page>
                     </f:if>
@@ -195,19 +195,19 @@
                     <f:else>
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item">
-                                <f:link.page pageUid="{rootLine.0.uid}" class="commune-footer-link text-decoration-none">Accueil</f:link.page>
+                                <f:link.page pageUid="{rootLine.0.uid}" class="commune-footer-subtle-link text-decoration-none">Accueil</f:link.page>
                             </li>
                             <li class="list-inline-item separator text-white-50" aria-hidden="true">·</li>
                             <li class="list-inline-item">
-                                <f:link.page pageUid="18" class="commune-footer-link text-decoration-none">Mentions Légales</f:link.page>
+                                <f:link.page pageUid="18" class="commune-footer-subtle-link text-decoration-none">Mentions Légales</f:link.page>
                             </li>
                             <li class="list-inline-item separator text-white-50" aria-hidden="true">·</li>
                             <li class="list-inline-item">
-                                <f:link.page pageUid="19" class="commune-footer-link text-decoration-none">Politique des cookies</f:link.page>
+                                <f:link.page pageUid="19" class="commune-footer-subtle-link text-decoration-none">Politique des cookies</f:link.page>
                             </li>
                             <li class="list-inline-item separator text-white-50" aria-hidden="true">·</li>
                             <li class="list-inline-item">
-                                <f:link.page pageUid="20" class="commune-footer-link text-decoration-none">Plan du site</f:link.page>
+                                <f:link.page pageUid="20" class="commune-footer-subtle-link text-decoration-none">Plan du site</f:link.page>
                             </li>
                         </ul>
                     </f:else>

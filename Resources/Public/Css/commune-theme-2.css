@@ -1221,12 +1221,43 @@ h1.page-title::before,
   font-size: 1.05rem;
 }
 
+/* Barre inférieure : Mentions RGAA et navigation de bas de page (Textes et liens atténués) */
+.commune-footer-bottom-bar,
+.commune-footer-rgaa {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.875rem;
+}
+
+.commune-footer-rgaa strong {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.commune-footer-subtle-link,
+.commune-footer-rgaa a,
+.commune-footer-dynamic-nav a {
+  color: var(--commune-secondary) !important;
+  opacity: 0.75;
+  transition: opacity 0.2s ease, color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.commune-footer-subtle-link:hover,
+.commune-footer-subtle-link:focus,
+.commune-footer-rgaa a:hover,
+.commune-footer-rgaa a:focus,
+.commune-footer-dynamic-nav a:hover,
+.commune-footer-dynamic-nav a:focus {
+  color: var(--commune-secondary-light) !important;
+  opacity: 1 !important;
+  text-decoration: underline !important;
+}
+
 .commune-footer .badge-rgaa {
-  background-color: var(--commune-secondary) !important;
-  color: var(--commune-text-main) !important;
-  font-weight: 700;
-  font-size: 0.85rem;
-  padding: 0.35rem 0.65rem;
+  background-color: rgba(245, 178, 30, 0.2) !important;
+  color: var(--commune-secondary) !important;
+  border: 1px solid rgba(245, 178, 30, 0.35);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.55rem;
   border-radius: 0 !important;
 }
 
