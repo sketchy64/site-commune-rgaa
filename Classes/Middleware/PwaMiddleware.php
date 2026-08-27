@@ -177,8 +177,8 @@ class PwaMiddleware implements MiddlewareInterface
             $connection->update('tx_sitecommunergaa_push_subscription', ['hidden' => 0], ['hidden' => 1]);
         }
 
-        $totalCount = (int)$connection->select(['COUNT(*)'], 'tx_sitecommunergaa_push_subscription')->fetchOne();
-        $activeCount = (int)$connection->select(['COUNT(*)'], 'tx_sitecommunergaa_push_subscription', ['hidden' => 0])->fetchOne();
+        $totalCount = (int)$connection->executeQuery('SELECT COUNT(*) FROM tx_sitecommunergaa_push_subscription')->fetchOne();
+        $activeCount = (int)$connection->executeQuery('SELECT COUNT(*) FROM tx_sitecommunergaa_push_subscription WHERE hidden = 0')->fetchOne();
 
         $webPushService = $this->webPushService ?? GeneralUtility::makeInstance(WebPushService::class);
         $sentCount = $webPushService->notifyAllSubscribers(

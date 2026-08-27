@@ -71,7 +71,7 @@
           applicationServerKey: applicationServerKey
         })
         .then(function (subscription) {
-          // Envoie de l'abonnement au serveur TYPO3
+          // Envoi de l'abonnement au serveur TYPO3
           return fetch('/api/pwa/subscribe', {
             method: 'POST',
             headers: {
@@ -108,9 +108,11 @@
 
             registration.showNotification('Mairie - Alertes activées', {
               body: 'Vous recevrez directement sur votre écran les nouvelles actualités de la commune.',
-              icon: '/favicon.ico'
+              icon: '/_assets/site_commune_rgaa/Icons/pwa-192x192.png'
             });
           });
+        } else if (permission === 'denied') {
+          alert('Les notifications sont bloquées dans votre navigateur. Cliquez sur le cadenassier dans la barre d\'adresse pour autoriser les notifications sur ce site.');
         }
       });
     }
@@ -119,25 +121,20 @@
   // Initialisation au chargement du DOM
   document.addEventListener('DOMContentLoaded', function () {
     const notifyBtns = document.querySelectorAll('#pwa-notify-btn, .pwa-notify-trigger');
-    if (notifyBtns.length > 0 && 'Notification' in window) {
-      if (Notification.permission === 'granted' && 'serviceWorker' in navigator) {
+    if ('Notification' in window && 'serviceWorker' in navigator) {
+      if (Notification.permission === 'granted') {
         navigator.serviceWorker.ready.then(function (registration) {
-          registration.pushManager.getSubscription().then(function (subscription) {
-            if (subscription) {
-              notifyBtns.forEach(function (btn) {
-                btn.innerHTML = '<i class="bi bi-bell-fill me-1" aria-hidden="true"></i> Notifications activées';
-                btn.classList.replace('btn-outline-secondary', 'btn-success');
-              });
-            }
-          });
+          window.CommuneApp.subscribeUserToPush(registration);
         });
       }
 
-      notifyBtns.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          window.CommuneApp.requestNotificationPermission();
+      if (notifyBtns.length > 0) {
+        notifyBtns.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            window.CommuneApp.requestNotificationPermission();
+          });
         });
-      });
+      }
     }
   });
 })();
