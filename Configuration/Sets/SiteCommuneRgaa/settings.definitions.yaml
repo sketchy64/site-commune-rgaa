@@ -476,6 +476,20 @@ settings:
     type: bool
     default: true
 
+  commune.pwa_top_banner_text:
+    label: 'Texte d''information du bandeau supérieur PWA'
+    description: 'Texte affiché dans le bandeau supérieur en haut du site'
+    category: commune_app
+    type: string
+    default: 'Installez l''application Mairie et recevez les alertes en direct sur votre écran.'
+
+  commune.pwa_top_banner_show_close:
+    label: 'Afficher la croix de fermeture du bandeau supérieur'
+    description: 'Permet aux citoyens de masquer le bandeau d''information'
+    category: commune_app
+    type: bool
+    default: true
+
   commune.pwa_enable:
     label: 'Activer la compatibilité Application Mobile (PWA Android & iOS)'
     description: 'Permet aux citoyens d''installer le site comme une application sur leur écran d''accueil'

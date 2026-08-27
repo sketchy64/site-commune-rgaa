@@ -167,11 +167,32 @@ page {
         data = site:settings:commune.enable_theme_switcher
         ifEmpty.data = site:settings.commune.enable_theme_switcher
         ifEmpty.ifEmpty.value = {$commune.enable_theme_switcher}
+      }
+
+      # Activer le bandeau supérieur PWA & Notifications
       communePwaTopBannerEnable = TEXT
       communePwaTopBannerEnable {
         data = site:settings:commune.pwa_top_banner_enable
         ifEmpty.data = site:settings.commune.pwa_top_banner_enable
         ifEmpty.ifEmpty.value = {$commune.pwa_top_banner_enable}
+        ifEmpty.ifEmpty.ifEmpty.value = 1
+      }
+
+      # Texte personnalisé du bandeau supérieur PWA
+      communePwaTopBannerText = TEXT
+      communePwaTopBannerText {
+        data = site:settings:commune.pwa_top_banner_text
+        ifEmpty.data = site:settings.commune.pwa_top_banner_text
+        ifEmpty.ifEmpty.value = {$commune.pwa_top_banner_text}
+        ifEmpty.ifEmpty.ifEmpty.value = Installez l'application Mairie et recevez les alertes en direct sur votre écran.
+      }
+
+      # Afficher la croix de fermeture du bandeau supérieur PWA (0/1)
+      communePwaTopBannerShowClose = TEXT
+      communePwaTopBannerShowClose {
+        data = site:settings:commune.pwa_top_banner_show_close
+        ifEmpty.data = site:settings.commune.pwa_top_banner_show_close
+        ifEmpty.ifEmpty.value = {$commune.pwa_top_banner_show_close}
         ifEmpty.ifEmpty.ifEmpty.value = 1
       }
 
