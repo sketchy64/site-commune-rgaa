@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Commune\SiteCommuneRgaa\Middleware;
 
+use Commune\SiteCommuneRgaa\Service\WebPushService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -35,6 +36,11 @@ class PwaMiddleware implements MiddlewareInterface
             return $this->handlePushSubscriptionRequest($request);
         }
 
+        // 4. API de Test de Notification Push (/api/pwa/test-notification)
+        if ($path === '/api/pwa/test-notification') {
+            return $this->handleTestNotificationRequest();
+        }
+
         return $handler->handle($request);
     }
 
@@ -48,12 +54,15 @@ class PwaMiddleware implements MiddlewareInterface
         $content = file_get_contents($manifestPath);
         $manifestData = json_decode($content, true) ?: [];
 
-        // Remplacement dynamique du préfixe EXT: par un chemin web valide
+        // Remplacement dynamique du préfixe EXT: par un chemin web absolu valide
         if (isset($manifestData['icons']) && is_array($manifestData['icons'])) {
             foreach ($manifestData['icons'] as &$icon) {
                 if (isset($icon['src']) && str_starts_with($icon['src'], 'EXT:')) {
                     $absPath = GeneralUtility::getFileAbsFileName($icon['src']);
                     $webPath = PathUtility::getAbsoluteWebPath($absPath);
+                    if (!str_starts_with($webPath, '/') && !str_starts_with($webPath, 'http')) {
+                        $webPath = '/' . $webPath;
+                    }
                     $icon['src'] = $webPath;
                 }
             }
@@ -151,5 +160,23 @@ class PwaMiddleware implements MiddlewareInterface
         }
 
         return new JsonResponse(['error' => 'Method not allowed'], 405);
+    }
+
+    private function handleTestNotificationRequest(): ResponseInterface
+    {
+        $webPushService = GeneralUtility::makeInstance(WebPushService::class);
+        $sentCount = $webPushService->notifyAllSubscribers(
+            'Mairie : Test de Notification Push',
+            'Ceci est une notification de test envoyée par le système PWA communal.',
+            '/'
+        );
+
+        return new JsonResponse([
+            'success' => true,
+            'sent' => $sentCount,
+            'message' => $sentCount > 0
+                ? 'Notification de test envoyée avec succès à ' . $sentCount . ' abonné(s).'
+                : 'Aucun abonné actif trouvé ou échec de la livraison.'
+        ]);
     }
 }

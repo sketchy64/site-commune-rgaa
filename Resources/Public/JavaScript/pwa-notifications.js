@@ -58,7 +58,7 @@
   window.CommuneApp = {
     getVapidPublicKey: function () {
       const meta = document.querySelector('meta[name="pwa-vapid-public-key"]');
-      return meta ? meta.getAttribute('content') : 'BEl62iUYgUivxIkv69yViEuiBIj7EBA70z7_D7j5n_sW4K0r6-0f8K9vP5w0H1X4G5A4L2d6n9Y2K7j0_N2O9I8';
+      return meta ? meta.getAttribute('content') : 'BLQcfzIu2XgG6fT4vVsRY6BYy1LgVkyKH8XYYJajIUts74MKtdOlZOZt2ZCs62LmUIUnaunEZPevfxIxIHzn_iY';
     },
 
     subscribeUserToPush: function (registration) {
