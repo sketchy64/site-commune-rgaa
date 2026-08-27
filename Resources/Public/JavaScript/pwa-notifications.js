@@ -1,6 +1,6 @@
 /**
  * PWA & Push Notifications Manager - Site Commune RGAA
- * Permet l'installation de l'application sur smartphone et l'abonnement aux alertes
+ * Permet l'installation de l'application sur smartphone et la gestion à 2 états (Activer / Désactiver) des alertes
  */
 
 (function () {
@@ -54,7 +54,7 @@
     });
   });
 
-  // 3. Gestion de l'abonnement WebPush aux actualités
+  // 3. Gestion de l'abonnement & désabonnement WebPush aux actualités (2 états)
   window.CommuneApp = {
     getVapidPublicKey: function () {
       const meta = document.querySelector('meta[name="pwa-vapid-public-key"]');
@@ -63,6 +63,29 @@
         return val;
       }
       return 'BLQcfzIu2XgG6fT4vVsRY6BYy1LgVkyKH8XYYJajIUts74MKtdOlZOZt2ZCs62LmUIUnaunEZPevfxIxIHzn_iY';
+    },
+
+    updateButtonUI: function (isSubscribed) {
+      const notifyBtns = document.querySelectorAll('#pwa-notify-btn, .pwa-notify-trigger');
+      notifyBtns.forEach(function (btn) {
+        if (isSubscribed) {
+          btn.setAttribute('data-subscribed', 'true');
+          btn.classList.remove('btn-outline-secondary', 'btn-outline-light');
+          btn.classList.add('btn-success');
+          btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="me-1" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> <span>Désactiver les notifications</span>';
+          btn.setAttribute('title', 'Cliquer pour désactiver les notifications push');
+        } else {
+          btn.setAttribute('data-subscribed', 'false');
+          btn.classList.remove('btn-success');
+          if (btn.id === 'pwa-notify-btn') {
+            btn.classList.add('btn-outline-secondary');
+          } else {
+            btn.classList.add('btn-outline-light');
+          }
+          btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> <span>Activer les notifications</span>';
+          btn.setAttribute('title', 'Cliquer pour activer les notifications push');
+        }
+      });
     },
 
     subscribeUserToPush: function (registration) {
@@ -119,11 +142,7 @@
         })
         .then(function (data) {
           if (data && data.success) {
-            const notifyBtns = document.querySelectorAll('#pwa-notify-btn, .pwa-notify-trigger');
-            notifyBtns.forEach(function (btn) {
-              btn.innerHTML = '<i class="bi bi-bell-fill me-1" aria-hidden="true"></i> Notifications activées';
-              btn.classList.replace('btn-outline-secondary', 'btn-success');
-            });
+            self.updateButtonUI(true);
           } else {
             console.warn('Erreur réponse enregistrement souscription push:', data);
           }
@@ -133,27 +152,83 @@
         });
     },
 
-    requestNotificationPermission: function () {
+    unsubscribeUserFromPush: function (registration) {
+      var self = this;
+      return registration.pushManager.getSubscription().then(function (subscription) {
+        if (subscription) {
+          const endpoint = subscription.endpoint;
+          return subscription.unsubscribe().then(function (successful) {
+            if (successful) {
+              return fetch('/api/pwa/subscribe', {
+                method: 'DELETE',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ endpoint: endpoint })
+              });
+            }
+          });
+        }
+      }).then(function () {
+        self.updateButtonUI(false);
+      }).catch(function (err) {
+        console.warn('Erreur lors du désabonnement push:', err);
+      });
+    },
+
+    toggleNotificationState: function () {
       if (!('Notification' in window) || !('serviceWorker' in navigator)) {
         alert('Votre navigateur ne supporte pas les notifications push.');
         return;
       }
 
       var self = this;
-      Notification.requestPermission().then(function (permission) {
-        if (permission === 'granted') {
-          navigator.serviceWorker.ready.then(function (registration) {
-            self.subscribeUserToPush(registration);
-
-            registration.showNotification('Mairie - Alertes activées', {
-              body: 'Vous recevrez directement sur votre écran les nouvelles actualités de la commune.',
-              icon: '/_assets/site_commune_rgaa/Icons/pwa-192x192.png'
-            });
-          });
-        } else if (permission === 'denied') {
-          alert('Les notifications sont bloquées dans votre navigateur. Cliquez sur le cadenassier dans la barre d\'adresse pour autoriser les notifications sur ce site.');
-        }
+      navigator.serviceWorker.ready.then(function (registration) {
+        registration.pushManager.getSubscription().then(function (subscription) {
+          if (subscription) {
+            // Déjà abonné -> Désactiver
+            self.unsubscribeUserFromPush(registration);
+          } else {
+            // Non abonné -> Demander l'autorisation + S'abonner
+            if (Notification.permission === 'granted') {
+              self.subscribeUserToPush(registration);
+              registration.showNotification('Mairie - Alertes activées', {
+                body: 'Vous recevrez directement sur votre écran les nouvelles actualités de la commune.',
+                icon: '/_assets/site_commune_rgaa/Icons/pwa-192x192.png'
+              });
+            } else if (Notification.permission === 'denied') {
+              alert('Les notifications sont bloquées dans votre navigateur. Cliquez sur le cadenas dans la barre d\'adresse pour autoriser les notifications sur ce site.');
+            } else {
+              Notification.requestPermission().then(function (permission) {
+                if (permission === 'granted') {
+                  self.subscribeUserToPush(registration);
+                  registration.showNotification('Mairie - Alertes activées', {
+                    body: 'Vous recevrez directement sur votre écran les nouvelles actualités de la commune.',
+                    icon: '/_assets/site_commune_rgaa/Icons/pwa-192x192.png'
+                  });
+                }
+              });
+            }
+          }
+        });
       });
+    },
+
+    checkSubscriptionStatus: function () {
+      var self = this;
+      if ('Notification' in window && 'serviceWorker' in navigator && Notification.permission === 'granted') {
+        navigator.serviceWorker.ready.then(function (registration) {
+          registration.pushManager.getSubscription().then(function (subscription) {
+            if (subscription) {
+              self.updateButtonUI(true);
+            } else {
+              self.updateButtonUI(false);
+            }
+          });
+        });
+      } else {
+        self.updateButtonUI(false);
+      }
     }
   };
 
@@ -161,16 +236,12 @@
   document.addEventListener('DOMContentLoaded', function () {
     const notifyBtns = document.querySelectorAll('#pwa-notify-btn, .pwa-notify-trigger');
     if ('Notification' in window && 'serviceWorker' in navigator) {
-      if (Notification.permission === 'granted') {
-        navigator.serviceWorker.ready.then(function (registration) {
-          window.CommuneApp.subscribeUserToPush(registration);
-        });
-      }
+      window.CommuneApp.checkSubscriptionStatus();
 
       if (notifyBtns.length > 0) {
         notifyBtns.forEach(function (btn) {
           btn.addEventListener('click', function () {
-            window.CommuneApp.requestNotificationPermission();
+            window.CommuneApp.toggleNotificationState();
           });
         });
       }
