@@ -186,29 +186,21 @@
       navigator.serviceWorker.ready.then(function (registration) {
         registration.pushManager.getSubscription().then(function (subscription) {
           if (subscription) {
-            // Déjà abonné -> Désactiver
+            // Déjà abonné -> Désactiver (Unsubscribe + suppression BDD TYPO3)
             self.unsubscribeUserFromPush(registration);
           } else {
-            // Non abonné -> Demander l'autorisation + S'abonner
-            if (Notification.permission === 'granted') {
-              self.subscribeUserToPush(registration);
-              registration.showNotification('Mairie - Alertes activées', {
-                body: 'Vous recevrez directement sur votre écran les nouvelles actualités de la commune.',
-                icon: '/_assets/site_commune_rgaa/Icons/pwa-192x192.png'
-              });
-            } else if (Notification.permission === 'denied') {
-              alert('Les notifications sont bloquées dans votre navigateur. Cliquez sur le cadenas dans la barre d\'adresse pour autoriser les notifications sur ce site.');
-            } else {
-              Notification.requestPermission().then(function (permission) {
-                if (permission === 'granted') {
-                  self.subscribeUserToPush(registration);
-                  registration.showNotification('Mairie - Alertes activées', {
-                    body: 'Vous recevrez directement sur votre écran les nouvelles actualités de la commune.',
-                    icon: '/_assets/site_commune_rgaa/Icons/pwa-192x192.png'
-                  });
-                }
-              });
-            }
+            // Non abonné -> Demande / vérification directe de la permission auprès du navigateur
+            Notification.requestPermission().then(function (permission) {
+              if (permission === 'granted') {
+                self.subscribeUserToPush(registration);
+                registration.showNotification('Mairie - Alertes activées', {
+                  body: 'Vous recevrez directement sur votre écran les nouvelles actualités de la commune.',
+                  icon: '/_assets/site_commune_rgaa/Icons/pwa-192x192.png'
+                });
+              } else if (permission === 'denied') {
+                alert('Les notifications sont bloquées dans votre navigateur. Cliquez sur le cadenas dans la barre d\'adresse pour autoriser les notifications sur ce site.');
+              }
+            });
           }
         });
       });
