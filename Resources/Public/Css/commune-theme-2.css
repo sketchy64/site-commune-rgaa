@@ -2170,6 +2170,7 @@ a.icon-group-item:hover {
   width: 100%;
   position: relative;
   z-index: 1020;
+  background-color: var(--commune-bg-light);
 }
 
 .commune-emergency-alert-container .frame,
