@@ -602,9 +602,7 @@ h1.page-title::before,
    Accès Rapides / Démarches Citoyennes
    ============================================================================== */
 .commune-quickaccess-section {
-  background-color: var(--commune-bg-light);
-  border-top: 1px solid var(--commune-border);
-  border-bottom: 1px solid var(--commune-border);
+  position: relative;
 }
 
 .commune-quickaccess-card {
@@ -1950,11 +1948,13 @@ a.icon-group-item:hover {
   transition: background-color 0.2s ease;
 }
 
-.commune-home-section:nth-of-type(odd) {
+.commune-section-content:nth-child(2n+1 of .commune-section-content) {
   background-color: var(--commune-bg-main);
+  border-top: none;
+  border-bottom: none;
 }
 
-.commune-home-section:nth-of-type(even) {
+.commune-section-content:nth-child(2n of .commune-section-content) {
   background-color: var(--commune-bg-light);
   border-top: 1px solid var(--commune-border);
   border-bottom: 1px solid var(--commune-border);
