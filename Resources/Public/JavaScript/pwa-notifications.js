@@ -62,7 +62,8 @@
     },
 
     subscribeUserToPush: function (registration) {
-      var publicKey = this.getVapidPublicKey();
+      var self = this;
+      var publicKey = self.getVapidPublicKey();
       var applicationServerKey = urlBase64ToUint8Array(publicKey);
 
       return registration.pushManager
@@ -71,22 +72,56 @@
           applicationServerKey: applicationServerKey
         })
         .then(function (subscription) {
+          var subJson = subscription.toJSON ? subscription.toJSON() : {};
+          var p256dhKey = (subJson.keys && subJson.keys.p256dh) ? subJson.keys.p256dh : '';
+          var authKey = (subJson.keys && subJson.keys.auth) ? subJson.keys.auth : '';
+
+          if (!p256dhKey && subscription.getKey) {
+            var rawP256dh = subscription.getKey('p256dh');
+            if (rawP256dh) {
+              p256dhKey = btoa(String.fromCharCode.apply(null, new Uint8Array(rawP256dh)))
+                .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+            }
+          }
+          if (!authKey && subscription.getKey) {
+            var rawAuth = subscription.getKey('auth');
+            if (rawAuth) {
+              authKey = btoa(String.fromCharCode.apply(null, new Uint8Array(rawAuth)))
+                .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+            }
+          }
+
+          var payload = {
+            endpoint: subscription.endpoint || subJson.endpoint || '',
+            p256dh: p256dhKey,
+            auth: authKey,
+            keys: {
+              p256dh: p256dhKey,
+              auth: authKey
+            }
+          };
+
           // Envoi de l'abonnement au serveur TYPO3
           return fetch('/api/pwa/subscribe', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(subscription)
+            body: JSON.stringify(payload)
           });
         })
         .then(function (response) {
-          if (response.ok) {
+          return response.json();
+        })
+        .then(function (data) {
+          if (data && data.success) {
             const notifyBtns = document.querySelectorAll('#pwa-notify-btn, .pwa-notify-trigger');
             notifyBtns.forEach(function (btn) {
               btn.innerHTML = '<i class="bi bi-bell-fill me-1" aria-hidden="true"></i> Notifications activées';
               btn.classList.replace('btn-outline-secondary', 'btn-success');
             });
+          } else {
+            console.warn('Erreur réponse enregistrement souscription push:', data);
           }
         })
         .catch(function (err) {

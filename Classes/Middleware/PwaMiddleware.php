@@ -109,12 +109,19 @@ class PwaMiddleware implements MiddlewareInterface
 
         if ($method === 'POST') {
             $endpoint = trim((string)($input['endpoint'] ?? ''));
-            $p256dh = trim((string)($input['keys']['p256dh'] ?? ''));
-            $auth = trim((string)($input['keys']['auth'] ?? ''));
+            $p256dh = trim((string)($input['keys']['p256dh'] ?? $input['p256dh'] ?? ''));
+            $auth = trim((string)($input['keys']['auth'] ?? $input['auth'] ?? ''));
             $userAgent = substr((string)($request->getHeaderLine('User-Agent') ?? ''), 0, 255);
 
             if (empty($endpoint) || empty($p256dh) || empty($auth)) {
-                return new JsonResponse(['error' => 'Invalid payload'], 400);
+                return new JsonResponse([
+                    'error' => 'Invalid payload',
+                    'details' => [
+                        'has_endpoint' => !empty($endpoint),
+                        'has_p256dh' => !empty($p256dh),
+                        'has_auth' => !empty($auth)
+                    ]
+                ], 400);
             }
 
             // Vérification si déjà inscrit
