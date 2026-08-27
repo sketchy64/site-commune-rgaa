@@ -17,6 +17,10 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 
 class PwaMiddleware implements MiddlewareInterface
 {
+    public function __construct(
+        private readonly ?WebPushService $webPushService = null
+    ) {}
+
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $path = $request->getUri()->getPath();
@@ -164,7 +168,7 @@ class PwaMiddleware implements MiddlewareInterface
 
     private function handleTestNotificationRequest(): ResponseInterface
     {
-        $webPushService = GeneralUtility::makeInstance(WebPushService::class);
+        $webPushService = $this->webPushService ?? GeneralUtility::makeInstance(WebPushService::class);
         $sentCount = $webPushService->notifyAllSubscribers(
             'Mairie : Test de Notification Push',
             'Ceci est une notification de test envoyée par le système PWA communal.',

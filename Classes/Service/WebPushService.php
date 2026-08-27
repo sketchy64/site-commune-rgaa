@@ -18,11 +18,19 @@ class WebPushService
     private const DEFAULT_PRIVATE_KEY = 'ftRVnQjBwQBjx2AyBOUS4xIqqFQzMOxEGtWdvITg-y8';
     private const DEFAULT_SUBJECT = 'mailto:contact@notre-commune.fr';
 
+    private readonly RequestFactory $requestFactory;
+    private readonly ConnectionPool $connectionPool;
+    private readonly SiteFinder $siteFinder;
+
     public function __construct(
-        private readonly RequestFactory $requestFactory,
-        private readonly ConnectionPool $connectionPool,
-        private readonly SiteFinder $siteFinder
-    ) {}
+        ?RequestFactory $requestFactory = null,
+        ?ConnectionPool $connectionPool = null,
+        ?SiteFinder $siteFinder = null
+    ) {
+        $this->requestFactory = $requestFactory ?? GeneralUtility::makeInstance(RequestFactory::class);
+        $this->connectionPool = $connectionPool ?? GeneralUtility::makeInstance(ConnectionPool::class);
+        $this->siteFinder = $siteFinder ?? GeneralUtility::makeInstance(SiteFinder::class);
+    }
 
     /**
      * Récupère la clef VAPID publique configurée dans le site ou la clef par défaut
