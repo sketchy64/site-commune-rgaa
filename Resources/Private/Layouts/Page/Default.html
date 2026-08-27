@@ -37,7 +37,12 @@
 <!-- Liens d'évitement / Skip Links obligatoires RGAA 4.1.2 (Critère 12.7) -->
 <f:render partial="Structure/SkipLinks" arguments="{_all}" />
 
+<f:variable name="communePwaTopBannerEnable" value="{rgaa:siteSetting(key: 'commune.pwa_top_banner_enable', default: communePwaTopBannerEnable)}" />
+
 <div id="top" class="site-wrapper d-flex flex-column min-vh-100">
+    <!-- Bandeau supérieur PWA Mobile & Notifications Push (Paramétrable via commune.pwa_top_banner_enable) -->
+    <f:render partial="Structure/PwaBanner" arguments="{_all}" />
+
     <!-- Barre d'outils d'accessibilité (Taille police, Contraste, Police dyslexie) -->
     <f:render partial="Accessibility/Toolbar" arguments="{_all}" />
 

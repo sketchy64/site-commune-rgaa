@@ -469,6 +469,13 @@ settings:
   # ============================================================================
   # 7. APPLICATION MOBILE (PWA) & ALERTES
   # ============================================================================
+  commune.pwa_top_banner_enable:
+    label: 'Afficher le bandeau supérieur PWA & Notifications (En-tête)'
+    description: 'Affiche un bandeau d''information en haut du site permettant au citoyen d''installer l''application et d''activer les alertes'
+    category: commune_app
+    type: bool
+    default: true
+
   commune.pwa_enable:
     label: 'Activer la compatibilité Application Mobile (PWA Android & iOS)'
     description: 'Permet aux citoyens d''installer le site comme une application sur leur écran d''accueil'

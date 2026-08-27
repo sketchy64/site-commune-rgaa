@@ -1,0 +1,45 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<!-- Bandeau Supérieur d'information PWA & Notifications Push -->
+<f:if condition="{communePwaTopBannerEnable} != '0'">
+    <div id="pwa-top-banner" class="pwa-top-banner bg-primary text-white py-2 border-bottom shadow-sm" role="region" aria-label="Application mobile et notifications citoyennes">
+        <div class="container d-flex flex-wrap align-items-center justify-content-between gap-2">
+            <div class="d-flex align-items-center gap-2 small">
+                <!-- Icône téléphone / alerte -->
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0" aria-hidden="true">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                    <line x1="12" y1="18" x2="12.01" y2="18"/>
+                </svg>
+                <span class="fw-medium">
+                    Installez l'application <strong>{f:if(condition: communeNom, then: communeNom, else: 'Mairie')}</strong> et recevez les alertes & actualités en direct sur votre écran.
+                </span>
+            </div>
+
+            <div class="d-flex align-items-center gap-2 ms-auto">
+                <!-- Bouton d'installation PWA Mobile (révélé dynamiquement par JS si installable) -->
+                <button type="button" id="pwa-install-btn-banner" class="btn btn-sm btn-light pwa-install-trigger d-none align-items-center gap-1 shadow-sm fw-semibold" aria-label="Installer l'application sur votre smartphone">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>Installer l'App</span>
+                </button>
+
+                <!-- Bouton dynamique d'activation/désactivation des notifications Push (Synchronisé 1:1) -->
+                <button type="button" id="pwa-notify-btn-banner" class="btn btn-sm btn-warning pwa-notify-trigger d-inline-flex align-items-center gap-1 shadow-sm fw-semibold" aria-label="Activer les notifications push d'actualités">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span>Activer les notifications</span>
+                </button>
+
+                <!-- Bouton de fermeture du bandeau -->
+                <button type="button" id="pwa-banner-close-btn" class="btn-close btn-close-white ms-2" aria-label="Fermer le bandeau d'information PWA"></button>
+            </div>
+        </div>
+    </div>
+</f:if>
+</html>

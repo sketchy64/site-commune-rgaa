@@ -167,6 +167,12 @@ page {
         data = site:settings:commune.enable_theme_switcher
         ifEmpty.data = site:settings.commune.enable_theme_switcher
         ifEmpty.ifEmpty.value = {$commune.enable_theme_switcher}
+      communePwaTopBannerEnable = TEXT
+      communePwaTopBannerEnable {
+        data = site:settings:commune.pwa_top_banner_enable
+        ifEmpty.data = site:settings.commune.pwa_top_banner_enable
+        ifEmpty.ifEmpty.value = {$commune.pwa_top_banner_enable}
+        ifEmpty.ifEmpty.ifEmpty.value = 1
       }
 
       # Logo et personnalisation de marque
