@@ -216,8 +216,15 @@ class WebPushService
                     $report = $webPush->sendOneNotification($subscription, $payload, ['urgency' => 'high']);
                     if ($report->isSuccess()) {
                         $sentCount++;
+                        $logger->info('Notification push livrée avec succès', ['uid' => $sub['uid'], 'endpoint' => substr($endpoint, 0, 40) . '...']);
                     } else {
-                        // Masquer uniquement si l'abonnement est expiré ou révoqué (404/410)
+                        $logger->warn('Échec envoi push abonné', [
+                            'uid' => $sub['uid'],
+                            'reason' => method_exists($report, 'getReason') ? $report->getReason() : 'Inconnue',
+                            'is_expired' => $report->isSubscriptionExpired()
+                        ]);
+
+                        // Masquer uniquement si l'abonnement est explicitement expiré ou révoqué (404/410)
                         if ($report->isSubscriptionExpired()) {
                             $connection->update(
                                 'tx_sitecommunergaa_push_subscription',
@@ -229,7 +236,7 @@ class WebPushService
                 }
                 return $sentCount;
             } catch (\Throwable $e) {
-                // Secours en cas d'erreur minishlink
+                $logger->error('Exception lors de l\'envoi WebPush', ['exception' => $e->getMessage()]);
             }
         }
 

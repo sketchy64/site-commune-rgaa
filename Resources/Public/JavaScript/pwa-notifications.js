@@ -326,18 +326,17 @@
 
       navigator.serviceWorker.ready.then(function (registration) {
         registration.pushManager.getSubscription().then(function (subscription) {
-          // AUTO-SOUSCRIPTION : Si les notifications sont autorisées dans le cadenas,
-          // mais qu'aucun abonnement n'existe ET que l'utilisateur N'A PAS explicitement désactivé sur le site
-          if (perm === 'granted' && !subscription) {
+          // Si les notifications sont autorisées dans le cadenas :
+          if (perm === 'granted') {
             if (localStorage.getItem('pwa_notifications_disabled_by_user') === 'true') {
-              // L'utilisateur a cliqué sur "Désactiver les notifications" -> Conserver l'état désactivé
               self.updateButtonUI(false);
             } else {
-              // L'utilisateur n'a jamais désactivé sur le site -> Souscrire automatiquement
+              // Toujours ré-enregistrer la souscription auprès du serveur pour maintenir hidden = 0 en BDD
               self.subscribeUserToPush(registration);
               self.updateButtonUI(true);
             }
-            return;
+          } else {
+            self.updateButtonUI(false);
           }
 
           const isNotificationActive = (perm === 'granted') && (subscription !== null);
