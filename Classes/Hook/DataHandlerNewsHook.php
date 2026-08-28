@@ -29,6 +29,14 @@ class DataHandlerNewsHook
         }
 
         $recordId = is_numeric($id) ? (int)$id : (int)($dataHandler->substNEWwithIDs[$id] ?? 0);
+        if ($recordId <= 0) {
+            $connTemp = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_news_domain_model_news');
+            $latestUid = (int)$connTemp->executeQuery('SELECT uid FROM tx_news_domain_model_news ORDER BY uid DESC LIMIT 1')->fetchOne();
+            if ($latestUid > 0) {
+                $recordId = $latestUid;
+            }
+        }
+
         $logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
         $logger->info('DataHandlerNewsHook capturé pour tx_news_domain_model_news', ['status' => $status, 'rawId' => $id, 'recordId' => $recordId]);
 
