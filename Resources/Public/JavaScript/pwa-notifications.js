@@ -149,21 +149,23 @@
       notifyBtns.forEach(function (btn) {
         if (isSubscribed) {
           btn.setAttribute('data-subscribed', 'true');
-          btn.classList.remove('btn-outline-secondary', 'btn-outline-light', 'btn-warning');
-          btn.classList.add('btn-success');
-          btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" class="me-1" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> <span>Désactiver les notifications</span>';
+          btn.classList.remove('btn-outline-secondary', 'btn-outline-light', 'btn-warning', 'text-dark');
+          btn.classList.add('btn-success', 'text-white', 'fw-bold');
+          btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="#ffffff" stroke="#ffffff" stroke-width="1.5" class="me-1 flex-shrink-0" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> <span class="text-white fw-bold">Désactiver les notifications</span>';
           btn.setAttribute('title', 'Cliquer pour désactiver les notifications push');
         } else {
           btn.setAttribute('data-subscribed', 'false');
-          btn.classList.remove('btn-success');
+          btn.classList.remove('btn-success', 'text-white');
           if (btn.id === 'pwa-notify-btn-banner') {
-            btn.classList.add('btn-warning');
+            btn.classList.add('btn-warning', 'text-dark', 'fw-bold');
+            btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#212529" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="me-1 flex-shrink-0" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> <span class="text-dark fw-bold">Activer les notifications</span>';
           } else if (btn.id === 'pwa-notify-btn') {
-            btn.classList.add('btn-outline-secondary');
+            btn.classList.add('btn-outline-secondary', 'fw-bold');
+            btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1 flex-shrink-0" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> <span>Activer les notifications</span>';
           } else {
-            btn.classList.add('btn-outline-light');
+            btn.classList.add('btn-outline-light', 'fw-bold');
+            btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1 flex-shrink-0" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> <span>Activer les notifications</span>';
           }
-          btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> <span>Activer les notifications</span>';
           btn.setAttribute('title', 'Cliquer pour activer les notifications push');
         }
       });
