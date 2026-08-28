@@ -75,7 +75,10 @@ self.addEventListener('push', (event) => {
     body: data.body,
     icon: data.icon,
     badge: data.icon,
-    vibrate: [100, 50, 100],
+    vibrate: [200, 100, 200, 100, 200],
+    tag: 'commune-news-' + (data.timestamp || Date.now()),
+    renotify: true,
+    requireInteraction: true,
     data: {
       url: data.url || '/'
     }

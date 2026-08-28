@@ -185,8 +185,14 @@ class WebPushService
                 ],
             ];
 
+            $defaultOptions = [
+                'TTL' => 86400,
+                'urgency' => 'high',
+                'topic' => 'news'
+            ];
+
             try {
-                $webPush = new WebPush($auth);
+                $webPush = new WebPush($auth, $defaultOptions);
                 foreach ($subscriptions as $sub) {
                     $endpoint = $sub['endpoint'] ?? '';
                     $p256dh = $sub['p256dh'] ?? '';
@@ -207,7 +213,7 @@ class WebPushService
                         ]
                     ]);
 
-                    $report = $webPush->sendOneNotification($subscription, $payload);
+                    $report = $webPush->sendOneNotification($subscription, $payload, ['urgency' => 'high']);
                     if ($report->isSuccess()) {
                         $sentCount++;
                     } else {
