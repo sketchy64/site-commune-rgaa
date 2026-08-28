@@ -7,6 +7,7 @@ namespace Commune\SiteCommuneRgaa\EventListener;
 use Commune\SiteCommuneRgaa\Service\WebPushService;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\Event\AfterDatabaseOperationsEvent;
+use TYPO3\CMS\Core\DataHandling\Event\AfterRecordPublicationEvent;
 
 class NewsPublishedEventListener
 {
@@ -67,16 +68,27 @@ class NewsPublishedEventListener
             return;
         }
 
-        // 2. Support via AfterDatabaseOperationsEvent du DataHandler TYPO3 (Backend Form / List toggle)
-        if ($event instanceof AfterDatabaseOperationsEvent) {
-            $table = $event->getTable();
+        // 2. Support via DataHandler Events TYPO3 v13/v14 (AfterDatabaseOperationsEvent / AfterRecordPublicationEvent)
+        if ($event instanceof AfterDatabaseOperationsEvent || $event instanceof AfterRecordPublicationEvent) {
+            /** @var mixed $event */
+            $table = method_exists($event, 'getTable') ? $event->getTable() : '';
             if ($table === 'tx_news_domain_model_news') {
-                $recordId = (int)$event->getRecordId();
+                $rawId = method_exists($event, 'getRecordId') ? $event->getRecordId() : 0;
+                $recordId = is_numeric($rawId) ? (int)$rawId : 0;
+
+                // Si le recordId est un placeholder 'NEW66c...', résolution de l'UID réel créé par DataHandler
+                if ($recordId <= 0 && method_exists($event, 'getDataHandler')) {
+                    $dh = $event->getDataHandler();
+                    if ($dh && isset($dh->substNEWwithIDs[$rawId])) {
+                        $recordId = (int)$dh->substNEWwithIDs[$rawId];
+                    }
+                }
+
                 if ($recordId <= 0 || isset(self::$processedUids[$recordId])) {
                     return;
                 }
 
-                $fieldArray = $event->getFieldArray();
+                $fieldArray = method_exists($event, 'getFieldArray') ? (array)$event->getFieldArray() : [];
 
                 // Récupération de l'enregistrement complet en base de données
                 $connection = $this->connectionPool->getConnectionForTable('tx_news_domain_model_news');

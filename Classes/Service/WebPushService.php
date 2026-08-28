@@ -33,24 +33,47 @@ class WebPushService
     }
 
     /**
-     * Helper sécurisé pour la lecture d'un paramètre de site (Compatible TYPO3 v12 et v13 SiteSettings)
+     * Helper sécurisé pour la lecture d'un paramètre de site (Compatible TYPO3 v12, v13 et v14 SiteSettings)
      */
     private function getSiteSetting(string $key): mixed
     {
         try {
-            $site = current($this->siteFinder->getAllSites());
+            $sites = $this->siteFinder->getAllSites();
+            if (empty($sites)) {
+                return null;
+            }
+            $site = current($sites);
             if ($site && method_exists($site, 'getSettings')) {
                 $settings = $site->getSettings();
-                if (is_object($settings) && method_exists($settings, 'get')) {
-                    $val = $settings->get($key);
-                    if ($val !== null && $val !== '') {
-                        return $val;
+                if (is_object($settings)) {
+                    if (method_exists($settings, 'has') && $settings->has($key)) {
+                        return $settings->get($key);
                     }
-                    if (str_contains($key, '.')) {
-                        $parts = explode('.', $key, 2);
-                        $section = $settings->get($parts[0]);
-                        if (is_array($section) && isset($section[$parts[1]])) {
-                            return $section[$parts[1]];
+                    if (method_exists($settings, 'get')) {
+                        try {
+                            $val = $settings->get($key);
+                            if ($val !== null && $val !== '') {
+                                return $val;
+                            }
+                        } catch (\Throwable $e) {
+                        }
+                    }
+                    if (method_exists($settings, 'getAll')) {
+                        $all = $settings->getAll();
+                        if (is_array($all)) {
+                            $parts = explode('.', $key);
+                            $curr = $all;
+                            foreach ($parts as $part) {
+                                if (is_array($curr) && isset($curr[$part])) {
+                                    $curr = $curr[$part];
+                                } else {
+                                    $curr = null;
+                                    break;
+                                }
+                            }
+                            if ($curr !== null) {
+                                return $curr;
+                            }
                         }
                     }
                 } elseif (is_array($settings)) {
