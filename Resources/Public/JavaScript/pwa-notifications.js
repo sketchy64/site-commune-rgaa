@@ -224,7 +224,7 @@
         })
         .then(function (data) {
           if (data && data.success) {
-            self.updatePwaAndNotificationUI();
+            self.updateButtonUI(true);
           } else {
             console.warn('Erreur réponse enregistrement souscription push:', data);
           }
@@ -252,7 +252,7 @@
           });
         }
       }).then(function () {
-        self.updatePwaAndNotificationUI();
+        self.updateButtonUI(false);
       }).catch(function (err) {
         console.warn('Erreur lors du désabonnement push:', err);
       });
@@ -289,7 +289,7 @@
                 });
               } else if (permission === 'denied') {
                 showNotificationHelpModal();
-                self.updatePwaAndNotificationUI();
+                self.updateButtonUI(false);
               }
             });
           }
@@ -321,6 +321,14 @@
 
       navigator.serviceWorker.ready.then(function (registration) {
         registration.pushManager.getSubscription().then(function (subscription) {
+          // AUTO-SOUSCRIPTION : Si l'utilisateur a débloqué les notifications dans le cadenas navigateur,
+          // mais que l'abonnement n'était pas encore créé en BDD -> S'abonner automatiquement !
+          if (perm === 'granted' && !subscription) {
+            self.subscribeUserToPush(registration);
+            self.updateButtonUI(true);
+            return;
+          }
+
           const isNotificationActive = (perm === 'granted') && (subscription !== null);
 
           // CAS 1 : Utilisateur navigue DANS L'APPLICATION PWA (Standalone)
