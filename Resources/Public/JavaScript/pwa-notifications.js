@@ -158,7 +158,7 @@
           btn.classList.remove('btn-success', 'text-white');
           if (btn.id === 'pwa-notify-btn-banner') {
             btn.classList.add('btn-warning', 'text-dark', 'fw-bold');
-            btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#212529" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="me-1 flex-shrink-0" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> <span class="text-dark fw-bold">Activer les notifications</span>';
+            btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#212529" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="stroke: #212529 !important; fill: none !important; color: #212529 !important;" class="me-1 flex-shrink-0" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> <span class="text-dark fw-bold">Activer les notifications</span>';
           } else if (btn.id === 'pwa-notify-btn') {
             btn.classList.add('btn-outline-secondary', 'fw-bold');
             btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1 flex-shrink-0" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> <span>Activer les notifications</span>';

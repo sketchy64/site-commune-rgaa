@@ -4260,3 +4260,42 @@ article ul.pagination>li::before,
   margin-top: 0;
   margin-bottom: 0.75rem;
 }
+
+/* --- Boutons du bandeau supérieur PWA & Notifications (Haute Lisibilité RGAA) --- */
+#pwa-top-banner #pwa-notify-btn-banner.btn-warning {
+  background-color: #ffc107 !important;
+  border-color: #ffc107 !important;
+  color: #212529 !important;
+}
+
+#pwa-top-banner #pwa-notify-btn-banner.btn-warning svg,
+#pwa-top-banner #pwa-notify-btn-banner.btn-warning svg path {
+  stroke: #212529 !important;
+  fill: none !important;
+  color: #212529 !important;
+}
+
+#pwa-top-banner #pwa-notify-btn-banner.btn-success {
+  background-color: #198754 !important;
+  border-color: #198754 !important;
+  color: #ffffff !important;
+}
+
+#pwa-top-banner #pwa-notify-btn-banner.btn-success svg,
+#pwa-top-banner #pwa-notify-btn-banner.btn-success svg path {
+  stroke: #ffffff !important;
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+
+#pwa-top-banner #pwa-install-btn-banner {
+  background-color: #ffffff !important;
+  border-color: #dee2e6 !important;
+  color: #212529 !important;
+}
+
+#pwa-top-banner #pwa-install-btn-banner svg,
+#pwa-top-banner #pwa-install-btn-banner svg path {
+  stroke: #212529 !important;
+  color: #212529 !important;
+}
