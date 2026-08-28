@@ -38,10 +38,12 @@
     e.preventDefault();
     deferredPrompt = e;
 
+    if (window.CommuneApp && window.CommuneApp.updatePwaAndNotificationUI) {
+      window.CommuneApp.updatePwaAndNotificationUI();
+    }
+
     const installBtns = document.querySelectorAll('#pwa-install-btn, #pwa-install-btn-banner, .pwa-install-trigger');
     installBtns.forEach(function (btn) {
-      btn.classList.remove('d-none');
-      btn.classList.add('d-inline-flex');
       btn.addEventListener('click', function () {
         if (!deferredPrompt) return;
         deferredPrompt.prompt();
@@ -53,6 +55,9 @@
             });
           }
           deferredPrompt = null;
+          if (window.CommuneApp && window.CommuneApp.updatePwaAndNotificationUI) {
+            window.CommuneApp.updatePwaAndNotificationUI();
+          }
         });
       });
     });
@@ -146,7 +151,7 @@
           btn.setAttribute('data-subscribed', 'true');
           btn.classList.remove('btn-outline-secondary', 'btn-outline-light', 'btn-warning');
           btn.classList.add('btn-success');
-          btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" class="me-1" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> <span>Notifications activées</span>';
+          btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" class="me-1" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> <span>Désactiver les notifications</span>';
           btn.setAttribute('title', 'Cliquer pour désactiver les notifications push');
         } else {
           btn.setAttribute('data-subscribed', 'false');
@@ -217,7 +222,7 @@
         })
         .then(function (data) {
           if (data && data.success) {
-            self.updateButtonUI(true);
+            self.updatePwaAndNotificationUI();
           } else {
             console.warn('Erreur réponse enregistrement souscription push:', data);
           }
@@ -245,7 +250,7 @@
           });
         }
       }).then(function () {
-        self.updateButtonUI(false);
+        self.updatePwaAndNotificationUI();
       }).catch(function (err) {
         console.warn('Erreur lors du désabonnement push:', err);
       });
@@ -282,7 +287,7 @@
                 });
               } else if (permission === 'denied') {
                 showNotificationHelpModal();
-                self.updateButtonUI(false);
+                self.updatePwaAndNotificationUI();
               }
             });
           }
@@ -291,29 +296,100 @@
     },
 
     /**
-     * Vérification stricte et synchronisation 1:1 avec la permission réelle du navigateur
+     * Calcule l'état d'installation PWA et l'état des notifications pour appliquer les 4 règles strictes d'affichage
      */
-    checkSubscriptionStatus: function () {
+    updatePwaAndNotificationUI: function () {
       var self = this;
-      if ('Notification' in window && 'serviceWorker' in navigator) {
-        const perm = Notification.permission;
-        if (perm === 'granted') {
-          navigator.serviceWorker.ready.then(function (registration) {
-            registration.pushManager.getSubscription().then(function (subscription) {
-              if (subscription) {
-                self.updateButtonUI(true);
-              } else {
-                self.updateButtonUI(false);
-              }
-            });
-          });
-        } else {
-          // Si permission === 'denied' ou 'default', forcer l'état inactif / désactivé sur le site
-          self.updateButtonUI(false);
-        }
-      } else {
+      const banner = document.getElementById('pwa-top-banner');
+      const installBtn = document.getElementById('pwa-install-btn-banner');
+      const notifyBtn = document.getElementById('pwa-notify-btn-banner');
+
+      // Détection si l'application est actuellement installée / lancée en PWA Standalone
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                           window.navigator.standalone === true ||
+                           document.referrer.startsWith('android-app://');
+
+      const perm = ('Notification' in window) ? Notification.permission : 'default';
+
+      if (!('serviceWorker' in navigator) || !('Notification' in window)) {
         self.updateButtonUI(false);
+        return;
       }
+
+      navigator.serviceWorker.ready.then(function (registration) {
+        registration.pushManager.getSubscription().then(function (subscription) {
+          const isNotificationActive = (perm === 'granted') && (subscription !== null);
+
+          // RÈGLE 1 : Si l'app est déjà installée ET notifications déjà actives -> Cacher la barre
+          if (isStandalone && isNotificationActive) {
+            if (banner) banner.classList.add('d-none');
+            return;
+          }
+
+          // RÈGLE 2 : Si l'app est installée mais notifications NON activées -> Afficher bouton d'activation mais PAS bouton d'installation
+          if (isStandalone && !isNotificationActive) {
+            if (banner) banner.classList.remove('d-none');
+            if (installBtn) {
+              installBtn.classList.remove('d-inline-flex');
+              installBtn.classList.add('d-none');
+            }
+            if (notifyBtn) {
+              notifyBtn.classList.remove('d-none');
+              notifyBtn.classList.add('d-inline-flex');
+            }
+            self.updateButtonUI(false);
+            return;
+          }
+
+          // RÈGLE 3 : Si l'app n'est PAS installée mais notifications DÉJÀ ACTIVES -> Afficher bouton de désactivation
+          if (!isStandalone && isNotificationActive) {
+            if (banner && sessionStorage.getItem('pwa_banner_dismissed') !== 'true') {
+              banner.classList.remove('d-none');
+            }
+            if (installBtn) {
+              if (deferredPrompt) {
+                installBtn.classList.remove('d-none');
+                installBtn.classList.add('d-inline-flex');
+              } else {
+                installBtn.classList.remove('d-inline-flex');
+                installBtn.classList.add('d-none');
+              }
+            }
+            if (notifyBtn) {
+              notifyBtn.classList.remove('d-none');
+              notifyBtn.classList.add('d-inline-flex');
+            }
+            self.updateButtonUI(true);
+            return;
+          }
+
+          // RÈGLE 4 : Si l'app n'est PAS installée ET notifications DÉSACTIVÉES -> Afficher bouton d'activation
+          if (!isStandalone && !isNotificationActive) {
+            if (banner && sessionStorage.getItem('pwa_banner_dismissed') !== 'true') {
+              banner.classList.remove('d-none');
+            }
+            if (installBtn) {
+              if (deferredPrompt) {
+                installBtn.classList.remove('d-none');
+                installBtn.classList.add('d-inline-flex');
+              } else {
+                installBtn.classList.remove('d-inline-flex');
+                installBtn.classList.add('d-none');
+              }
+            }
+            if (notifyBtn) {
+              notifyBtn.classList.remove('d-none');
+              notifyBtn.classList.add('d-inline-flex');
+            }
+            self.updateButtonUI(false);
+            return;
+          }
+        });
+      });
+    },
+
+    checkSubscriptionStatus: function () {
+      this.updatePwaAndNotificationUI();
     }
   };
 
@@ -323,11 +399,11 @@
 
     const notifyBtns = document.querySelectorAll('#pwa-notify-btn, #pwa-notify-btn-banner, .pwa-notify-trigger');
     if ('Notification' in window && 'serviceWorker' in navigator) {
-      window.CommuneApp.checkSubscriptionStatus();
+      window.CommuneApp.updatePwaAndNotificationUI();
 
       // Ré-interroger le statut lors du retour de focus sur l'onglet (si modifié dans le cadenas)
       window.addEventListener('focus', function () {
-        window.CommuneApp.checkSubscriptionStatus();
+        window.CommuneApp.updatePwaAndNotificationUI();
       });
 
       if (notifyBtns.length > 0) {

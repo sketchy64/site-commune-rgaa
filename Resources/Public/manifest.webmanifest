@@ -1,21 +1,28 @@
 {
+  "id": "/",
   "name": "Site Officiel de la Mairie",
   "short_name": "Mairie",
   "description": "Portail officiel de la commune - Démarches, actualités, agenda et alertes citoyennes",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#00703A",
+  "lang": "fr",
+  "categories": ["government", "news", "lifestyle"],
   "icons": [
     {
       "src": "EXT:site_commune_rgaa/Resources/Public/Icons/pwa-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "EXT:site_commune_rgaa/Resources/Public/Icons/pwa-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "EXT:site_commune_rgaa/Resources/Public/Icons/pwa-maskable-192x192.png",
