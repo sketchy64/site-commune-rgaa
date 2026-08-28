@@ -176,6 +176,8 @@
       var publicKey = self.getVapidPublicKey();
       var applicationServerKey = urlBase64ToUint8Array(publicKey);
 
+      localStorage.removeItem('pwa_notifications_disabled_by_user');
+
       return registration.pushManager
         .subscribe({
           userVisibleOnly: true,
@@ -236,6 +238,8 @@
 
     unsubscribeUserFromPush: function (registration) {
       var self = this;
+      localStorage.setItem('pwa_notifications_disabled_by_user', 'true');
+
       return registration.pushManager.getSubscription().then(function (subscription) {
         if (subscription) {
           const endpoint = subscription.endpoint;
@@ -280,6 +284,7 @@
             self.unsubscribeUserFromPush(registration);
           } else {
             // Non abonné -> Demander l'autorisation + S'abonner
+            localStorage.removeItem('pwa_notifications_disabled_by_user');
             Notification.requestPermission().then(function (permission) {
               if (permission === 'granted') {
                 self.subscribeUserToPush(registration);
@@ -321,11 +326,17 @@
 
       navigator.serviceWorker.ready.then(function (registration) {
         registration.pushManager.getSubscription().then(function (subscription) {
-          // AUTO-SOUSCRIPTION : Si l'utilisateur a débloqué les notifications dans le cadenas navigateur,
-          // mais que l'abonnement n'était pas encore créé en BDD -> S'abonner automatiquement !
+          // AUTO-SOUSCRIPTION : Si les notifications sont autorisées dans le cadenas,
+          // mais qu'aucun abonnement n'existe ET que l'utilisateur N'A PAS explicitement désactivé sur le site
           if (perm === 'granted' && !subscription) {
-            self.subscribeUserToPush(registration);
-            self.updateButtonUI(true);
+            if (localStorage.getItem('pwa_notifications_disabled_by_user') === 'true') {
+              // L'utilisateur a cliqué sur "Désactiver les notifications" -> Conserver l'état désactivé
+              self.updateButtonUI(false);
+            } else {
+              // L'utilisateur n'a jamais désactivé sur le site -> Souscrire automatiquement
+              self.subscribeUserToPush(registration);
+              self.updateButtonUI(true);
+            }
             return;
           }
 
