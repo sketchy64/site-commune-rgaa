@@ -7,10 +7,11 @@ namespace Commune\SiteCommuneRgaa\EventListener;
 use Commune\SiteCommuneRgaa\Service\WebPushService;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\Event\AfterDatabaseOperationsEvent;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class NewsPublishedEventListener
 {
+    private static array $processedUids = [];
+
     public function __construct(
         private readonly WebPushService $webPushService,
         private readonly ConnectionPool $connectionPool
@@ -21,11 +22,20 @@ class NewsPublishedEventListener
      */
     public function __invoke(object $event): void
     {
+        if (!$this->webPushService->isPushEnabled()) {
+            return;
+        }
+
         // 1. Support de l'évènement natif EXT:news (GeorgRinger\News\Event\NewsPostPersistEvent)
         if (get_class($event) === 'GeorgRinger\News\Event\NewsPostPersistEvent') {
             /** @var mixed $event */
             $news = method_exists($event, 'getNews') ? $event->getNews() : null;
             if ($news) {
+                $uid = method_exists($news, 'getUid') ? (int)$news->getUid() : 0;
+                if ($uid > 0 && isset(self::$processedUids[$uid])) {
+                    return;
+                }
+
                 $isHidden = method_exists($news, 'getHidden') ? (bool)$news->getHidden() : false;
                 if ($isHidden) {
                     return;
@@ -41,8 +51,12 @@ class NewsPublishedEventListener
                     $teaser = 'Une nouvelle actualité a été publiée sur le site de la Mairie.';
                 }
 
-                $uid = method_exists($news, 'getUid') ? (int)$news->getUid() : 0;
-                $detailUrl = $uid > 0 ? '/news/detail/' . $uid : '/';
+                $pathSegment = method_exists($news, 'getPathSegment') ? (string)$news->getPathSegment() : '';
+                $detailUrl = !empty($pathSegment) ? '/news/' . $pathSegment : ($uid > 0 ? '/news/detail/' . $uid : '/');
+
+                if ($uid > 0) {
+                    self::$processedUids[$uid] = true;
+                }
 
                 $this->webPushService->notifyAllSubscribers(
                     'Mairie : ' . $title,
@@ -58,13 +72,13 @@ class NewsPublishedEventListener
             $table = $event->getTable();
             if ($table === 'tx_news_domain_model_news') {
                 $recordId = (int)$event->getRecordId();
-                if ($recordId <= 0) {
+                if ($recordId <= 0 || isset(self::$processedUids[$recordId])) {
                     return;
                 }
 
                 $fieldArray = $event->getFieldArray();
 
-                // Récupération de l'enregistrement complet en base de données pour garantie d'exhaustivité
+                // Récupération de l'enregistrement complet en base de données
                 $connection = $this->connectionPool->getConnectionForTable('tx_news_domain_model_news');
                 $fullRecord = $connection->select(
                     ['*'],
@@ -87,6 +101,8 @@ class NewsPublishedEventListener
 
                 // Vérification de la publication effective (visible, non supprimée, dates valides)
                 if ($hidden === 0 && $deleted === 0 && ($starttime === 0 || $starttime <= $now) && ($endtime === 0 || $endtime > $now)) {
+                    self::$processedUids[$recordId] = true;
+
                     $title = trim((string)($record['title'] ?? 'Nouvelle actualité'));
                     $teaser = trim((string)($record['teaser'] ?? ''));
 

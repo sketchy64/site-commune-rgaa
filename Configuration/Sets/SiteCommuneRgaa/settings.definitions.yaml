@@ -497,6 +497,13 @@ settings:
     type: bool
     default: true
 
+  commune.pwa_push_enable:
+    label: 'Activer l''envoi automatique des notifications Push d''actualités (Web Push)'
+    description: 'Permet d''activer ou de désactiver globalement l''envoi des notifications push lors de la publication d''actualités'
+    category: commune_app
+    type: bool
+    default: true
+
   commune.pwa_app_name:
     label: 'Nom court de l''application mobile'
     description: 'Nom affiché sous l''icône sur l''écran d''accueil du smartphone'

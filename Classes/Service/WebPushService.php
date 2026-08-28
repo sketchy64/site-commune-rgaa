@@ -105,10 +105,26 @@ class WebPushService
     }
 
     /**
+     * Indique si l'envoi des notifications Web Push est activé dans la configuration globale du site
+     */
+    public function isPushEnabled(): bool
+    {
+        $val = $this->getSiteSetting('commune.pwa_push_enable');
+        if ($val === null) {
+            return true;
+        }
+        return (bool)$val && (string)$val !== '0' && (string)$val !== 'false';
+    }
+
+    /**
      * Envoie une notification push à tous les abonnés enregistrés
      */
     public function notifyAllSubscribers(string $title, string $body, string $url = '/', string $icon = '/_assets/site_commune_rgaa/Icons/pwa-192x192.png'): int
     {
+        if (!$this->isPushEnabled()) {
+            return 0;
+        }
+
         $connection = $this->connectionPool->getConnectionForTable('tx_sitecommunergaa_push_subscription');
         $subscriptions = $connection->select(
             ['*'],

@@ -196,6 +196,15 @@ page {
         ifEmpty.ifEmpty.ifEmpty.value = 1
       }
 
+      # Activer ou désactiver globalement l'envoi des notifications Push (0/1)
+      communePwaPushEnable = TEXT
+      communePwaPushEnable {
+        data = site:settings:commune.pwa_push_enable
+        ifEmpty.data = site:settings.commune.pwa_push_enable
+        ifEmpty.ifEmpty.value = {$commune.pwa_push_enable}
+        ifEmpty.ifEmpty.ifEmpty.value = 1
+      }
+
       # Logo et personnalisation de marque
       communeLogoFile = TEXT
       communeLogoFile {

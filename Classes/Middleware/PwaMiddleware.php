@@ -188,19 +188,26 @@ class PwaMiddleware implements MiddlewareInterface
         $activeCount = (int)$connection->executeQuery('SELECT COUNT(*) FROM tx_sitecommunergaa_push_subscription WHERE hidden = 0')->fetchOne();
 
         $webPushService = $this->webPushService ?? GeneralUtility::makeInstance(WebPushService::class);
-        $sentCount = $webPushService->notifyAllSubscribers(
-            'Mairie : Test de Notification Push',
-            'Ceci est une notification de test envoyée par le système PWA communal.',
-            '/'
-        );
+        $isPushEnabled = $webPushService->isPushEnabled();
 
-        $message = $sentCount > 0
-            ? 'Notification de test envoyée avec succès à ' . $sentCount . ' abonné(s).'
-            : ($activeCount === 0
-                ? ($totalCount > 0
-                    ? 'Aucun abonné actif (' . $totalCount . ' abonnement(s) masqué(s) en base). Ajoutez ?reactivate=1 ou réactivez sur le site.'
-                    : 'Aucun abonné enregistré en base. Veuillez cliquer sur "Activer les notifications" sur le site.')
-                : 'Échec de la livraison de la notification push aux abonnés actifs.');
+        $sentCount = 0;
+        if ($isPushEnabled) {
+            $sentCount = $webPushService->notifyAllSubscribers(
+                'Mairie : Test de Notification Push',
+                'Ceci est une notification de test envoyée par le système PWA communal.',
+                '/'
+            );
+        }
+
+        $message = !$isPushEnabled
+            ? 'L\'envoi des notifications push est actuellement désactivé globalement dans les paramètres du site (commune.pwa_push_enable = 0).'
+            : ($sentCount > 0
+                ? 'Notification de test envoyée avec succès à ' . $sentCount . ' abonné(s).'
+                : ($activeCount === 0
+                    ? ($totalCount > 0
+                        ? 'Aucun abonné actif (' . $totalCount . ' abonnement(s) masqué(s) en base). Ajoutez ?reactivate=1 ou réactivez sur le site.'
+                        : 'Aucun abonné enregistré en base. Veuillez cliquer sur "Activer les notifications" sur le site.')
+                    : 'Échec de la livraison de la notification push aux abonnés actifs.'));
 
         return new JsonResponse([
             'success' => true,
