@@ -144,7 +144,10 @@ class WebPushService
      */
     public function notifyAllSubscribers(string $title, string $body, string $url = '/', string $icon = '/_assets/site_commune_rgaa/Icons/pwa-192x192.png'): int
     {
+        $logger = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Log\LogManager::class)->getLogger(__CLASS__);
+
         if (!$this->isPushEnabled()) {
+            $logger->info('Envoi Push ignoré : commune.pwa_push_enable est désactivé');
             return 0;
         }
 
@@ -156,8 +159,11 @@ class WebPushService
         )->fetchAllAssociative();
 
         if (empty($subscriptions)) {
+            $logger->info('Envoi Push ignoré : Aucun abonné actif trouvé dans tx_sitecommunergaa_push_subscription');
             return 0;
         }
+
+        $logger->info('Tentative d\'envoi Push aux abonnés', ['active_subscribers' => count($subscriptions), 'title' => $title]);
 
         $payload = json_encode([
             'title' => $title,

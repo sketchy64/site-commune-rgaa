@@ -7,6 +7,7 @@ namespace Commune\SiteCommuneRgaa\Hook;
 use Commune\SiteCommuneRgaa\Service\WebPushService;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
+use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class DataHandlerNewsHook
@@ -28,12 +29,16 @@ class DataHandlerNewsHook
         }
 
         $recordId = is_numeric($id) ? (int)$id : (int)($dataHandler->substNEWwithIDs[$id] ?? 0);
+        $logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
+        $logger->info('DataHandlerNewsHook capturé pour tx_news_domain_model_news', ['status' => $status, 'rawId' => $id, 'recordId' => $recordId]);
+
         if ($recordId <= 0 || isset(self::$processedUids[$recordId])) {
             return;
         }
 
         $webPushService = GeneralUtility::makeInstance(WebPushService::class);
         if (!$webPushService->isPushEnabled()) {
+            $logger->info('DataHandlerNewsHook : push désactivé globalement.');
             return;
         }
 
@@ -46,6 +51,7 @@ class DataHandlerNewsHook
         )->fetchAssociative();
 
         if (!$fullRecord) {
+            $logger->warn('DataHandlerNewsHook : Enregistrement introuvable en BDD', ['recordId' => $recordId]);
             return;
         }
 
@@ -75,11 +81,15 @@ class DataHandlerNewsHook
             $pathSegment = trim((string)($record['path_segment'] ?? ''));
             $detailUrl = !empty($pathSegment) ? '/news/' . $pathSegment : '/news/detail/' . $recordId;
 
-            $webPushService->notifyAllSubscribers(
+            $logger->info('DataHandlerNewsHook : Déclenchement de l\'envoi push pour l\'actualité', ['title' => $title, 'recordId' => $recordId]);
+
+            $sent = $webPushService->notifyAllSubscribers(
                 'Mairie : ' . $title,
                 $teaser,
                 $detailUrl
             );
+
+            $logger->info('DataHandlerNewsHook : Résultat envoi push', ['sent' => $sent]);
         }
     }
 }
