@@ -181,11 +181,26 @@ class PwaMiddleware implements MiddlewareInterface
 
         // Réactivation optionnelle des abonnements masqués via ?reactivate=1
         if (!empty($queryParams['reactivate'])) {
-            $connection->update('tx_sitecommunergaa_push_subscription', ['hidden' => 0], ['hidden' => 1]);
+            $connection->update('tx_sitecommunergaa_push_subscription', ['hidden' => 0], ['pid' => 0]);
         }
 
         $totalCount = (int)$connection->executeQuery('SELECT COUNT(*) FROM tx_sitecommunergaa_push_subscription')->fetchOne();
         $activeCount = (int)$connection->executeQuery('SELECT COUNT(*) FROM tx_sitecommunergaa_push_subscription WHERE hidden = 0')->fetchOne();
+
+        $subscriptionsList = $connection->select(
+            ['uid', 'user_agent', 'crdate', 'tstamp', 'hidden', 'endpoint'],
+            'tx_sitecommunergaa_push_subscription',
+            [],
+            [],
+            ['uid' => 'DESC'],
+            10
+        )->fetchAllAssociative();
+
+        foreach ($subscriptionsList as &$sub) {
+            $sub['endpoint'] = substr((string)($sub['endpoint'] ?? ''), 0, 40) . '...';
+            $sub['crdate_formatted'] = date('Y-m-d H:i:s', (int)($sub['crdate'] ?? 0));
+            $sub['tstamp_formatted'] = date('Y-m-d H:i:s', (int)($sub['tstamp'] ?? 0));
+        }
 
         $webPushService = $this->webPushService ?? GeneralUtility::makeInstance(WebPushService::class);
         $isPushEnabled = $webPushService->isPushEnabled();
@@ -214,7 +229,8 @@ class PwaMiddleware implements MiddlewareInterface
             'sent' => $sentCount,
             'active_subscriptions' => $activeCount,
             'total_subscriptions' => $totalCount,
-            'message' => $message
+            'message' => $message,
+            'diagnostic_subscriptions' => $subscriptionsList
         ]);
     }
 }

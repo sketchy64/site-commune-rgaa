@@ -71,8 +71,8 @@ class DataHandlerNewsHook
         $endtime = (int)($record['endtime'] ?? 0);
         $now = time();
 
-        // Publication effective (visible, non supprimée, dates de publication valides)
-        if ($hidden === 0 && $deleted === 0 && ($starttime === 0 || $starttime <= $now) && ($endtime === 0 || $endtime > $now)) {
+        // Publication effective (visible, non supprimée, dates de publication valides avec tolérance 60s)
+        if ($hidden === 0 && $deleted === 0 && ($starttime === 0 || $starttime <= ($now + 60)) && ($endtime === 0 || $endtime > $now)) {
             self::$processedUids[$recordId] = true;
 
             $title = trim((string)($record['title'] ?? 'Nouvelle actualité'));

@@ -120,8 +120,8 @@ class NewsPublishedEventListener
                 $endtime = (int)($record['endtime'] ?? 0);
                 $now = time();
 
-                // Vérification de la publication effective (visible, non supprimée, dates valides)
-                if ($hidden === 0 && $deleted === 0 && ($starttime === 0 || $starttime <= $now) && ($endtime === 0 || $endtime > $now)) {
+                // Vérification de la publication effective (visible, non supprimée, dates valides avec tolérance 60s)
+                if ($hidden === 0 && $deleted === 0 && ($starttime === 0 || $starttime <= ($now + 60)) && ($endtime === 0 || $endtime > $now)) {
                     self::$processedUids[$recordId] = true;
 
                     $title = trim((string)($record['title'] ?? 'Nouvelle actualité'));
