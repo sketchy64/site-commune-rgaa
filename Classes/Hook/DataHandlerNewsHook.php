@@ -59,7 +59,7 @@ class DataHandlerNewsHook
         )->fetchAssociative();
 
         if (!$fullRecord) {
-            $logger->warn('DataHandlerNewsHook : Enregistrement introuvable en BDD', ['recordId' => $recordId]);
+            $logger->warning('DataHandlerNewsHook : Enregistrement introuvable en BDD', ['recordId' => $recordId]);
             return;
         }
 

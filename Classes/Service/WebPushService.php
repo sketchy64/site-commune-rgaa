@@ -218,7 +218,7 @@ class WebPushService
                         $sentCount++;
                         $logger->info('Notification push livrée avec succès', ['uid' => $sub['uid'], 'endpoint' => substr($endpoint, 0, 40) . '...']);
                     } else {
-                        $logger->warn('Échec envoi push abonné', [
+                        $logger->warning('Échec envoi push abonné', [
                             'uid' => $sub['uid'],
                             'reason' => method_exists($report, 'getReason') ? $report->getReason() : 'Inconnue',
                             'is_expired' => $report->isSubscriptionExpired()
