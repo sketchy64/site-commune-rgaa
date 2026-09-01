@@ -56,7 +56,7 @@ class NewsPublishedEventListener
                 if (!empty($pathSegment)) {
                     $detailUrl = '/news/' . ltrim($pathSegment, '/');
                 } elseif ($uid > 0) {
-                    $detailUrl = '/?tx_news_pi1%5Bnews%5D=' . $uid . '&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Baction%5D=detail';
+                    $detailUrl = '/index.php?id=1&tx_news_pi1%5Bnews%5D=' . $uid . '&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Baction%5D=detail';
                 } else {
                     $detailUrl = '/';
                 }
@@ -145,7 +145,7 @@ class NewsPublishedEventListener
                     if (!empty($pathSegment)) {
                         $detailUrl = '/news/' . ltrim($pathSegment, '/');
                     } else {
-                        $detailUrl = '/?tx_news_pi1%5Bnews%5D=' . $recordId . '&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Baction%5D=detail';
+                        $detailUrl = '/index.php?id=1&tx_news_pi1%5Bnews%5D=' . $recordId . '&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Baction%5D=detail';
                     }
 
                     $this->webPushService->notifyAllSubscribers(
