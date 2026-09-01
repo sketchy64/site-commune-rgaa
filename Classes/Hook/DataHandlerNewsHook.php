@@ -111,12 +111,8 @@ class DataHandlerNewsHook
                 $teaser = 'Une nouvelle actualité a été publiée sur le site de la Mairie.';
             }
 
-            $pathSegment = trim((string)($record['path_segment'] ?? ''));
-            if (!empty($pathSegment)) {
-                $detailUrl = '/news/' . ltrim($pathSegment, '/');
-            } else {
-                $detailUrl = '/index.php?id=1&tx_news_pi1%5Bnews%5D=' . $recordId . '&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Baction%5D=detail';
-            }
+            $targetPageUid = !empty($record['detail_page']) ? (int)$record['detail_page'] : 1;
+            $detailUrl = '/index.php?id=' . $targetPageUid . '&tx_news_pi1%5Bnews%5D=' . $recordId . '&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Baction%5D=detail';
 
             $logger->info('DataHandlerNewsHook : Déclenchement de l\'envoi push pour l\'actualité', ['title' => $title, 'recordId' => $recordId]);
 
