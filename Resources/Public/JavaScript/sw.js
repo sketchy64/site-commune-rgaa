@@ -3,7 +3,7 @@
  * Gestion du mode hors-ligne et réception des notifications push citoyennes
  */
 
-const CACHE_NAME = 'commune-app-v2';
+const CACHE_NAME = 'commune-app-v3';
 const ASSETS_TO_CACHE = [
   '/',
   '/manifest.webmanifest'
@@ -89,7 +89,7 @@ self.addEventListener('push', (event) => {
   );
 });
 
-// Clic sur une notification push -> ouverture directe de la fiche détaillée de l'actualité
+// Clic sur une notification push -> ouverture directe de la fiche détaillée de l'actualité dans la PWA
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
@@ -103,22 +103,27 @@ self.addEventListener('notificationclick', (event) => {
 
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
-      // 1. Chercher si un onglet du Frontend (hors Backend TYPO3) est déjà ouvert
+      // 1. Si une fenêtre est déjà ouverte sur cette URL exacte, la mettre au premier plan
       for (let client of windowClients) {
-        if (!client.url.includes('/typo3/') && 'focus' in client) {
-          if ('navigate' in client) {
-            return client.navigate(urlToOpen).then((navigatedClient) => {
-              return navigatedClient ? navigatedClient.focus() : client.focus();
-            }).catch(() => {
-              if (clients.openWindow) {
-                return clients.openWindow(urlToOpen);
-              }
-            });
-          }
+        if (client.url === urlToOpen && 'focus' in client) {
           return client.focus();
         }
       }
-      // 2. Si aucun onglet Frontend ouvert, ouvrir la page détaillée dans une nouvelle fenêtre
+
+      // 2. Si une fenêtre Frontend (hors Backend TYPO3) est déjà ouverte et visible à l'écran, naviguer
+      for (let client of windowClients) {
+        if (!client.url.includes('/typo3/') && client.visibilityState === 'visible' && 'focus' in client && 'navigate' in client) {
+          return client.navigate(urlToOpen).then((navigatedClient) => {
+            return (navigatedClient || client).focus();
+          }).catch(() => {
+            if (clients.openWindow) {
+              return clients.openWindow(urlToOpen);
+            }
+          });
+        }
+      }
+
+      // 3. Si l'application PWA est fermée ou en arrière-plan, ouvrir la fenêtre PWA directement sur l'actualité
       if (clients.openWindow) {
         return clients.openWindow(urlToOpen);
       }
