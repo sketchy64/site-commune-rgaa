@@ -53,7 +53,7 @@ class NewsPublishedEventListener
                 }
 
                 if ($uid > 0) {
-                    $detailUrl = '/index.php?id=1&tx_news_pi1%5Bnews%5D=' . $uid . '&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Baction%5D=detail';
+                    $detailUrl = '/accueil/actualites-1?tx_news_pi1%5Baction%5D=detail&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Bnews%5D=' . $uid;
                 } else {
                     $detailUrl = '/';
                 }
@@ -138,8 +138,8 @@ class NewsPublishedEventListener
                         $teaser = 'Une nouvelle actualité a été publiée sur le site de la Mairie.';
                     }
 
-                    $targetPageUid = !empty($record['detail_page']) ? (int)$record['detail_page'] : 1;
-                    $detailUrl = '/index.php?id=' . $targetPageUid . '&tx_news_pi1%5Bnews%5D=' . $recordId . '&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Baction%5D=detail';
+                    $targetBase = !empty($record['detail_page']) ? '/index.php?id=' . (int)$record['detail_page'] : '/accueil/actualites-1';
+                    $detailUrl = $targetBase . '?tx_news_pi1%5Baction%5D=detail&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Bnews%5D=' . $recordId;
 
                     $this->webPushService->notifyAllSubscribers(
                         'Mairie : ' . $title,
