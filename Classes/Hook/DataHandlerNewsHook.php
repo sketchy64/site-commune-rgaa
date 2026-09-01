@@ -15,7 +15,7 @@ class DataHandlerNewsHook
     private static array $processedUids = [];
 
     /**
-     * Intercepte la sauvegarde et la publication d'une actualité via le DataHandler TYPO3 (Compatibilité v12 & v13 Backend)
+     * Intercepte la sauvegarde (création / édition) d'une actualité via le DataHandler TYPO3
      */
     public function processDatamap_afterDatabaseOperations(
         string $status,
@@ -37,8 +37,33 @@ class DataHandlerNewsHook
             }
         }
 
+        $this->processPublication($status, $table, $recordId, $fieldArray);
+    }
+
+    /**
+     * Intercepte les commandes du DataHandler TYPO3 (ex: masquer / démasquer via les icônes de liste)
+     */
+    public function processCmdmap_postProcess(
+        string $command,
+        string $table,
+        mixed $id,
+        mixed $value,
+        DataHandler $dataHandler
+    ): void {
+        if ($table !== 'tx_news_domain_model_news') {
+            return;
+        }
+
+        $recordId = is_numeric($id) ? (int)$id : 0;
+        if ($recordId > 0) {
+            $this->processPublication('cmdmap:' . $command, $table, $recordId, []);
+        }
+    }
+
+    private function processPublication(string $status, string $table, int $recordId, array $fieldArray): void
+    {
         $logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
-        $logger->info('DataHandlerNewsHook capturé pour tx_news_domain_model_news', ['status' => $status, 'rawId' => $id, 'recordId' => $recordId]);
+        $logger->info('DataHandlerNewsHook déclenché pour tx_news_domain_model_news', ['status' => $status, 'recordId' => $recordId]);
 
         if ($recordId <= 0 || isset(self::$processedUids[$recordId])) {
             return;
