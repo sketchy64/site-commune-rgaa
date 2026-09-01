@@ -3,7 +3,7 @@
  * Gestion du mode hors-ligne et réception des notifications push citoyennes
  */
 
-const CACHE_NAME = 'commune-app-v1';
+const CACHE_NAME = 'commune-app-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/manifest.webmanifest'
@@ -89,21 +89,36 @@ self.addEventListener('push', (event) => {
   );
 });
 
-// Clic sur une notification push -> ouverture de la page de l'actualité
+// Clic sur une notification push -> ouverture directe de la fiche détaillée de l'actualité
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const urlToOpen = event.notification.data && event.notification.data.url ? event.notification.data.url : '/';
+
+  let rawUrl = (event.notification.data && event.notification.data.url) ? event.notification.data.url : '/';
+  let urlToOpen;
+  try {
+    urlToOpen = new URL(rawUrl, self.location.origin).href;
+  } catch (e) {
+    urlToOpen = self.location.origin + rawUrl;
+  }
 
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
+      // 1. Chercher si un onglet du Frontend (hors Backend TYPO3) est déjà ouvert
       for (let client of windowClients) {
-        if ('focus' in client) {
+        if (!client.url.includes('/typo3/') && 'focus' in client) {
           if ('navigate' in client) {
-            client.navigate(urlToOpen);
+            return client.navigate(urlToOpen).then((navigatedClient) => {
+              return navigatedClient ? navigatedClient.focus() : client.focus();
+            }).catch(() => {
+              if (clients.openWindow) {
+                return clients.openWindow(urlToOpen);
+              }
+            });
           }
           return client.focus();
         }
       }
+      // 2. Si aucun onglet Frontend ouvert, ouvrir la page détaillée dans une nouvelle fenêtre
       if (clients.openWindow) {
         return clients.openWindow(urlToOpen);
       }
