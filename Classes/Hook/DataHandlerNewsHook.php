@@ -112,7 +112,11 @@ class DataHandlerNewsHook
             }
 
             $pathSegment = trim((string)($record['path_segment'] ?? ''));
-            $detailUrl = !empty($pathSegment) ? '/news/' . $pathSegment : '/news/detail/' . $recordId;
+            if (!empty($pathSegment)) {
+                $detailUrl = '/news/' . ltrim($pathSegment, '/');
+            } else {
+                $detailUrl = '/?tx_news_pi1%5Bnews%5D=' . $recordId . '&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Baction%5D=detail';
+            }
 
             $logger->info('DataHandlerNewsHook : Déclenchement de l\'envoi push pour l\'actualité', ['title' => $title, 'recordId' => $recordId]);
 

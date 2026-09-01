@@ -52,8 +52,14 @@ class NewsPublishedEventListener
                     $teaser = 'Une nouvelle actualité a été publiée sur le site de la Mairie.';
                 }
 
-                $pathSegment = method_exists($news, 'getPathSegment') ? (string)$news->getPathSegment() : '';
-                $detailUrl = !empty($pathSegment) ? '/news/' . $pathSegment : ($uid > 0 ? '/news/detail/' . $uid : '/');
+                $pathSegment = method_exists($news, 'getPathSegment') ? trim((string)$news->getPathSegment()) : '';
+                if (!empty($pathSegment)) {
+                    $detailUrl = '/news/' . ltrim($pathSegment, '/');
+                } elseif ($uid > 0) {
+                    $detailUrl = '/?tx_news_pi1%5Bnews%5D=' . $uid . '&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Baction%5D=detail';
+                } else {
+                    $detailUrl = '/';
+                }
 
                 if ($uid > 0) {
                     self::$processedUids[$uid] = true;
@@ -136,7 +142,11 @@ class NewsPublishedEventListener
                     }
 
                     $pathSegment = trim((string)($record['path_segment'] ?? ''));
-                    $detailUrl = !empty($pathSegment) ? '/news/' . $pathSegment : '/news/detail/' . $recordId;
+                    if (!empty($pathSegment)) {
+                        $detailUrl = '/news/' . ltrim($pathSegment, '/');
+                    } else {
+                        $detailUrl = '/?tx_news_pi1%5Bnews%5D=' . $recordId . '&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Baction%5D=detail';
+                    }
 
                     $this->webPushService->notifyAllSubscribers(
                         'Mairie : ' . $title,
