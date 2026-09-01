@@ -36,9 +36,7 @@
       navigator.serviceWorker
         .register('/sw.js', { scope: '/' })
         .then(function (reg) {
-          if (reg && reg.update) {
-            reg.update();
-          }
+          // Service worker enregistré
         })
         .catch(function (err) {
           console.warn('Erreur enregistrement ServiceWorker PWA:', err);
