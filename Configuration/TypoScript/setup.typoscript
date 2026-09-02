@@ -916,6 +916,7 @@ plugin.tx_news {
   }
   settings {
     listLayout = {$commune.news_list_layout}
+    orderByAllowed = tstamp,crdate,datetime,title,detail_page,categories,sorting,author
   }
 }
 
