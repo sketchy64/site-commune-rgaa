@@ -4,9 +4,9 @@
 <!-- Bandeau Supérieur d'information PWA & Notifications Push (Compact et haute lisibilité) -->
 <f:if condition="{communePwaTopBannerEnable} != '0'">
     <aside id="pwa-top-banner" class="pwa-top-banner bg-dark text-white py-1 border-bottom shadow-sm" style="font-size: 0.8125rem; min-height: 34px;" role="region" aria-label="Application mobile et notifications citoyennes">
-        <div class="container d-flex flex-wrap align-items-center justify-content-between gap-2 py-0">
+        <div class="container d-flex flex-wrap align-items-center justify-content-between gap-2 py-0 pwa-top-banner-container">
             <!-- Message explicatif citoyen personnalisable via la constante commune.pwa_top_banner_text -->
-            <div class="d-flex align-items-center gap-2 flex-grow-1 text-truncate">
+            <div class="d-flex align-items-center gap-2 flex-grow-1 text-truncate pwa-banner-message">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffc107" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 text-warning" aria-hidden="true">
                     <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
                     <line x1="12" y1="18" x2="12.01" y2="18"/>
@@ -20,7 +20,7 @@
             </div>
 
             <!-- Boutons d'action : Installer & Notifications -->
-            <div class="d-flex align-items-center gap-2 ms-auto flex-shrink-0">
+            <div class="d-flex align-items-center gap-2 ms-auto flex-shrink-0 pwa-banner-actions">
                 <!-- Bouton 1 : Installer l'application PWA (Texte et Icône foncés sur fond blanc pour contraste optimal) -->
                 <button type="button" id="pwa-install-btn-banner" class="btn btn-sm btn-light text-dark fw-bold border py-0 px-2 pwa-install-trigger d-none align-items-center gap-1 shadow-sm" style="font-size: 0.775rem; height: 26px;" aria-label="Installer l'application sur votre smartphone">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#212529" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
