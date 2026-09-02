@@ -8,6 +8,7 @@ use Commune\SiteCommuneRgaa\Service\WebPushService;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class DataHandlerNewsHook
@@ -111,10 +112,10 @@ class DataHandlerNewsHook
                 $teaser = 'Une nouvelle actualité a été publiée sur le site de la Mairie.';
             }
 
-            $targetBase = !empty($record['detail_page']) ? '/index.php?id=' . (int)$record['detail_page'] : '/accueil/actualites-1';
-            $detailUrl = $targetBase . '?tx_news_pi1%5Baction%5D=detail&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Bnews%5D=' . $recordId;
+            // Génération 100% dynamique de l'URL via le SiteRouter TYPO3 (en prenant en compte tout changement de slug de page)
+            $detailUrl = $this->buildNewsDetailUrl($record);
 
-            $logger->info('DataHandlerNewsHook : Déclenchement de l\'envoi push pour l\'actualité', ['title' => $title, 'recordId' => $recordId]);
+            $logger->info('DataHandlerNewsHook : Déclenchement de l\'envoi push pour l\'actualité', ['title' => $title, 'recordId' => $recordId, 'url' => $detailUrl]);
 
             $sent = $webPushService->notifyAllSubscribers(
                 'Mairie : ' . $title,
@@ -124,5 +125,63 @@ class DataHandlerNewsHook
 
             $logger->info('DataHandlerNewsHook : Résultat envoi push', ['sent' => $sent]);
         }
+    }
+
+    /**
+     * Construit dynamiquement l'URL de détail d'une actualité en interrogeant le SiteRouter TYPO3.
+     * Cette méthode récupère le slug de la page à jour, quel que soit son nom ou son niveau dans l'arborescence.
+     */
+    private function buildNewsDetailUrl(array $record): string
+    {
+        $recordId = (int)($record['uid'] ?? 0);
+        if ($recordId <= 0) {
+            return '/';
+        }
+
+        // 1. Déterminer la page cible (page de détail si configurée, sinon page parente pid)
+        $targetPageUid = 0;
+        if (!empty($record['detail_page']) && (int)$record['detail_page'] > 0) {
+            $targetPageUid = (int)$record['detail_page'];
+        } elseif (!empty($record['pid']) && (int)$record['pid'] > 0) {
+            $targetPageUid = (int)$record['pid'];
+        }
+
+        // 2. Génération dynamique via le SiteRouter TYPO3 Core
+        try {
+            $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
+            $site = null;
+
+            if ($targetPageUid > 0) {
+                try {
+                    $site = $siteFinder->getSiteByPageId($targetPageUid);
+                } catch (\Throwable $e) {
+                    // Fallback sur le site racine si la page n'est pas résolue directement
+                }
+            }
+            if (!$site) {
+                $site = $siteFinder->getSiteByPageId(1);
+            }
+
+            $router = $site->getRouter();
+            $queryParams = [
+                'tx_news_pi1' => [
+                    'controller' => 'News',
+                    'action' => 'detail',
+                    'news' => $recordId
+                ]
+            ];
+
+            $pageUidForRouting = $targetPageUid > 0 ? $targetPageUid : 1;
+            $uri = $router->generateUri($pageUidForRouting, $queryParams);
+
+            return (string)$uri;
+        } catch (\Throwable $e) {
+            $logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
+            $logger->warning('DataHandlerNewsHook : Erreur lors de la génération d\'URL via SiteRouter', ['exception' => $e->getMessage()]);
+        }
+
+        // 3. Secours de secours si le routeur échoue
+        $fallbackUid = $targetPageUid > 0 ? $targetPageUid : 1;
+        return '/index.php?id=' . $fallbackUid . '&tx_news_pi1%5Baction%5D=detail&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Bnews%5D=' . $recordId;
     }
 }
