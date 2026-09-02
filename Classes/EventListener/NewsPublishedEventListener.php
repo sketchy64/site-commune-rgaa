@@ -158,7 +158,7 @@ class NewsPublishedEventListener
 
     /**
      * Construit dynamiquement l'URL de détail d'une actualité en interrogeant le SiteRouter TYPO3.
-     * Cette méthode récupère le slug de la page à jour, quel que soit son nom ou son niveau dans l'arborescence.
+     * Cette méthode récupère le slug de la page Frontend à jour, quel que soit son nom ou son niveau dans l'arborescence.
      */
     private function buildNewsDetailUrl(array $record): string
     {
@@ -167,13 +167,8 @@ class NewsPublishedEventListener
             return '/';
         }
 
-        // 1. Déterminer la page cible (page de détail si configurée, sinon page parente pid)
-        $targetPageUid = 0;
-        if (!empty($record['detail_page']) && (int)$record['detail_page'] > 0) {
-            $targetPageUid = (int)$record['detail_page'];
-        } elseif (!empty($record['pid']) && (int)$record['pid'] > 0) {
-            $targetPageUid = (int)$record['pid'];
-        }
+        // 1. Déterminer la véritable page Frontend (doktype = 1, non-SysFolder)
+        $targetPageUid = $this->resolveNewsFrontendPageUid($record);
 
         // 2. Génération dynamique via le SiteRouter TYPO3 Core
         try {
@@ -200,17 +195,58 @@ class NewsPublishedEventListener
                 ]
             ];
 
-            $pageUidForRouting = $targetPageUid > 0 ? $targetPageUid : 1;
-            $uri = $router->generateUri($pageUidForRouting, $queryParams);
-
+            $uri = $router->generateUri($targetPageUid, $queryParams);
             return (string)$uri;
         } catch (\Throwable $e) {
             $logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
             $logger->warning('NewsPublishedEventListener : Erreur lors de la génération d\'URL via SiteRouter', ['exception' => $e->getMessage()]);
         }
 
-        // 3. Secours de secours si le routeur échoue
-        $fallbackUid = $targetPageUid > 0 ? $targetPageUid : 1;
-        return '/index.php?id=' . $fallbackUid . '&tx_news_pi1%5Baction%5D=detail&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Bnews%5D=' . $recordId;
+        // 3. Secours si le routeur échoue
+        return '/index.php?id=' . $targetPageUid . '&tx_news_pi1%5Baction%5D=detail&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Bnews%5D=' . $recordId;
+    }
+
+    /**
+     * Identifie l'UID de la vraie page Frontend (doktype = 1, excluant les SysFolders 254).
+     */
+    private function resolveNewsFrontendPageUid(array $record): int
+    {
+        // Si la page de détail est explicitement spécifiée dans l'enregistrement de l'actualité
+        if (!empty($record['detail_page']) && (int)$record['detail_page'] > 0) {
+            return (int)$record['detail_page'];
+        }
+
+        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+        $connPages = $connectionPool->getConnectionForTable('pages');
+
+        // Rechercher dans l'arborescence une page Frontend valide (doktype = 1) avec slug contenant 'actualit'
+        $queryBuilder = $connPages->createQueryBuilder();
+        $frontendPageUid = (int)$queryBuilder
+            ->select('uid')
+            ->from('pages')
+            ->where($queryBuilder->expr()->eq('deleted', 0))
+            ->andWhere($queryBuilder->expr()->eq('hidden', 0))
+            ->andWhere($queryBuilder->expr()->eq('doktype', 1))
+            ->andWhere($queryBuilder->expr()->like('slug', $queryBuilder->createNamedParameter('%actualit%')))
+            ->orderBy('uid', 'ASC')
+            ->setMaxResults(1)
+            ->executeQuery()
+            ->fetchOne();
+
+        if ($frontendPageUid > 0) {
+            return $frontendPageUid;
+        }
+
+        // Secours si pas de slug 'actualit' : chercher la première sous-page Frontend valide (non-SysFolder)
+        $fallbackPageUid = (int)$connPages->createQueryBuilder()
+            ->select('uid')
+            ->from('pages')
+            ->where('deleted = 0 AND hidden = 0 AND doktype = 1 AND is_siteroot = 0')
+            ->orderBy('uid', 'ASC')
+            ->setMaxResults(1)
+            ->executeQuery()
+            ->fetchOne();
+
+        return $fallbackPageUid > 0 ? $fallbackPageUid : 1;
     }
 }
