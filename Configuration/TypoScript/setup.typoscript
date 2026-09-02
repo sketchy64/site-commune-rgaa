@@ -916,10 +916,6 @@ plugin.tx_news {
   }
   settings {
     listLayout = {$commune.news_list_layout}
-    orderBy = datetime
-    orderDirection = desc
-    topNewsFirst = 1
-    overrideFlexformSettingsIfEmpty = cropMaxCharacters,dateField,timeRestriction,orderBy,orderDirection,topNewsFirst,startingpoint,recursive
   }
 }
 
