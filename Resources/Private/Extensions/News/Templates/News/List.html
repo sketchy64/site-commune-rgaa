@@ -5,7 +5,6 @@
 -->
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       xmlns:n="http://typo3.org/ns/GeorgRinger/News/ViewHelpers"
-      xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
 <f:layout name="General" />
@@ -14,25 +13,6 @@
     <f:if condition="{news}">
         <f:then>
             <f:variable name="activeLayout" value="{f:if(condition: settings.templateLayout, then: settings.templateLayout, else: settings.listLayout)}" />
-
-            <f:if condition="{rgaa:beUserLoggedIn()}">
-                <div class="alert alert-warning my-3 p-3 font-monospace small shadow-sm rounded-3" role="status">
-                    <div class="fw-bold mb-1">🛠️ [DEBUG ADMIN TYPO3 - PARAMÈTRES DU PLUGIN]</div>
-                    <div>• <strong>orderBy</strong> (champ de tri) : <code>{settings.orderBy -> f:or(alternative: 'NON SPÉCIFIÉ (Vide)')}</code></div>
-                    <div>• <strong>orderDirection</strong> (sens du tri) : <code>{settings.orderDirection -> f:or(alternative: 'NON SPÉCIFIÉ (Vide)')}</code></div>
-                    <div>• <strong>Layout actif</strong> : <code>{activeLayout}</code></div>
-                    <div>• <strong>Ordre UIDs affichés</strong> : 
-                        <f:if condition="{pagination.paginator}">
-                            <f:then>
-                                <f:for each="{pagination.paginator.paginatedItems}" as="item" iteration="it">#<strong>{item.uid}</strong>: "{item.title -> f:format.crop(maxCharacters: 25)}" ({f:format.date(date: item.datetime, format: 'd/m/Y H:i')}){f:if(condition: it.isLast, else: ' ➔ ')}</f:for>
-                            </f:then>
-                            <f:else>
-                                <f:for each="{news}" as="item" iteration="it">#<strong>{item.uid}</strong>: "{item.title -> f:format.crop(maxCharacters: 25)}" ({f:format.date(date: item.datetime, format: 'd/m/Y H:i')}){f:if(condition: it.isLast, else: ' ➔ ')}</f:for>
-                            </f:else>
-                        </f:if>
-                    </div>
-                </div>
-            </f:if>
             
             <f:switch expression="{activeLayout}">
                 <f:case value="carousel">
