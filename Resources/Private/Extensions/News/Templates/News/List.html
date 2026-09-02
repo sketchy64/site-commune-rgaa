@@ -1,6 +1,6 @@
 <!--
     OVERRIDE: EXT:news/Resources/Private/Templates/News/List.html
-    REASON: RGAA 4.1 Compliance & Pagination / FlexForm Settings Fix
+    REASON: RGAA 4.1 Compliance & Dynamic Pagination / FlexForm Settings Fix
     TARGET EXT VERSION: news ^11.0 || ^12.0 || ^13.0
 -->
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
@@ -13,7 +13,6 @@
     <f:if condition="{news}">
         <f:then>
             <f:variable name="activeLayout" value="{f:if(condition: settings.templateLayout, then: settings.templateLayout, else: settings.listLayout)}" />
-            <f:variable name="newsList" value="{f:if(condition: pagination.paginator, then: pagination.paginator.paginatedItems, else: news)}" />
             
             <f:switch expression="{activeLayout}">
                 <f:case value="carousel">
@@ -25,11 +24,22 @@
                     <!-- Mode Liste en ligne (Image à gauche, texte à droite) -->
                     <div class="commune-news-list-container commune-news-list-rows">
                         <div class="row g-4">
-                            <f:for each="{newsList}" as="newsItem" iteration="iterator">
-                                <div class="col-12">
-                                    <f:render partial="List/ItemRow" arguments="{newsItem: newsItem, settings: settings, iterator: iterator}" />
-                                </div>
-                            </f:for>
+                            <f:if condition="{pagination.paginator}">
+                                <f:then>
+                                    <f:for each="{pagination.paginator.paginatedItems}" as="newsItem" iteration="iterator">
+                                        <div class="col-12">
+                                            <f:render partial="List/ItemRow" arguments="{newsItem: newsItem, settings: settings, iterator: iterator}" />
+                                        </div>
+                                    </f:for>
+                                </f:then>
+                                <f:else>
+                                    <f:for each="{news}" as="newsItem" iteration="iterator">
+                                        <div class="col-12">
+                                            <f:render partial="List/ItemRow" arguments="{newsItem: newsItem, settings: settings, iterator: iterator}" />
+                                        </div>
+                                    </f:for>
+                                </f:else>
+                            </f:if>
                         </div>
 
                         <!-- Pagination accessible RGAA -->
@@ -43,11 +53,22 @@
                     <!-- Mode par défaut : En colonnes / Grille de cartes -->
                     <div class="commune-news-list-container commune-news-list-cards">
                         <div class="row g-4">
-                            <f:for each="{newsList}" as="newsItem" iteration="iterator">
-                                <div class="col-lg-4 col-md-6 col-12 d-flex">
-                                    <f:render partial="List/Item" arguments="{newsItem: newsItem, settings: settings, iterator: iterator}" />
-                                </div>
-                            </f:for>
+                            <f:if condition="{pagination.paginator}">
+                                <f:then>
+                                    <f:for each="{pagination.paginator.paginatedItems}" as="newsItem" iteration="iterator">
+                                        <div class="col-lg-4 col-md-6 col-12 d-flex">
+                                            <f:render partial="List/Item" arguments="{newsItem: newsItem, settings: settings, iterator: iterator}" />
+                                        </div>
+                                    </f:for>
+                                </f:then>
+                                <f:else>
+                                    <f:for each="{news}" as="newsItem" iteration="iterator">
+                                        <div class="col-lg-4 col-md-6 col-12 d-flex">
+                                            <f:render partial="List/Item" arguments="{newsItem: newsItem, settings: settings, iterator: iterator}" />
+                                        </div>
+                                    </f:for>
+                                </f:else>
+                            </f:if>
                         </div>
 
                         <!-- Pagination accessible RGAA -->
