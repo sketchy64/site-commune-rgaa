@@ -68,6 +68,7 @@ class SiteManagementService
 
     /**
      * Récupère les paramètres d'un site fusionnés (Définitions < SysTemplate DB Constants < SiteSettings YAML).
+     * Structure de retour multi-format pour garantir la compatibilité absolue avec Fluid et PHP.
      *
      * @return array<string, mixed>
      */
@@ -97,21 +98,37 @@ class SiteManagementService
         }
 
         // Fusion en cascade : Defaults < sys_template < SiteSettings YAML
-        $merged = $defaults;
+        $rawMerged = $defaults;
         foreach ($defaults as $key => $defaultVal) {
             // a. Constantes sys_template si présentes
             if (isset($sysTemplateConstants[$key])) {
-                $merged[$key] = $sysTemplateConstants[$key];
+                $rawMerged[$key] = $sysTemplateConstants[$key];
             }
 
             // b. Site Settings YAML
             $yamlVal = $this->extractValueFromConfig($siteSettings, $key);
             if ($yamlVal !== null && $yamlVal !== '') {
-                $merged[$key] = $yamlVal;
+                $rawMerged[$key] = $yamlVal;
             }
         }
 
-        return $merged;
+        // Duplication tri-forme de la structure pour Fluid ({currentSettings.commune.nom}, {currentSettings.commune_nom}, etc.)
+        $result = [];
+        foreach ($rawMerged as $key => $value) {
+            $result[$key] = $value;
+            $underscoreKey = str_replace('.', '_', $key);
+            $result[$underscoreKey] = $value;
+
+            if (str_contains($key, '.')) {
+                $parts = explode('.', $key, 2);
+                if (!isset($result[$parts[0]]) || !is_array($result[$parts[0]])) {
+                    $result[$parts[0]] = [];
+                }
+                $result[$parts[0]][$parts[1]] = $value;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -132,16 +149,28 @@ class SiteManagementService
 
             $definitions = $this->getSettingsDefinitions()['settings'];
 
-            // Traitement et nettoyage des types
+            // Traitement et nettoyage des types avec extraction multi-format
             $cleanSettings = [];
             foreach ($definitions as $key => $def) {
                 $type = $def['type'] ?? 'string';
                 $isBool = ($type === 'bool' || $type === 'boolean');
 
+                $underscoreKey = str_replace('.', '_', $key);
+                $dotParts = str_contains($key, '.') ? explode('.', $key, 2) : [];
+
+                $rawSubmitted = null;
+                if (array_key_exists($key, $submittedSettings)) {
+                    $rawSubmitted = $submittedSettings[$key];
+                } elseif (array_key_exists($underscoreKey, $submittedSettings)) {
+                    $rawSubmitted = $submittedSettings[$underscoreKey];
+                } elseif (!empty($dotParts) && isset($submittedSettings[$dotParts[0]][$dotParts[1]])) {
+                    $rawSubmitted = $submittedSettings[$dotParts[0]][$dotParts[1]];
+                }
+
                 if ($isBool) {
-                    $val = !empty($submittedSettings[$key]);
+                    $val = ($rawSubmitted !== null) ? !empty($rawSubmitted) : false;
                 } else {
-                    $val = $submittedSettings[$key] ?? ($existingSettings[$key] ?? $def['default'] ?? '');
+                    $val = $rawSubmitted ?? ($existingSettings[$key] ?? $def['default'] ?? '');
                 }
 
                 $cleanVal = match ($type) {
