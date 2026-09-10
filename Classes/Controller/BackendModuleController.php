@@ -8,6 +8,8 @@ use Commune\SiteCommuneRgaa\Service\SiteManagementService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
+use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -37,9 +39,12 @@ class BackendModuleController extends ActionController
         $definitions = $this->siteManagementService->getSettingsDefinitions();
         $currentSettings = !empty($siteIdentifier) ? $this->siteManagementService->getSiteSettings($siteIdentifier) : [];
 
+        // Ajout propre du fichier CSS backend via le PageRenderer Core TYPO3
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $pageRenderer->addCssFile('EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css');
+
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $moduleTemplate->setTitle('Collectivités RGAA', 'Administration & Multi-Sites');
-        $moduleTemplate->getPageRenderer()->addCssFile('EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css');
 
         $moduleTemplate->assignMultiple([
             'sites' => $sites,
@@ -95,9 +100,11 @@ class BackendModuleController extends ActionController
     {
         $definitions = $this->siteManagementService->getSettingsDefinitions();
 
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $pageRenderer->addCssFile('EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css');
+
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $moduleTemplate->setTitle('Assistant de Déploiement', 'Nouveau site commune');
-        $moduleTemplate->getPageRenderer()->addCssFile('EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css');
 
         $moduleTemplate->assignMultiple([
             'step' => $step,
