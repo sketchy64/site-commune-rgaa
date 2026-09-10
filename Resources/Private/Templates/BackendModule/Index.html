@@ -56,40 +56,40 @@
             <f:form action="save" name="settingsForm">
                 <f:form.hidden name="siteIdentifier" value="{selectedSiteIdentifier}" />
 
-                <!-- Navigation par Onglets -->
+                <!-- Navigation par Onglets avec événement onclick explicite -->
                 <ul class="rgaa-tabs">
                     <li class="rgaa-tab-item">
-                        <button type="button" class="rgaa-tab-btn active" data-target="panel-theme">
+                        <button type="button" class="rgaa-tab-btn active" onclick="rgaaSwitchTab(this, 'panel-theme')">
                             🎨 Thème & Couleurs
                         </button>
                     </li>
                     <li class="rgaa-tab-item">
-                        <button type="button" class="rgaa-tab-btn" data-target="panel-identity">
+                        <button type="button" class="rgaa-tab-btn" onclick="rgaaSwitchTab(this, 'panel-identity')">
                             🏛️ Identité & Logo
                         </button>
                     </li>
                     <li class="rgaa-tab-item">
-                        <button type="button" class="rgaa-tab-btn" data-target="panel-contact">
+                        <button type="button" class="rgaa-tab-btn" onclick="rgaaSwitchTab(this, 'panel-contact')">
                             📞 Contacts & Horaires
                         </button>
                     </li>
                     <li class="rgaa-tab-item">
-                        <button type="button" class="rgaa-tab-btn" data-target="panel-a11y">
+                        <button type="button" class="rgaa-tab-btn" onclick="rgaaSwitchTab(this, 'panel-a11y')">
                             ♿ Accessibilité RGAA
                         </button>
                     </li>
                     <li class="rgaa-tab-item">
-                        <button type="button" class="rgaa-tab-btn" data-target="panel-home">
+                        <button type="button" class="rgaa-tab-btn" onclick="rgaaSwitchTab(this, 'panel-home')">
                             🏠 Page d'accueil
                         </button>
                     </li>
                     <li class="rgaa-tab-item">
-                        <button type="button" class="rgaa-tab-btn" data-target="panel-footer">
+                        <button type="button" class="rgaa-tab-btn" onclick="rgaaSwitchTab(this, 'panel-footer')">
                             🦶 Pied de page
                         </button>
                     </li>
                     <li class="rgaa-tab-item">
-                        <button type="button" class="rgaa-tab-btn" data-target="panel-app">
+                        <button type="button" class="rgaa-tab-btn" onclick="rgaaSwitchTab(this, 'panel-app')">
                             📱 PWA & Web Push
                         </button>
                     </li>
@@ -330,27 +330,25 @@
 
 </div>
 
-<!-- Script JS Interactif pour les Onglets -->
+<!-- Fonction JS globale et infaillible pour le changement d'onglets -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const tabBtns = document.querySelectorAll('.rgaa-tab-btn');
-    const tabPanels = document.querySelectorAll('.rgaa-tab-panel');
-
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', function () {
-            const targetId = this.getAttribute('data-target');
-
-            tabBtns.forEach(b => b.classList.remove('active'));
-            tabPanels.forEach(p => p.classList.remove('active'));
-
-            this.classList.add('active');
-            const targetPanel = document.getElementById(targetId);
-            if (targetPanel) {
-                targetPanel.classList.add('active');
-            }
-        });
+function rgaaSwitchTab(btn, panelId) {
+    const buttons = document.querySelectorAll('.rgaa-tab-btn');
+    buttons.forEach(function(b) {
+        b.classList.remove('active');
     });
-});
+
+    const panels = document.querySelectorAll('.rgaa-tab-panel');
+    panels.forEach(function(p) {
+        p.classList.remove('active');
+    });
+
+    btn.classList.add('active');
+    const targetPanel = document.getElementById(panelId);
+    if (targetPanel) {
+        targetPanel.classList.add('active');
+    }
+}
 </script>
 
 </html>

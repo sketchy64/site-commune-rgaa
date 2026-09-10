@@ -7,8 +7,8 @@ namespace Commune\SiteCommuneRgaa\Controller;
 use Commune\SiteCommuneRgaa\Service\SiteManagementService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -67,7 +67,7 @@ class BackendModuleController extends ActionController
     public function saveAction(string $siteIdentifier, array $settings = []): ResponseInterface
     {
         if (empty($siteIdentifier)) {
-            $this->addFlashMessage('Aucun site sélectionné pour la sauvegarde.', 'Erreur', AbstractMessage::ERROR);
+            $this->addFlashMessage('Aucun site sélectionné pour la sauvegarde.', 'Erreur', ContextualFeedbackSeverity::ERROR);
             return $this->redirect('index');
         }
 
@@ -77,13 +77,13 @@ class BackendModuleController extends ActionController
             $this->addFlashMessage(
                 sprintf('Les paramètres du site "%s" ont été sauvegardés avec succès !', $siteIdentifier),
                 'Succès',
-                AbstractMessage::OK
+                ContextualFeedbackSeverity::OK
             );
         } else {
             $this->addFlashMessage(
                 sprintf('Une erreur est survenue lors de la sauvegarde du site "%s".', $siteIdentifier),
                 'Erreur',
-                AbstractMessage::ERROR
+                ContextualFeedbackSeverity::ERROR
             );
         }
 
@@ -123,7 +123,7 @@ class BackendModuleController extends ActionController
     public function createSiteAction(array $wizardData = []): ResponseInterface
     {
         if (empty($wizardData['name'])) {
-            $this->addFlashMessage('Le nom de la commune est obligatoire.', 'Erreur', AbstractMessage::ERROR);
+            $this->addFlashMessage('Le nom de la commune est obligatoire.', 'Erreur', ContextualFeedbackSeverity::ERROR);
             return $this->redirect('wizard', null, null, ['step' => 1, 'wizardData' => $wizardData]);
         }
 
@@ -133,7 +133,7 @@ class BackendModuleController extends ActionController
             $this->addFlashMessage(
                 sprintf('Félicitations ! Le site de la commune "%s" a été déployé avec succès (Identifiant: %s).', $wizardData['name'], $newIdentifier),
                 'Déploiement réussi',
-                AbstractMessage::OK
+                ContextualFeedbackSeverity::OK
             );
 
             return $this->redirect('index', null, null, ['siteIdentifier' => $newIdentifier]);
@@ -141,7 +141,7 @@ class BackendModuleController extends ActionController
             $this->addFlashMessage(
                 'Erreur lors du déploiement : ' . $e->getMessage(),
                 'Erreur de déploiement',
-                AbstractMessage::ERROR
+                ContextualFeedbackSeverity::ERROR
             );
 
             return $this->redirect('wizard', null, null, ['step' => 5, 'wizardData' => $wizardData]);
