@@ -39,9 +39,10 @@ class BackendModuleController extends ActionController
         $definitions = $this->siteManagementService->getSettingsDefinitions();
         $currentSettings = !empty($siteIdentifier) ? $this->siteManagementService->getSiteSettings($siteIdentifier) : [];
 
-        // Ajout propre du fichier CSS backend via le PageRenderer Core TYPO3
+        // Ajout propre des fichiers CSS et JS backend via le PageRenderer Core TYPO3 (Compatibilité CSP)
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         $pageRenderer->addCssFile('EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css');
+        $pageRenderer->addJsFile('EXT:site_commune_rgaa/Resources/Public/JavaScript/backend-module.js');
 
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $moduleTemplate->setTitle('Collectivités RGAA', 'Administration & Multi-Sites');
@@ -102,6 +103,7 @@ class BackendModuleController extends ActionController
 
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         $pageRenderer->addCssFile('EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css');
+        $pageRenderer->addJsFile('EXT:site_commune_rgaa/Resources/Public/JavaScript/backend-module.js');
 
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $moduleTemplate->setTitle('Assistant de Déploiement', 'Nouveau site commune');

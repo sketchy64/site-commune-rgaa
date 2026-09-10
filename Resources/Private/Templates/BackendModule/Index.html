@@ -1,6 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
-<f:be.pageRenderer includeCssFiles="{0: 'EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css'}" />
+<f:be.pageRenderer includeCssFiles="{0: 'EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css'}" includeJsFiles="{0: 'EXT:site_commune_rgaa/Resources/Public/JavaScript/backend-module.js'}" />
 
 <div class="rgaa-backend-wrapper p-4">
 
@@ -56,40 +56,40 @@
             <f:form action="save" name="settingsForm">
                 <f:form.hidden name="siteIdentifier" value="{selectedSiteIdentifier}" />
 
-                <!-- Navigation par Onglets avec événement onclick explicite -->
+                <!-- Navigation par Onglets (Conforme CSP) -->
                 <ul class="rgaa-tabs">
                     <li class="rgaa-tab-item">
-                        <button type="button" class="rgaa-tab-btn active" onclick="rgaaSwitchTab(this, 'panel-theme')">
+                        <button type="button" class="rgaa-tab-btn active" data-target="panel-theme">
                             🎨 Thème & Couleurs
                         </button>
                     </li>
                     <li class="rgaa-tab-item">
-                        <button type="button" class="rgaa-tab-btn" onclick="rgaaSwitchTab(this, 'panel-identity')">
+                        <button type="button" class="rgaa-tab-btn" data-target="panel-identity">
                             🏛️ Identité & Logo
                         </button>
                     </li>
                     <li class="rgaa-tab-item">
-                        <button type="button" class="rgaa-tab-btn" onclick="rgaaSwitchTab(this, 'panel-contact')">
+                        <button type="button" class="rgaa-tab-btn" data-target="panel-contact">
                             📞 Contacts & Horaires
                         </button>
                     </li>
                     <li class="rgaa-tab-item">
-                        <button type="button" class="rgaa-tab-btn" onclick="rgaaSwitchTab(this, 'panel-a11y')">
+                        <button type="button" class="rgaa-tab-btn" data-target="panel-a11y">
                             ♿ Accessibilité RGAA
                         </button>
                     </li>
                     <li class="rgaa-tab-item">
-                        <button type="button" class="rgaa-tab-btn" onclick="rgaaSwitchTab(this, 'panel-home')">
+                        <button type="button" class="rgaa-tab-btn" data-target="panel-home">
                             🏠 Page d'accueil
                         </button>
                     </li>
                     <li class="rgaa-tab-item">
-                        <button type="button" class="rgaa-tab-btn" onclick="rgaaSwitchTab(this, 'panel-footer')">
+                        <button type="button" class="rgaa-tab-btn" data-target="panel-footer">
                             🦶 Pied de page
                         </button>
                     </li>
                     <li class="rgaa-tab-item">
-                        <button type="button" class="rgaa-tab-btn" onclick="rgaaSwitchTab(this, 'panel-app')">
+                        <button type="button" class="rgaa-tab-btn" data-target="panel-app">
                             📱 PWA & Web Push
                         </button>
                     </li>
@@ -329,26 +329,5 @@
     </f:if>
 
 </div>
-
-<!-- Fonction JS globale et infaillible pour le changement d'onglets -->
-<script>
-function rgaaSwitchTab(btn, panelId) {
-    const buttons = document.querySelectorAll('.rgaa-tab-btn');
-    buttons.forEach(function(b) {
-        b.classList.remove('active');
-    });
-
-    const panels = document.querySelectorAll('.rgaa-tab-panel');
-    panels.forEach(function(p) {
-        p.classList.remove('active');
-    });
-
-    btn.classList.add('active');
-    const targetPanel = document.getElementById(panelId);
-    if (targetPanel) {
-        targetPanel.classList.add('active');
-    }
-}
-</script>
 
 </html>
