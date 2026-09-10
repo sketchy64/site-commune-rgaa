@@ -72,9 +72,9 @@ class BackendModuleController extends ActionController
             return $this->redirect('index');
         }
 
-        $success = $this->siteManagementService->saveSiteSettings($siteIdentifier, $settings);
+        $result = $this->siteManagementService->saveSiteSettings($siteIdentifier, $settings);
 
-        if ($success) {
+        if ($result['success']) {
             $this->addFlashMessage(
                 sprintf('Les paramètres du site "%s" ont été sauvegardés avec succès !', $siteIdentifier),
                 'Succès',
@@ -82,8 +82,8 @@ class BackendModuleController extends ActionController
             );
         } else {
             $this->addFlashMessage(
-                sprintf('Une erreur est survenue lors de la sauvegarde du site "%s".', $siteIdentifier),
-                'Erreur',
+                sprintf('Impossible de sauvegarder le site "%s" : %s', $siteIdentifier, $result['error'] ?? 'Erreur inconnue'),
+                'Erreur de sauvegarde',
                 ContextualFeedbackSeverity::ERROR
             );
         }

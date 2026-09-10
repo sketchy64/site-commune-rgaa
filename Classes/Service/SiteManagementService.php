@@ -67,7 +67,7 @@ class SiteManagementService
     }
 
     /**
-     * Récupère les paramètres d'un site fusionnés avec les valeurs par défaut de settings.definitions.yaml.
+     * Récupère les paramètres d'un site fusionnés (Définitions < SysTemplate DB Constants < SiteSettings YAML).
      *
      * @return array<string, mixed>
      */
@@ -79,6 +79,13 @@ class SiteManagementService
             $defaults[$key] = $def['default'] ?? null;
         }
 
+        $site = $this->getSiteByIdentifier($identifier);
+        $rootPageId = $site ? $site->getRootPageId() : 0;
+
+        // 1. Lecture des constantes TypoScript de la table sys_template (BDD)
+        $sysTemplateConstants = $this->getSysTemplateConstants($rootPageId);
+
+        // 2. Lecture de la configuration du site (YAML)
         try {
             $siteConfig = $this->siteConfiguration->load($identifier);
             $siteSettings = $siteConfig['settings'] ?? [];
@@ -89,12 +96,18 @@ class SiteManagementService
             $siteSettings = [];
         }
 
-        // Fusion des paramètres : plat et avec notation par points (commune.nom -> $siteSettings['commune']['nom'] ou $siteSettings['commune.nom'])
+        // Fusion en cascade : Defaults < sys_template < SiteSettings YAML
         $merged = $defaults;
         foreach ($defaults as $key => $defaultVal) {
-            $value = $this->extractValueFromConfig($siteSettings, $key);
-            if ($value !== null) {
-                $merged[$key] = $value;
+            // a. Constantes sys_template si présentes
+            if (isset($sysTemplateConstants[$key])) {
+                $merged[$key] = $sysTemplateConstants[$key];
+            }
+
+            // b. Site Settings YAML
+            $yamlVal = $this->extractValueFromConfig($siteSettings, $key);
+            if ($yamlVal !== null && $yamlVal !== '') {
+                $merged[$key] = $yamlVal;
             }
         }
 
@@ -102,12 +115,13 @@ class SiteManagementService
     }
 
     /**
-     * Sauvegarde les nouveaux paramètres pour un site donné.
+     * Sauvegarde les nouveaux paramètres pour un site donné dans settings.yaml ET sys_template.
      *
-     * @param string $identifier Identifiant du site (ex: 'main-site' ou 'commune-pau')
+     * @param string $identifier Identifiant du site (ex: 'base-rgaa')
      * @param array<string, mixed> $submittedSettings Clés-valeurs du formulaire
+     * @return array{success: bool, error: string}
      */
-    public function saveSiteSettings(string $identifier, array $submittedSettings): bool
+    public function saveSiteSettings(string $identifier, array $submittedSettings): array
     {
         try {
             $siteConfig = $this->siteConfiguration->load($identifier);
@@ -118,37 +132,52 @@ class SiteManagementService
 
             $definitions = $this->getSettingsDefinitions()['settings'];
 
-            // Préparation des réglages enregistrés en nettoyant et typant les données
-            $newSettings = $existingSettings;
-            foreach ($submittedSettings as $key => $value) {
-                if (!isset($definitions[$key])) {
-                    continue;
+            // Traitement et nettoyage des types
+            $cleanSettings = [];
+            foreach ($definitions as $key => $def) {
+                $type = $def['type'] ?? 'string';
+                $isBool = ($type === 'bool' || $type === 'boolean');
+
+                if ($isBool) {
+                    $val = !empty($submittedSettings[$key]);
+                } else {
+                    $val = $submittedSettings[$key] ?? ($existingSettings[$key] ?? $def['default'] ?? '');
                 }
 
-                $type = $definitions[$key]['type'] ?? 'string';
-                $cleanValue = match ($type) {
-                    'bool', 'boolean' => (bool)$value,
-                    'int', 'integer' => (int)$value,
-                    default => (string)$value,
+                $cleanVal = match ($type) {
+                    'bool', 'boolean' => (bool)$val,
+                    'int', 'integer' => (int)$val,
+                    default => (string)$val,
                 };
 
-                // Écriture à la fois en notation plate (commune.nom) et imbriquée ('commune' => ['nom'])
-                $newSettings[$key] = $cleanValue;
+                $cleanSettings[$key] = $cleanVal;
+            }
+
+            // Écriture dans siteConfig['settings']
+            $newSettings = $existingSettings;
+            foreach ($cleanSettings as $key => $cleanVal) {
+                $newSettings[$key] = $cleanVal;
                 if (str_contains($key, '.')) {
                     $parts = explode('.', $key, 2);
                     if (!isset($newSettings[$parts[0]]) || !is_array($newSettings[$parts[0]])) {
                         $newSettings[$parts[0]] = [];
                     }
-                    $newSettings[$parts[0]][$parts[1]] = $cleanValue;
+                    $newSettings[$parts[0]][$parts[1]] = $cleanVal;
                 }
             }
 
             $siteConfig['settings'] = $newSettings;
             $this->siteConfiguration->write($identifier, $siteConfig);
 
-            return true;
+            // Mise à jour de sys_template si un enregistrement existe sur la page racine
+            $site = $this->getSiteByIdentifier($identifier);
+            if ($site && $site->getRootPageId() > 0) {
+                $this->saveSysTemplateConstants($site->getRootPageId(), $cleanSettings);
+            }
+
+            return ['success' => true, 'error' => ''];
         } catch (\Throwable $e) {
-            return false;
+            return ['success' => false, 'error' => $e->getMessage()];
         }
     }
 
@@ -224,6 +253,147 @@ class SiteManagementService
         }
 
         return $identifier;
+    }
+
+    /**
+     * Lit les constantes TypoScript enregistrées dans sys_template pour la page racine donnée.
+     *
+     * @return array<string, string>
+     */
+    private function getSysTemplateConstants(int $rootPageId): array
+    {
+        if ($rootPageId <= 0) {
+            return [];
+        }
+
+        try {
+            $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_template');
+            $row = $queryBuilder
+                ->select('constants')
+                ->from('sys_template')
+                ->where($queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($rootPageId, \PDO::PARAM_INT)))
+                ->orderBy('sorting', 'ASC')
+                ->setMaxResults(1)
+                ->executeQuery()
+                ->fetchAssociative();
+
+            if (!$row || empty($row['constants'])) {
+                return [];
+            }
+
+            $parsed = [];
+            $lines = explode("\n", (string)$row['constants']);
+            $currentPrefix = '';
+            foreach ($lines as $line) {
+                $line = trim($line);
+                if (empty($line) || str_starts_with($line, '#') || str_starts_with($line, '/')) {
+                    continue;
+                }
+                if ($line === 'commune {') {
+                    $currentPrefix = 'commune.';
+                    continue;
+                }
+                if ($line === '}' && !empty($currentPrefix)) {
+                    $currentPrefix = '';
+                    continue;
+                }
+                if (str_contains($line, '=')) {
+                    [$key, $val] = explode('=', $line, 2);
+                    $key = trim($key);
+                    $val = trim($val);
+                    if (!empty($key)) {
+                        $fullKey = str_starts_with($key, 'commune.') ? $key : ($currentPrefix . $key);
+                        $parsed[$fullKey] = $val;
+                    }
+                }
+            }
+
+            return $parsed;
+        } catch (\Throwable) {
+            return [];
+        }
+    }
+
+    /**
+     * Met à jour le bloc de constantes commune.* dans le sys_template de la page racine si un enregistrement existe.
+     */
+    private function saveSysTemplateConstants(int $rootPageId, array $settings): void
+    {
+        if ($rootPageId <= 0) {
+            return;
+        }
+
+        try {
+            $connection = $this->connectionPool->getConnectionForTable('sys_template');
+            $queryBuilder = $connection->createQueryBuilder();
+
+            $row = $queryBuilder
+                ->select('uid', 'constants')
+                ->from('sys_template')
+                ->where($queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($rootPageId, \PDO::PARAM_INT)))
+                ->orderBy('sorting', 'ASC')
+                ->setMaxResults(1)
+                ->executeQuery()
+                ->fetchAssociative();
+
+            if (!$row) {
+                return;
+            }
+
+            $existingConstants = (string)($row['constants'] ?? '');
+            $lines = explode("\n", $existingConstants);
+
+            // Retirer l'ancien bloc commune.*
+            $newLines = [];
+            $inCommuneBlock = false;
+            foreach ($lines as $line) {
+                $trimmed = trim($line);
+                if ($trimmed === 'commune {') {
+                    $inCommuneBlock = true;
+                    continue;
+                }
+                if ($inCommuneBlock) {
+                    if ($trimmed === '}') {
+                        $inCommuneBlock = false;
+                    }
+                    continue;
+                }
+                if (str_starts_with($trimmed, 'commune.')) {
+                    continue;
+                }
+                $newLines[] = $line;
+            }
+
+            // Ajouter le nouveau bloc propre
+            $newLines[] = '';
+            $newLines[] = '# ==============================================================================';
+            $newLines[] = '# Constantes Commune RGAA (Générées par le Module d\'Administration)';
+            $newLines[] = '# ==============================================================================';
+            $newLines[] = 'commune {';
+
+            foreach ($settings as $key => $val) {
+                if (str_starts_with($key, 'commune.')) {
+                    $subKey = substr($key, 8);
+                    if (is_bool($val)) {
+                        $valStr = $val ? '1' : '0';
+                    } else {
+                        $valStr = (string)$val;
+                    }
+                    $newLines[] = '  ' . $subKey . ' = ' . $valStr;
+                }
+            }
+            $newLines[] = '}';
+
+            $updatedConstants = implode("\n", $newLines);
+
+            $connection->update(
+                'sys_template',
+                ['constants' => $updatedConstants],
+                ['uid' => (int)$row['uid']]
+            );
+        } catch (\Throwable) {
+            // Ignorer silencieusement si pas de table ou pas de permission sys_template
+        }
     }
 
     /**
