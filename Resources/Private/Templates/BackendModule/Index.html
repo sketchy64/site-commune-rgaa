@@ -1,333 +1,354 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
-<div class="module-body t3js-module-body">
-    <div class="container-fluid">
+<div class="rgaa-backend-wrapper p-4">
 
-        <!-- En-tête du Module Backend -->
-        <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+    <!-- En-tête Général du Module -->
+    <div class="rgaa-module-header">
+        <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h1 class="h2 mb-1">
-                    <span class="badge bg-primary me-2">RGAA 4.1</span>
-                    Administration & Gestion Multi-Sites Communes
+                <h1>
+                    <span class="rgaa-badge-a11y">RGAA 4.1</span>
+                    Administration & Paramétrage Collectivités
                 </h1>
-                <p class="text-muted mb-0">Paramétrage institutionnel, surcouche graphique et assistant de déploiement.</p>
+                <p>Gestion centrale de l'identité institutionnelle, du thème visuel et de l'accessibilité.</p>
             </div>
-
-            <div class="d-flex align-items-center gap-3">
-                <!-- Sélecteur de site actif -->
-                <f:if condition="{sites}">
-                    <f:form action="index" method="get" class="d-flex align-items-center gap-2">
-                        <label for="siteSelect" class="fw-bold me-2 text-nowrap mb-0">Commune active :</label>
-                        <select id="siteSelect" name="tx_sitecommunergaa_site_sitecommunergaa_sitecommunergaaadmin[siteIdentifier]" class="form-select form-select-sm" onchange="this.form.submit()">
-                            <f:for each="{sites}" as="site">
-                                <option value="{site.identifier}" {f:if(condition: '{site.identifier} == {selectedSiteIdentifier}', then: 'selected')}>
-                                    {site.title} ({site.identifier})
-                                </option>
-                            </f:for>
-                        </select>
-                    </f:form>
-                </f:if>
-
-                <!-- Bouton Déployer Nouveau Site -->
-                <f:link.action action="wizard" class="btn btn-success btn-sm d-flex align-items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+            <div>
+                <f:link.action action="wizard" class="rgaa-btn rgaa-btn-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                     </svg>
                     Déployer une nouvelle commune
                 </f:link.action>
             </div>
         </div>
-
-        <!-- Flash Messages -->
-        <f:flashMessages />
-
-        <f:if condition="{selectedSite}">
-            <f:then>
-                <!-- Infos Synthèse du Site Sélectionné -->
-                <div class="card mb-4 bg-light border-0 shadow-sm">
-                    <div class="card-body py-3">
-                        <div class="row align-items-center">
-                            <div class="col-md-3">
-                                <strong>Nom du site :</strong> {selectedSite.title}
-                            </div>
-                            <div class="col-md-3">
-                                <strong>Page Racine ID :</strong> #{selectedSite.rootPageId}
-                            </div>
-                            <div class="col-md-3">
-                                <strong>URL de base :</strong> <code>{selectedSite.base}</code>
-                            </div>
-                            <div class="col-md-3 text-end">
-                                <span class="badge bg-info text-dark">Set: commune/site-commune-rgaa</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Formulaire de Configuration Globale -->
-                <f:form action="save" name="settingsForm">
-                    <f:form.hidden name="siteIdentifier" value="{selectedSiteIdentifier}" />
-
-                    <!-- Tabs de catégories -->
-                    <ul class="nav nav-tabs nav-tabs-responsive mb-4" id="settingsTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="tab-theme" data-bs-toggle="tab" data-bs-target="#panel-theme" type="button" role="tab">🎨 Thème & Couleurs</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="tab-identity" data-bs-toggle="tab" data-bs-target="#panel-identity" type="button" role="tab">🏛️ Identité & Logo</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="tab-contact" data-bs-toggle="tab" data-bs-target="#panel-contact" type="button" role="tab">📞 Contacts & Horaires</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="tab-a11y" data-bs-toggle="tab" data-bs-target="#panel-a11y" type="button" role="tab">♿ Accessibilité RGAA</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="tab-home" data-bs-toggle="tab" data-bs-target="#panel-home" type="button" role="tab">🏠 Page d'accueil</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="tab-footer" data-bs-toggle="tab" data-bs-target="#panel-footer" type="button" role="tab">🦶 Pied de page</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="tab-app" data-bs-toggle="tab" data-bs-target="#panel-app" type="button" role="tab">📱 PWA & Web Push</button>
-                        </li>
-                    </ul>
-
-                    <!-- Contenu des Onglets -->
-                    <div class="tab-content mb-4" id="settingsTabContent">
-
-                        <!-- Panel Thème & Couleurs -->
-                        <div class="tab-pane fade show active" id="panel-theme" role="tabpanel">
-                            <div class="card card-body">
-                                <h4 class="card-title mb-3">Sélection du Thème Graphique & Palette de Couleurs</h4>
-
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Thème graphique du site :</label>
-                                    <f:form.select name="settings[commune.theme_css]" value="{currentSettings.commune.theme_css}" class="form-select">
-                                        <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css">Thème 1 - Style classique avec arrondis et ombres</f:form.select.option>
-                                        <f:form.select.option value="">Bootstrap Package Standard (Sans surcouche)</f:form.select.option>
-                                    </f:form.select>
-                                    <div class="form-text">Définit le style visuel général des cartes, boutons et composants.</div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Jeu de couleurs institutionnel :</label>
-                                    <f:form.select name="settings[commune.color_scheme_css]" value="{currentSettings.commune.color_scheme_css}" class="form-select">
-                                        <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css">Vert Institutionnel & Or (Couleur 1)</f:form.select.option>
-                                        <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-2.css">Bleu Océan & Sable (Couleur 2)</f:form.select.option>
-                                        <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-3.css">Ardoise Montagne & Terracotta (Couleur 3)</f:form.select.option>
-                                    </f:form.select>
-                                </div>
-
-                                <div class="form-check form-switch mb-3">
-                                    <f:form.checkbox name="settings[commune.enable_theme_switcher]" value="1" checked="{currentSettings.commune.enable_theme_switcher}" class="form-check-input" id="enableSwitcher" />
-                                    <label class="form-check-label fw-bold" for="enableSwitcher">Activer le sélecteur de thème & couleurs sur le frontend (Live Preview)</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Panel Identité & Logo -->
-                        <div class="tab-pane fade" id="panel-identity" role="tabpanel">
-                            <div class="card card-body">
-                                <h4 class="card-title mb-3">Dénomination Offlicielle & Marquage</h4>
-
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Nom officiel de la commune :</label>
-                                    <f:form.textfield name="settings[commune.nom]" value="{currentSettings.commune.nom}" class="form-control" placeholder="Mairie de Votre-Commune" />
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Devise ou slogan officiel :</label>
-                                    <f:form.textfield name="settings[commune.slogan]" value="{currentSettings.commune.slogan}" class="form-control" placeholder="République Française - Liberté, Égalité, Fraternité" />
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label fw-bold">Chemin du logo :</label>
-                                        <f:form.textfield name="settings[commune.logo_file]" value="{currentSettings.commune.logo_file}" class="form-control" placeholder="fileadmin/logo.svg" />
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label fw-bold">Hauteur du logo (px) :</label>
-                                        <f:form.textfield name="settings[commune.logo_height]" value="{currentSettings.commune.logo_height}" class="form-control" type="number" />
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Disposition de l'en-tête :</label>
-                                    <f:form.select name="settings[commune.header_layout]" value="{currentSettings.commune.header_layout}" class="form-select">
-                                        <f:form.select.option value="standard">Standard (Logo/slogan + recherche en haut, menu centré)</f:form.select.option>
-                                        <f:form.select.option value="integrated">Intégré (Logo dans le menu à gauche, liens à droite)</f:form.select.option>
-                                    </f:form.select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Panel Contact & Horaires -->
-                        <div class="tab-pane fade" id="panel-contact" role="tabpanel">
-                            <div class="card card-body">
-                                <h4 class="card-title mb-3">Coordonnées & Horaires d'accueil</h4>
-
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Adresse postale de la mairie :</label>
-                                    <f:form.textfield name="settings[commune.adresse]" value="{currentSettings.commune.adresse}" class="form-control" />
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label fw-bold">Numéro de téléphone :</label>
-                                        <f:form.textfield name="settings[commune.telephone]" value="{currentSettings.commune.telephone}" class="form-control" />
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label fw-bold">Adresse e-mail :</label>
-                                        <f:form.textfield name="settings[commune.email]" value="{currentSettings.commune.email}" class="form-control" />
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Horaires d'ouverture au public :</label>
-                                    <f:form.textarea name="settings[commune.horaires]" value="{currentSettings.commune.horaires}" class="form-control" rows="3" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Panel Accessibilité RGAA -->
-                        <div class="tab-pane fade" id="panel-a11y" role="tabpanel">
-                            <div class="card card-body">
-                                <h4 class="card-title mb-3">Accessibilité Numérique RGAA 4.1.2</h4>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-bold">Intitulé mention :</label>
-                                        <f:form.textfield name="settings[commune.rgaa_titre]" value="{currentSettings.commune.rgaa_titre}" class="form-control" />
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-bold">Statut de conformité légale :</label>
-                                        <f:form.select name="settings[commune.rgaa_statut]" value="{currentSettings.commune.rgaa_statut}" class="form-select">
-                                            <f:form.select.option value="partiellement conforme">partiellement conforme</f:form.select.option>
-                                            <f:form.select.option value="totalement conforme">totalement conforme</f:form.select.option>
-                                            <f:form.select.option value="non conforme">non conforme</f:form.select.option>
-                                        </f:form.select>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-bold">Taux de conformité (%) :</label>
-                                        <f:form.textfield name="settings[commune.rgaa_taux]" value="{currentSettings.commune.rgaa_taux}" class="form-control" placeholder="84%" />
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">UID Page Déclaration d'accessibilité :</label>
-                                    <f:form.textfield name="settings[commune.rgaa_page_uid]" value="{currentSettings.commune.rgaa_page_uid}" class="form-control" type="number" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Panel Page d'Accueil -->
-                        <div class="tab-pane fade" id="panel-home" role="tabpanel">
-                            <div class="card card-body">
-                                <h4 class="card-title mb-3">Titres & Affichages des Sections d'Accueil</h4>
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label fw-bold">Titre Accès rapides :</label>
-                                        <f:form.textfield name="settings[commune.home_quickaccess_title]" value="{currentSettings.commune.home_quickaccess_title}" class="form-control" />
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label fw-bold">Titre Édito / Mot du Maire :</label>
-                                        <f:form.textfield name="settings[commune.home_edito_title]" value="{currentSettings.commune.home_edito_title}" class="form-control" />
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label fw-bold">Titre Actualités & Agenda :</label>
-                                        <f:form.textfield name="settings[commune.home_news_title]" value="{currentSettings.commune.home_news_title}" class="form-control" />
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label fw-bold">Titre Plan interactif :</label>
-                                        <f:form.textfield name="settings[commune.home_map_title]" value="{currentSettings.commune.home_map_title}" class="form-control" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Panel Pied de page -->
-                        <div class="tab-pane fade" id="panel-footer" role="tabpanel">
-                            <div class="card card-body">
-                                <h4 class="card-title mb-3">Configuration du Pied de Page</h4>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-bold">Titre Colonne 1 :</label>
-                                        <f:form.textfield name="settings[commune.footer_col1_title]" value="{currentSettings.commune.footer_col1_title}" class="form-control" />
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-bold">Titre Colonne 2 :</label>
-                                        <f:form.textfield name="settings[commune.footer_col2_title]" value="{currentSettings.commune.footer_col2_title}" class="form-control" />
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-bold">Titre Colonne 3 :</label>
-                                        <f:form.textfield name="settings[commune.footer_col3_title]" value="{currentSettings.commune.footer_col3_title}" class="form-control" />
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label fw-bold">Texte du bouton contact :</label>
-                                        <f:form.textfield name="settings[commune.footer_contact_btn_title]" value="{currentSettings.commune.footer_contact_btn_title}" class="form-control" />
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label fw-bold">UID Page Contact :</label>
-                                        <f:form.textfield name="settings[commune.footer_contact_page_uid]" value="{currentSettings.commune.footer_contact_page_uid}" class="form-control" type="number" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Panel PWA & Web Push -->
-                        <div class="tab-pane fade" id="panel-app" role="tabpanel">
-                            <div class="card card-body">
-                                <h4 class="card-title mb-3">Application Mobile PWA & Notifications Push</h4>
-
-                                <div class="form-check form-switch mb-3">
-                                    <f:form.checkbox name="settings[commune.pwa_enable]" value="1" checked="{currentSettings.commune.pwa_enable}" class="form-check-input" id="pwaEnable" />
-                                    <label class="form-check-label fw-bold" for="pwaEnable">Activer l'Application Mobile PWA (iOS / Android)</label>
-                                </div>
-
-                                <div class="form-check form-switch mb-3">
-                                    <f:form.checkbox name="settings[commune.pwa_push_enable]" value="1" checked="{currentSettings.commune.pwa_push_enable}" class="form-check-input" id="pwaPushEnable" />
-                                    <label class="form-check-label fw-bold" for="pwaPushEnable">Activer les notifications push d'actualités</label>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Nom court de l'application (Écran d'accueil) :</label>
-                                    <f:form.textfield name="settings[commune.pwa_app_name]" value="{currentSettings.commune.pwa_app_name}" class="form-control" placeholder="Mairie" />
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Actions Formulaire -->
-                    <div class="d-flex justify-content-end gap-2 border-top pt-3">
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check-circle-fill me-1" viewBox="0 0 16 16">
-                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l4.992-5.99a.75.75 0 0 0-.018-1.05z"/>
-                            </svg>
-                            Enregistrer la configuration de la commune
-                        </button>
-                    </div>
-
-                </f:form>
-            </f:then>
-            <f:else>
-                <div class="alert alert-warning">
-                    <h4 class="alert-heading">Aucun site configuré</h4>
-                    <p>Aucune configuration de site n'a été trouvée. Utilisez l'assistant de déploiement ci-dessous pour créer le premier site commune.</p>
-                    <f:link.action action="wizard" class="btn btn-success">Déployer la première commune</f:link.action>
-                </div>
-            </f:else>
-        </f:if>
-
     </div>
+
+    <!-- Flash Messages -->
+    <f:flashMessages />
+
+    <!-- Barre de Sélection de la Commune Active -->
+    <f:if condition="{sites}">
+        <div class="rgaa-site-bar">
+            <f:form action="index" method="get" class="rgaa-site-select-group">
+                <label for="siteSelect">Commune active à paramétrer :</label>
+                <select id="siteSelect" name="tx_sitecommunergaa_site_sitecommunergaa_sitecommunergaaadmin[siteIdentifier]" class="rgaa-select" onchange="this.form.submit()">
+                    <f:for each="{sites}" as="site">
+                        <option value="{site.identifier}" {f:if(condition: '{site.identifier} == {selectedSiteIdentifier}', then: 'selected')}>
+                            🏛️ {site.title} ({site.identifier})
+                        </option>
+                    </f:for>
+                </select>
+            </f:form>
+
+            <f:if condition="{selectedSite}">
+                <div class="rgaa-help-text m-0">
+                    Page racine : <strong>#{selectedSite.rootPageId}</strong> | Base URL : <code>{selectedSite.base}</code>
+                </div>
+            </f:if>
+        </div>
+    </f:if>
+
+    <f:if condition="{selectedSite}">
+        <f:then>
+            <!-- Formulaire Principal de Configuration -->
+            <f:form action="save" name="settingsForm">
+                <f:form.hidden name="siteIdentifier" value="{selectedSiteIdentifier}" />
+
+                <!-- Navigation par Onglets -->
+                <ul class="rgaa-tabs">
+                    <li class="rgaa-tab-item">
+                        <button type="button" class="rgaa-tab-btn active" data-target="panel-theme">
+                            🎨 Thème & Couleurs
+                        </button>
+                    </li>
+                    <li class="rgaa-tab-item">
+                        <button type="button" class="rgaa-tab-btn" data-target="panel-identity">
+                            🏛️ Identité & Logo
+                        </button>
+                    </li>
+                    <li class="rgaa-tab-item">
+                        <button type="button" class="rgaa-tab-btn" data-target="panel-contact">
+                            📞 Contacts & Horaires
+                        </button>
+                    </li>
+                    <li class="rgaa-tab-item">
+                        <button type="button" class="rgaa-tab-btn" data-target="panel-a11y">
+                            ♿ Accessibilité RGAA
+                        </button>
+                    </li>
+                    <li class="rgaa-tab-item">
+                        <button type="button" class="rgaa-tab-btn" data-target="panel-home">
+                            🏠 Page d'accueil
+                        </button>
+                    </li>
+                    <li class="rgaa-tab-item">
+                        <button type="button" class="rgaa-tab-btn" data-target="panel-footer">
+                            🦶 Pied de page
+                        </button>
+                    </li>
+                    <li class="rgaa-tab-item">
+                        <button type="button" class="rgaa-tab-btn" data-target="panel-app">
+                            📱 PWA & Web Push
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Contenu des Onglets -->
+
+                <!-- Panel 1 : Thème & Couleurs -->
+                <div class="rgaa-tab-panel active" id="panel-theme">
+                    <div class="rgaa-card">
+                        <h2 class="rgaa-card-title">Sélection du Thème Graphique & Palette de Couleurs</h2>
+
+                        <div class="rgaa-form-group">
+                            <label class="rgaa-label">Thème graphique du site :</label>
+                            <f:form.select name="settings[commune.theme_css]" value="{currentSettings.commune.theme_css}" class="rgaa-form-select">
+                                <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css">Thème 1 - Style classique avec arrondis et ombres</f:form.select.option>
+                                <f:form.select.option value="">Bootstrap Package Standard (Sans surcouche)</f:form.select.option>
+                            </f:form.select>
+                            <div class="rgaa-help-text">Définit le style visuel des cartes, boutons et composants institutionnels.</div>
+                        </div>
+
+                        <div class="rgaa-form-group">
+                            <label class="rgaa-label">Jeu de couleurs institutionnel :</label>
+                            <f:form.select name="settings[commune.color_scheme_css]" value="{currentSettings.commune.color_scheme_css}" class="rgaa-form-select">
+                                <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css">Couleur 1 : Vert Institutionnel & Or</f:form.select.option>
+                                <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-2.css">Couleur 2 : Bleu Océan & Sable</f:form.select.option>
+                                <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-3.css">Couleur 3 : Ardoise Montagne & Terracotta</f:form.select.option>
+                            </f:form.select>
+                            <div class="rgaa-help-text">Palette de couleurs primaires et secondaires appliquée sur l'ensemble du portail.</div>
+                        </div>
+
+                        <label class="rgaa-switch-container">
+                            <f:form.checkbox name="settings[commune.enable_theme_switcher]" value="1" checked="{currentSettings.commune.enable_theme_switcher}" id="enableSwitcher" />
+                            <span class="rgaa-switch-label">Activer le sélecteur de thème & couleurs sur le frontend (Live Preview)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Panel 2 : Identité & Logo -->
+                <div class="rgaa-tab-panel" id="panel-identity">
+                    <div class="rgaa-card">
+                        <h2 class="rgaa-card-title">Dénomination Officielle & Marquage</h2>
+
+                        <div class="rgaa-form-group">
+                            <label class="rgaa-label">Nom officiel de la commune :</label>
+                            <f:form.textfield name="settings[commune.nom]" value="{currentSettings.commune.nom}" class="rgaa-input" placeholder="Mairie de Notre-Commune" />
+                        </div>
+
+                        <div class="rgaa-form-group">
+                            <label class="rgaa-label">Devise ou slogan officiel :</label>
+                            <f:form.textfield name="settings[commune.slogan]" value="{currentSettings.commune.slogan}" class="rgaa-input" placeholder="République Française - Liberté, Égalité, Fraternité" />
+                        </div>
+
+                        <div class="rgaa-grid-2">
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Chemin du logo image :</label>
+                                <f:form.textfield name="settings[commune.logo_file]" value="{currentSettings.commune.logo_file}" class="rgaa-input" placeholder="fileadmin/logo.svg ou EXT:..." />
+                            </div>
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Hauteur d'affichage du logo (px) :</label>
+                                <f:form.textfield name="settings[commune.logo_height]" value="{currentSettings.commune.logo_height}" class="rgaa-input" type="number" />
+                            </div>
+                        </div>
+
+                        <div class="rgaa-form-group">
+                            <label class="rgaa-label">Disposition de l'en-tête et du menu :</label>
+                            <f:form.select name="settings[commune.header_layout]" value="{currentSettings.commune.header_layout}" class="rgaa-form-select">
+                                <f:form.select.option value="standard">Standard (Logo/slogan + recherche en haut, menu centré)</f:form.select.option>
+                                <f:form.select.option value="integrated">Intégré (Logo dans le menu à gauche, liens à droite)</f:form.select.option>
+                            </f:form.select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 3 : Contacts & Horaires -->
+                <div class="rgaa-tab-panel" id="panel-contact">
+                    <div class="rgaa-card">
+                        <h2 class="rgaa-card-title">Coordonnées Officielle & Horaires d'accueil</h2>
+
+                        <div class="rgaa-form-group">
+                            <label class="rgaa-label">Adresse postale de la Mairie :</label>
+                            <f:form.textfield name="settings[commune.adresse]" value="{currentSettings.commune.adresse}" class="rgaa-input" />
+                        </div>
+
+                        <div class="rgaa-grid-2">
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Téléphone d'accueil :</label>
+                                <f:form.textfield name="settings[commune.telephone]" value="{currentSettings.commune.telephone}" class="rgaa-input" />
+                            </div>
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Adresse e-mail de contact :</label>
+                                <f:form.textfield name="settings[commune.email]" value="{currentSettings.commune.email}" class="rgaa-input" />
+                            </div>
+                        </div>
+
+                        <div class="rgaa-form-group">
+                            <label class="rgaa-label">Horaires d'ouverture au public :</label>
+                            <f:form.textarea name="settings[commune.horaires]" value="{currentSettings.commune.horaires}" class="rgaa-textarea" rows="3" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 4 : Accessibilité RGAA -->
+                <div class="rgaa-tab-panel" id="panel-a11y">
+                    <div class="rgaa-card">
+                        <h2 class="rgaa-card-title">Accessibilité Numérique & Conformation Légale RGAA 4.1.2</h2>
+
+                        <div class="rgaa-grid-3">
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Intitulé de la mention :</label>
+                                <f:form.textfield name="settings[commune.rgaa_titre]" value="{currentSettings.commune.rgaa_titre}" class="rgaa-input" />
+                            </div>
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Statut légal de conformité :</label>
+                                <f:form.select name="settings[commune.rgaa_statut]" value="{currentSettings.commune.rgaa_statut}" class="rgaa-form-select">
+                                    <f:form.select.option value="partiellement conforme">partiellement conforme</f:form.select.option>
+                                    <f:form.select.option value="totalement conforme">totalement conforme</f:form.select.option>
+                                    <f:form.select.option value="non conforme">non conforme</f:form.select.option>
+                                </f:form.select>
+                            </div>
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Taux d'audit (%) :</label>
+                                <f:form.textfield name="settings[commune.rgaa_taux]" value="{currentSettings.commune.rgaa_taux}" class="rgaa-input" placeholder="84%" />
+                            </div>
+                        </div>
+
+                        <div class="rgaa-form-group">
+                            <label class="rgaa-label">UID Page Déclaration d'accessibilité (Page ID) :</label>
+                            <f:form.textfield name="settings[commune.rgaa_page_uid]" value="{currentSettings.commune.rgaa_page_uid}" class="rgaa-input" type="number" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 5 : Page d'accueil -->
+                <div class="rgaa-tab-panel" id="panel-home">
+                    <div class="rgaa-card">
+                        <h2 class="rgaa-card-title">Sections & Titres de la Page d'Accueil</h2>
+
+                        <div class="rgaa-grid-2">
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Titre de la zone Accès rapides :</label>
+                                <f:form.textfield name="settings[commune.home_quickaccess_title]" value="{currentSettings.commune.home_quickaccess_title}" class="rgaa-input" />
+                            </div>
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Titre de la zone Édito / Mot du Maire :</label>
+                                <f:form.textfield name="settings[commune.home_edito_title]" value="{currentSettings.commune.home_edito_title}" class="rgaa-input" />
+                            </div>
+                        </div>
+
+                        <div class="rgaa-grid-2">
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Titre Actualités & Agenda :</label>
+                                <f:form.textfield name="settings[commune.home_news_title]" value="{currentSettings.commune.home_news_title}" class="rgaa-input" />
+                            </div>
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Titre Plan interactif :</label>
+                                <f:form.textfield name="settings[commune.home_map_title]" value="{currentSettings.commune.home_map_title}" class="rgaa-input" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 6 : Pied de page -->
+                <div class="rgaa-tab-panel" id="panel-footer">
+                    <div class="rgaa-card">
+                        <h2 class="rgaa-card-title">Pied de Page & Liens Institutionnels</h2>
+
+                        <div class="rgaa-grid-3">
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Titre Colonne 1 :</label>
+                                <f:form.textfield name="settings[commune.footer_col1_title]" value="{currentSettings.commune.footer_col1_title}" class="rgaa-input" />
+                            </div>
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Titre Colonne 2 :</label>
+                                <f:form.textfield name="settings[commune.footer_col2_title]" value="{currentSettings.commune.footer_col2_title}" class="rgaa-input" />
+                            </div>
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Titre Colonne 3 :</label>
+                                <f:form.textfield name="settings[commune.footer_col3_title]" value="{currentSettings.commune.footer_col3_title}" class="rgaa-input" />
+                            </div>
+                        </div>
+
+                        <div class="rgaa-grid-2">
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Texte du bouton contact :</label>
+                                <f:form.textfield name="settings[commune.footer_contact_btn_title]" value="{currentSettings.commune.footer_contact_btn_title}" class="rgaa-input" />
+                            </div>
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">UID Page Contact :</label>
+                                <f:form.textfield name="settings[commune.footer_contact_page_uid]" value="{currentSettings.commune.footer_contact_page_uid}" class="rgaa-input" type="number" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 7 : PWA & Web Push -->
+                <div class="rgaa-tab-panel" id="panel-app">
+                    <div class="rgaa-card">
+                        <h2 class="rgaa-card-title">Application Mobile PWA & Notifications Push</h2>
+
+                        <label class="rgaa-switch-container">
+                            <f:form.checkbox name="settings[commune.pwa_enable]" value="1" checked="{currentSettings.commune.pwa_enable}" id="pwaEnable" />
+                            <span class="rgaa-switch-label">Activer l'Application Web Progressive (PWA Android & iOS)</span>
+                        </label>
+
+                        <label class="rgaa-switch-container">
+                            <f:form.checkbox name="settings[commune.pwa_push_enable]" value="1" checked="{currentSettings.commune.pwa_push_enable}" id="pwaPushEnable" />
+                            <span class="rgaa-switch-label">Activer l'envoi automatique des notifications Push d'actualités</span>
+                        </label>
+
+                        <div class="rgaa-form-group">
+                            <label class="rgaa-label">Nom court de l'application sur l'écran d'accueil :</label>
+                            <f:form.textfield name="settings[commune.pwa_app_name]" value="{currentSettings.commune.pwa_app_name}" class="rgaa-input" placeholder="Mairie" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bouton de Soumission -->
+                <div class="mt-4 text-end">
+                    <button type="submit" class="rgaa-btn rgaa-btn-primary rgaa-btn-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l4.992-5.99a.75.75 0 0 0-.018-1.05z"/>
+                        </svg>
+                        Enregistrer la configuration de la commune
+                    </button>
+                </div>
+
+            </f:form>
+        </f:then>
+        <f:else>
+            <div class="rgaa-card text-center p-5">
+                <h3>Aucune commune configurée</h3>
+                <p class="text-muted">Utilisez l'assistant ci-dessous pour créer le premier site de commune.</p>
+                <f:link.action action="wizard" class="rgaa-btn rgaa-btn-success">Déployer la première commune</f:link.action>
+            </div>
+        </f:else>
+    </f:if>
+
 </div>
+
+<!-- Script JS Interactif pour les Onglets -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tabBtns = document.querySelectorAll('.rgaa-tab-btn');
+    const tabPanels = document.querySelectorAll('.rgaa-tab-panel');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            const targetId = this.getAttribute('data-target');
+
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabPanels.forEach(p => p.classList.remove('active'));
+
+            this.classList.add('active');
+            const targetPanel = document.getElementById(targetId);
+            if (targetPanel) {
+                targetPanel.classList.add('active');
+            }
+        });
+    });
+});
+</script>
 
 </html>

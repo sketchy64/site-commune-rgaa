@@ -6,6 +6,7 @@ namespace Commune\SiteCommuneRgaa\Controller;
 
 use Commune\SiteCommuneRgaa\Service\SiteManagementService;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -15,7 +16,8 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 class BackendModuleController extends ActionController
 {
     public function __construct(
-        private readonly SiteManagementService $siteManagementService
+        private readonly SiteManagementService $siteManagementService,
+        private readonly ModuleTemplateFactory $moduleTemplateFactory
     ) {
     }
 
@@ -26,7 +28,6 @@ class BackendModuleController extends ActionController
     {
         $sites = $this->siteManagementService->getAllSites();
 
-        // Sélection du premier site si aucun identifiant passé
         if (empty($siteIdentifier) && !empty($sites)) {
             $firstSite = reset($sites);
             $siteIdentifier = $firstSite->getIdentifier();
@@ -36,7 +37,11 @@ class BackendModuleController extends ActionController
         $definitions = $this->siteManagementService->getSettingsDefinitions();
         $currentSettings = !empty($siteIdentifier) ? $this->siteManagementService->getSiteSettings($siteIdentifier) : [];
 
-        $this->view->assignMultiple([
+        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+        $moduleTemplate->setTitle('Collectivités RGAA', 'Administration & Multi-Sites');
+        $moduleTemplate->getPageRenderer()->addCssFile('EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css');
+
+        $moduleTemplate->assignMultiple([
             'sites' => $sites,
             'selectedSiteIdentifier' => $siteIdentifier,
             'selectedSite' => $selectedSite,
@@ -45,7 +50,7 @@ class BackendModuleController extends ActionController
             'currentSettings' => $currentSettings,
         ]);
 
-        return $this->htmlResponse();
+        return $moduleTemplate->renderResponse('BackendModule/Index');
     }
 
     /**
@@ -90,13 +95,17 @@ class BackendModuleController extends ActionController
     {
         $definitions = $this->siteManagementService->getSettingsDefinitions();
 
-        $this->view->assignMultiple([
+        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+        $moduleTemplate->setTitle('Assistant de Déploiement', 'Nouveau site commune');
+        $moduleTemplate->getPageRenderer()->addCssFile('EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css');
+
+        $moduleTemplate->assignMultiple([
             'step' => $step,
             'wizardData' => $wizardData,
             'settingsDefinitions' => $definitions['settings'] ?? [],
         ]);
 
-        return $this->htmlResponse();
+        return $moduleTemplate->renderResponse('BackendModule/Wizard');
     }
 
     /**

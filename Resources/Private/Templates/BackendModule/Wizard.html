@@ -1,275 +1,204 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
-<div class="module-body t3js-module-body">
-    <div class="container-fluid py-3">
+<div class="rgaa-backend-wrapper p-4">
 
-        <!-- En-tête Assistant -->
-        <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+    <!-- En-tête Assistant -->
+    <div class="rgaa-module-header">
+        <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h1 class="h2 mb-1">🚀 Assistant de Déploiement : Nouveau Site Commune</h1>
-                <p class="text-muted mb-0">Création automatisée de la configuration de site, attribution du Site Set et génération de l'arborescence RGAA.</p>
+                <h1>🚀 Assistant de Déploiement : Nouveau Site Commune</h1>
+                <p>Création guidée en 5 étapes, attribution du Site Set et génération d'arborescence RGAA.</p>
             </div>
             <div>
-                <f:link.action action="index" class="btn btn-outline-secondary btn-sm">
-                    ← Annuler & Retour à la liste
+                <f:link.action action="index" class="rgaa-btn rgaa-btn-outline" style="background:#fff; color:#0f4c81 !important;">
+                    ← Annuler & Retour
                 </f:link.action>
             </div>
         </div>
+    </div>
 
-        <!-- Flash Messages -->
-        <f:flashMessages />
+    <!-- Flash Messages -->
+    <f:flashMessages />
 
-        <!-- Stepper Visuel -->
-        <div class="row mb-5">
-            <div class="col-12">
-                <div class="position-relative m-4">
-                    <div class="progress" style="height: 4px;">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: {step * 20}%;"></div>
+    <!-- Stepper Visuel 5 Étapes -->
+    <div class="rgaa-stepper">
+        <div class="rgaa-step {f:if(condition: '{step} >= 1', then: 'active')}">1</div>
+        <div class="rgaa-step {f:if(condition: '{step} >= 2', then: 'active')}">2</div>
+        <div class="rgaa-step {f:if(condition: '{step} >= 3', then: 'active')}">3</div>
+        <div class="rgaa-step {f:if(condition: '{step} >= 4', then: 'active')}">4</div>
+        <div class="rgaa-step {f:if(condition: '{step} == 5', then: 'completed')}">5</div>
+    </div>
+
+    <!-- Container d'étape -->
+    <div class="rgaa-card">
+
+        <f:if condition="{step} == 1">
+            <!-- ÉTAPE 1 : Identité & Domaine -->
+            <h2 class="rgaa-card-title">Étape 1 / 5 : Identité de la Commune & URL</h2>
+            <p class="rgaa-help-text mb-4">Renseignez le nom officiel de la collectivité et son nom de domaine principal.</p>
+
+            <f:form action="wizard" name="wizardData">
+                <f:form.hidden name="step" value="2" />
+
+                <div class="rgaa-form-group">
+                    <label class="rgaa-label">Nom officiel de la commune * :</label>
+                    <f:form.textfield name="wizardData[name]" value="{wizardData.name}" class="rgaa-input" style="font-size:1.1rem; padding:0.75rem;" placeholder="Mairie de Pau" required="true" />
+                </div>
+
+                <div class="rgaa-grid-2">
+                    <div class="rgaa-form-group">
+                        <label class="rgaa-label">Identifiant unique du site (optionnel) :</label>
+                        <f:form.textfield name="wizardData[identifier]" value="{wizardData.identifier}" class="rgaa-input" placeholder="commune-pau" />
+                        <div class="rgaa-help-text">Généré automatiquement depuis le nom si laissé vide.</div>
                     </div>
-                    <div class="d-flex justify-content-between position-absolute top-0 start-0 end-0 translate-middle-y">
-                        <span class="btn btn-sm {f:if(condition: '{step} >= 1', then: 'btn-primary', else: 'btn-secondary')} rounded-pill" style="width: 2rem; height: 2rem;">1</span>
-                        <span class="btn btn-sm {f:if(condition: '{step} >= 2', then: 'btn-primary', else: 'btn-secondary')} rounded-pill" style="width: 2rem; height: 2rem;">2</span>
-                        <span class="btn btn-sm {f:if(condition: '{step} >= 3', then: 'btn-primary', else: 'btn-secondary')} rounded-pill" style="width: 2rem; height: 2rem;">3</span>
-                        <span class="btn btn-sm {f:if(condition: '{step} >= 4', then: 'btn-primary', else: 'btn-secondary')} rounded-pill" style="width: 2rem; height: 2rem;">4</span>
-                        <span class="btn btn-sm {f:if(condition: '{step} == 5', then: 'btn-success', else: 'btn-secondary')} rounded-pill" style="width: 2rem; height: 2rem;">5</span>
+                    <div class="rgaa-form-group">
+                        <label class="rgaa-label">URL de base (Domaine) * :</label>
+                        <f:form.textfield name="wizardData[domain]" value="{wizardData.domain}" class="rgaa-input" placeholder="https://www.pau.fr/" required="true" />
                     </div>
                 </div>
+
+                <div class="rgaa-form-group">
+                    <label class="rgaa-label">Devise ou slogan institutionnel :</label>
+                    <f:form.textfield name="wizardData[slogan]" value="{wizardData.slogan}" class="rgaa-input" placeholder="République Française - Liberté, Égalité, Fraternité" />
+                </div>
+
+                <div class="mt-4 text-end">
+                    <button type="submit" class="rgaa-btn rgaa-btn-primary rgaa-btn-lg">Suivant : Charte & Thème →</button>
+                </div>
+            </f:form>
+        </f:if>
+
+        <f:if condition="{step} == 2">
+            <!-- ÉTAPE 2 : Thème & Palette -->
+            <h2 class="rgaa-card-title">Étape 2 / 5 : Choix du Thème Graphique & Palette</h2>
+
+            <f:form action="wizard" name="wizardData">
+                <f:form.hidden name="step" value="3" />
+                <f:form.hidden name="wizardData[name]" value="{wizardData.name}" />
+                <f:form.hidden name="wizardData[identifier]" value="{wizardData.identifier}" />
+                <f:form.hidden name="wizardData[domain]" value="{wizardData.domain}" />
+                <f:form.hidden name="wizardData[slogan]" value="{wizardData.slogan}" />
+
+                <div class="rgaa-form-group">
+                    <label class="rgaa-label">Thème Graphique :</label>
+                    <f:form.select name="wizardData[theme]" value="{wizardData.theme}" class="rgaa-form-select">
+                        <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css">Thème 1 - Style classique institutionnel avec arrondis et ombres</f:form.select.option>
+                        <f:form.select.option value="">Bootstrap Package Standard (Sans surcouche)</f:form.select.option>
+                    </f:form.select>
+                </div>
+
+                <div class="rgaa-form-group">
+                    <label class="rgaa-label">Jeu de Couleurs Institutionnel :</label>
+                    <f:form.select name="wizardData[color_scheme]" value="{wizardData.color_scheme}" class="rgaa-form-select">
+                        <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css">Couleur 1 : Vert Institutionnel & Or</f:form.select.option>
+                        <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-2.css">Couleur 2 : Bleu Océan & Sable</f:form.select.option>
+                        <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-3.css">Couleur 3 : Ardoise Montagne & Terracotta</f:form.select.option>
+                    </f:form.select>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <f:link.action action="wizard" arguments="{step: 1, wizardData: wizardData}" class="rgaa-btn rgaa-btn-outline">← Étape précédente</f:link.action>
+                    <button type="submit" class="rgaa-btn rgaa-btn-primary rgaa-btn-lg">Suivant : Accessibilité RGAA →</button>
+                </div>
+            </f:form>
+        </f:if>
+
+        <f:if condition="{step} == 3">
+            <!-- ÉTAPE 3 : RGAA -->
+            <h2 class="rgaa-card-title">Étape 3 / 5 : Accessibilité Numérique & RGAA</h2>
+
+            <f:form action="wizard" name="wizardData">
+                <f:form.hidden name="step" value="4" />
+                <f:form.hidden name="wizardData[name]" value="{wizardData.name}" />
+                <f:form.hidden name="wizardData[identifier]" value="{wizardData.identifier}" />
+                <f:form.hidden name="wizardData[domain]" value="{wizardData.domain}" />
+                <f:form.hidden name="wizardData[slogan]" value="{wizardData.slogan}" />
+                <f:form.hidden name="wizardData[theme]" value="{wizardData.theme}" />
+                <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
+
+                <div class="rgaa-form-group">
+                    <label class="rgaa-label">Statut légal de conformité :</label>
+                    <f:form.select name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" class="rgaa-form-select">
+                        <f:form.select.option value="partiellement conforme">partiellement conforme</f:form.select.option>
+                        <f:form.select.option value="totalement conforme">totalement conforme</f:form.select.option>
+                        <f:form.select.option value="non conforme">non conforme</f:form.select.option>
+                    </f:form.select>
+                </div>
+
+                <div class="rgaa-form-group">
+                    <label class="rgaa-label">Taux d'audit initial (%) :</label>
+                    <f:form.textfield name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" class="rgaa-input" placeholder="85%" />
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <f:link.action action="wizard" arguments="{step: 2, wizardData: wizardData}" class="rgaa-btn rgaa-btn-outline">← Étape précédente</f:link.action>
+                    <button type="submit" class="rgaa-btn rgaa-btn-primary rgaa-btn-lg">Suivant : Arborescence →</button>
+                </div>
+            </f:form>
+        </f:if>
+
+        <f:if condition="{step} == 4">
+            <!-- ÉTAPE 4 : Arborescence -->
+            <h2 class="rgaa-card-title">Étape 4 / 5 : Structuration de l'Arborescence du Site</h2>
+
+            <f:form action="wizard" name="wizardData">
+                <f:form.hidden name="step" value="5" />
+                <f:form.hidden name="wizardData[name]" value="{wizardData.name}" />
+                <f:form.hidden name="wizardData[identifier]" value="{wizardData.identifier}" />
+                <f:form.hidden name="wizardData[domain]" value="{wizardData.domain}" />
+                <f:form.hidden name="wizardData[slogan]" value="{wizardData.slogan}" />
+                <f:form.hidden name="wizardData[theme]" value="{wizardData.theme}" />
+                <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
+                <f:form.hidden name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" />
+                <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
+
+                <label class="rgaa-switch-container mb-4">
+                    <f:form.checkbox name="wizardData[create_pages]" value="1" checked="true" id="createPages" />
+                    <span class="rgaa-switch-label">Générer automatiquement les 8 pages d'arborescence légales & conformes RGAA</span>
+                </label>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <f:link.action action="wizard" arguments="{step: 3, wizardData: wizardData}" class="rgaa-btn rgaa-btn-outline">← Étape précédente</f:link.action>
+                    <button type="submit" class="rgaa-btn rgaa-btn-primary rgaa-btn-lg">Suivant : Récapitulatif →</button>
+                </div>
+            </f:form>
+        </f:if>
+
+        <f:if condition="{step} == 5">
+            <!-- ÉTAPE 5 : Validation & Récapitulatif -->
+            <h2 class="rgaa-card-title" style="color:#16a34a;">Étape 5 / 5 : Confirmation & Déploiement Du Site</h2>
+            <p class="rgaa-help-text mb-4">Vérifiez les paramètres de la nouvelle commune avant le lancement automatique de la génération.</p>
+
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:1.25rem; margin-bottom:1.5rem;">
+                <div class="rgaa-form-group"><strong>Nom de la commune :</strong> {wizardData.name}</div>
+                <div class="rgaa-form-group"><strong>Domaine / Base URL :</strong> <code>{wizardData.domain}</code></div>
+                <div class="rgaa-form-group"><strong>Identifiant du site :</strong> <code>{wizardData.identifier}</code></div>
+                <div class="rgaa-form-group"><strong>Thème sélectionné :</strong> {wizardData.theme}</div>
+                <div class="rgaa-form-group"><strong>Statut RGAA :</strong> {wizardData.rgaa_statut} ({wizardData.rgaa_taux})</div>
             </div>
-        </div>
 
-        <!-- Formulaires par étape -->
-        <div class="card shadow-sm border-0">
-            <div class="card-body p-4">
+            <f:form action="createSite" name="wizardData">
+                <f:form.hidden name="wizardData[name]" value="{wizardData.name}" />
+                <f:form.hidden name="wizardData[identifier]" value="{wizardData.identifier}" />
+                <f:form.hidden name="wizardData[domain]" value="{wizardData.domain}" />
+                <f:form.hidden name="wizardData[slogan]" value="{wizardData.slogan}" />
+                <f:form.hidden name="wizardData[theme]" value="{wizardData.theme}" />
+                <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
+                <f:form.hidden name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" />
+                <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
+                <f:form.hidden name="wizardData[create_pages]" value="{wizardData.create_pages}" />
 
-                <f:if condition="{step} == 1">
-                    <!-- ÉTAPE 1 : Identité & Domaine -->
-                    <h3 class="mb-3">Étape 1 / 5 : Identité de la Commune & URL</h3>
-                    <p class="text-muted">Renseignez le nom officiel de la collectivité et son nom de domaine principal.</p>
-
-                    <f:form action="wizard" name="wizardData">
-                        <f:form.hidden name="step" value="2" />
-
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Nom officiel de la commune * :</label>
-                            <f:form.textfield name="wizardData[name]" value="{wizardData.name}" class="form-control form-control-lg" placeholder="Mairie de Pau" required="true" />
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Identifiant unique de site (optionnel) :</label>
-                                <f:form.textfield name="wizardData[identifier]" value="{wizardData.identifier}" class="form-control" placeholder="commune-pau" />
-                                <div class="form-text">Généré automatiquement depuis le nom si laissé vide.</div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">URL de base (Domaine) * :</label>
-                                <f:form.textfield name="wizardData[domain]" value="{wizardData.domain}" class="form-control" placeholder="https://www.pau.fr/" required="true" />
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Devise ou slogan institutionnel :</label>
-                            <f:form.textfield name="wizardData[slogan]" value="{wizardData.slogan}" class="form-control" placeholder="République Française - Liberté, Égalité, Fraternité" />
-                        </div>
-
-                        <div class="d-flex justify-content-end mt-4">
-                            <button type="submit" class="btn btn-primary btn-lg">Suivant : Charte & Thème →</button>
-                        </div>
-                    </f:form>
-                </f:if>
-
-                <f:if condition="{step} == 2">
-                    <!-- ÉTAPE 2 : Thème & Palette -->
-                    <h3 class="mb-3">Étape 2 / 5 : Choix du Thème Graphique & Palette</h3>
-                    <p class="text-muted">Sélectionnez la charte visuelle pré-configurée adaptée à l'environnement de la commune.</p>
-
-                    <f:form action="wizard" name="wizardData">
-                        <f:form.hidden name="step" value="3" />
-                        <f:form.hidden name="wizardData[name]" value="{wizardData.name}" />
-                        <f:form.hidden name="wizardData[identifier]" value="{wizardData.identifier}" />
-                        <f:form.hidden name="wizardData[domain]" value="{wizardData.domain}" />
-                        <f:form.hidden name="wizardData[slogan]" value="{wizardData.slogan}" />
-
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">Thème Graphique :</label>
-                            <f:form.select name="wizardData[theme]" value="{wizardData.theme}" class="form-select form-select-lg">
-                                <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css">Thème 1 - Style classique institutionnel avec arrondis et ombres</f:form.select.option>
-                                <f:form.select.option value="">Bootstrap Package Standard (Sans surcouche)</f:form.select.option>
-                            </f:form.select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">Jeu de Couleurs :</label>
-                            <f:form.select name="wizardData[color_scheme]" value="{wizardData.color_scheme}" class="form-select form-select-lg">
-                                <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css">Couleur 1 : Vert Institutionnel & Or</f:form.select.option>
-                                <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-2.css">Couleur 2 : Bleu Océan & Sable</f:form.select.option>
-                                <f:form.select.option value="EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-3.css">Couleur 3 : Ardoise Montagne & Terracotta</f:form.select.option>
-                            </f:form.select>
-                        </div>
-
-                        <div class="d-flex justify-content-between mt-4">
-                            <f:link.action action="wizard" arguments="{step: 1, wizardData: wizardData}" class="btn btn-outline-secondary btn-lg">← Étape précédente</f:link.action>
-                            <button type="submit" class="btn btn-primary btn-lg">Suivant : Accessibilité RGAA →</button>
-                        </div>
-                    </f:form>
-                </f:if>
-
-                <f:if condition="{step} == 3">
-                    <!-- ÉTAPE 3 : RGAA -->
-                    <h3 class="mb-3">Étape 3 / 5 : Accessibilité Numérique & RGAA</h3>
-
-                    <f:form action="wizard" name="wizardData">
-                        <f:form.hidden name="step" value="4" />
-                        <f:form.hidden name="wizardData[name]" value="{wizardData.name}" />
-                        <f:form.hidden name="wizardData[identifier]" value="{wizardData.identifier}" />
-                        <f:form.hidden name="wizardData[domain]" value="{wizardData.domain}" />
-                        <f:form.hidden name="wizardData[slogan]" value="{wizardData.slogan}" />
-                        <f:form.hidden name="wizardData[theme]" value="{wizardData.theme}" />
-                        <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
-
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Statut de conformité légale :</label>
-                            <f:form.select name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" class="form-select">
-                                <f:form.select.option value="partiellement conforme">partiellement conforme</f:form.select.option>
-                                <f:form.select.option value="totalement conforme">totalement conforme</f:form.select.option>
-                                <f:form.select.option value="non conforme">non conforme</f:form.select.option>
-                            </f:form.select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Taux de conformité initial (%) :</label>
-                            <f:form.textfield name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" class="form-control" placeholder="85%" />
-                        </div>
-
-                        <div class="d-flex justify-content-between mt-4">
-                            <f:link.action action="wizard" arguments="{step: 2, wizardData: wizardData}" class="btn btn-outline-secondary btn-lg">← Étape précédente</f:link.action>
-                            <button type="submit" class="btn btn-primary btn-lg">Suivant : Arborescence →</button>
-                        </div>
-                    </f:form>
-                </f:if>
-
-                <f:if condition="{step} == 4">
-                    <!-- ÉTAPE 4 : Arborescence -->
-                    <h3 class="mb-3">Étape 4 / 5 : Structuration de l'Arborescence du Site</h3>
-
-                    <f:form action="wizard" name="wizardData">
-                        <f:form.hidden name="step" value="5" />
-                        <f:form.hidden name="wizardData[name]" value="{wizardData.name}" />
-                        <f:form.hidden name="wizardData[identifier]" value="{wizardData.identifier}" />
-                        <f:form.hidden name="wizardData[domain]" value="{wizardData.domain}" />
-                        <f:form.hidden name="wizardData[slogan]" value="{wizardData.slogan}" />
-                        <f:form.hidden name="wizardData[theme]" value="{wizardData.theme}" />
-                        <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
-                        <f:form.hidden name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" />
-                        <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
-
-                        <div class="card p-3 bg-light border-0 mb-4">
-                            <div class="form-check form-switch mb-0">
-                                <f:form.checkbox name="wizardData[create_pages]" value="1" checked="true" class="form-check-input" id="createPages" />
-                                <label class="form-check-label fw-bold" for="createPages">Générer automatiquement les pages légales & obligatoires RGAA</label>
-                            </div>
-                        </div>
-
-                        <ul class="list-group mb-4">
-                            <li class="list-group-item d-flex align-items-center">
-                                <span class="badge bg-primary me-2">Page 1</span> 🏠 Page d'Accueil (gabarit commune_home)
-                            </li>
-                            <li class="list-group-item d-flex align-items-center">
-                                <span class="badge bg-secondary me-2">Page 2</span> 📰 Actualités & Agenda municipal
-                            </li>
-                            <li class="list-group-item d-flex align-items-center">
-                                <span class="badge bg-secondary me-2">Page 3</span> 📝 Démarches & Services aux citoyens
-                            </li>
-                            <li class="list-group-item d-flex align-items-center">
-                                <span class="badge bg-secondary me-2">Page 4</span> 🏛️ Ma Mairie & Conseil Municipal
-                            </li>
-                            <li class="list-group-item d-flex align-items-center">
-                                <span class="badge bg-info me-2">Obligatoire</span> ♿ Déclaration d'accessibilité RGAA
-                            </li>
-                            <li class="list-group-item d-flex align-items-center">
-                                <span class="badge bg-secondary me-2">Page 6</span> 📞 Contact & Horaires d'ouverture
-                            </li>
-                            <li class="list-group-item d-flex align-items-center">
-                                <span class="badge bg-info me-2">Obligatoire</span> ⚖️ Mentions légales & RGPD
-                            </li>
-                            <li class="list-group-item d-flex align-items-center">
-                                <span class="badge bg-secondary me-2">Page 8</span> 🗺️ Plan du site
-                            </li>
-                        </ul>
-
-                        <div class="d-flex justify-content-between mt-4">
-                            <f:link.action action="wizard" arguments="{step: 3, wizardData: wizardData}" class="btn btn-outline-secondary btn-lg">← Étape précédente</f:link.action>
-                            <button type="submit" class="btn btn-primary btn-lg">Suivant : Récapitulatif →</button>
-                        </div>
-                    </f:form>
-                </f:if>
-
-                <f:if condition="{step} == 5">
-                    <!-- ÉTAPE 5 : Validation & Récapitulatif -->
-                    <h3 class="mb-3 text-success">Étape 5 / 5 : Confirmation & Déploiement Du Site</h3>
-                    <p class="text-muted">Vérifiez les paramètres de la nouvelle commune avant le lancement automatique de la génération.</p>
-
-                    <table class="table table-bordered mb-4">
-                        <tbody>
-                            <tr>
-                                <th style="width: 30%;">Nom de la commune</th>
-                                <td><strong class="h5 mb-0">{wizardData.name}</strong></td>
-                            </tr>
-                            <tr>
-                                <th>URL / Domaine</th>
-                                <td><code>{wizardData.domain}</code></td>
-                            </tr>
-                            <tr>
-                                <th>Identifiant du site</th>
-                                <td><code>{wizardData.identifier}</code></td>
-                            </tr>
-                            <tr>
-                                <th>Slogan</th>
-                                <td>{wizardData.slogan}</td>
-                            </tr>
-                            <tr>
-                                <th>Thème sélectionné</th>
-                                <td>{wizardData.theme}</td>
-                            </tr>
-                            <tr>
-                                <th>Statut RGAA</th>
-                                <td><span class="badge bg-success">{wizardData.rgaa_statut} ({wizardData.rgaa_taux})</span></td>
-                            </tr>
-                            <tr>
-                                <th>Génération d'arborescence</th>
-                                <td>
-                                    <f:if condition="{wizardData.create_pages}">
-                                        <f:then><span class="badge bg-primary">Oui (8 pages générées)</span></f:then>
-                                        <f:else><span class="badge bg-secondary">Non (Page racine uniquement)</span></f:else>
-                                    </f:if>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <f:form action="createSite" name="wizardData">
-                        <f:form.hidden name="wizardData[name]" value="{wizardData.name}" />
-                        <f:form.hidden name="wizardData[identifier]" value="{wizardData.identifier}" />
-                        <f:form.hidden name="wizardData[domain]" value="{wizardData.domain}" />
-                        <f:form.hidden name="wizardData[slogan]" value="{wizardData.slogan}" />
-                        <f:form.hidden name="wizardData[theme]" value="{wizardData.theme}" />
-                        <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
-                        <f:form.hidden name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" />
-                        <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
-                        <f:form.hidden name="wizardData[create_pages]" value="{wizardData.create_pages}" />
-
-                        <div class="d-flex justify-content-between mt-4">
-                            <f:link.action action="wizard" arguments="{step: 4, wizardData: wizardData}" class="btn btn-outline-secondary btn-lg">← Étape précédente</f:link.action>
-                            <button type="submit" class="btn btn-success btn-lg px-5">
-                                🚀 Valider & Déployer le nouveau site commune
-                            </button>
-                        </div>
-                    </f:form>
-                </f:if>
-
-            </div>
-        </div>
+                <div class="d-flex justify-content-between mt-4">
+                    <f:link.action action="wizard" arguments="{step: 4, wizardData: wizardData}" class="rgaa-btn rgaa-btn-outline">← Étape précédente</f:link.action>
+                    <button type="submit" class="rgaa-btn rgaa-btn-success rgaa-btn-lg">
+                        🚀 Valider & Déployer le nouveau site commune
+                    </button>
+                </div>
+            </f:form>
+        </f:if>
 
     </div>
+
 </div>
 
 </html>

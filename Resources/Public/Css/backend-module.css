@@ -1,0 +1,365 @@
+/* ============================================================================
+   Site Commune RGAA - Style du Module d'Administration Backend TYPO3
+   ============================================================================ */
+
+:root {
+    --rgaa-primary: #0f4c81;
+    --rgaa-primary-hover: #0a355c;
+    --rgaa-secondary: #008080;
+    --rgaa-accent: #d97706;
+    --rgaa-bg-light: #f4f6f9;
+    --rgaa-border: #e2e8f0;
+    --rgaa-text-dark: #1e293b;
+    --rgaa-text-muted: #64748b;
+    --rgaa-radius: 8px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--rgaa-text-dark);
+    background-color: #ffffff;
+    line-height: 1.5;
+}
+
+/* Header & Titre du Module */
+.rgaa-module-header {
+    background: linear-gradient(135deg, #0f4c81 0%, #1e3a8a 100%);
+    color: #ffffff;
+    padding: 1.5rem 2rem;
+    border-radius: var(--rgaa-radius);
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.rgaa-module-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: #ffffff;
+}
+
+.rgaa-module-header p {
+    color: #e2e8f0;
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+.rgaa-badge-a11y {
+    background-color: #22c55e;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Bar de Sélection de Commune Active */
+.rgaa-site-bar {
+    background-color: #f8fafc;
+    border: 1px solid var(--rgaa-border);
+    border-radius: var(--rgaa-radius);
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.rgaa-site-select-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.rgaa-site-select-group label {
+    font-weight: 600;
+    color: var(--rgaa-text-dark);
+    margin-bottom: 0;
+    white-space: nowrap;
+}
+
+.rgaa-select {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: var(--rgaa-text-dark);
+    min-width: 250px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.rgaa-select:focus {
+    border-color: var(--rgaa-primary);
+    box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.15);
+    outline: none;
+}
+
+/* Boutons */
+.rgaa-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.rgaa-btn-primary {
+    background-color: var(--rgaa-primary);
+    color: #ffffff !important;
+}
+
+.rgaa-btn-primary:hover {
+    background-color: var(--rgaa-primary-hover);
+    color: #ffffff !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.rgaa-btn-success {
+    background-color: #16a34a;
+    color: #ffffff !important;
+}
+
+.rgaa-btn-success:hover {
+    background-color: #15803d;
+    color: #ffffff !important;
+}
+
+.rgaa-btn-outline {
+    background-color: transparent;
+    border-color: #cbd5e1;
+    color: var(--rgaa-text-dark) !important;
+}
+
+.rgaa-btn-outline:hover {
+    background-color: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+.rgaa-btn-lg {
+    padding: 0.75rem 1.75rem;
+    font-size: 1rem;
+}
+
+/* Navigation par Onglets (Tabs) */
+.rgaa-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    border-bottom: 2px solid var(--rgaa-border);
+    margin-bottom: 1.5rem;
+    padding-left: 0;
+    list-style: none;
+}
+
+.rgaa-tab-item {
+    margin-bottom: -2px;
+}
+
+.rgaa-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--rgaa-text-muted);
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.rgaa-tab-btn:hover {
+    color: var(--rgaa-primary);
+    background-color: #f8fafc;
+}
+
+.rgaa-tab-btn.active {
+    color: var(--rgaa-primary);
+    border-bottom-color: var(--rgaa-primary);
+    background-color: #ffffff;
+}
+
+/* Tab Panels */
+.rgaa-tab-panel {
+    display: none;
+}
+
+.rgaa-tab-panel.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cards & Form Sections */
+.rgaa-card {
+    background: #ffffff;
+    border: 1px solid var(--rgaa-border);
+    border-radius: var(--rgaa-radius);
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.rgaa-card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--rgaa-primary);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+/* Controls & Form Groups */
+.rgaa-form-group {
+    margin-bottom: 1.25rem;
+}
+
+.rgaa-label {
+    display: block;
+    font-weight: 600;
+    color: var(--rgaa-text-dark);
+    margin-bottom: 0.4rem;
+    font-size: 0.925rem;
+}
+
+.rgaa-input,
+.rgaa-textarea,
+.rgaa-form-select {
+    width: 100%;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.95rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: var(--rgaa-text-dark);
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.rgaa-input:focus,
+.rgaa-textarea:focus,
+.rgaa-form-select:focus {
+    border-color: var(--rgaa-primary);
+    box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.15);
+    outline: none;
+}
+
+.rgaa-help-text {
+    font-size: 0.85rem;
+    color: var(--rgaa-text-muted);
+    margin-top: 0.35rem;
+}
+
+.rgaa-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.25rem;
+}
+
+.rgaa-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+}
+
+/* Switch Checkbox Custom */
+.rgaa-switch-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background-color: #f8fafc;
+    border: 1px solid var(--rgaa-border);
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+.rgaa-switch-container input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: var(--rgaa-primary);
+    cursor: pointer;
+}
+
+.rgaa-switch-label {
+    font-weight: 600;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+/* Stepper Wizard */
+.rgaa-stepper {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 2rem 0 3rem;
+}
+
+.rgaa-stepper::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #e2e8f0;
+    z-index: 1;
+    transform: translateY(-50%);
+}
+
+.rgaa-step {
+    position: relative;
+    z-index: 2;
+    background: #ffffff;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 3px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--rgaa-text-muted);
+}
+
+.rgaa-step.active {
+    border-color: var(--rgaa-primary);
+    background: var(--rgaa-primary);
+    color: #ffffff;
+}
+
+.rgaa-step.completed {
+    border-color: #16a34a;
+    background: #16a34a;
+    color: #ffffff;
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+    .rgaa-site-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .rgaa-tabs {
+        flex-direction: column;
+    }
+}
