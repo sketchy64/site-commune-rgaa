@@ -167,7 +167,9 @@ class SiteManagementService
             }
 
             $siteConfig['settings'] = $newSettings;
-            $this->siteConfiguration->write($identifier, $siteConfig);
+
+            // Écriture sécurisée de la configuration du site (Support toutes versions TYPO3)
+            $this->writeSiteConfigurationData($identifier, $siteConfig);
 
             // Mise à jour de sys_template si un enregistrement existe sur la page racine
             $site = $this->getSiteByIdentifier($identifier);
@@ -178,6 +180,38 @@ class SiteManagementService
             return ['success' => true, 'error' => ''];
         } catch (\Throwable $e) {
             return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * Écrit la configuration du site de façon robuste et compatible avec toutes les versions TYPO3 Core.
+     */
+    private function writeSiteConfigurationData(string $identifier, array $siteConfig): void
+    {
+        if (method_exists($this->siteConfiguration, 'write')) {
+            $this->siteConfiguration->write($identifier, $siteConfig);
+            return;
+        }
+
+        if (method_exists($this->siteConfiguration, 'writeSiteConfiguration')) {
+            $this->siteConfiguration->writeSiteConfiguration($identifier, $siteConfig);
+            return;
+        }
+
+        // Sauvegarde directe YAML en repli
+        $siteDir = GeneralUtility::getFileAbsFileName('config/sites/' . $identifier . '/');
+        if (!is_dir($siteDir)) {
+            GeneralUtility::mkdir_deep($siteDir);
+        }
+
+        $configFile = $siteDir . 'config.yaml';
+        $yamlContent = Yaml::dump($siteConfig, 99, 2);
+        GeneralUtility::writeFile($configFile, $yamlContent);
+
+        if (isset($siteConfig['settings']) && is_array($siteConfig['settings'])) {
+            $settingsFile = $siteDir . 'settings.yaml';
+            $settingsContent = Yaml::dump($siteConfig['settings'], 99, 2);
+            GeneralUtility::writeFile($settingsFile, $settingsContent);
         }
     }
 
@@ -245,7 +279,7 @@ class SiteManagementService
             ],
         ];
 
-        $this->siteConfiguration->write($identifier, $siteConfig);
+        $this->writeSiteConfigurationData($identifier, $siteConfig);
 
         // 3. Arborescence automatique si cochée
         if (!empty($data['create_pages'])) {
@@ -268,42 +302,64 @@ class SiteManagementService
 
         try {
             $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_template');
-            $row = $queryBuilder
+            $rows = $queryBuilder
                 ->select('constants')
                 ->from('sys_template')
                 ->where($queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($rootPageId, \PDO::PARAM_INT)))
                 ->orderBy('sorting', 'ASC')
-                ->setMaxResults(1)
                 ->executeQuery()
-                ->fetchAssociative();
+                ->fetchAllAssociative();
 
-            if (!$row || empty($row['constants'])) {
+            if (empty($rows)) {
                 return [];
             }
 
             $parsed = [];
-            $lines = explode("\n", (string)$row['constants']);
-            $currentPrefix = '';
-            foreach ($lines as $line) {
-                $line = trim($line);
-                if (empty($line) || str_starts_with($line, '#') || str_starts_with($line, '/')) {
+            foreach ($rows as $row) {
+                $constantsText = (string)($row['constants'] ?? '');
+                if (empty($constantsText)) {
                     continue;
                 }
-                if ($line === 'commune {') {
-                    $currentPrefix = 'commune.';
-                    continue;
-                }
-                if ($line === '}' && !empty($currentPrefix)) {
-                    $currentPrefix = '';
-                    continue;
-                }
-                if (str_contains($line, '=')) {
-                    [$key, $val] = explode('=', $line, 2);
-                    $key = trim($key);
-                    $val = trim($val);
-                    if (!empty($key)) {
-                        $fullKey = str_starts_with($key, 'commune.') ? $key : ($currentPrefix . $key);
-                        $parsed[$fullKey] = $val;
+
+                $lines = explode("\n", $constantsText);
+                $currentBlockStack = [];
+
+                foreach ($lines as $line) {
+                    $line = trim($line);
+                    if (empty($line) || str_starts_with($line, '#') || str_starts_with($line, '//')) {
+                        continue;
+                    }
+
+                    if (str_contains($line, '{')) {
+                        $blockName = trim(str_replace('{', '', $line));
+                        if (!empty($blockName)) {
+                            $currentBlockStack[] = $blockName;
+                        }
+                        continue;
+                    }
+
+                    if ($line === '}') {
+                        array_pop($currentBlockStack);
+                        continue;
+                    }
+
+                    if (str_contains($line, '=')) {
+                        $parts = explode('=', $line, 2);
+                        $rawKey = trim(rtrim($parts[0], ':'));
+                        $val = trim($parts[1]);
+
+                        if ((str_starts_with($val, '"') && str_ends_with($val, '"')) || (str_starts_with($val, "'") && str_ends_with($val, "'"))) {
+                            $val = substr($val, 1, -1);
+                        }
+
+                        if (!empty($rawKey)) {
+                            if (!empty($currentBlockStack)) {
+                                $fullKey = implode('.', $currentBlockStack) . '.' . $rawKey;
+                            } else {
+                                $fullKey = $rawKey;
+                            }
+                            $parsed[$fullKey] = $val;
+                        }
                     }
                 }
             }
@@ -392,7 +448,7 @@ class SiteManagementService
                 ['uid' => (int)$row['uid']]
             );
         } catch (\Throwable) {
-            // Ignorer silencieusement si pas de table ou pas de permission sys_template
+            // Ignorer silencieusement si pas de table sys_template
         }
     }
 

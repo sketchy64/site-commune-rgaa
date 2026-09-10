@@ -28,154 +28,245 @@ commune {
   # customsubcategory=commune_contact=3. Coordonnées & Horaires
   # customsubcategory=commune_home=4. Page d'accueil
   # customsubcategory=commune_news=5. Actualités
-  # customsubcategory=commune_a11y=6. Accessibilité & RGAA
-  # customsubcategory=commune_footer=7. Pied de page
-  # customsubcategory=commune_app=8. Application mobile
-  # customsubcategory=commune_emergency=9. Numéros d'urgence
+  # customsubcategory=commune_a11y=6. Accessibilité Numérique & RGAA
+  # customsubcategory=commune_footer=7. Pied de page & Navigation
+  # customsubcategory=commune_app=8. Application Mobile (PWA) & Alertes
+  # customsubcategory=commune_emergency=9. Numéros d'urgence & Utiles
   # customsubcategory=commune_social=10. Réseaux sociaux
-  # customsubcategory=commune_language=11. Sélecteur de langues
-  
-  # cat=commune_root/commune_theme/010; type=options[Thème 1 - Style classique (Ombres & Arrondis)=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css, Bootstrap Package standard (Sans surcouche)=]; label=Thème graphique (style de la commune)
+  # customsubcategory=commune_language=11. Langues & Multilinguisme
+
+  # ============================================================================
+  # 1. APPARENCE & THÈMES
+  # ============================================================================
+  # cat=commune_root/commune_theme/010; type=options[Thème 1 - Style classique avec arrondis et ombres=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css, Bootstrap Package standard (Sans surcouche)=]; label=Thème graphique du site : Sélectionnez le style graphique (ex: Thème 1). Choisissez vide pour Bootstrap Package standard.
   theme_css = EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css
 
-  # cat=commune_root/commune_theme/020; type=options[Jeu de couleurs 1 (Vert Institutionnel & Or)=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css, Jeu de couleurs 2 (Bleu Océan & Sable)=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-2.css, Jeu de couleurs 3 (Ardoise Montagne & Terracotta)=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-3.css]; label=Jeu de couleurs institutionnel
+  # cat=commune_root/commune_theme/020; type=options[Couleur 1 : Vert Institutionnel & Or=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css, Couleur 2 : Bleu Océan & Sable=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-2.css, Couleur 3 : Ardoise Montagne & Terracotta=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-3.css]; label=Jeu de couleurs institutionnel : Sélectionnez la palette de couleurs à appliquer.
   color_scheme_css = EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css
 
-  # cat=commune_root/commune_theme/030; type=boolean; label=Activer le sélecteur de thème & couleurs en frontend (Live Preview)
+  # cat=commune_root/commune_theme/030; type=boolean; label=Activer le sélecteur de thème & couleurs sur le frontend (Live Preview)
   enable_theme_switcher = 1
 
-  # cat=commune_root/commune_identity/010; type=string; label=Chemin du logo
-  logo_file = 
-  # cat=commune_root/commune_identity/020; type=int+; label=Hauteur du logo (px)
-  logo_height = 60
-  # cat=commune_root/commune_identity/030; type=boolean; label=Masquer le nom de la commune dans l'en-tête
-  header_hide_title = 0
-  # cat=commune_root/commune_identity/040; type=boolean; label=Masquer le slogan dans l'en-tête
-  header_hide_slogan = 0
-  # cat=commune_root/commune_identity/045; type=options[Standard (Logo/slogan/recherche dans l'en-tête, menu centré)=standard, Intégré (Logo/slogan à gauche du menu, menu à droite)=integrated]; label=Disposition de l'en-tête et du menu
-  header_layout = standard
-
-  # cat=commune_root/commune_identity/050; type=string; label=Nom officiel de la commune
+  # ============================================================================
+  # 2. IDENTITÉ & MARQUE
+  # ============================================================================
+  # cat=commune_root/commune_identity/010; type=string; label=Nom officiel de la commune / collectivité : Affiché dans l'en-tête, le titre du site et le pied de page
   nom = Mairie de Notre-Commune
-  # cat=commune_root/commune_identity/060; type=string; label=Devise ou sous-titre
+
+  # cat=commune_root/commune_identity/020; type=string; label=Devise ou slogan officiel : Exemple : République Française - Liberté, Égalité, Fraternité
   slogan = République Française - Liberté, Égalité, Fraternité
-  # cat=commune_root/commune_identity/070; type=string; label=Département
+
+  # cat=commune_root/commune_identity/030; type=string; label=Département : Exemple : 64 - Pyrénées-Atlantiques
   departement = 64 - Pyrénées-Atlantiques
-  # cat=commune_root/commune_identity/080; type=string; label=Région
+
+  # cat=commune_root/commune_identity/040; type=string; label=Région : Exemple : Nouvelle-Aquitaine
   region = Nouvelle-Aquitaine
 
-  # cat=commune_root/commune_contact/010; type=string; label=Adresse postale
+  # cat=commune_root/commune_identity/050; type=string; label=Chemin du logo de la mairie : Fichier image du logo (Ex : fileadmin/logo.svg ou EXT:...)
+  logo_file = 
+
+  # cat=commune_root/commune_identity/060; type=int+; label=Hauteur du logo (en pixels) : Hauteur d'affichage du logo dans l'en-tête (Ex : 60)
+  logo_height = 60
+
+  # cat=commune_root/commune_identity/070; type=boolean; label=Masquer le nom de la commune dans l'en-tête : Cocher pour masquer le texte si le logo contient le nom
+  header_hide_title = 0
+
+  # cat=commune_root/commune_identity/080; type=boolean; label=Masquer le slogan/devise dans l'en-tête
+  header_hide_slogan = 0
+
+  # cat=commune_root/commune_identity/090; type=options[Standard (Logo/slogan + recherche en haut, menu centré)=standard, Intégré (Logo dans le menu à gauche, liens à droite)=integrated]; label=Disposition de l'en-tête et du menu
+  header_layout = standard
+
+  # ============================================================================
+  # 3. COORDONNÉES & HORAIRES
+  # ============================================================================
+  # cat=commune_root/commune_contact/010; type=string; label=Adresse postale de la Mairie : Numéro, rue, code postal et ville
   adresse = 1 Place de la République, 64000 Commune
-  # cat=commune_root/commune_contact/020; type=string; label=Téléphone
+
+  # cat=commune_root/commune_contact/020; type=string; label=Numéro de téléphone officiel : Exemple : 05 59 00 00 00
   telephone = 05 59 00 00 00
-  # cat=commune_root/commune_contact/030; type=string; label=E-mail
+
+  # cat=commune_root/commune_contact/030; type=string; label=Adresse e-mail de contact : Exemple : contact@notre-commune.fr
   email = contact@notre-commune.fr
-  # cat=commune_root/commune_contact/040; type=string; label=Horaires d'accueil
+
+  # cat=commune_root/commune_contact/040; type=string; label=Horaires d'ouverture au public : Horaires d'accueil de la mairie pour les administrés
   horaires = Du Lundi au Vendredi : 8h30 - 12h00 / 13h30 - 17h30
 
-  # cat=commune_root/commune_home/005; type=boolean; label=Afficher la zone de recherche sur le carrousel d'accueil
+  # ============================================================================
+  # 4. PAGE D'ACCUEIL
+  # ============================================================================
+  # cat=commune_root/commune_home/005; type=boolean; label=Afficher la zone de recherche sur le carrousel (Accueil)
   home_hero_search_enable = 0
 
-  # cat=commune_root/commune_home/010; type=string; label=Titre Accès rapides
+  # cat=commune_root/commune_home/010; type=string; label=Titre de la zone Accès rapides
   home_quickaccess_title = Accès rapides
-  # cat=commune_root/commune_home/020; type=boolean; label=Masquer titre Accès rapides
+
+  # cat=commune_root/commune_home/020; type=boolean; label=Masquer le titre de la zone Accès rapides
   home_quickaccess_hide_title = 0
 
-  # cat=commune_root/commune_home/030; type=string; label=Titre Édito / Mot du Maire
+  # cat=commune_root/commune_home/030; type=string; label=Titre de la zone Édito / Mot du Maire
   home_edito_title = Le mot du Maire
-  # cat=commune_root/commune_home/040; type=boolean; label=Masquer titre Édito
+
+  # cat=commune_root/commune_home/040; type=boolean; label=Masquer le titre de la zone Édito
   home_edito_hide_title = 0
 
-  # cat=commune_root/commune_home/045; type=string; label=Titre Actualités à la une
+  # cat=commune_root/commune_home/045; type=string; label=Titre de la zone Actualités à la une
   home_featured_news_title = Actualités à la une
-  # cat=commune_root/commune_home/046; type=boolean; label=Masquer titre Actualités à la une
+
+  # cat=commune_root/commune_home/046; type=boolean; label=Masquer le titre de la zone Actualités à la une
   home_featured_news_hide_title = 0
+
   # cat=commune_root/commune_home/047; type=boolean; label=Masquer la section Actualités à la une
   home_featured_news_hide_section = 0
 
-  # cat=commune_root/commune_home/050; type=string; label=Titre Actualités & Agenda
+  # cat=commune_root/commune_home/050; type=string; label=Titre de la zone Actualités & Agenda
   home_news_title = Actualités & Agenda municipal
-  # cat=commune_root/commune_home/060; type=boolean; label=Masquer titre Actualités & Agenda
+
+  # cat=commune_root/commune_home/060; type=boolean; label=Masquer le titre de la zone Actualités & Agenda
   home_news_hide_title = 0
 
-  # cat=commune_root/commune_home/070; type=string; label=Titre Carte interactive
+  # cat=commune_root/commune_home/070; type=string; label=Titre de la zone Carte interactive
   home_map_title = Plan interactif & Découverte
-  # cat=commune_root/commune_home/080; type=boolean; label=Masquer titre Carte interactive
+
+  # cat=commune_root/commune_home/080; type=boolean; label=Masquer le titre de la zone Carte interactive
   home_map_hide_title = 0
 
-  # cat=commune_root/commune_home/090; type=boolean; label=Activer section Plan du site
+  # cat=commune_root/commune_home/090; type=boolean; label=Activer la section Plan du site sur la page d'accueil
   home_sitemap_enable = 1
-  # cat=commune_root/commune_home/100; type=string; label=Titre Plan du site
+
+  # cat=commune_root/commune_home/100; type=string; label=Titre de la section Plan du site
   home_sitemap_title = Plan du site & Navigation
-  # cat=commune_root/commune_home/110; type=boolean; label=Masquer titre Plan du site
+
+  # cat=commune_root/commune_home/110; type=boolean; label=Masquer le titre de la section Plan du site
   home_sitemap_hide_title = 0
 
-  # cat=commune_root/commune_home/120; type=int+; label=UID page de recherche
+  # cat=commune_root/commune_home/120; type=int+; label=Page de Recherche (ID / UID) : Identifiant de la page des résultats de recherche
   search_page_uid = 23
 
-
-  # cat=commune_root/commune_news/010; type=options[En colonnes (Cartes)=cards, En ligne (Image à gauche)=rows]; label=Mode d'affichage des listes d'actualités
+  # ============================================================================
+  # 5. ACTUALITÉS
+  # ============================================================================
+  # cat=commune_root/commune_news/010; type=options[En colonnes (Cartes)=cards, En ligne (Image à gauche)=rows]; label=Disposition des listes d'actualités
   news_list_layout = cards
 
-  # cat=commune_root/commune_a11y/010; type=string; label=Intitulé mention accessibilité
+  # ============================================================================
+  # 6. ACCESSIBILITÉ NUMÉRIQUE & RGAA
+  # ============================================================================
+  # cat=commune_root/commune_a11y/010; type=string; label=Intitulé de la mention d'accessibilité (Ex : Accessibilité :)
   rgaa_titre = Accessibilité :
-  # cat=commune_root/commune_a11y/020; type=string; label=Statut de conformité RGAA
+
+  # cat=commune_root/commune_a11y/020; type=string; label=Statut de conformité légale (ex: partiellement conforme)
   rgaa_statut = partiellement conforme
-  # cat=commune_root/commune_a11y/030; type=string; label=Taux de conformité RGAA
+
+  # cat=commune_root/commune_a11y/030; type=string; label=Taux de conformité RGAA (Ex : 84%)
   rgaa_taux = 84%
-  # cat=commune_root/commune_a11y/040; type=int+; label=UID page Déclaration accessibilité
+
+  # cat=commune_root/commune_a11y/040; type=int+; label=Page de la Déclaration d'accessibilité (ID / UID)
   rgaa_page_uid = 96
 
-  # cat=commune_root/commune_footer/010; type=string; label=Titre Colonne 1 Footer
+  # ============================================================================
+  # 7. PIED DE PAGE & NAVIGATION
+  # ============================================================================
+  # cat=commune_root/commune_footer/010; type=string; label=Titre Colonne 1 (Coordonnées & Horaires)
   footer_col1_title = Coordonnées & Horaires
-  # cat=commune_root/commune_footer/020; type=string; label=Texte bouton contact
+
+  # cat=commune_root/commune_footer/020; type=string; label=Titre Colonne 2 (Numéros d'urgence)
+  footer_col2_title = Numéros d'urgence
+
+  # cat=commune_root/commune_footer/030; type=string; label=Titre Colonne 3 (Nous situer)
+  footer_col3_title = Nous situer
+
+  # cat=commune_root/commune_footer/040; type=string; label=Texte du bouton de contact
   footer_contact_btn_title = Contacter la mairie
-  # cat=commune_root/commune_footer/030; type=int+; label=UID page contact
+
+  # cat=commune_root/commune_footer/050; type=int+; label=Page de Contact (ID / UID)
   footer_contact_page_uid = 22
 
-  # cat=commune_root/commune_footer/040; type=string; label=Titre Colonne 2 Footer
-  footer_col2_title = Numéros d'urgence
-  # cat=commune_root/commune_footer/050; type=string; label=Titre Colonne 3 Footer
-  footer_col3_title = Nous situer
-  # cat=commune_root/commune_footer/060; type=string; label=Image plan d'accès Footer
+  # cat=commune_root/commune_footer/060; type=string; label=Image du plan d'accès
   footer_map_image = EXT:site_commune_rgaa/Resources/Public/Images/plan-acces.svg
-  # cat=commune_root/commune_footer/070; type=int+; label=UID page plan d'accès
+
+  # cat=commune_root/commune_footer/070; type=int+; label=Page du Plan d'accès / Localisation (ID / UID)
   footer_map_page_uid = 21
-  # cat=commune_root/commune_footer/080; type=int+; label=UID dossier liens de bas de page
+
+  # cat=commune_root/commune_footer/080; type=int+; label=Dossier des liens de bas de page (ID / UID)
   footer_folder_uid = 13
 
-  # cat=commune_root/commune_app/010; type=boolean; label=Activer PWA Mobile
+  # ============================================================================
+  # 8. APPLICATION MOBILE (PWA) & ALERTES
+  # ============================================================================
+  # cat=commune_root/commune_app/010; type=boolean; label=Afficher le bandeau supérieur PWA & Notifications (En-tête)
+  pwa_top_banner_enable = 1
+
+  # cat=commune_root/commune_app/020; type=string; label=Texte d'information du bandeau supérieur PWA
+  pwa_top_banner_text = Installez l'application Mairie et recevez les alertes en direct sur votre écran.
+
+  # cat=commune_root/commune_app/030; type=boolean; label=Afficher la croix de fermeture du bandeau supérieur
+  pwa_top_banner_show_close = 1
+
+  # cat=commune_root/commune_app/040; type=boolean; label=Activer la compatibilité Application Mobile (PWA Android & iOS)
   pwa_enable = 1
-  # cat=commune_root/commune_app/020; type=string; label=Nom application mobile
+
+  # cat=commune_root/commune_app/050; type=boolean; label=Activer l'envoi automatique des notifications Push d'actualités
+  pwa_push_enable = 1
+
+  # cat=commune_root/commune_app/060; type=string; label=Nom court de l'application mobile (Écran d'accueil)
   pwa_app_name = Mairie
 
-  # cat=commune_root/commune_emergency/010; type=string; label=SAMU
+  # cat=commune_root/commune_app/070; type=string; label=Clef VAPID Publique (Web Push)
+  pwa_vapid_public_key = BLQcfzIu2XgG6fT4vVsRY6BYy1LgVkyKH8XYYJajIUts74MKtdOlZOZt2ZCs62LmUIUnaunEZPevfxIxIHzn_iY
+
+  # cat=commune_root/commune_app/080; type=string; label=Clef VAPID Privée (Web Push)
+  pwa_vapid_private_key = ftRVnQjBwQBjx2AyBOUS4xIqqFQzMOxEGtWdvITg-y8
+
+  # cat=commune_root/commune_app/090; type=string; label=Adresse e-mail de contact VAPID
+  pwa_vapid_email = contact@notre-commune.fr
+
+  # ============================================================================
+  # 9. NUMÉROS D'URGENCE RÉPUBLICAINS
+  # ============================================================================
+  # cat=commune_root/commune_emergency/010; type=string; label=SAMU (Urgences médicales)
   samu = 15
-  # cat=commune_root/commune_emergency/020; type=string; label=Police / Gendarmerie
+
+  # cat=commune_root/commune_emergency/020; type=string; label=Police secours / Gendarmerie
   police = 17
-  # cat=commune_root/commune_emergency/030; type=string; label=Pompiers
+
+  # cat=commune_root/commune_emergency/030; type=string; label=Sapeurs-Pompiers
   pompiers = 18
-  # cat=commune_root/commune_emergency/040; type=string; label=Urgence européenne
+
+  # cat=commune_root/commune_emergency/040; type=string; label=Numéro d'urgence européen
   urgence_europeenne = 112
-  # cat=commune_root/commune_emergency/050; type=string; label=Urgence sourds/malentendants
+
+  # cat=commune_root/commune_emergency/050; type=string; label=Urgence personnes sourdes et malentendantes (SMS/Visio)
   sourds_malentendants = 114
 
+  # ============================================================================
+  # 10. RÉSEAUX SOCIAUX INSTITUTIONNELS
+  # ============================================================================
   # cat=commune_root/commune_social/010; type=string; label=Lien Facebook
   social_facebook = 
+
   # cat=commune_root/commune_social/020; type=string; label=Lien Instagram
   social_instagram = 
+
   # cat=commune_root/commune_social/030; type=string; label=Lien Twitter / X
   social_twitter = 
+
   # cat=commune_root/commune_social/040; type=string; label=Lien YouTube
   social_youtube = 
+
   # cat=commune_root/commune_social/050; type=boolean; label=Afficher les réseaux sociaux dans l'en-tête
   header_social_enable = 1
+
   # cat=commune_root/commune_social/060; type=boolean; label=Afficher les réseaux sociaux dans le pied de page
   footer_social_enable = 1
 
+  # ============================================================================
+  # 11. SÉLECTEUR DE LANGUES & MULTILINGUISME
+  # ============================================================================
   # cat=commune_root/commune_language/010; type=boolean; label=Afficher le sélecteur de langues dans l'en-tête
   header_language_enable = 0
-  # cat=commune_root/commune_language/020; type=options[À côté du logo (En-tête)=brand, Au centre avec les réseaux sociaux=center, Dans la barre de menu=menu]; label=Position du sélecteur de langues
+
+  # cat=commune_root/commune_language/020; type=options[À côté du logo (En-tête)=brand, Au centre avec les réseaux sociaux=center, Dans la barre de menu=menu]; label=Emplacement du sélecteur de langues
   header_language_position = brand
 }
 
@@ -183,4 +274,3 @@ commune {
 # Inclusion des constantes pour EXT:hcaptcha
 # ------------------------------------------------------------------------------
 @import 'EXT:hcaptcha/Configuration/TypoScript/constants.typoscript'
-
