@@ -89,7 +89,7 @@
         function applyStyle(type, targetUrl, targetKey, save) {
             var isColor = (type === 'color');
             var linkId = isColor ? 'commune-color-scheme-link' : 'commune-theme-link';
-            var pattern = isColor ? /commune-couleurs-\d+\.css/ : /commune-theme-\d+\.css/;
+            var pattern = isColor ? /commune-couleurs/ : /commune-theme/;
             var storageKey = isColor ? 'commune_color' : 'commune_theme';
 
             var currentLink = findOrCreateLink(linkId, pattern);
@@ -128,7 +128,7 @@
         }
 
         // Synchroniser le select de couleur avec la page actuelle
-        var colorLink = findOrCreateLink('commune-color-scheme-link', /commune-couleurs-\d+\.css/);
+        var colorLink = findOrCreateLink('commune-color-scheme-link', /commune-couleurs/);
         var savedColor = localStorage.getItem('commune_color');
 
         if (savedColor) {
@@ -150,7 +150,7 @@
         }
 
         // Synchroniser le select de thème avec la page actuelle
-        var themeLink = findOrCreateLink('commune-theme-link', /commune-theme-\d+\.css/);
+        var themeLink = findOrCreateLink('commune-theme-link', /commune-theme/);
         var savedTheme = localStorage.getItem('commune_theme');
 
         if (savedTheme) {
