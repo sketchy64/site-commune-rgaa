@@ -98,6 +98,18 @@ class SiteManagementService
             $siteSettings = [];
         }
 
+        // Lecture directe complémentaire de settings.yaml (Standard TYPO3 v13 Site Sets)
+        $settingsFilePath = GeneralUtility::getFileAbsFileName('config/sites/' . $identifier . '/settings.yaml');
+        if (file_exists($settingsFilePath)) {
+            try {
+                $parsedYamlSettings = Yaml::parseFile($settingsFilePath);
+                if (is_array($parsedYamlSettings)) {
+                    $siteSettings = array_replace_recursive($siteSettings, $parsedYamlSettings);
+                }
+            } catch (\Throwable) {
+            }
+        }
+
         // Fusion en cascade : Defaults < sys_template < SiteSettings YAML
         $rawMerged = $defaults;
         foreach ($defaults as $key => $defaultVal) {
@@ -206,6 +218,9 @@ class SiteManagementService
             $rootPageId = $site ? $site->getRootPageId() : 0;
             $this->saveSysTemplateConstants($rootPageId, $cleanSettings);
 
+            // Vidage complet des caches pour prise en compte immédiate en Frontend
+            $this->flushAllSiteCaches();
+
             return ['success' => true, 'error' => ''];
         } catch (\Throwable $e) {
             return ['success' => false, 'error' => $e->getMessage()];
@@ -245,9 +260,29 @@ class SiteManagementService
             GeneralUtility::writeFile($settingsFile, $settingsContent);
         }
 
-        // Vidage immédiat du cache core TYPO3
+        $this->flushAllSiteCaches();
+    }
+
+    /**
+     * Vide intégralement les caches Core, System et Frontend (pages/hash) pour mise à jour immédiate.
+     */
+    private function flushAllSiteCaches(): void
+    {
         try {
-            GeneralUtility::makeInstance(CacheManager::class)->getCache('core')->flush();
+            $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
+            if (method_exists($cacheManager, 'flushCachesInGroup')) {
+                $cacheManager->flushCachesInGroup('pages');
+                $cacheManager->flushCachesInGroup('system');
+            }
+            if ($cacheManager->hasCache('core')) {
+                $cacheManager->getCache('core')->flush();
+            }
+            if ($cacheManager->hasCache('pages')) {
+                $cacheManager->getCache('pages')->flush();
+            }
+            if ($cacheManager->hasCache('hash')) {
+                $cacheManager->getCache('hash')->flush();
+            }
         } catch (\Throwable) {
         }
     }

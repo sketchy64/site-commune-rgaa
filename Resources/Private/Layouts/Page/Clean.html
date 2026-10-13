@@ -8,7 +8,7 @@
     <f:variable name="activeColorScheme" value="EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css" />
 </f:if>
 <f:if condition="{activeColorScheme} && {activeColorScheme} != 'none'">
-    <f:asset.css identifier="commune-color-scheme" href="{activeColorScheme}" priority="true" />
+    <f:asset.css identifier="commune-color-scheme" href="{activeColorScheme}" attributes="{id: 'commune-color-scheme-link'}" />
 </f:if>
 
 <!-- Chargement dynamique de la feuille de style du thème sélectionné (Paramètres de site ou Constantes) -->
@@ -17,7 +17,7 @@
     <f:variable name="activeTheme" value="EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css" />
 </f:if>
 <f:if condition="{activeTheme} && {activeTheme} != 'none' && {activeTheme} != 'default'">
-    <f:asset.css identifier="commune-theme" href="{activeTheme}" />
+    <f:asset.css identifier="commune-theme" href="{activeTheme}" attributes="{id: 'commune-theme-link'}" />
 </f:if>
 
 <f:render partial="Structure/SkipLinks" arguments="{_all}" />

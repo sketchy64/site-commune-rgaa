@@ -18,6 +18,14 @@
   --commune-accent-dark: #1d7daa;
   --commune-accent-light: #e6f6fd;
 
+  /* Compatibilité Bootstrap 5 & bootstrap_package */
+  --bs-primary: var(--commune-primary);
+  --bs-primary-rgb: 0, 112, 58;
+  --bs-secondary: var(--commune-secondary);
+  --bs-secondary-rgb: 245, 178, 30;
+  --bs-link-color: var(--commune-primary);
+  --bs-link-hover-color: var(--commune-primary-dark);
+
   /* Couleurs de texte */
   --commune-text-main: #212529;
   --commune-text-muted: #595959;

@@ -1,42 +1,13 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<!-- Script immédiat d'application locale avant affichage pour éviter tout saut visuel (FOUC) -->
-<script>
-(function() {
-    try {
-        var savedTheme = localStorage.getItem('commune_theme');
-        var savedColor = localStorage.getItem('commune_color');
-        
-        if (savedTheme) {
-            var links = document.querySelectorAll('link[rel="stylesheet"]');
-            for (var i = 0; i < links.length; i++) {
-                if (links[i].href && links[i].href.indexOf('commune-theme-') !== -1) {
-                    links[i].href = links[i].href.replace(/commune-theme-\d+\.css/, savedTheme);
-                    break;
-                }
-            }
-        }
-        if (savedColor) {
-            var links = document.querySelectorAll('link[rel="stylesheet"]');
-            for (var i = 0; i < links.length; i++) {
-                if (links[i].href && links[i].href.indexOf('commune-couleurs-') !== -1) {
-                    links[i].href = links[i].href.replace(/commune-couleurs-\d+\.css/, savedColor);
-                    break;
-                }
-            }
-        }
-    } catch(e) {}
-})();
-</script>
-
 <!-- Panneau de sélection du Thème et des Couleurs en direct (Live Preview Frontend) -->
 <aside id="commune-admin-switcher" class="commune-admin-switcher" role="region" aria-label="Testeur de Thèmes et Couleurs en direct">
     <!-- Bouton Toggle / Badge -->
     <button type="button" id="admin-switcher-toggle" class="admin-switcher-toggle" aria-expanded="false" aria-controls="admin-switcher-panel" title="Ouvrir le testeur de thèmes et couleurs en direct">
         <span class="admin-switcher-icon" aria-hidden="true">🎨</span>
         <span class="admin-switcher-label">Thème & Couleurs</span>
-        <span id="admin-switcher-indicator" class="admin-switcher-badge d-none">Custom</span>
+        <span id="admin-switcher-indicator" class="admin-switcher-badge d-none" title="Aperçu local actif (temporaire)">Custom</span>
     </button>
 
     <!-- Contenu du Panneau -->
@@ -50,26 +21,27 @@
             <!-- Choix du Thème CSS (Structure & Formes) -->
             <div class="admin-switcher-field">
                 <label for="admin-theme-select" class="admin-switcher-field-label">Style de Thème :</label>
-                <select id="admin-theme-select" class="form-select form-select-sm">
-                    <option value="commune-theme-1.css">Thème 1 (Classique : Arrondis, Ombres & Dégradés)</option>
-                    <option value="commune-theme-2.css">Thème 2 (Moderne : Angles Droits, Lignes Nettes & Blocs)</option>
+                <select id="admin-theme-select" class="form-select form-select-sm" aria-label="Style de Thème">
+                    <option value="{f:uri.resource(path: 'Css/commune-theme-1.css')}" data-key="commune-theme-1.css">Thème 1 (Classique : Arrondis, Ombres & Dégradés)</option>
+                    <option value="{f:uri.resource(path: 'Css/commune-theme-2.css')}" data-key="commune-theme-2.css">Thème 2 (Moderne : Angles Droits, Lignes Nettes & Blocs)</option>
+                    <option value="none" data-key="none">Bootstrap Package Standard (Sans surcouche)</option>
                 </select>
             </div>
 
             <!-- Choix de la Palette de Couleurs CSS -->
             <div class="admin-switcher-field">
                 <label for="admin-color-select" class="admin-switcher-field-label">Jeu de Couleurs :</label>
-                <select id="admin-color-select" class="form-select form-select-sm">
-                    <option value="commune-couleurs-1.css">Jeu 1 (Vert Institutionnel & Or)</option>
-                    <option value="commune-couleurs-2.css">Jeu 2 (Bleu Océan & Sable)</option>
-                    <option value="commune-couleurs-3.css">Jeu 3 (Ardoise Montagne & Terracotta)</option>
+                <select id="admin-color-select" class="form-select form-select-sm" aria-label="Jeu de Couleurs">
+                    <option value="{f:uri.resource(path: 'Css/commune-couleurs-1.css')}" data-key="commune-couleurs-1.css">Jeu 1 (Vert Institutionnel & Or)</option>
+                    <option value="{f:uri.resource(path: 'Css/commune-couleurs-2.css')}" data-key="commune-couleurs-2.css">Jeu 2 (Bleu Océan & Sable)</option>
+                    <option value="{f:uri.resource(path: 'Css/commune-couleurs-3.css')}" data-key="commune-couleurs-3.css">Jeu 3 (Ardoise Montagne & Terracotta)</option>
                 </select>
             </div>
 
             <!-- Bouton de réinitialisation -->
             <div class="admin-switcher-actions">
-                <button type="button" id="admin-switcher-reset" class="btn btn-sm btn-outline-danger w-100">
-                    🔄 Réinitialiser aux constantes TYPO3
+                <button type="button" id="admin-switcher-reset" class="btn btn-sm btn-outline-danger w-100" title="Effacer l'aperçu local et recharger avec la configuration officielle du serveur">
+                    🔄 Réinitialiser aux paramètres serveur
                 </button>
             </div>
         </div>
@@ -79,7 +51,7 @@
 <!-- JavaScript interactif pour le sélecteur -->
 <script>
 (function() {
-    document.addEventListener('DOMContentLoaded', function() {
+    function initThemeSwitcher() {
         var toggleBtn = document.getElementById('admin-switcher-toggle');
         var closeBtn = document.getElementById('admin-switcher-close');
         var panel = document.getElementById('admin-switcher-panel');
@@ -90,85 +62,120 @@
 
         if (!toggleBtn || !panel || !themeSelect || !colorSelect) return;
 
-        function getThemeLink() {
+        function findOrCreateLink(id, pattern) {
+            var el = document.getElementById(id);
+            if (el) return el;
             var links = document.querySelectorAll('link[rel="stylesheet"]');
             for (var i = 0; i < links.length; i++) {
-                if (links[i].href && links[i].href.indexOf('commune-theme-') !== -1) {
+                if (links[i].href && pattern.test(links[i].href)) {
+                    links[i].id = id;
                     return links[i];
                 }
             }
             return null;
         }
 
-        function getColorLink() {
-            var links = document.querySelectorAll('link[rel="stylesheet"]');
-            for (var i = 0; i < links.length; i++) {
-                if (links[i].href && links[i].href.indexOf('commune-couleurs-') !== -1) {
-                    return links[i];
+        function updateIndicator() {
+            var hasCustom = !!(localStorage.getItem('commune_theme') || localStorage.getItem('commune_color'));
+            if (indicator) {
+                if (hasCustom) {
+                    indicator.classList.remove('d-none');
+                } else {
+                    indicator.classList.add('d-none');
                 }
             }
-            return null;
         }
 
-        // Synchroniser les champs du sélecteur avec les fichiers actuellement chargés
-        var currentThemeLink = getThemeLink();
-        if (currentThemeLink) {
-            var m = currentThemeLink.href.match(/commune-theme-\d+\.css/);
-            if (m) themeSelect.value = m[0];
+        function applyStyle(type, targetUrl, targetKey, save) {
+            var isColor = (type === 'color');
+            var linkId = isColor ? 'commune-color-scheme-link' : 'commune-theme-link';
+            var pattern = isColor ? /commune-couleurs-\d+\.css/ : /commune-theme-\d+\.css/;
+            var storageKey = isColor ? 'commune_color' : 'commune_theme';
+
+            var currentLink = findOrCreateLink(linkId, pattern);
+
+            if (targetUrl === 'none') {
+                if (currentLink && currentLink.parentNode) {
+                    currentLink.parentNode.removeChild(currentLink);
+                }
+                if (save) localStorage.setItem(storageKey, 'none');
+                updateIndicator();
+                return;
+            }
+
+            // Création d'un nouvel élément pour recalculer immédiatement les styles sans délai
+            var newLink = document.createElement('link');
+            newLink.rel = 'stylesheet';
+            newLink.id = linkId;
+            newLink.href = targetUrl;
+
+            newLink.onload = function() {
+                if (currentLink && currentLink !== newLink && currentLink.parentNode) {
+                    currentLink.parentNode.removeChild(currentLink);
+                }
+            };
+
+            if (currentLink && currentLink.parentNode) {
+                currentLink.parentNode.insertBefore(newLink, currentLink.nextSibling);
+            } else {
+                document.head.appendChild(newLink);
+            }
+
+            if (save && targetKey) {
+                localStorage.setItem(storageKey, targetKey);
+            }
+            updateIndicator();
         }
 
-        var currentColorLink = getColorLink();
-        if (currentColorLink) {
-            var mColor = currentColorLink.href.match(/commune-couleurs-\d+\.css/);
-            if (mColor) colorSelect.value = mColor[0];
-        }
-
-        // Restaurer la sélection sauvegardée dans la session locale du navigateur (localStorage)
-        var savedTheme = localStorage.getItem('commune_theme');
+        // Synchroniser le select de couleur avec la page actuelle
+        var colorLink = findOrCreateLink('commune-color-scheme-link', /commune-couleurs-\d+\.css/);
         var savedColor = localStorage.getItem('commune_color');
 
-        if (savedTheme) {
-            applyTheme(savedTheme, false);
-            themeSelect.value = savedTheme;
-        }
         if (savedColor) {
-            applyColor(savedColor, false);
-            colorSelect.value = savedColor;
+            for (var c = 0; c < colorSelect.options.length; c++) {
+                if (colorSelect.options[c].getAttribute('data-key') === savedColor) {
+                    colorSelect.selectedIndex = c;
+                    applyStyle('color', colorSelect.options[c].value, savedColor, false);
+                    break;
+                }
+            }
+        } else if (colorLink && colorLink.href) {
+            for (var c = 0; c < colorSelect.options.length; c++) {
+                var key = colorSelect.options[c].getAttribute('data-key');
+                if (key && colorLink.href.indexOf(key) !== -1) {
+                    colorSelect.selectedIndex = c;
+                    break;
+                }
+            }
+        }
+
+        // Synchroniser le select de thème avec la page actuelle
+        var themeLink = findOrCreateLink('commune-theme-link', /commune-theme-\d+\.css/);
+        var savedTheme = localStorage.getItem('commune_theme');
+
+        if (savedTheme) {
+            for (var t = 0; t < themeSelect.options.length; t++) {
+                if (themeSelect.options[t].getAttribute('data-key') === savedTheme) {
+                    themeSelect.selectedIndex = t;
+                    applyStyle('theme', themeSelect.options[t].value, savedTheme, false);
+                    break;
+                }
+            }
+        } else if (themeLink && themeLink.href) {
+            for (var t = 0; t < themeSelect.options.length; t++) {
+                var tKey = themeSelect.options[t].getAttribute('data-key');
+                if (tKey && themeLink.href.indexOf(tKey) !== -1) {
+                    themeSelect.selectedIndex = t;
+                    break;
+                }
+            }
+        } else if (!themeLink) {
+            themeSelect.value = 'none';
         }
 
         updateIndicator();
 
-        function updateIndicator() {
-            if (localStorage.getItem('commune_theme') || localStorage.getItem('commune_color')) {
-                if (indicator) indicator.classList.remove('d-none');
-            } else {
-                if (indicator) indicator.classList.add('d-none');
-            }
-        }
-
-        function applyTheme(themeFileName, save) {
-            var link = getThemeLink();
-            if (link) {
-                link.href = link.href.replace(/commune-theme-\d+\.css/, themeFileName);
-                if (save) {
-                    localStorage.setItem('commune_theme', themeFileName);
-                }
-                updateIndicator();
-            }
-        }
-
-        function applyColor(colorFileName, save) {
-            var link = getColorLink();
-            if (link) {
-                link.href = link.href.replace(/commune-couleurs-\d+\.css/, colorFileName);
-                if (save) {
-                    localStorage.setItem('commune_color', colorFileName);
-                }
-                updateIndicator();
-            }
-        }
-
-        // Événements
+        // Événements d'ouverture/fermeture du panneau
         toggleBtn.addEventListener('click', function() {
             var isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
             toggleBtn.setAttribute('aria-expanded', !isExpanded);
@@ -189,14 +196,20 @@
             });
         }
 
+        // Événements de sélection en direct
         themeSelect.addEventListener('change', function() {
-            applyTheme(this.value, true);
+            var selectedOpt = this.options[this.selectedIndex];
+            var key = selectedOpt.getAttribute('data-key') || this.value;
+            applyStyle('theme', this.value, key, true);
         });
 
         colorSelect.addEventListener('change', function() {
-            applyColor(this.value, true);
+            var selectedOpt = this.options[this.selectedIndex];
+            var key = selectedOpt.getAttribute('data-key') || this.value;
+            applyStyle('color', this.value, key, true);
         });
 
+        // Bouton réinitialiser
         if (resetBtn) {
             resetBtn.addEventListener('click', function() {
                 localStorage.removeItem('commune_theme');
@@ -204,7 +217,13 @@
                 window.location.reload();
             });
         }
-    });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initThemeSwitcher);
+    } else {
+        initThemeSwitcher();
+    }
 })();
 </script>
 

@@ -34,13 +34,15 @@ page {
     15 = TEXT
     15 {
       value = BLQcfzIu2XgG6fT4vVsRY6BYy1LgVkyKH8XYYJajIUts74MKtdOlZOZt2ZCs62LmUIUnaunEZPevfxIxIHzn_iY
-      override.data = site:settings:commune.pwa_vapid_public_key
+      override.data = siteSettings:commune.pwa_vapid_public_key
+      override.ifEmpty.data = site:settings:commune.pwa_vapid_public_key
       wrap = <meta name="pwa-vapid-public-key" content="|">
     }
     99 = TEXT
     99 {
-      data = site:settings:commune.theme_css
-      ifEmpty.value = {$commune.theme_css}
+      data = siteSettings:commune.theme_css
+      ifEmpty.data = site:settings:commune.theme_css
+      ifEmpty.ifEmpty.value = {$commune.theme_css}
       wrap = <!-- Theme actif: | -->
     }
   }
@@ -148,148 +150,167 @@ page {
       # Thème graphique sélectionné (priorité aux réglages de site, puis constantes)
       communeTheme = TEXT
       communeTheme {
-        data = site:settings:commune.theme_css
-        ifEmpty.data = site:settings.commune.theme_css
-        ifEmpty.ifEmpty.value = {$commune.theme_css}
+        data = siteSettings:commune.theme_css
+        ifEmpty.data = site:settings:commune.theme_css
+        ifEmpty.ifEmpty.data = site:settings.commune.theme_css
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.theme_css}
       }
 
       # Jeu de couleurs sélectionné
       communeColorScheme = TEXT
       communeColorScheme {
-        data = site:settings:commune.color_scheme_css
-        ifEmpty.data = site:settings.commune.color_scheme_css
-        ifEmpty.ifEmpty.value = {$commune.color_scheme_css}
+        data = siteSettings:commune.color_scheme_css
+        ifEmpty.data = site:settings:commune.color_scheme_css
+        ifEmpty.ifEmpty.data = site:settings.commune.color_scheme_css
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.color_scheme_css}
       }
 
       # Activer le sélecteur de thème & couleurs en frontend (Live Preview)
       communeEnableThemeSwitcher = TEXT
       communeEnableThemeSwitcher {
-        data = site:settings:commune.enable_theme_switcher
-        ifEmpty.data = site:settings.commune.enable_theme_switcher
-        ifEmpty.ifEmpty.value = {$commune.enable_theme_switcher}
+        data = siteSettings:commune.enable_theme_switcher
+        ifEmpty.data = site:settings:commune.enable_theme_switcher
+        ifEmpty.ifEmpty.data = site:settings.commune.enable_theme_switcher
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.enable_theme_switcher}
       }
 
       # Activer le bandeau supérieur PWA & Notifications
       communePwaTopBannerEnable = TEXT
       communePwaTopBannerEnable {
-        data = site:settings:commune.pwa_top_banner_enable
-        ifEmpty.data = site:settings.commune.pwa_top_banner_enable
-        ifEmpty.ifEmpty.value = {$commune.pwa_top_banner_enable}
-        ifEmpty.ifEmpty.ifEmpty.value = 1
+        data = siteSettings:commune.pwa_top_banner_enable
+        ifEmpty.data = site:settings:commune.pwa_top_banner_enable
+        ifEmpty.ifEmpty.data = site:settings.commune.pwa_top_banner_enable
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.pwa_top_banner_enable}
+        ifEmpty.ifEmpty.ifEmpty.ifEmpty.value = 1
       }
 
       # Texte personnalisé du bandeau supérieur PWA
       communePwaTopBannerText = TEXT
       communePwaTopBannerText {
-        data = site:settings:commune.pwa_top_banner_text
-        ifEmpty.data = site:settings.commune.pwa_top_banner_text
-        ifEmpty.ifEmpty.value = {$commune.pwa_top_banner_text}
-        ifEmpty.ifEmpty.ifEmpty.value = Installez l'application Mairie et recevez les alertes en direct sur votre écran.
+        data = siteSettings:commune.pwa_top_banner_text
+        ifEmpty.data = site:settings:commune.pwa_top_banner_text
+        ifEmpty.ifEmpty.data = site:settings.commune.pwa_top_banner_text
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.pwa_top_banner_text}
+        ifEmpty.ifEmpty.ifEmpty.ifEmpty.value = Installez l'application Mairie et recevez les alertes en direct sur votre écran.
       }
 
       # Afficher la croix de fermeture du bandeau supérieur PWA (0/1)
       communePwaTopBannerShowClose = TEXT
       communePwaTopBannerShowClose {
-        data = site:settings:commune.pwa_top_banner_show_close
-        ifEmpty.data = site:settings.commune.pwa_top_banner_show_close
-        ifEmpty.ifEmpty.value = {$commune.pwa_top_banner_show_close}
-        ifEmpty.ifEmpty.ifEmpty.value = 1
+        data = siteSettings:commune.pwa_top_banner_show_close
+        ifEmpty.data = site:settings:commune.pwa_top_banner_show_close
+        ifEmpty.ifEmpty.data = site:settings.commune.pwa_top_banner_show_close
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.pwa_top_banner_show_close}
+        ifEmpty.ifEmpty.ifEmpty.ifEmpty.value = 1
       }
 
       # Activer ou désactiver globalement l'envoi des notifications Push (0/1)
       communePwaPushEnable = TEXT
       communePwaPushEnable {
-        data = site:settings:commune.pwa_push_enable
-        ifEmpty.data = site:settings.commune.pwa_push_enable
-        ifEmpty.ifEmpty.value = {$commune.pwa_push_enable}
-        ifEmpty.ifEmpty.ifEmpty.value = 1
+        data = siteSettings:commune.pwa_push_enable
+        ifEmpty.data = site:settings:commune.pwa_push_enable
+        ifEmpty.ifEmpty.data = site:settings.commune.pwa_push_enable
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.pwa_push_enable}
+        ifEmpty.ifEmpty.ifEmpty.ifEmpty.value = 1
       }
 
       # Logo et personnalisation de marque
       communeLogoFile = TEXT
       communeLogoFile {
-        data = site:settings:commune.logo_file
-        ifEmpty.data = site:settings.commune.logo_file
-        ifEmpty.ifEmpty.value = {$commune.logo_file}
+        data = siteSettings:commune.logo_file
+        ifEmpty.data = site:settings:commune.logo_file
+        ifEmpty.ifEmpty.data = site:settings.commune.logo_file
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.logo_file}
       }
 
       communeLogoHeight = TEXT
       communeLogoHeight {
-        data = site:settings:commune.logo_height
-        ifEmpty.data = site:settings.commune.logo_height
-        ifEmpty.ifEmpty.value = {$commune.logo_height}
+        data = siteSettings:commune.logo_height
+        ifEmpty.data = site:settings:commune.logo_height
+        ifEmpty.ifEmpty.data = site:settings.commune.logo_height
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.logo_height}
       }
 
       communeHeaderHideTitle = TEXT
       communeHeaderHideTitle {
-        data = site:settings:commune.header_hide_title
-        ifEmpty.data = site:settings.commune.header_hide_title
-        ifEmpty.ifEmpty.value = {$commune.header_hide_title}
+        data = siteSettings:commune.header_hide_title
+        ifEmpty.data = site:settings:commune.header_hide_title
+        ifEmpty.ifEmpty.data = site:settings.commune.header_hide_title
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.header_hide_title}
       }
 
       communeHeaderHideSlogan = TEXT
       communeHeaderHideSlogan {
-        data = site:settings:commune.header_hide_slogan
-        ifEmpty.data = site:settings.commune.header_hide_slogan
-        ifEmpty.ifEmpty.value = {$commune.header_hide_slogan}
+        data = siteSettings:commune.header_hide_slogan
+        ifEmpty.data = site:settings:commune.header_hide_slogan
+        ifEmpty.ifEmpty.data = site:settings.commune.header_hide_slogan
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.header_hide_slogan}
       }
 
       communeHeaderLayout = TEXT
       communeHeaderLayout {
-        data = site:settings:commune:header_layout
-        ifEmpty.data = site:settings:commune.header_layout
-        ifEmpty.ifEmpty.data = site:settings.commune.header_layout
-        ifEmpty.ifEmpty.ifEmpty.value = {$commune.header_layout}
+        data = siteSettings:commune.header_layout
+        ifEmpty.data = site:settings:commune:header_layout
+        ifEmpty.ifEmpty.data = site:settings:commune.header_layout
+        ifEmpty.ifEmpty.ifEmpty.data = site:settings.commune.header_layout
+        ifEmpty.ifEmpty.ifEmpty.ifEmpty.value = {$commune.header_layout}
       }
 
       # Données de la commune
       communeNom = TEXT
       communeNom {
-        data = site:settings:commune.nom
-        ifEmpty.data = site:settings.commune.nom
-        ifEmpty.ifEmpty.value = {$commune.nom}
+        data = siteSettings:commune.nom
+        ifEmpty.data = site:settings:commune.nom
+        ifEmpty.ifEmpty.data = site:settings.commune.nom
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.nom}
       }
 
       communeSlogan = TEXT
       communeSlogan {
-        data = site:settings:commune.slogan
-        ifEmpty.data = site:settings.commune.slogan
-        ifEmpty.ifEmpty.value = {$commune.slogan}
+        data = siteSettings:commune.slogan
+        ifEmpty.data = site:settings:commune.slogan
+        ifEmpty.ifEmpty.data = site:settings.commune.slogan
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.slogan}
       }
 
       communeDepartement = TEXT
       communeDepartement {
-        data = site:settings:commune.departement
-        ifEmpty.data = site:settings.commune.departement
-        ifEmpty.ifEmpty.value = {$commune.departement}
+        data = siteSettings:commune.departement
+        ifEmpty.data = site:settings:commune.departement
+        ifEmpty.ifEmpty.data = site:settings.commune.departement
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.departement}
       }
 
       communeAdresse = TEXT
       communeAdresse {
-        data = site:settings:commune.adresse
-        ifEmpty.data = site:settings.commune.adresse
-        ifEmpty.ifEmpty.value = {$commune.adresse}
+        data = siteSettings:commune.adresse
+        ifEmpty.data = site:settings:commune.adresse
+        ifEmpty.ifEmpty.data = site:settings.commune.adresse
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.adresse}
       }
 
       communeTelephone = TEXT
       communeTelephone {
-        data = site:settings:commune.telephone
-        ifEmpty.data = site:settings.commune.telephone
-        ifEmpty.ifEmpty.value = {$commune.telephone}
+        data = siteSettings:commune.telephone
+        ifEmpty.data = site:settings:commune.telephone
+        ifEmpty.ifEmpty.data = site:settings.commune.telephone
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.telephone}
       }
 
       communeEmail = TEXT
       communeEmail {
-        data = site:settings:commune.email
-        ifEmpty.data = site:settings.commune.email
-        ifEmpty.ifEmpty.value = {$commune.email}
+        data = siteSettings:commune.email
+        ifEmpty.data = site:settings:commune.email
+        ifEmpty.ifEmpty.data = site:settings.commune.email
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.email}
       }
 
       communeHoraires = TEXT
       communeHoraires {
-        data = site:settings:commune.horaires
-        ifEmpty.data = site:settings.commune.horaires
-        ifEmpty.ifEmpty.value = {$commune.horaires}
+        data = siteSettings:commune.horaires
+        ifEmpty.data = site:settings:commune.horaires
+        ifEmpty.ifEmpty.data = site:settings.commune.horaires
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.horaires}
       }
 
       # Titres et visibilité des sections de la page d'accueil

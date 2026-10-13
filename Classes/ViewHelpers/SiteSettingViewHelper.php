@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Commune\SiteCommuneRgaa\ViewHelpers;
 
-use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use Symfony\Component\Yaml\Yaml;
 use TYPO3\CMS\Core\Site\Entity\Site;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * ViewHelper pour récupérer proprement un paramètre de site TYPO3 v13 (SiteSettings).
@@ -44,44 +46,8 @@ class SiteSettingViewHelper extends AbstractViewHelper
 
         $rawValue = null;
 
-        // 1. Recherche via l'objet SiteSettings
-        if (method_exists($site, 'getSettings')) {
-            $settings = $site->getSettings();
-            
-            // a. Accès direct par la clé exacte
-            if (method_exists($settings, 'get')) {
-                $val = $settings->get($key);
-                if ($val !== null && $val !== '') {
-                    $rawValue = $val;
-                }
-            }
-
-            // b. Accès par sous-tableau (ex: get('commune')['header_layout'])
-            if ($rawValue === null && str_contains($key, '.') && method_exists($settings, 'get')) {
-                $parts = explode('.', $key, 2);
-                $section = $settings->get($parts[0]);
-                if (is_array($section)) {
-                    $val = $this->getValueByDotPath($section, $parts[1]);
-                    if ($val !== null && $val !== '') {
-                        $rawValue = $val;
-                    }
-                }
-            }
-
-            // c. Parcours de l'ensemble des réglages si getAll() disponible
-            if ($rawValue === null && method_exists($settings, 'getAll')) {
-                $all = $settings->getAll();
-                if (is_array($all)) {
-                    $val = $this->getValueByDotPath($all, $key);
-                    if ($val !== null && $val !== '') {
-                        $rawValue = $val;
-                    }
-                }
-            }
-        }
-
-        // 2. Recherche directe dans la configuration brute du site (Fallback)
-        if ($rawValue === null && method_exists($site, 'getConfiguration')) {
+        // 1. Recherche prioritaire dans la configuration explicite du site (config.yaml / settings.yaml)
+        if (method_exists($site, 'getConfiguration')) {
             $config = $site->getConfiguration();
             if (isset($config['settings']) && is_array($config['settings'])) {
                 $val = $this->getValueByDotPath($config['settings'], $key);
@@ -93,6 +59,58 @@ class SiteSettingViewHelper extends AbstractViewHelper
                 $val = $this->getValueByDotPath($config, $key);
                 if ($val !== null && $val !== '') {
                     $rawValue = $val;
+                }
+            }
+        }
+
+        // 2. Recherche directe dans config/sites/<identifier>/settings.yaml si disponible
+        if ($rawValue === null && method_exists($site, 'getIdentifier')) {
+            $settingsFile = GeneralUtility::getFileAbsFileName('config/sites/' . $site->getIdentifier() . '/settings.yaml');
+            if (file_exists($settingsFile)) {
+                try {
+                    $parsed = Yaml::parseFile($settingsFile);
+                    if (is_array($parsed)) {
+                        $val = $this->getValueByDotPath($parsed, $key);
+                        if ($val !== null && $val !== '') {
+                            $rawValue = $val;
+                        }
+                    }
+                } catch (\Throwable) {
+                }
+            }
+        }
+
+        // 3. Si non trouvé dans la configuration explicite du site, utiliser la valeur par défaut passée (TypoScript sys_template)
+        if ($rawValue === null && $default !== null && $default !== '') {
+            $rawValue = $default;
+        }
+
+        // 4. Si toujours rien, fallback sur SiteSettings global (getSettings())
+        if ($rawValue === null && method_exists($site, 'getSettings')) {
+            $settings = $site->getSettings();
+            if (method_exists($settings, 'get')) {
+                $val = $settings->get($key);
+                if ($val !== null && $val !== '') {
+                    $rawValue = $val;
+                }
+            }
+            if ($rawValue === null && str_contains($key, '.') && method_exists($settings, 'get')) {
+                $parts = explode('.', $key, 2);
+                $section = $settings->get($parts[0]);
+                if (is_array($section)) {
+                    $val = $this->getValueByDotPath($section, $parts[1]);
+                    if ($val !== null && $val !== '') {
+                        $rawValue = $val;
+                    }
+                }
+            }
+            if ($rawValue === null && method_exists($settings, 'getAll')) {
+                $all = $settings->getAll();
+                if (is_array($all)) {
+                    $val = $this->getValueByDotPath($all, $key);
+                    if ($val !== null && $val !== '') {
+                        $rawValue = $val;
+                    }
                 }
             }
         }
