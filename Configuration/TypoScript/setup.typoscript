@@ -147,32 +147,17 @@ page {
 
     # Variables injectées dans les templates Fluid
     variables {
-      # Thème graphique sélectionné (priorité aux réglages de site, puis constantes)
+      # Thème graphique sélectionné (Injecté depuis les constantes TypoScript sys_template)
       communeTheme = TEXT
-      communeTheme {
-        data = siteSettings:commune.theme_css
-        ifEmpty.data = site:settings:commune.theme_css
-        ifEmpty.ifEmpty.data = site:settings.commune.theme_css
-        ifEmpty.ifEmpty.ifEmpty.value = {$commune.theme_css}
-      }
+      communeTheme.value = {$commune.theme_css}
 
-      # Jeu de couleurs sélectionné
+      # Jeu de couleurs sélectionné (Injecté depuis les constantes TypoScript sys_template)
       communeColorScheme = TEXT
-      communeColorScheme {
-        data = siteSettings:commune.color_scheme_css
-        ifEmpty.data = site:settings:commune.color_scheme_css
-        ifEmpty.ifEmpty.data = site:settings.commune.color_scheme_css
-        ifEmpty.ifEmpty.ifEmpty.value = {$commune.color_scheme_css}
-      }
+      communeColorScheme.value = {$commune.color_scheme_css}
 
       # Activer le sélecteur de thème & couleurs en frontend (Live Preview)
       communeEnableThemeSwitcher = TEXT
-      communeEnableThemeSwitcher {
-        data = siteSettings:commune.enable_theme_switcher
-        ifEmpty.data = site:settings:commune.enable_theme_switcher
-        ifEmpty.ifEmpty.data = site:settings.commune.enable_theme_switcher
-        ifEmpty.ifEmpty.ifEmpty.value = {$commune.enable_theme_switcher}
-      }
+      communeEnableThemeSwitcher.value = {$commune.enable_theme_switcher}
 
       # Activer le bandeau supérieur PWA & Notifications
       communePwaTopBannerEnable = TEXT

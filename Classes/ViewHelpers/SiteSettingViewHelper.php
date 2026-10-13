@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Commune\SiteCommuneRgaa\ViewHelpers;
 
 use Symfony\Component\Yaml\Yaml;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * ViewHelper pour récupérer proprement un paramètre de site TYPO3 v13 (SiteSettings).
+ * Synchronisé bidirectionnellement avec les constantes TypoScript sys_template et settings.yaml.
  *
  * Usage :
  * {rgaa:siteSetting(key: 'commune.theme_css', default: communeTheme)}
@@ -22,11 +24,17 @@ class SiteSettingViewHelper extends AbstractViewHelper
      */
     protected $escapeOutput = false;
 
+    /**
+     * Cache mémoire pour le timestamp de sys_template par page racine
+     * @var array<int, int>
+     */
+    private static array $templateTstampCache = [];
+
     public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('key', 'string', 'Clé du paramètre de site (ex: commune.theme_css)', true);
-        $this->registerArgument('default', 'mixed', 'Valeur par défaut si non définie', false, null);
+        $this->registerArgument('default', 'mixed', 'Valeur par défaut si non définie (Constante TypoScript)', false, null);
     }
 
     public function render(): mixed
@@ -36,18 +44,54 @@ class SiteSettingViewHelper extends AbstractViewHelper
 
         $request = $this->renderingContext->getRequest();
         if (!$request || !method_exists($request, 'getAttribute')) {
-            return $default;
+            $normalized = $this->normalizeSettingValue($key, $default);
+            return $normalized !== null ? $normalized : $default;
         }
 
         $site = $request->getAttribute('site');
         if (!$site instanceof Site) {
-            return $default;
+            $normalized = $this->normalizeSettingValue($key, $default);
+            return $normalized !== null ? $normalized : $default;
         }
 
-        $rawValue = null;
+        // 1. Détermination du timestamp de sys_template pour le site courant
+        $rootPageId = $site->getRootPageId();
+        $templateTstamp = $this->getSysTemplateTimestamp($rootPageId);
 
-        // 1. Recherche prioritaire dans la configuration explicite du site (config.yaml / settings.yaml)
-        if (method_exists($site, 'getConfiguration')) {
+        // 2. Recherche directe dans config/sites/<identifier>/settings.yaml avec son timestamp
+        $yamlValue = null;
+        $yamlMtime = 0;
+        if (method_exists($site, 'getIdentifier')) {
+            $settingsFile = GeneralUtility::getFileAbsFileName('config/sites/' . $site->getIdentifier() . '/settings.yaml');
+            if (file_exists($settingsFile)) {
+                $yamlMtime = (int)filemtime($settingsFile);
+                try {
+                    $parsed = Yaml::parseFile($settingsFile);
+                    if (is_array($parsed)) {
+                        $val = $this->getValueByDotPath($parsed, $key);
+                        if ($val !== null && $val !== '') {
+                            $yamlValue = $val;
+                        }
+                    }
+                } catch (\Throwable) {
+                }
+            }
+        }
+
+        // 3. Arbitrage temporel bidirectionnel :
+        // Si TypoScript (sys_template) a été modifié plus récemment que settings.yaml,
+        // la valeur transmise par les constantes TypoScript ($default) prévaut.
+        $rawValue = null;
+        if ($templateTstamp > $yamlMtime && $default !== null && $default !== '') {
+            $rawValue = $default;
+        } elseif ($yamlValue !== null && $yamlValue !== '') {
+            $rawValue = $yamlValue;
+        } elseif ($default !== null && $default !== '') {
+            $rawValue = $default;
+        }
+
+        // 4. Fallback sur la configuration explicite du site si disponible
+        if ($rawValue === null && method_exists($site, 'getConfiguration')) {
             $config = $site->getConfiguration();
             if (isset($config['settings']) && is_array($config['settings'])) {
                 $val = $this->getValueByDotPath($config['settings'], $key);
@@ -63,29 +107,7 @@ class SiteSettingViewHelper extends AbstractViewHelper
             }
         }
 
-        // 2. Recherche directe dans config/sites/<identifier>/settings.yaml si disponible
-        if ($rawValue === null && method_exists($site, 'getIdentifier')) {
-            $settingsFile = GeneralUtility::getFileAbsFileName('config/sites/' . $site->getIdentifier() . '/settings.yaml');
-            if (file_exists($settingsFile)) {
-                try {
-                    $parsed = Yaml::parseFile($settingsFile);
-                    if (is_array($parsed)) {
-                        $val = $this->getValueByDotPath($parsed, $key);
-                        if ($val !== null && $val !== '') {
-                            $rawValue = $val;
-                        }
-                    }
-                } catch (\Throwable) {
-                }
-            }
-        }
-
-        // 3. Si non trouvé dans la configuration explicite du site, utiliser la valeur par défaut passée (TypoScript sys_template)
-        if ($rawValue === null && $default !== null && $default !== '') {
-            $rawValue = $default;
-        }
-
-        // 4. Si toujours rien, fallback sur SiteSettings global (getSettings())
+        // 5. Fallback final sur les SiteSettings globaux du Core (définitions d'usine)
         if ($rawValue === null && method_exists($site, 'getSettings')) {
             $settings = $site->getSettings();
             if (method_exists($settings, 'get')) {
@@ -117,6 +139,41 @@ class SiteSettingViewHelper extends AbstractViewHelper
 
         $normalized = $this->normalizeSettingValue($key, $rawValue);
         return $normalized !== null ? $normalized : $default;
+    }
+
+    /**
+     * Récupère le timestamp de dernière modification de sys_template sur la page racine (avec cache).
+     */
+    private function getSysTemplateTimestamp(int $rootPageId): int
+    {
+        if ($rootPageId <= 0) {
+            return 0;
+        }
+
+        if (isset(self::$templateTstampCache[$rootPageId])) {
+            return self::$templateTstampCache[$rootPageId];
+        }
+
+        try {
+            $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+            $queryBuilder = $connectionPool->getQueryBuilderForTable('sys_template');
+            $row = $queryBuilder
+                ->select('tstamp')
+                ->from('sys_template')
+                ->where($queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($rootPageId, \PDO::PARAM_INT)))
+                ->orderBy('root', 'DESC')
+                ->addOrderBy('sorting', 'ASC')
+                ->setMaxResults(1)
+                ->executeQuery()
+                ->fetchAssociative();
+
+            $tstamp = ($row && isset($row['tstamp'])) ? (int)$row['tstamp'] : 0;
+            self::$templateTstampCache[$rootPageId] = $tstamp;
+            return $tstamp;
+        } catch (\Throwable) {
+            self::$templateTstampCache[$rootPageId] = 0;
+            return 0;
+        }
     }
 
     /**

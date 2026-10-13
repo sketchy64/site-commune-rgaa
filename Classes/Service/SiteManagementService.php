@@ -84,45 +84,63 @@ class SiteManagementService
         $site = $this->getSiteByIdentifier($identifier);
         $rootPageId = $site ? $site->getRootPageId() : 0;
 
-        // 1. Lecture universelle des constantes TypoScript de la BDD (sys_template)
-        $sysTemplateConstants = $this->getSysTemplateConstants($rootPageId);
+        // 1. Lecture universelle des constantes TypoScript de la BDD (sys_template) avec son timestamp
+        $templateData = $this->getSysTemplateConstantsData($rootPageId);
+        $sysTemplateConstants = $templateData['constants'];
+        $templateTstamp = $templateData['tstamp'];
 
-        // 2. Lecture de la configuration du site (YAML)
-        try {
-            $siteConfig = $this->siteConfiguration->load($identifier);
-            $siteSettings = $siteConfig['settings'] ?? [];
-            if (!is_array($siteSettings)) {
-                $siteSettings = [];
-            }
-        } catch (\Throwable) {
-            $siteSettings = [];
-        }
-
-        // Lecture directe complémentaire de settings.yaml (Standard TYPO3 v13 Site Sets)
+        // 2. Lecture de la configuration du site (YAML settings.yaml) avec son timestamp
         $settingsFilePath = GeneralUtility::getFileAbsFileName('config/sites/' . $identifier . '/settings.yaml');
+        $siteSettings = [];
+        $yamlMtime = 0;
         if (file_exists($settingsFilePath)) {
+            $yamlMtime = (int)filemtime($settingsFilePath);
             try {
                 $parsedYamlSettings = Yaml::parseFile($settingsFilePath);
                 if (is_array($parsedYamlSettings)) {
-                    $siteSettings = array_replace_recursive($siteSettings, $parsedYamlSettings);
+                    $siteSettings = $parsedYamlSettings;
                 }
             } catch (\Throwable) {
             }
         }
 
-        // Fusion en cascade : Defaults < sys_template < SiteSettings YAML
+        // Lecture d'appoint dans config.yaml si présent
+        try {
+            $siteConfig = $this->siteConfiguration->load($identifier);
+            if (isset($siteConfig['settings']) && is_array($siteConfig['settings'])) {
+                $siteSettings = array_replace_recursive($siteConfig['settings'], $siteSettings);
+            }
+        } catch (\Throwable) {
+        }
+
+        // Arbitrage temporel bidirectionnel :
+        // Si sys_template a été modifié plus récemment (ex: Constant Editor), les constantes ont la priorité.
+        // Sinon (ex: sauvegarde via Module ou Site Settings), settings.yaml a la priorité.
+        $preferTemplate = ($templateTstamp > $yamlMtime);
+
         $rawMerged = $defaults;
         foreach ($defaults as $key => $defaultVal) {
-            // a. Constantes sys_template si présentées dans la BDD
-            if (isset($sysTemplateConstants[$key]) && $sysTemplateConstants[$key] !== '') {
-                $rawMerged[$key] = $sysTemplateConstants[$key];
-            }
-
-            // b. Surcharge Site Settings YAML
             $yamlVal = $this->extractValueFromConfig($siteSettings, $key);
-            if ($yamlVal !== null && $yamlVal !== '') {
-                $rawMerged[$key] = $yamlVal;
+            $templateVal = $sysTemplateConstants[$key] ?? null;
+
+            if ($preferTemplate) {
+                if ($templateVal !== null && $templateVal !== '') {
+                    $rawMerged[$key] = $templateVal;
+                } elseif ($yamlVal !== null && $yamlVal !== '') {
+                    $rawMerged[$key] = $yamlVal;
+                }
+            } else {
+                if ($yamlVal !== null && $yamlVal !== '') {
+                    $rawMerged[$key] = $yamlVal;
+                } elseif ($templateVal !== null && $templateVal !== '') {
+                    $rawMerged[$key] = $templateVal;
+                }
             }
+        }
+
+        // Normalisation spécifique pour les options de thème ('' ou 'none' => 'none')
+        if (isset($rawMerged['commune.theme_css']) && $rawMerged['commune.theme_css'] === '') {
+            $rawMerged['commune.theme_css'] = 'none';
         }
 
         // Duplication tri-forme de la structure pour Fluid ({currentSettings.commune.nom}, {currentSettings.commune_nom}, etc.)
@@ -195,30 +213,46 @@ class SiteManagementService
                 $cleanSettings[$key] = $cleanVal;
             }
 
-            // Écriture dans siteConfig['settings']
-            $newSettings = $existingSettings;
+            // 1. Sauvegarde propre dans config/sites/<identifier>/settings.yaml (Standard TYPO3 v13 Site Sets)
+            $nestedSettings = [];
             foreach ($cleanSettings as $key => $cleanVal) {
-                $newSettings[$key] = $cleanVal;
                 if (str_contains($key, '.')) {
                     $parts = explode('.', $key, 2);
-                    if (!isset($newSettings[$parts[0]]) || !is_array($newSettings[$parts[0]])) {
-                        $newSettings[$parts[0]] = [];
+                    if (!isset($nestedSettings[$parts[0]]) || !is_array($nestedSettings[$parts[0]])) {
+                        $nestedSettings[$parts[0]] = [];
                     }
-                    $newSettings[$parts[0]][$parts[1]] = $cleanVal;
+                    $nestedSettings[$parts[0]][$parts[1]] = $cleanVal;
+                } else {
+                    $nestedSettings[$key] = $cleanVal;
                 }
             }
 
-            $siteConfig['settings'] = $newSettings;
+            $siteDir = GeneralUtility::getFileAbsFileName('config/sites/' . $identifier . '/');
+            if (!is_dir($siteDir)) {
+                GeneralUtility::mkdir_deep($siteDir);
+            }
+            $settingsFile = $siteDir . 'settings.yaml';
+            $yamlContent = Yaml::dump($nestedSettings, 99, 2);
+            GeneralUtility::writeFile($settingsFile, $yamlContent);
 
-            // Écriture sécurisée de la configuration du site (Support toutes versions TYPO3)
-            $this->writeSiteConfigurationData($identifier, $siteConfig);
+            // 2. Nettoyage de config.yaml si un bloc settings obsolète s'y trouvait
+            try {
+                $siteConfig = $this->siteConfiguration->load($identifier);
+                if (isset($siteConfig['settings'])) {
+                    unset($siteConfig['settings']);
+                    if (method_exists($this->siteConfiguration, 'write')) {
+                        $this->siteConfiguration->write($identifier, $siteConfig);
+                    }
+                }
+            } catch (\Throwable) {
+            }
 
-            // Mise à jour synchrone de sys_template (BDD)
+            // 3. Mise à jour synchrone de sys_template (BDD) pour le site
             $site = $this->getSiteByIdentifier($identifier);
             $rootPageId = $site ? $site->getRootPageId() : 0;
             $this->saveSysTemplateConstants($rootPageId, $cleanSettings);
 
-            // Vidage complet des caches pour prise en compte immédiate en Frontend
+            // 4. Vidage complet des caches pour prise en compte immédiate en Frontend
             $this->flushAllSiteCaches();
 
             return ['success' => true, 'error' => ''];
@@ -329,17 +363,24 @@ class SiteManagementService
                     'flag' => 'fr',
                 ],
             ],
-            'settings' => [
-                'commune' => [
-                    'nom' => $name,
-                    'slogan' => $data['slogan'] ?? 'République Française - Liberté, Égalité, Fraternité',
-                    'theme_css' => $data['theme'] ?? 'EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css',
-                    'color_scheme_css' => $data['color_scheme'] ?? 'EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css',
-                ],
-            ],
         ];
 
-        $this->writeSiteConfigurationData($identifier, $siteConfig);
+        // Écriture de config.yaml
+        $siteDir = GeneralUtility::getFileAbsFileName('config/sites/' . $identifier . '/');
+        if (!is_dir($siteDir)) {
+            GeneralUtility::mkdir_deep($siteDir);
+        }
+        $configFile = $siteDir . 'config.yaml';
+        GeneralUtility::writeFile($configFile, Yaml::dump($siteConfig, 99, 2));
+
+        // Initialisation synchrone de settings.yaml et des constantes sys_template
+        $initialSettings = [
+            'commune.nom' => $name,
+            'commune.slogan' => $data['slogan'] ?? 'République Française - Liberté, Égalité, Fraternité',
+            'commune.theme_css' => $data['theme'] ?? 'EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css',
+            'commune.color_scheme_css' => $data['color_scheme'] ?? 'EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css',
+        ];
+        $this->saveSiteSettings($identifier, $initialSettings);
 
         if (!empty($data['create_pages'])) {
             $this->generateDefaultPageTree($rootPageId);
@@ -349,40 +390,54 @@ class SiteManagementService
     }
 
     /**
-     * Parseur universel des constantes TypoScript enregistrées dans sys_template (BDD).
+     * Parseur universel des constantes TypoScript enregistrées dans sys_template (BDD) avec relevé de timestamp.
      *
-     * @return array<string, string>
+     * @return array{constants: array<string, string>, tstamp: int}
      */
-    private function getSysTemplateConstants(int $rootPageId): array
+    private function getSysTemplateConstantsData(int $rootPageId): array
     {
         try {
             $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_template');
             $expr = $queryBuilder->expr();
 
-            $constraints = [];
+            $rows = [];
             if ($rootPageId > 0) {
-                $constraints[] = $expr->eq('pid', $queryBuilder->createNamedParameter($rootPageId, \PDO::PARAM_INT));
+                $rows = $queryBuilder
+                    ->select('uid', 'pid', 'tstamp', 'constants')
+                    ->from('sys_template')
+                    ->where($expr->eq('pid', $queryBuilder->createNamedParameter($rootPageId, \PDO::PARAM_INT)))
+                    ->orderBy('root', 'DESC')
+                    ->addOrderBy('sorting', 'ASC')
+                    ->executeQuery()
+                    ->fetchAllAssociative();
             }
-            $constraints[] = $expr->eq('root', 1);
-
-            $rows = $queryBuilder
-                ->select('uid', 'pid', 'constants')
-                ->from('sys_template')
-                ->where($expr->or(...$constraints))
-                ->orderBy('sorting', 'ASC')
-                ->executeQuery()
-                ->fetchAllAssociative();
 
             if (empty($rows)) {
-                return [];
+                $qbRoot = $this->connectionPool->getQueryBuilderForTable('sys_template');
+                $rows = $qbRoot
+                    ->select('uid', 'pid', 'tstamp', 'constants')
+                    ->from('sys_template')
+                    ->where($qbRoot->expr()->eq('root', 1))
+                    ->orderBy('sorting', 'ASC')
+                    ->executeQuery()
+                    ->fetchAllAssociative();
             }
 
+            if (empty($rows)) {
+                return ['constants' => [], 'tstamp' => 0];
+            }
+
+            $maxTstamp = 0;
+            $parsed = [];
             $definitions = $this->getSettingsDefinitions()['settings'];
             $knownKeys = array_keys($definitions);
 
-            $parsed = [];
-
             foreach ($rows as $row) {
+                $rowTstamp = (int)($row['tstamp'] ?? 0);
+                if ($rowTstamp > $maxTstamp) {
+                    $maxTstamp = $rowTstamp;
+                }
+
                 $text = (string)($row['constants'] ?? '');
                 if (empty($text)) {
                     continue;
@@ -443,9 +498,9 @@ class SiteManagementService
                 }
             }
 
-            return $parsed;
+            return ['constants' => $parsed, 'tstamp' => $maxTstamp];
         } catch (\Throwable) {
-            return [];
+            return ['constants' => [], 'tstamp' => 0];
         }
     }
 
@@ -458,39 +513,37 @@ class SiteManagementService
             $connection = $this->connectionPool->getConnectionForTable('sys_template');
             $queryBuilder = $connection->createQueryBuilder();
 
-            $constraints = [];
+            $row = null;
             if ($rootPageId > 0) {
-                $constraints[] = $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($rootPageId, \PDO::PARAM_INT));
+                $row = $queryBuilder
+                    ->select('uid', 'pid', 'constants')
+                    ->from('sys_template')
+                    ->where($queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($rootPageId, \PDO::PARAM_INT)))
+                    ->orderBy('root', 'DESC')
+                    ->addOrderBy('sorting', 'ASC')
+                    ->setMaxResults(1)
+                    ->executeQuery()
+                    ->fetchAssociative();
             }
-            $constraints[] = $queryBuilder->expr()->eq('root', 1);
 
-            $row = $queryBuilder
-                ->select('uid', 'pid', 'constants')
-                ->from('sys_template')
-                ->where($queryBuilder->expr()->or(...$constraints))
-                ->orderBy('sorting', 'ASC')
-                ->setMaxResults(1)
-                ->executeQuery()
-                ->fetchAssociative();
+            if (!$row) {
+                $qbRoot = $connection->createQueryBuilder();
+                $row = $qbRoot
+                    ->select('uid', 'pid', 'constants')
+                    ->from('sys_template')
+                    ->where($qbRoot->expr()->eq('root', 1))
+                    ->orderBy('sorting', 'ASC')
+                    ->setMaxResults(1)
+                    ->executeQuery()
+                    ->fetchAssociative();
+            }
 
-            // Construction du bloc de constantes propre
+            // Construction du bloc de constantes propre (Format TypoScript plat standard reconnu par l'éditeur de constantes)
             $constantLines = [];
             $constantLines[] = '# ==============================================================================';
-            $constantLines[] = '# Constantes Commune RGAA (Générées par le Module d\'Administration)';
+            $constantLines[] = '# Constantes Commune RGAA (Synchronisées par le Module d\'Administration)';
             $constantLines[] = '# ==============================================================================';
-            $constantLines[] = 'commune {';
 
-            foreach ($settings as $key => $val) {
-                if (str_starts_with($key, 'commune.')) {
-                    $subKey = substr($key, 8);
-                    $valStr = is_bool($val) ? ($val ? '1' : '0') : (string)$val;
-                    $constantLines[] = '  ' . $subKey . ' = ' . $valStr;
-                }
-            }
-            $constantLines[] = '}';
-            $constantLines[] = '';
-
-            // Également écrire en format plat pour compatibilité maximale
             foreach ($settings as $key => $val) {
                 if (str_starts_with($key, 'commune.')) {
                     $valStr = is_bool($val) ? ($val ? '1' : '0') : (string)$val;
@@ -499,17 +552,18 @@ class SiteManagementService
             }
 
             $generatedBlock = implode("\n", $constantLines);
+            $now = time();
 
             if ($row) {
                 $existingConstants = (string)($row['constants'] ?? '');
                 $lines = explode("\n", $existingConstants);
 
-                // Retirer tout ancien bloc commune
+                // Retirer tout ancien bloc commune ou lignes commune.*
                 $newLines = [];
                 $inCommuneBlock = false;
                 foreach ($lines as $line) {
                     $trimmed = trim($line);
-                    if ($trimmed === 'commune {') {
+                    if ($trimmed === 'commune {' || $trimmed === 'commune{') {
                         $inCommuneBlock = true;
                         continue;
                     }
@@ -525,16 +579,19 @@ class SiteManagementService
                     $newLines[] = $line;
                 }
 
-                $updatedConstants = implode("\n", $newLines) . "\n\n" . $generatedBlock;
+                $cleaned = rtrim(implode("\n", $newLines));
+                $updatedConstants = ($cleaned !== '' ? $cleaned . "\n\n" : '') . $generatedBlock;
 
                 $connection->update(
                     'sys_template',
-                    ['constants' => $updatedConstants],
+                    [
+                        'constants' => $updatedConstants,
+                        'tstamp' => $now,
+                    ],
                     ['uid' => (int)$row['uid']]
                 );
             } elseif ($rootPageId > 0) {
-                // Créer un enregistrement sys_template si aucun n'existe sur la racine
-                $now = time();
+                // Créer un enregistrement sys_template sur la racine
                 $connection->insert('sys_template', [
                     'pid' => $rootPageId,
                     'title' => 'Configuration Commune RGAA',

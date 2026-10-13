@@ -2,7 +2,7 @@
       data-namespace-typo3-fluid="true">
 
 <!-- Panneau de sélection du Thème et des Couleurs en direct (Live Preview Frontend) -->
-<aside id="commune-admin-switcher" class="commune-admin-switcher" role="region" aria-label="Testeur de Thèmes et Couleurs en direct">
+<aside id="commune-admin-switcher" class="commune-admin-switcher" role="region" aria-label="Testeur de Thèmes et Couleurs en direct" data-server-theme="{activeTheme}" data-server-color="{activeColorScheme}">
     <!-- Bouton Toggle / Badge -->
     <button type="button" id="admin-switcher-toggle" class="admin-switcher-toggle" aria-expanded="false" aria-controls="admin-switcher-panel" title="Ouvrir le testeur de thèmes et couleurs en direct">
         <span class="admin-switcher-icon" aria-hidden="true">🎨</span>
@@ -22,8 +22,8 @@
             <div class="admin-switcher-field">
                 <label for="admin-theme-select" class="admin-switcher-field-label">Style de Thème :</label>
                 <select id="admin-theme-select" class="form-select form-select-sm" aria-label="Style de Thème">
-                    <option value="{f:uri.resource(path: 'Css/commune-theme-1.css')}" data-key="commune-theme-1.css">Thème 1 (Classique : Arrondis, Ombres & Dégradés)</option>
-                    <option value="{f:uri.resource(path: 'Css/commune-theme-2.css')}" data-key="commune-theme-2.css">Thème 2 (Moderne : Angles Droits, Lignes Nettes & Blocs)</option>
+                    <option value="{f:uri.resource(extensionName: 'SiteCommuneRgaa', path: 'Css/commune-theme-1.css')}" data-key="commune-theme-1.css">Thème 1 (Classique : Arrondis, Ombres & Dégradés)</option>
+                    <option value="{f:uri.resource(extensionName: 'SiteCommuneRgaa', path: 'Css/commune-theme-2.css')}" data-key="commune-theme-2.css">Thème 2 (Moderne : Angles Droits, Lignes Nettes & Blocs)</option>
                     <option value="none" data-key="none">Bootstrap Package Standard (Sans surcouche)</option>
                 </select>
             </div>
@@ -32,9 +32,9 @@
             <div class="admin-switcher-field">
                 <label for="admin-color-select" class="admin-switcher-field-label">Jeu de Couleurs :</label>
                 <select id="admin-color-select" class="form-select form-select-sm" aria-label="Jeu de Couleurs">
-                    <option value="{f:uri.resource(path: 'Css/commune-couleurs-1.css')}" data-key="commune-couleurs-1.css">Jeu 1 (Vert Institutionnel & Or)</option>
-                    <option value="{f:uri.resource(path: 'Css/commune-couleurs-2.css')}" data-key="commune-couleurs-2.css">Jeu 2 (Bleu Océan & Sable)</option>
-                    <option value="{f:uri.resource(path: 'Css/commune-couleurs-3.css')}" data-key="commune-couleurs-3.css">Jeu 3 (Ardoise Montagne & Terracotta)</option>
+                    <option value="{f:uri.resource(extensionName: 'SiteCommuneRgaa', path: 'Css/commune-couleurs-1.css')}" data-key="commune-couleurs-1.css">Jeu 1 (Vert Institutionnel & Or)</option>
+                    <option value="{f:uri.resource(extensionName: 'SiteCommuneRgaa', path: 'Css/commune-couleurs-2.css')}" data-key="commune-couleurs-2.css">Jeu 2 (Bleu Océan & Sable)</option>
+                    <option value="{f:uri.resource(extensionName: 'SiteCommuneRgaa', path: 'Css/commune-couleurs-3.css')}" data-key="commune-couleurs-3.css">Jeu 3 (Ardoise Montagne & Terracotta)</option>
                 </select>
             </div>
 
@@ -59,8 +59,23 @@
         var colorSelect = document.getElementById('admin-color-select');
         var resetBtn = document.getElementById('admin-switcher-reset');
         var indicator = document.getElementById('admin-switcher-indicator');
+        var switcherEl = document.getElementById('commune-admin-switcher');
 
         if (!toggleBtn || !panel || !themeSelect || !colorSelect) return;
+
+        // Synchronisation automatique avec la configuration serveur :
+        // Si les réglages serveur ont changé dans le back-office, on purge le stockage temporaire local
+        var serverTheme = switcherEl ? (switcherEl.getAttribute('data-server-theme') || '') : '';
+        var serverColor = switcherEl ? (switcherEl.getAttribute('data-server-color') || '') : '';
+        var lastServerTheme = localStorage.getItem('commune_last_server_theme');
+        var lastServerColor = localStorage.getItem('commune_last_server_color');
+
+        if (lastServerTheme !== null && (lastServerTheme !== serverTheme || lastServerColor !== serverColor)) {
+            localStorage.removeItem('commune_theme');
+            localStorage.removeItem('commune_color');
+        }
+        localStorage.setItem('commune_last_server_theme', serverTheme);
+        localStorage.setItem('commune_last_server_color', serverColor);
 
         function findOrCreateLink(id, pattern) {
             var el = document.getElementById(id);
@@ -214,6 +229,8 @@
             resetBtn.addEventListener('click', function() {
                 localStorage.removeItem('commune_theme');
                 localStorage.removeItem('commune_color');
+                localStorage.removeItem('commune_last_server_theme');
+                localStorage.removeItem('commune_last_server_color');
                 window.location.reload();
             });
         }

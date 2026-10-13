@@ -38,7 +38,7 @@ commune {
   # ============================================================================
   # 1. APPARENCE & THÈMES
   # ============================================================================
-  # cat=commune_root/commune_theme/010; type=options[Thème 1 - Style classique avec arrondis et ombres=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css, Bootstrap Package standard (Sans surcouche)=]; label=Thème graphique du site : Sélectionnez le style graphique (ex: Thème 1). Choisissez vide pour Bootstrap Package standard.
+  # cat=commune_root/commune_theme/010; type=options[Thème 1 - Style classique avec arrondis et ombres=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css, Thème 2 - Moderne : Angles Droits Lignes Nettes & Blocs=EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-2.css, Bootstrap Package standard (Sans surcouche)=none]; label=Thème graphique du site : Sélectionnez le style graphique (Thème 1 classique, Thème 2 moderne, ou Bootstrap Package standard).
   theme_css = EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css
 
   # cat=commune_root/commune_theme/020; type=options[Couleur 1 : Vert Institutionnel & Or=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css, Couleur 2 : Bleu Océan & Sable=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-2.css, Couleur 3 : Ardoise Montagne & Terracotta=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-3.css]; label=Jeu de couleurs institutionnel : Sélectionnez la palette de couleurs à appliquer.
