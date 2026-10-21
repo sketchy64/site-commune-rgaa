@@ -7,17 +7,22 @@ namespace Commune\SiteCommuneRgaa\Service;
 use Symfony\Component\Yaml\Yaml;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Configuration\SiteConfiguration;
+use TYPO3\CMS\Core\Configuration\SiteWriter;
+use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Service métier de gestion des sites et des paramètres de communes.
+ * Service métier de gestion des sites et des paramètres de communes (compatible TYPO3 v12, v13 et v14).
  */
 class SiteManagementService
 {
     private const SETTINGS_DEFINITIONS_PATH = 'EXT:site_commune_rgaa/Configuration/Sets/SiteCommuneRgaa/settings.definitions.yaml';
+
+    private const DEFAULT_STATIC_INCLUDES = 'EXT:fluid_styled_content/Configuration/TypoScript,EXT:fluid_styled_content/Configuration/TypoScript/Styling,EXT:form/Configuration/TypoScript,EXT:bootstrap_package/Configuration/TypoScript,EXT:site_commune_rgaa/Configuration/TypoScript';
 
     public function __construct(
         private readonly SiteFinder $siteFinder,
@@ -90,10 +95,10 @@ class SiteManagementService
         $templateTstamp = $templateData['tstamp'];
 
         // 2. Lecture de la configuration du site (YAML settings.yaml) avec son timestamp
-        $settingsFilePath = GeneralUtility::getFileAbsFileName('config/sites/' . $identifier . '/settings.yaml');
+        $settingsFilePath = $this->resolveSiteSettingsFilePath($identifier);
         $siteSettings = [];
         $yamlMtime = 0;
-        if (file_exists($settingsFilePath)) {
+        if ($settingsFilePath !== '' && file_exists($settingsFilePath)) {
             $yamlMtime = (int)filemtime($settingsFilePath);
             try {
                 $parsedYamlSettings = Yaml::parseFile($settingsFilePath);
@@ -213,7 +218,7 @@ class SiteManagementService
                 $cleanSettings[$key] = $cleanVal;
             }
 
-            // 1. Sauvegarde propre dans config/sites/<identifier>/settings.yaml (Standard TYPO3 v13 Site Sets)
+            // 1. Sauvegarde propre dans config/sites/<identifier>/settings.yaml (Standard TYPO3 v13/v14 Site Sets & v12)
             $nestedSettings = [];
             foreach ($cleanSettings as $key => $cleanVal) {
                 if (str_contains($key, '.')) {
@@ -227,22 +232,35 @@ class SiteManagementService
                 }
             }
 
-            $siteDir = GeneralUtility::getFileAbsFileName('config/sites/' . $identifier . '/');
+            $siteDir = $this->getSiteConfigDirectory($identifier);
             if (!is_dir($siteDir)) {
                 GeneralUtility::mkdir_deep($siteDir);
             }
-            $settingsFile = $siteDir . 'settings.yaml';
-            $yamlContent = Yaml::dump($nestedSettings, 99, 2);
-            GeneralUtility::writeFile($settingsFile, $yamlContent);
+
+            $wroteViaSiteWriter = false;
+            if (class_exists(SiteWriter::class)) {
+                try {
+                    $siteWriter = GeneralUtility::makeInstance(SiteWriter::class);
+                    if (method_exists($siteWriter, 'writeSettings')) {
+                        $siteWriter->writeSettings($identifier, $nestedSettings);
+                        $wroteViaSiteWriter = true;
+                    }
+                } catch (\Throwable) {
+                }
+            }
+
+            if (!$wroteViaSiteWriter) {
+                $settingsFile = $siteDir . 'settings.yaml';
+                $yamlContent = Yaml::dump($nestedSettings, 99, 2);
+                GeneralUtility::writeFile($settingsFile, $yamlContent);
+            }
 
             // 2. Nettoyage de config.yaml si un bloc settings obsolète s'y trouvait
             try {
                 $siteConfig = $this->siteConfiguration->load($identifier);
                 if (isset($siteConfig['settings'])) {
                     unset($siteConfig['settings']);
-                    if (method_exists($this->siteConfiguration, 'write')) {
-                        $this->siteConfiguration->write($identifier, $siteConfig);
-                    }
+                    $this->writeSiteConfigurationData($identifier, $siteConfig);
                 }
             } catch (\Throwable) {
             }
@@ -250,7 +268,7 @@ class SiteManagementService
             // 3. Mise à jour synchrone de sys_template (BDD) pour le site
             $site = $this->getSiteByIdentifier($identifier);
             $rootPageId = $site ? $site->getRootPageId() : 0;
-            $this->saveSysTemplateConstants($rootPageId, $cleanSettings);
+            $this->saveSysTemplateConstants($rootPageId, $cleanSettings, $site);
 
             // 4. Vidage complet des caches pour prise en compte immédiate en Frontend
             $this->flushAllSiteCaches();
@@ -262,39 +280,69 @@ class SiteManagementService
     }
 
     /**
-     * Écrit la configuration du site de façon robuste et compatible avec toutes les versions TYPO3 Core.
+     * Écrit la configuration du site de façon robuste et compatible avec toutes les versions TYPO3 Core (v12, v13, v14).
      */
     private function writeSiteConfigurationData(string $identifier, array $siteConfig): void
     {
-        if (method_exists($this->siteConfiguration, 'write')) {
+        $wroteConfig = false;
+
+        if (class_exists(SiteWriter::class)) {
+            try {
+                $siteWriter = GeneralUtility::makeInstance(SiteWriter::class);
+                if (method_exists($siteWriter, 'write')) {
+                    $siteWriter->write($identifier, $siteConfig);
+                    $wroteConfig = true;
+                }
+            } catch (\Throwable) {
+            }
+        }
+
+        if (!$wroteConfig && method_exists($this->siteConfiguration, 'write')) {
             try {
                 $this->siteConfiguration->write($identifier, $siteConfig);
-            } catch (\Throwable) {
-            }
-        } elseif (method_exists($this->siteConfiguration, 'writeSiteConfiguration')) {
-            try {
-                $this->siteConfiguration->writeSiteConfiguration($identifier, $siteConfig);
+                $wroteConfig = true;
             } catch (\Throwable) {
             }
         }
 
-        // Sauvegarde directe YAML dans config/sites/<identifier>/
-        $siteDir = GeneralUtility::getFileAbsFileName('config/sites/' . $identifier . '/');
-        if (!is_dir($siteDir)) {
-            GeneralUtility::mkdir_deep($siteDir);
-        }
+        if (!$wroteConfig) {
+            $siteDir = $this->getSiteConfigDirectory($identifier);
+            if (!is_dir($siteDir)) {
+                GeneralUtility::mkdir_deep($siteDir);
+            }
 
-        $configFile = $siteDir . 'config.yaml';
-        $yamlContent = Yaml::dump($siteConfig, 99, 2);
-        GeneralUtility::writeFile($configFile, $yamlContent);
-
-        if (isset($siteConfig['settings']) && is_array($siteConfig['settings'])) {
-            $settingsFile = $siteDir . 'settings.yaml';
-            $settingsContent = Yaml::dump($siteConfig['settings'], 99, 2);
-            GeneralUtility::writeFile($settingsFile, $settingsContent);
+            $configFile = $siteDir . 'config.yaml';
+            $yamlContent = Yaml::dump($siteConfig, 99, 2);
+            GeneralUtility::writeFile($configFile, $yamlContent);
         }
 
         $this->flushAllSiteCaches();
+    }
+
+    /**
+     * Retourne le chemin absolu du dossier config/sites/<identifier>/ (compatible Composer et Classic).
+     */
+    private function getSiteConfigDirectory(string $identifier): string
+    {
+        return rtrim(Environment::getConfigPath(), '/') . '/sites/' . $identifier . '/';
+    }
+
+    /**
+     * Résout le chemin du fichier settings.yaml d'un site avec repli de compatibilité.
+     */
+    private function resolveSiteSettingsFilePath(string $identifier): string
+    {
+        $primary = $this->getSiteConfigDirectory($identifier) . 'settings.yaml';
+        if (file_exists($primary)) {
+            return $primary;
+        }
+
+        $legacyPublicFile = GeneralUtility::getFileAbsFileName('config/sites/' . $identifier . '/settings.yaml');
+        if ($legacyPublicFile !== '' && file_exists($legacyPublicFile)) {
+            return $legacyPublicFile;
+        }
+
+        return $primary;
     }
 
     /**
@@ -346,8 +394,9 @@ class SiteManagementService
         $siteConfig = [
             'rootPageId' => $rootPageId,
             'base' => $domain,
+            'websiteTitle' => $name,
             'title' => $name,
-            'sets' => [
+            'dependencies' => [
                 'commune/site-commune-rgaa',
             ],
             'languages' => [
@@ -365,13 +414,8 @@ class SiteManagementService
             ],
         ];
 
-        // Écriture de config.yaml
-        $siteDir = GeneralUtility::getFileAbsFileName('config/sites/' . $identifier . '/');
-        if (!is_dir($siteDir)) {
-            GeneralUtility::mkdir_deep($siteDir);
-        }
-        $configFile = $siteDir . 'config.yaml';
-        GeneralUtility::writeFile($configFile, Yaml::dump($siteConfig, 99, 2));
+        // Écriture de config.yaml via SiteWriter (v13/v14) ou SiteConfiguration (v12)
+        $this->writeSiteConfigurationData($identifier, $siteConfig);
 
         // Initialisation synchrone de settings.yaml et des constantes sys_template
         $initialSettings = [
@@ -405,7 +449,7 @@ class SiteManagementService
                 $rows = $queryBuilder
                     ->select('uid', 'pid', 'tstamp', 'constants')
                     ->from('sys_template')
-                    ->where($expr->eq('pid', $queryBuilder->createNamedParameter($rootPageId, \PDO::PARAM_INT)))
+                    ->where($expr->eq('pid', $queryBuilder->createNamedParameter($rootPageId, Connection::PARAM_INT)))
                     ->orderBy('root', 'DESC')
                     ->addOrderBy('sorting', 'ASC')
                     ->executeQuery()
@@ -506,8 +550,9 @@ class SiteManagementService
 
     /**
      * Met à jour ou crée le bloc de constantes commune.* dans le sys_template de la page racine.
+     * Préserve l'arbre TypoScript des Site Sets en TYPO3 v13/v14 et inclut les statiques requis en TYPO3 v12.
      */
-    private function saveSysTemplateConstants(int $rootPageId, array $settings): void
+    private function saveSysTemplateConstants(int $rootPageId, array $settings, ?Site $site = null): void
     {
         try {
             $connection = $this->connectionPool->getConnectionForTable('sys_template');
@@ -516,9 +561,9 @@ class SiteManagementService
             $row = null;
             if ($rootPageId > 0) {
                 $row = $queryBuilder
-                    ->select('uid', 'pid', 'constants')
+                    ->select('uid', 'pid', 'root', 'clear', 'constants', 'config', 'include_static_file')
                     ->from('sys_template')
-                    ->where($queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($rootPageId, \PDO::PARAM_INT)))
+                    ->where($queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($rootPageId, Connection::PARAM_INT)))
                     ->orderBy('root', 'DESC')
                     ->addOrderBy('sorting', 'ASC')
                     ->setMaxResults(1)
@@ -529,7 +574,7 @@ class SiteManagementService
             if (!$row) {
                 $qbRoot = $connection->createQueryBuilder();
                 $row = $qbRoot
-                    ->select('uid', 'pid', 'constants')
+                    ->select('uid', 'pid', 'root', 'clear', 'constants', 'config', 'include_static_file')
                     ->from('sys_template')
                     ->where($qbRoot->expr()->eq('root', 1))
                     ->orderBy('sorting', 'ASC')
@@ -537,6 +582,9 @@ class SiteManagementService
                     ->executeQuery()
                     ->fetchAssociative();
             }
+
+            // Détermine si le site utilise les Site Sets (TYPO3 v13 / v14)
+            $siteIsTypoScriptRoot = ($site !== null && method_exists($site, 'isTypoScriptRoot') && $site->isTypoScriptRoot());
 
             // Construction du bloc de constantes propre (Format TypoScript plat standard reconnu par l'éditeur de constantes)
             $constantLines = [];
@@ -582,25 +630,53 @@ class SiteManagementService
                 $cleaned = rtrim(implode("\n", $newLines));
                 $updatedConstants = ($cleaned !== '' ? $cleaned . "\n\n" : '') . $generatedBlock;
 
+                $updateFields = [
+                    'constants' => $updatedConstants,
+                    'tstamp' => $now,
+                ];
+
+                // Auto-réparation si un sys_template vide avec clear=3 écrasait le Site Set (v13/v14) ou manquait d'include_static_file (v12)
+                $hasNoSetupAndNoStatic = empty(trim((string)($row['config'] ?? ''))) && empty(trim((string)($row['include_static_file'] ?? '')));
+                if ($hasNoSetupAndNoStatic && ((int)($row['clear'] ?? 0) & 2)) {
+                    if ($siteIsTypoScriptRoot) {
+                        $updateFields['root'] = 0;
+                        $updateFields['clear'] = 0;
+                    } else {
+                        $updateFields['include_static_file'] = self::DEFAULT_STATIC_INCLUDES;
+                    }
+                }
+
                 $connection->update(
                     'sys_template',
-                    [
-                        'constants' => $updatedConstants,
-                        'tstamp' => $now,
-                    ],
+                    $updateFields,
                     ['uid' => (int)$row['uid']]
                 );
             } elseif ($rootPageId > 0) {
-                // Créer un enregistrement sys_template sur la racine
-                $connection->insert('sys_template', [
-                    'pid' => $rootPageId,
-                    'title' => 'Configuration Commune RGAA',
-                    'root' => 1,
-                    'clear' => 3,
-                    'constants' => $generatedBlock,
-                    'crdate' => $now,
-                    'tstamp' => $now,
-                ]);
+                // Créer un enregistrement sys_template adapté à la version TYPO3 / mode du site
+                if ($siteIsTypoScriptRoot) {
+                    // En TYPO3 v13/v14 avec Site Set : ne pas vider le Setup (clear = 0, root = 0)
+                    $connection->insert('sys_template', [
+                        'pid' => $rootPageId,
+                        'title' => 'Configuration Commune RGAA',
+                        'root' => 0,
+                        'clear' => 0,
+                        'constants' => $generatedBlock,
+                        'crdate' => $now,
+                        'tstamp' => $now,
+                    ]);
+                } else {
+                    // En TYPO3 v12 (ou sans Site Set) : template racine complet avec inclusion des statiques
+                    $connection->insert('sys_template', [
+                        'pid' => $rootPageId,
+                        'title' => 'Configuration Commune RGAA',
+                        'root' => 1,
+                        'clear' => 3,
+                        'include_static_file' => self::DEFAULT_STATIC_INCLUDES,
+                        'constants' => $generatedBlock,
+                        'crdate' => $now,
+                        'tstamp' => $now,
+                    ]);
+                }
             }
         } catch (\Throwable) {
         }

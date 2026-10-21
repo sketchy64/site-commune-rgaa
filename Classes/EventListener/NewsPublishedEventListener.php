@@ -6,8 +6,6 @@ namespace Commune\SiteCommuneRgaa\EventListener;
 
 use Commune\SiteCommuneRgaa\Service\WebPushService;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\DataHandling\Event\AfterDatabaseOperationsEvent;
-use TYPO3\CMS\Core\DataHandling\Event\AfterRecordPublicationEvent;
 use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -30,7 +28,7 @@ class NewsPublishedEventListener
             return;
         }
 
-        // 1. Support de l'évènement natif EXT:news (GeorgRinger\News\Event\NewsPostPersistEvent)
+        // Support de l'évènement natif EXT:news (GeorgRinger\News\Event\NewsPostPersistEvent)
         if (get_class($event) === 'GeorgRinger\News\Event\NewsPostPersistEvent') {
             /** @var mixed $event */
             $news = method_exists($event, 'getNews') ? $event->getNews() : null;
@@ -61,7 +59,7 @@ class NewsPublishedEventListener
                 $detailUrl = $this->buildNewsDetailUrl([
                     'uid' => $uid,
                     'detail_page' => $detailPage,
-                    'pid' => $pid
+                    'pid' => $pid,
                 ]);
 
                 if ($uid > 0) {
@@ -73,85 +71,6 @@ class NewsPublishedEventListener
                     $teaser,
                     $detailUrl
                 );
-            }
-            return;
-        }
-
-        // 2. Support via DataHandler Events TYPO3 v13/v14 (AfterDatabaseOperationsEvent / AfterRecordPublicationEvent)
-        if ($event instanceof AfterDatabaseOperationsEvent || $event instanceof AfterRecordPublicationEvent) {
-            /** @var mixed $event */
-            $table = method_exists($event, 'getTable') ? $event->getTable() : '';
-            if ($table === 'tx_news_domain_model_news') {
-                $rawId = method_exists($event, 'getRecordId') ? $event->getRecordId() : 0;
-                $recordId = is_numeric($rawId) ? (int)$rawId : 0;
-
-                // Si le recordId est un placeholder 'NEW66c...', résolution de l'UID réel créé par DataHandler
-                if ($recordId <= 0 && method_exists($event, 'getDataHandler')) {
-                    $dh = $event->getDataHandler();
-                    if ($dh && isset($dh->substNEWwithIDs[$rawId])) {
-                        $recordId = (int)$dh->substNEWwithIDs[$rawId];
-                    }
-                }
-
-                // Secours universel si l'ID est toujours nul (ex: NEW...) : Récupérer le dernier UID inséré
-                if ($recordId <= 0) {
-                    $connTemp = $this->connectionPool->getConnectionForTable('tx_news_domain_model_news');
-                    $latestUid = (int)$connTemp->executeQuery('SELECT uid FROM tx_news_domain_model_news ORDER BY uid DESC LIMIT 1')->fetchOne();
-                    if ($latestUid > 0) {
-                        $recordId = $latestUid;
-                    }
-                }
-
-                if ($recordId <= 0 || isset(self::$processedUids[$recordId])) {
-                    return;
-                }
-
-                $fieldArray = method_exists($event, 'getFieldArray') ? (array)$event->getFieldArray() : [];
-
-                // Récupération de l'enregistrement complet en base de données
-                $connection = $this->connectionPool->getConnectionForTable('tx_news_domain_model_news');
-                $fullRecord = $connection->select(
-                    ['*'],
-                    'tx_news_domain_model_news',
-                    ['uid' => $recordId]
-                )->fetchAssociative();
-
-                if (!$fullRecord) {
-                    return;
-                }
-
-                // Fusion des modifications récentes avec l'enregistrement complet
-                $record = array_merge($fullRecord, $fieldArray);
-
-                $hidden = (int)($record['hidden'] ?? 0);
-                $deleted = (int)($record['deleted'] ?? 0);
-                $starttime = (int)($record['starttime'] ?? 0);
-                $endtime = (int)($record['endtime'] ?? 0);
-                $now = time();
-
-                // Vérification de la publication effective (visible, non supprimée, dates valides avec tolérance 60s)
-                if ($hidden === 0 && $deleted === 0 && ($starttime === 0 || $starttime <= ($now + 60)) && ($endtime === 0 || $endtime > $now)) {
-                    self::$processedUids[$recordId] = true;
-
-                    $title = trim((string)($record['title'] ?? 'Nouvelle actualité'));
-                    $teaser = trim((string)($record['teaser'] ?? ''));
-
-                    if (empty($teaser) && !empty($record['bodytext'])) {
-                        $teaser = strip_tags((string)$record['bodytext']);
-                    }
-                    $teaser = mb_substr(trim($teaser), 0, 140);
-                    if (empty($teaser)) {
-                        $teaser = 'Une nouvelle actualité a été publiée sur le site de la Mairie.';
-                    }
-
-                    $detailUrl = $this->buildNewsDetailUrl($record);
-
-                    $this->webPushService->notifyAllSubscribers(
-                        'Mairie : ' . $title,
-                        $teaser,
-                        $detailUrl
-                    );
-                }
             }
         }
     }
@@ -178,7 +97,7 @@ class NewsPublishedEventListener
             if ($targetPageUid > 0) {
                 try {
                     $site = $siteFinder->getSiteByPageId($targetPageUid);
-                } catch (\Throwable $e) {
+                } catch (\Throwable) {
                     // Fallback sur le site racine si la page n'est pas résolue directement
                 }
             }
@@ -191,8 +110,8 @@ class NewsPublishedEventListener
                 'tx_news_pi1' => [
                     'controller' => 'News',
                     'action' => 'detail',
-                    'news' => $recordId
-                ]
+                    'news' => $recordId,
+                ],
             ];
 
             $uri = $router->generateUri($targetPageUid, $queryParams);
@@ -216,8 +135,7 @@ class NewsPublishedEventListener
             return (int)$record['detail_page'];
         }
 
-        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
-        $connPages = $connectionPool->getConnectionForTable('pages');
+        $connPages = $this->connectionPool->getConnectionForTable('pages');
 
         // Rechercher dans l'arborescence une page Frontend valide (doktype = 1) avec slug contenant 'actualit'
         $queryBuilder = $connPages->createQueryBuilder();

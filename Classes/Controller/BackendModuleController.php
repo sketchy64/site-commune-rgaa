@@ -9,7 +9,6 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -19,7 +18,8 @@ class BackendModuleController extends ActionController
 {
     public function __construct(
         private readonly SiteManagementService $siteManagementService,
-        private readonly ModuleTemplateFactory $moduleTemplateFactory
+        private readonly ModuleTemplateFactory $moduleTemplateFactory,
+        private readonly PageRenderer $pageRenderer
     ) {
     }
 
@@ -28,6 +28,13 @@ class BackendModuleController extends ActionController
      */
     public function indexAction(string $siteIdentifier = ''): ResponseInterface
     {
+        if ($siteIdentifier === '') {
+            $queryParams = $this->request->getQueryParams();
+            if (!empty($queryParams['siteIdentifier']) && is_string($queryParams['siteIdentifier'])) {
+                $siteIdentifier = $queryParams['siteIdentifier'];
+            }
+        }
+
         $sites = $this->siteManagementService->getAllSites();
 
         if (empty($siteIdentifier) && !empty($sites)) {
@@ -39,10 +46,9 @@ class BackendModuleController extends ActionController
         $definitions = $this->siteManagementService->getSettingsDefinitions();
         $currentSettings = !empty($siteIdentifier) ? $this->siteManagementService->getSiteSettings($siteIdentifier) : [];
 
-        // Ajout propre des fichiers CSS et JS backend via le PageRenderer Core TYPO3 (Compatibilité CSP)
-        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->addCssFile('EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css');
-        $pageRenderer->addJsFile('EXT:site_commune_rgaa/Resources/Public/JavaScript/backend-module.js');
+        // Ajout propre des fichiers CSS et JS backend via le PageRenderer Core TYPO3 (Compatibilité CSP v12/v13/v14)
+        $this->pageRenderer->addCssFile('EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css');
+        $this->pageRenderer->addJsFile('EXT:site_commune_rgaa/Resources/Public/JavaScript/backend-module.js');
 
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $moduleTemplate->setTitle('Collectivités RGAA', 'Administration & Multi-Sites');
@@ -101,9 +107,8 @@ class BackendModuleController extends ActionController
     {
         $definitions = $this->siteManagementService->getSettingsDefinitions();
 
-        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->addCssFile('EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css');
-        $pageRenderer->addJsFile('EXT:site_commune_rgaa/Resources/Public/JavaScript/backend-module.js');
+        $this->pageRenderer->addCssFile('EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css');
+        $this->pageRenderer->addJsFile('EXT:site_commune_rgaa/Resources/Public/JavaScript/backend-module.js');
 
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $moduleTemplate->setTitle('Assistant de Déploiement', 'Nouveau site commune');

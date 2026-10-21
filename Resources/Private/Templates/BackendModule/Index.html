@@ -1,7 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
-<f:be.pageRenderer includeCssFiles="{0: 'EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css'}" includeJsFiles="{0: 'EXT:site_commune_rgaa/Resources/Public/JavaScript/backend-module.js'}" />
-
 <div class="rgaa-backend-wrapper p-4">
 
     <!-- En-tête Général du Module -->
@@ -33,10 +31,10 @@
         <div class="rgaa-site-bar">
             <f:form action="index" method="get" class="rgaa-site-select-group">
                 <label for="siteSelect">Commune active à paramétrer :</label>
-                <select id="siteSelect" name="tx_sitecommunergaa_site_sitecommunergaa_sitecommunergaaadmin[siteIdentifier]" class="rgaa-select" onchange="this.form.submit()">
+                <select id="siteSelect" name="siteIdentifier" class="rgaa-select" onchange="this.form.submit()">
                     <f:for each="{sites}" as="site">
                         <option value="{site.identifier}" {f:if(condition: '{site.identifier} == {selectedSiteIdentifier}', then: 'selected')}>
-                            🏛️ {site.title} ({site.identifier})
+                            🏛️ {f:if(condition: site.configuration.websiteTitle, then: site.configuration.websiteTitle, else: '{f:if(condition: site.configuration.title, then: site.configuration.title, else: site.identifier)}')} ({site.identifier})
                         </option>
                     </f:for>
                 </select>

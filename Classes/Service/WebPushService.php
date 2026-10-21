@@ -6,10 +6,13 @@ namespace Commune\SiteCommuneRgaa\Service;
 
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\WebPush;
+use Symfony\Component\Yaml\Yaml;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 
 class WebPushService
 {
@@ -55,7 +58,7 @@ class WebPushService
                             if ($val !== null && $val !== '') {
                                 return $val;
                             }
-                        } catch (\Throwable $e) {
+                        } catch (\Throwable) {
                         }
                     }
                     if (method_exists($settings, 'getAll')) {
@@ -92,7 +95,36 @@ class WebPushService
                     }
                 }
             }
-        } catch (\Throwable $e) {
+
+            // Repli de lecture directe dans settings.yaml (pour TYPO3 v12 ou cache non initialisé)
+            if ($site && method_exists($site, 'getIdentifier')) {
+                $settingsFile = rtrim(Environment::getConfigPath(), '/') . '/sites/' . $site->getIdentifier() . '/settings.yaml';
+                if (!file_exists($settingsFile)) {
+                    $settingsFile = GeneralUtility::getFileAbsFileName('config/sites/' . $site->getIdentifier() . '/settings.yaml');
+                }
+                if ($settingsFile !== '' && file_exists($settingsFile)) {
+                    $parsed = Yaml::parseFile($settingsFile);
+                    if (is_array($parsed)) {
+                        if (array_key_exists($key, $parsed) && $parsed[$key] !== null) {
+                            return $parsed[$key];
+                        }
+                        $parts = explode('.', $key);
+                        $curr = $parsed;
+                        foreach ($parts as $part) {
+                            if (is_array($curr) && array_key_exists($part, $curr)) {
+                                $curr = $curr[$part];
+                            } else {
+                                $curr = null;
+                                break;
+                            }
+                        }
+                        if ($curr !== null) {
+                            return $curr;
+                        }
+                    }
+                }
+            }
+        } catch (\Throwable) {
         }
         return null;
     }
@@ -142,13 +174,25 @@ class WebPushService
     /**
      * Envoie une notification push à tous les abonnés enregistrés
      */
-    public function notifyAllSubscribers(string $title, string $body, string $url = '/', string $icon = '/_assets/site_commune_rgaa/Icons/pwa-192x192.png'): int
+    public function notifyAllSubscribers(string $title, string $body, string $url = '/', string $icon = 'EXT:site_commune_rgaa/Resources/Public/Icons/pwa-192x192.png'): int
     {
         $logger = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Log\LogManager::class)->getLogger(__CLASS__);
 
         if (!$this->isPushEnabled()) {
             $logger->info('Envoi Push ignoré : commune.pwa_push_enable est désactivé');
             return 0;
+        }
+
+        if (str_starts_with($icon, 'EXT:')) {
+            $absIconPath = GeneralUtility::getFileAbsFileName($icon);
+            if ($absIconPath !== '' && file_exists($absIconPath)) {
+                $webIconPath = PathUtility::getAbsoluteWebPath($absIconPath);
+                $icon = (!str_starts_with($webIconPath, '/') && !str_starts_with($webIconPath, 'http'))
+                    ? '/' . $webIconPath
+                    : $webIconPath;
+            } else {
+                $icon = '/_assets/site_commune_rgaa/Icons/pwa-192x192.png';
+            }
         }
 
         $connection = $this->connectionPool->getConnectionForTable('tx_sitecommunergaa_push_subscription');
@@ -170,7 +214,7 @@ class WebPushService
             'body' => $body,
             'url' => $url,
             'icon' => $icon,
-            'timestamp' => time()
+            'timestamp' => time(),
         ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
         $sentCount = 0;
@@ -188,7 +232,7 @@ class WebPushService
             $defaultOptions = [
                 'TTL' => 86400,
                 'urgency' => 'high',
-                'topic' => 'news'
+                'topic' => 'news',
             ];
 
             try {
@@ -210,7 +254,7 @@ class WebPushService
                         'keys' => [
                             'p256dh' => $p256dh,
                             'auth' => $authToken,
-                        ]
+                        ],
                     ]);
 
                     $report = $webPush->sendOneNotification($subscription, $payload, ['urgency' => 'high']);
@@ -221,7 +265,7 @@ class WebPushService
                         $logger->warning('Échec envoi push abonné', [
                             'uid' => $sub['uid'],
                             'reason' => method_exists($report, 'getReason') ? $report->getReason() : 'Inconnue',
-                            'is_expired' => $report->isSubscriptionExpired()
+                            'is_expired' => $report->isSubscriptionExpired(),
                         ]);
 
                         // Masquer uniquement si l'abonnement est explicitement expiré ou révoqué (404/410)
@@ -285,12 +329,12 @@ class WebPushService
                 'headers' => $headers,
                 'body' => $payload,
                 'timeout' => 5.0,
-                'http_errors' => false
+                'http_errors' => false,
             ];
 
             $response = $this->requestFactory->request($endpoint, 'POST', $options);
             return $response->getStatusCode();
-        } catch (\Throwable $e) {
+        } catch (\Throwable) {
             return 500;
         }
     }
@@ -304,7 +348,7 @@ class WebPushService
         $claims = [
             'aud' => $origin,
             'exp' => time() + 43200, // 12h
-            'sub' => $this->getVapidSubject()
+            'sub' => $this->getVapidSubject(),
         ];
 
         $encodedHeader = $this->base64UrlEncode(json_encode($header));
@@ -330,7 +374,7 @@ class WebPushService
             if ($key && openssl_sign($data, $rawSig, $key, OPENSSL_ALGO_SHA256)) {
                 return $this->base64UrlEncode($this->convertDerToRsa($rawSig));
             }
-        } catch (\Throwable $e) {
+        } catch (\Throwable) {
         }
         return '';
     }

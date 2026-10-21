@@ -1,4 +1,7 @@
 name: commune/site-commune-rgaa
-label: 'Site Commune RGAA'
-optionalDependencies:
+label: 'Site Commune RGAA 4.1 — Kit collectivités territoriales'
+dependencies:
   - bootstrap-package/full
+  - typo3/fluid-styled-content
+  - typo3/fluid-styled-content-css
+  - typo3/form
