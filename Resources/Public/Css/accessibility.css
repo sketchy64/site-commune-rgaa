@@ -1003,3 +1003,9 @@ body.a11y-high-contrast .commune-carousel-slide .commune-carousel-action-btn {
   color: #ffff00 !important;
   border-bottom: 2px solid #ffff00 !important;
 }
+
+body.a11y-high-contrast .commune-page-hero {
+  background: #000000 !important;
+  border-bottom: 2px solid #ffffff !important;
+}
+

@@ -1,26 +1,133 @@
 mod.web_layout.BackendLayouts {
   commune_default {
     title = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.default
-    icon = EXT:site_commune_rgaa/Resources/Public/Icons/Extension.svg
+    icon = EXT:site_commune_rgaa/Resources/Public/Icons/BackendLayouts/commune_default.svg
     config {
       backend_layout {
-        colCount = 1
-        rowCount = 2
+        colCount = 2
+        rowCount = 12
         rows {
           1 {
             columns {
               1 {
-                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.alert
-                colPos = 100
-                maxitems = 1
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.toolbar
+                colspan = 2
               }
             }
           }
           2 {
             columns {
               1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.main_navigation
+                colspan = 2
+              }
+            }
+          }
+          3 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.hero_title_breadcrumb
+                colspan = 2
+              }
+            }
+          }
+          4 {
+            columns {
+              1 {
                 name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.main
                 colPos = 0
+                colspan = 2
+              }
+            }
+          }
+          5 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 11
+                colspan = 1
+              }
+              2 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 12
+                colspan = 1
+              }
+            }
+          }
+          6 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 20
+                colspan = 2
+              }
+            }
+          }
+          7 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 21
+                colspan = 1
+              }
+              2 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 22
+                colspan = 1
+              }
+            }
+          }
+          8 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 30
+                colspan = 2
+              }
+            }
+          }
+          9 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 31
+                colspan = 1
+              }
+              2 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 32
+                colspan = 1
+              }
+            }
+          }
+          10 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 40
+                colspan = 2
+              }
+            }
+          }
+          11 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 41
+                colspan = 1
+              }
+              2 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 42
+                colspan = 1
+              }
+            }
+          }
+          12 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.footer
+                colspan = 2
               }
             }
           }

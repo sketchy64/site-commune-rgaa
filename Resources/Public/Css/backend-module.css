@@ -147,6 +147,11 @@ body {
     border-color: #94a3b8;
 }
 
+.rgaa-btn-sm {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+}
+
 .rgaa-btn-lg {
     padding: 0.75rem 1.75rem;
     font-size: 1rem;
@@ -353,6 +358,208 @@ body {
     color: #ffffff;
 }
 
+/* ============================================================================
+   Étape 4 du Wizard : Sélecteur d'arborescence hiérarchique en accordéon
+   ============================================================================ */
+
+.rgaa-tree-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.rgaa-tree-folder-card {
+    border: 1px solid #cbd5e1;
+    border-radius: var(--rgaa-radius);
+    background-color: #ffffff;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.rgaa-tree-folder-card.is-open {
+    border-color: var(--rgaa-primary);
+    box-shadow: 0 2px 6px rgba(15, 76, 129, 0.08);
+}
+
+.rgaa-tree-folder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.9rem 1.25rem;
+    background-color: #f1f5f9;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.rgaa-tree-folder-header:hover {
+    background-color: #e2e8f0;
+}
+
+.rgaa-tree-folder-card.is-open .rgaa-tree-folder-header {
+    border-bottom: 1px solid #cbd5e1;
+    background-color: #eff6ff;
+}
+
+.rgaa-accordion-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--rgaa-primary);
+    cursor: pointer;
+    text-align: left;
+}
+
+.rgaa-accordion-trigger:focus-visible {
+    outline: 2px solid var(--rgaa-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.rgaa-accordion-chevron {
+    display: inline-block;
+    font-size: 0.9rem;
+    transition: transform 0.2s ease;
+}
+
+.rgaa-tree-folder-card.is-open .rgaa-accordion-chevron {
+    transform: rotate(90deg);
+}
+
+.rgaa-tree-folder-body {
+    padding: 1.25rem;
+}
+
+.rgaa-tree-folder-body[hidden] {
+    display: none !important;
+}
+
+.rgaa-tree-rubriques-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.25rem;
+}
+
+.rgaa-tree-rubrique-card {
+    border: 1px solid var(--rgaa-border);
+    border-radius: 6px;
+    background-color: #fcfdfe;
+    padding: 1rem;
+}
+
+.rgaa-tree-l1-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.6rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.rgaa-tree-mini-controls {
+    display: inline-flex;
+    gap: 0.25rem;
+    flex-shrink: 0;
+}
+
+.rgaa-btn-mini {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.rgaa-btn-mini:hover {
+    background-color: var(--rgaa-primary);
+    border-color: var(--rgaa-primary);
+    color: #ffffff;
+}
+
+.rgaa-tree-list {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+}
+
+.rgaa-tree-list-l2 {
+    padding-left: 0.5rem;
+}
+
+.rgaa-tree-list-l3 {
+    padding-left: 1.5rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.35rem;
+    border-left: 2px solid #e2e8f0;
+}
+
+.rgaa-tree-item-l2 {
+    margin-bottom: 0.35rem;
+}
+
+.rgaa-tree-item-l3 {
+    margin-bottom: 0.25rem;
+}
+
+.rgaa-tree-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    margin-bottom: 0;
+    user-select: none;
+}
+
+.rgaa-tree-label-l1 {
+    font-weight: 700;
+    font-size: 0.96rem;
+    color: var(--rgaa-primary);
+}
+
+.rgaa-tree-label-l2 {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--rgaa-text-dark);
+}
+
+.rgaa-tree-label-l3 {
+    font-weight: 400;
+    font-size: 0.86rem;
+    color: #475569;
+}
+
+.rgaa-tree-checkbox {
+    width: 1.05rem;
+    height: 1.05rem;
+    accent-color: var(--rgaa-primary);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.rgaa-tree-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0.75rem;
+}
+
+.rgaa-tree-footer-item {
+    padding: 0.65rem 0.9rem;
+    border: 1px solid var(--rgaa-border);
+    border-radius: 6px;
+    background-color: #f8fafc;
+}
+
 /* Responsive Utilities */
 @media (max-width: 768px) {
     .rgaa-site-bar {
@@ -361,5 +568,8 @@ body {
     }
     .rgaa-tabs {
         flex-direction: column;
+    }
+    .rgaa-tree-rubriques-grid {
+        grid-template-columns: 1fr;
     }
 }

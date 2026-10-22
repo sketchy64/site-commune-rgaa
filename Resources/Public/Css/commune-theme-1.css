@@ -4365,3 +4365,16 @@ svg.news-calendar-icon {
     width: 100%;
   }
 }
+
+/* ==============================================================================
+   Bandeau d'en-tête des pages de contenu (Hero - Titre - Fil d'Ariane)
+   ============================================================================== */
+.commune-page-hero {
+  background: linear-gradient(135deg, var(--commune-bg-subtle, #f8faf9) 0%, var(--commune-primary-light, #eef6f2) 100%) !important;
+  border-bottom: 1px solid var(--commune-border, #dee2e6) !important;
+}
+
+.commune-page-hero .page-title,
+.commune-page-hero h1.page-title {
+  margin-bottom: 0 !important;
+}

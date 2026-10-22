@@ -319,7 +319,7 @@
                             </div>
                         </div>
 
-                        <div class="rgaa-grid-3">
+                        <div class="rgaa-grid-2">
                             <div class="rgaa-form-group">
                                 <label class="rgaa-label">Image du plan d'accès :</label>
                                 <f:form.textfield name="settings[commune.footer_map_image]" value="{currentSettings.commune.footer_map_image}" class="rgaa-input" />
@@ -328,8 +328,15 @@
                                 <label class="rgaa-label">Page Plan d'accès (ID / UID) :</label>
                                 <f:form.textfield name="settings[commune.footer_map_page_uid]" value="{currentSettings.commune.footer_map_page_uid}" class="rgaa-input" type="number" />
                             </div>
+                        </div>
+
+                        <div class="rgaa-grid-2">
                             <div class="rgaa-form-group">
-                                <label class="rgaa-label">Dossier des liens de bas de page (ID) :</label>
+                                <label class="rgaa-label">Dossier du Menu principal (ID / UID) :</label>
+                                <f:form.textfield name="settings[commune.main_menu_folder_uid]" value="{currentSettings.commune.main_menu_folder_uid}" class="rgaa-input" type="number" />
+                            </div>
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Dossier des liens de bas de page (ID / UID) :</label>
                                 <f:form.textfield name="settings[commune.footer_folder_uid]" value="{currentSettings.commune.footer_folder_uid}" class="rgaa-input" type="number" />
                             </div>
                         </div>

@@ -106,8 +106,8 @@ categories:
     parent: commune_footer
 
   commune_footer_links:
-    label: 'Dossier des liens utiles'
-    description: 'Identifiant du dossier contenant les pages de pied de page'
+    label: 'Dossiers des menus (Principal & Pied de page)'
+    description: 'Identifiants des dossiers contenant les pages du menu principal et du pied de page'
     parent: commune_footer
 
 settings:
@@ -353,10 +353,10 @@ settings:
 
   commune.search_page_uid:
     label: 'Page de Recherche (ID / UID)'
-    description: 'Identifiant (UID) de la page contenant le formulaire et les résultats de recherche (Ex : 23)'
+    description: 'Identifiant (UID) de la page contenant le formulaire et les résultats de recherche (Ex : 76)'
     category: commune_home_sections
     type: int
-    default: 23
+    default: 76
 
 
   # ============================================================================
@@ -398,10 +398,10 @@ settings:
 
   commune.rgaa_page_uid:
     label: 'Page de la Déclaration d''accessibilité (ID / UID)'
-    description: 'Identifiant (UID) de la page contenant la déclaration complète (Ex : 96)'
+    description: 'Identifiant (UID) de la page contenant la déclaration complète (Ex : 72)'
     category: commune_a11y
     type: int
-    default: 96
+    default: 72
 
   # ============================================================================
   # 6. PIED DE PAGE : TITRES DES COLONNES
@@ -436,10 +436,10 @@ settings:
 
   commune.footer_contact_page_uid:
     label: 'Page de Contact (ID / UID)'
-    description: 'Identifiant de la page vers laquelle pointe le bouton contact du footer (Ex : 22 pour [22] Nous contacter)'
+    description: 'Identifiant de la page vers laquelle pointe le bouton contact du footer (Ex : 75 pour [75] Nous contacter)'
     category: commune_footer_contact
     type: int
-    default: 22
+    default: 75
 
   # ============================================================================
   # 6. PIED DE PAGE : PLAN D'ACCÈS / CARTE
@@ -453,20 +453,27 @@ settings:
 
   commune.footer_map_page_uid:
     label: 'Page du Plan d''accès / Localisation (ID / UID)'
-    description: 'Identifiant (UID) de la page ouverte au clic sur l''image du pied de page (Ex : 21 pour [21] Plan d''accès)'
+    description: 'Identifiant (UID) de la page ouverte au clic sur l''image du pied de page (Ex : 74 pour [74] Plan d''accès)'
     category: commune_footer_map
     type: int
-    default: 21
+    default: 74
 
   # ============================================================================
-  # 6. PIED DE PAGE : DOSSIER DES LIENS
+  # 6. PIED DE PAGE & NAVIGATION : DOSSIERS DES MENUS
   # ============================================================================
-  commune.footer_folder_uid:
-    label: 'Dossier des liens de bas de page (ID / UID)'
-    description: 'Identifiant du dossier contenant les pages du pied de page (Ex : 13 pour le dossier [13] Pied de page)'
+  commune.main_menu_folder_uid:
+    label: 'Dossier du Menu principal (ID / UID)'
+    description: 'Identifiant du dossier contenant les pages du menu principal (Ex : 2 pour le dossier [2] Menu principal)'
     category: commune_footer_links
     type: int
-    default: 13
+    default: 2
+
+  commune.footer_folder_uid:
+    label: 'Dossier des liens de bas de page (ID / UID)'
+    description: 'Identifiant du dossier contenant les pages du pied de page (Ex : 3 pour le dossier [3] Menu en pied de page)'
+    category: commune_footer_links
+    type: int
+    default: 3
 
   # ============================================================================
   # 7. APPLICATION MOBILE (PWA) & ALERTES
@@ -633,5 +640,3 @@ settings:
       - 'brand'
       - 'center'
       - 'menu'
-
-

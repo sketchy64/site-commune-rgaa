@@ -3,23 +3,55 @@
     <file source-language="fr" datatype="plaintext" original="messages" date="2026-08-12T10:00:00Z" product-name="site_commune_rgaa">
         <header/>
         <body>
-            <!-- Backend Layouts -->
+            <!-- Backend Layouts (2 Accueil + 2 Contenu) -->
             <trans-unit id="backend_layout.home" xml:space="preserve">
-                <source>Commune - Page d'accueil</source>
+                <source>Commune - Accueil 1 (Grille multi-lignes)</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.home_2" xml:space="preserve">
+                <source>Commune - Accueil 2 (Contenu et colonne droite)</source>
             </trans-unit>
             <trans-unit id="backend_layout.subpage" xml:space="preserve">
-                <source>Commune - Page standard avec menu latéral</source>
+                <source>Commune - Page de contenu avec barre latérale</source>
             </trans-unit>
             <trans-unit id="backend_layout.default" xml:space="preserve">
-                <source>Commune - Pleine largeur</source>
+                <source>Commune - Page de contenu pleine largeur</source>
             </trans-unit>
 
-            <!-- Colonnes -->
+            <!-- Zones structurelles (automatiques) -->
+            <trans-unit id="backend_layout.column.toolbar" xml:space="preserve">
+                <source>Barre d'outils</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.column.main_navigation" xml:space="preserve">
+                <source>Navigation principale</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.column.hero_title_breadcrumb" xml:space="preserve">
+                <source>Hero - Titre - Fil d'Ariane</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.column.sidebar" xml:space="preserve">
+                <source>Barre latérale</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.column.home_footer" xml:space="preserve">
+                <source>Carte interactive - Plan du site - Pied de page</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.column.footer" xml:space="preserve">
+                <source>Pied de page</source>
+            </trans-unit>
+
+            <!-- Colonnes de contenu éditables -->
             <trans-unit id="backend_layout.column.alert" xml:space="preserve">
-                <source>Bandeau d'alerte citoyenne (Urgence / Alerte météo)</source>
+                <source>Panneau d'alerte</source>
             </trans-unit>
             <trans-unit id="backend_layout.column.hero" xml:space="preserve">
-                <source>Bannière / Actualité à la Une (Hero)</source>
+                <source>Diaporama d'images</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.column.quickaccess" xml:space="preserve">
+                <source>Accès rapides</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.column.main" xml:space="preserve">
+                <source>Contenu principal</source>
+            </trans-unit>
+            <trans-unit id="backend_layout.column.content" xml:space="preserve">
+                <source>Contenu</source>
             </trans-unit>
             <trans-unit id="backend_layout.column.edito" xml:space="preserve">
                 <source>Édito / Mot du Maire (Texte &amp; Image)</source>
@@ -27,17 +59,11 @@
             <trans-unit id="backend_layout.column.featured_news" xml:space="preserve">
                 <source>Actualités à la une (Carrousel / En vedette)</source>
             </trans-unit>
-            <trans-unit id="backend_layout.column.quickaccess" xml:space="preserve">
-                <source>Accès rapides (Groupe d'icônes / Démarches)</source>
-            </trans-unit>
-            <trans-unit id="backend_layout.column.main" xml:space="preserve">
-                <source>Contenu principal</source>
-            </trans-unit>
             <trans-unit id="backend_layout.column.events_news" xml:space="preserve">
                 <source>Agenda et Actualités municipales</source>
             </trans-unit>
             <trans-unit id="backend_layout.column.sidebar_left" xml:space="preserve">
-                <source>Menu latéral et informations pratiques</source>
+                <source>Barre latérale</source>
             </trans-unit>
             <trans-unit id="backend_layout.column.interactive_map" xml:space="preserve">
                 <source>Carte interactive de la commune (Plan / Points d'intérêt)</source>

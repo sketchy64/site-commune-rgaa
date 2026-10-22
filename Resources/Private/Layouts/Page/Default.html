@@ -45,18 +45,11 @@
     <!-- Barre d'outils d'accessibilité (Taille police, Contraste, Police dyslexie) -->
     <f:render partial="Accessibility/Toolbar" arguments="{_all}" />
 
-    <!-- Bandeau d'alerte citoyenne (si contenu présent dans la colonne colPos 100) -->
-    <f:if condition="{emergencyAlertContent}">
-        <f:render partial="Structure/EmergencyAlert" arguments="{_all}" />
-    </f:if>
+    <!-- Panneau d'alerte citoyenne (entre la Barre d'outils et la Navigation principale sur les gabarits d'accueil) -->
+    <f:render section="EmergencyAlert" optional="true" />
 
     <!-- En-tête institutionnel & navigation principale -->
     <f:render partial="Structure/Header" arguments="{_all}" />
-
-    <!-- Fil d'Ariane accessible (uniquement sur sous-pages, masqué sur la page d'accueil) -->
-    <f:if condition="{rootLine -> f:count()} > 1">
-        <f:render partial="Navigation/Breadcrumb" arguments="{_all}" />
-    </f:if>
 
     <!-- Contenu Principal (Landmark role="main") -->
     <main id="main-content" class="flex-grow-1" role="main" tabindex="-1">

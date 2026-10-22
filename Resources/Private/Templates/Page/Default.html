@@ -4,19 +4,13 @@
 <f:layout name="Default" />
 
 <f:section name="Main">
+    <!-- Bandeau d'en-tête pleine largeur : Hero - Titre - Fil d'Ariane -->
+    <f:render partial="Structure/PageHero" arguments="{_all}" />
+
     <div class="container my-4">
-        <article class="commune-full-page">
-            <div class="mb-4">
-                <h1 class="page-title commune-section-title mb-0">{data.title}</h1>
-            </div>
-
-            <f:if condition="{data.subtitle}">
-                <p class="lead text-muted mb-4">{data.subtitle}</p>
-            </f:if>
-
-            <div class="commune-page-content">
-                <f:format.raw>{mainContent}</f:format.raw>
-            </div>
+        <!-- Corps de la page pleine largeur : 8 rangées de contenu modulables (100% et 50%/50% alternés) -->
+        <article class="commune-full-page commune-page-content">
+            <f:render partial="Structure/ContentRows" arguments="{_all}" />
         </article>
     </div>
 </f:section>

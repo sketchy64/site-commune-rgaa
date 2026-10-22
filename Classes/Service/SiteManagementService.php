@@ -11,6 +11,7 @@ use TYPO3\CMS\Core\Configuration\SiteWriter;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -70,6 +71,314 @@ class SiteManagementService
             'categories' => $parsed['categories'] ?? [],
             'settings' => $parsed['settings'] ?? [],
         ];
+    }
+
+    /**
+     * Retourne le catalogue complet de l'arborescence proposée à l'étape 4 du Wizard.
+     *
+     * @return array<string, mixed>
+     */
+    public function getDefaultPageTreeCatalog(): array
+    {
+        return [
+            'folders' => [
+                'main_menu' => [
+                    'title' => 'Menu principal',
+                    'slug' => '/dossier-menu-principal',
+                    'setting_key' => 'commune.main_menu_folder_uid',
+                    'pages' => [
+                        [
+                            'key' => 'main_accueil',
+                            'title' => 'Accueil',
+                            'doktype' => 4,
+                            'shortcut_root' => true,
+                            'nav_hide' => 0,
+                            'badge' => 'Raccourci vers la racine',
+                            'children' => [
+                                [
+                                    'key' => 'main_actualites',
+                                    'title' => 'Actualités',
+                                    'doktype' => 1,
+                                    'nav_hide' => 1,
+                                    'omit_parent_slug' => true,
+                                    'badge' => 'Cachée du menu',
+                                    'children' => [
+                                        [
+                                            'key' => 'main_actualites_detail',
+                                            'title' => 'Détail',
+                                            'doktype' => 1,
+                                            'nav_hide' => 1,
+                                            'badge' => 'Cachée du menu',
+                                        ],
+                                    ],
+                                ],
+                                [
+                                    'key' => 'main_agenda',
+                                    'title' => 'Agenda',
+                                    'doktype' => 1,
+                                    'nav_hide' => 1,
+                                    'omit_parent_slug' => true,
+                                    'badge' => 'Cachée du menu',
+                                    'children' => [
+                                        [
+                                            'key' => 'main_agenda_detail',
+                                            'title' => 'Détail',
+                                            'doktype' => 1,
+                                            'nav_hide' => 1,
+                                            'badge' => 'Cachée du menu',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                        [
+                            'key' => 'main_mairie',
+                            'title' => 'La Mairie',
+                            'doktype' => 1,
+                            'nav_hide' => 0,
+                            'children' => [
+                                [
+                                    'key' => 'main_mairie_conseil',
+                                    'title' => 'Le conseil municipal',
+                                    'doktype' => 1,
+                                    'nav_hide' => 0,
+                                    'children' => [
+                                        ['key' => 'main_mairie_conseil_elus', 'title' => 'Les élus', 'doktype' => 1, 'nav_hide' => 0],
+                                        ['key' => 'main_mairie_conseil_commissions', 'title' => 'Les commissions municipales', 'doktype' => 1, 'nav_hide' => 0],
+                                        ['key' => 'main_mairie_conseil_comptes_rendus', 'title' => 'Les comptes rendus', 'doktype' => 1, 'nav_hide' => 0],
+                                    ],
+                                ],
+                                ['key' => 'main_mairie_services', 'title' => 'Les services municipaux', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_mairie_finances', 'title' => 'Les finances', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_mairie_bulletin', 'title' => 'Le bulletin municipal', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_mairie_projets', 'title' => 'Projets et réalisations', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_mairie_marches', 'title' => 'Marchés publics', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_mairie_actes', 'title' => 'Actes administratifs', 'doktype' => 1, 'nav_hide' => 0],
+                            ],
+                        ],
+                        [
+                            'key' => 'main_commune',
+                            'title' => 'La commune',
+                            'doktype' => 1,
+                            'nav_hide' => 0,
+                            'children' => [
+                                ['key' => 'main_commune_presentation', 'title' => 'Présentation de la commune', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_commune_histoire', 'title' => 'L\'histoire', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_commune_patrimoine', 'title' => 'Le patrimoine', 'doktype' => 1, 'nav_hide' => 0],
+                                [
+                                    'key' => 'main_commune_medias',
+                                    'title' => 'Médias',
+                                    'doktype' => 1,
+                                    'nav_hide' => 0,
+                                    'children' => [
+                                        ['key' => 'main_commune_medias_photos', 'title' => 'Photos', 'doktype' => 1, 'nav_hide' => 0],
+                                        ['key' => 'main_commune_medias_videos', 'title' => 'Vidéos', 'doktype' => 1, 'nav_hide' => 0],
+                                    ],
+                                ],
+                            ],
+                        ],
+                        [
+                            'key' => 'main_services',
+                            'title' => 'Services et vie pratique',
+                            'doktype' => 1,
+                            'nav_hide' => 0,
+                            'children' => [
+                                ['key' => 'main_services_guide', 'title' => 'Guide des démarches', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_services_demarches', 'title' => 'Démarches en ligne', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_services_salles', 'title' => 'Salles communales', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_services_mobilites', 'title' => 'Mobilités', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_services_tourisme', 'title' => 'Tourisme et loisirs', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_services_eau', 'title' => 'Eau et assainissement', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_services_dechets', 'title' => 'Gestion des déchets', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_services_urbanisme', 'title' => 'Urbanisme', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_services_cimetiere', 'title' => 'Cimetière', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_services_numeros', 'title' => 'Numéros utiles', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_services_emploi', 'title' => 'Emploi', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_services_securite', 'title' => 'Sécurité et civisme', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_services_signaler', 'title' => 'Signaler un problème', 'doktype' => 1, 'nav_hide' => 0],
+                            ],
+                        ],
+                        [
+                            'key' => 'main_solidarite',
+                            'title' => 'Solidarité et santé',
+                            'doktype' => 1,
+                            'nav_hide' => 0,
+                            'children' => [
+                                ['key' => 'main_solidarite_ccas', 'title' => 'Le Centre Communal d\'Action Sociale (CCAS)', 'doktype' => 1, 'nav_hide' => 0],
+                                [
+                                    'key' => 'main_solidarite_seniors',
+                                    'title' => 'Seniors',
+                                    'doktype' => 1,
+                                    'nav_hide' => 0,
+                                    'children' => [
+                                        ['key' => 'main_solidarite_seniors_aide', 'title' => 'Aide à domicile', 'doktype' => 1, 'nav_hide' => 0],
+                                        ['key' => 'main_solidarite_seniors_repas', 'title' => 'Portage des repas', 'doktype' => 1, 'nav_hide' => 0],
+                                        ['key' => 'main_solidarite_seniors_animations', 'title' => 'Animations seniors', 'doktype' => 1, 'nav_hide' => 0],
+                                    ],
+                                ],
+                                [
+                                    'key' => 'main_solidarite_sante',
+                                    'title' => 'Santé et prévention',
+                                    'doktype' => 1,
+                                    'nav_hide' => 0,
+                                    'children' => [
+                                        ['key' => 'main_solidarite_sante_urgence', 'title' => 'Numéros d\'urgence', 'doktype' => 1, 'nav_hide' => 0],
+                                        ['key' => 'main_solidarite_sante_canicule', 'title' => 'Plan canicule', 'doktype' => 1, 'nav_hide' => 0],
+                                    ],
+                                ],
+                            ],
+                        ],
+                        [
+                            'key' => 'main_enfance',
+                            'title' => 'Enfance et jeunesse',
+                            'doktype' => 1,
+                            'nav_hide' => 0,
+                            'children' => [
+                                [
+                                    'key' => 'main_enfance_petite',
+                                    'title' => 'Petite enfance (0 à 3 ans)',
+                                    'doktype' => 1,
+                                    'nav_hide' => 0,
+                                    'children' => [
+                                        ['key' => 'main_enfance_petite_rpe', 'title' => 'Relais petite enfance', 'doktype' => 1, 'nav_hide' => 0],
+                                        ['key' => 'main_enfance_petite_ram', 'title' => 'Relais assistance maternelle', 'doktype' => 1, 'nav_hide' => 0],
+                                        ['key' => 'main_enfance_petite_creches', 'title' => 'Crèches et micro-crèches', 'doktype' => 1, 'nav_hide' => 0],
+                                    ],
+                                ],
+                                [
+                                    'key' => 'main_enfance_4_11',
+                                    'title' => 'Enfance (4 à 11 ans)',
+                                    'doktype' => 1,
+                                    'nav_hide' => 0,
+                                    'children' => [
+                                        ['key' => 'main_enfance_4_11_maternelle', 'title' => 'École maternelle', 'doktype' => 1, 'nav_hide' => 0],
+                                        ['key' => 'main_enfance_4_11_elementaire', 'title' => 'École élémentaire', 'doktype' => 1, 'nav_hide' => 0],
+                                    ],
+                                ],
+                                [
+                                    'key' => 'main_enfance_jeunesse',
+                                    'title' => 'Jeunesse (12 à 18 ans)',
+                                    'doktype' => 1,
+                                    'nav_hide' => 0,
+                                    'children' => [
+                                        ['key' => 'main_enfance_jeunesse_college', 'title' => 'Collège', 'doktype' => 1, 'nav_hide' => 0],
+                                        ['key' => 'main_enfance_jeunesse_lycee', 'title' => 'Lycée', 'doktype' => 1, 'nav_hide' => 0],
+                                    ],
+                                ],
+                                ['key' => 'main_enfance_restauration', 'title' => 'Restauration', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_enfance_transports', 'title' => 'Transports', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_enfance_loisirs', 'title' => 'Centre de loisirs', 'doktype' => 1, 'nav_hide' => 0],
+                                ['key' => 'main_enfance_portail', 'title' => 'Portail famille', 'doktype' => 1, 'nav_hide' => 0],
+                            ],
+                        ],
+                    ],
+                ],
+                'footer_menu' => [
+                    'title' => 'Menu en pied de page',
+                    'slug' => '/dossier-menu-en-pied-de-page',
+                    'setting_key' => 'commune.footer_folder_uid',
+                    'pages' => [
+                        [
+                            'key' => 'footer_accueil',
+                            'title' => 'Accueil',
+                            'doktype' => 4,
+                            'shortcut_root' => true,
+                            'nav_hide' => 0,
+                            'badge' => 'Raccourci vers la racine',
+                        ],
+                        [
+                            'key' => 'footer_mentions',
+                            'title' => 'Crédits & Mentions légales',
+                            'doktype' => 1,
+                            'nav_hide' => 0,
+                        ],
+                        [
+                            'key' => 'footer_cookies',
+                            'title' => 'Politique des cookies',
+                            'doktype' => 1,
+                            'nav_hide' => 0,
+                        ],
+                        [
+                            'key' => 'footer_accessibilite',
+                            'title' => 'Déclaration d\'accessibilité',
+                            'doktype' => 1,
+                            'nav_hide' => 0,
+                            'setting_key' => 'commune.rgaa_page_uid',
+                            'badge' => 'Liée à commune.rgaa_page_uid',
+                        ],
+                        [
+                            'key' => 'footer_plan_site',
+                            'title' => 'Plan du site',
+                            'doktype' => 1,
+                            'nav_hide' => 0,
+                        ],
+                        [
+                            'key' => 'footer_plan_acces',
+                            'title' => 'Plan d\'accès',
+                            'doktype' => 1,
+                            'nav_hide' => 0,
+                            'setting_key' => 'commune.footer_map_page_uid',
+                            'badge' => 'Liée à commune.footer_map_page_uid',
+                        ],
+                        [
+                            'key' => 'footer_contact',
+                            'title' => 'Nous contacter',
+                            'doktype' => 1,
+                            'nav_hide' => 0,
+                            'setting_key' => 'commune.footer_contact_page_uid',
+                            'badge' => 'Liée à commune.footer_contact_page_uid',
+                        ],
+                        [
+                            'key' => 'footer_recherche',
+                            'title' => 'Recherche',
+                            'doktype' => 1,
+                            'nav_hide' => 1,
+                            'setting_key' => 'commune.search_page_uid',
+                            'badge' => 'Cachée du menu · Liée à commune.search_page_uid',
+                        ],
+                    ],
+                ],
+            ],
+            'empty_folders' => [
+                ['title' => 'FORMATION', 'slug' => '/dossier-formation'],
+                ['title' => 'Actualités', 'slug' => '/dossier-actualites'],
+                ['title' => 'Agenda', 'slug' => '/dossier-agenda'],
+                ['title' => 'Carte', 'slug' => '/dossier-carte'],
+            ],
+        ];
+    }
+
+    /**
+     * Retourne la liste à plat de toutes les clés de pages du catalogue par défaut.
+     *
+     * @return array<int, string>
+     */
+    public function getAllCatalogPageKeys(): array
+    {
+        $catalog = $this->getDefaultPageTreeCatalog();
+        $keys = [];
+
+        foreach ($catalog['folders'] as $folder) {
+            $this->collectNodeKeys($folder['pages'] ?? [], $keys);
+        }
+
+        return $keys;
+    }
+
+    /**
+     * @param array<int, array<string, mixed>> $nodes
+     * @param array<int, string> $keys
+     */
+    private function collectNodeKeys(array $nodes, array &$keys): void
+    {
+        foreach ($nodes as $node) {
+            if (!empty($node['key'])) {
+                $keys[] = (string)$node['key'];
+            }
+            if (!empty($node['children']) && is_array($node['children'])) {
+                $this->collectNodeKeys($node['children'], $keys);
+            }
+        }
     }
 
     /**
@@ -370,7 +679,7 @@ class SiteManagementService
     }
 
     /**
-     * Crée une nouvelle configuration de site et son arborescence de pages.
+     * Crée une nouvelle configuration de site et son arborescence complète de dossiers et de pages.
      */
     public function createNewSite(array $data): string
     {
@@ -385,11 +694,27 @@ class SiteManagementService
 
         $rootPageId = $this->createRootPage($name);
 
-        $domain = $data['domain'] ?? 'http://localhost/';
-        if (!str_starts_with($domain, 'http://') && !str_starts_with($domain, 'https://')) {
-            $domain = 'https://' . $domain;
+        $rawDomain = trim((string)($data['domain'] ?? ''));
+        if ($rawDomain === '' || $rawDomain === '/') {
+            $domain = '/';
+        } elseif (str_starts_with($rawDomain, '/')) {
+            $domain = '/' . trim($rawDomain, '/') . '/';
+        } else {
+            if (!str_starts_with($rawDomain, 'http://') && !str_starts_with($rawDomain, 'https://')) {
+                $hostOnly = explode(':', explode('/', $rawDomain)[0])[0];
+                $isLocal = (
+                    $hostOnly === 'localhost'
+                    || $hostOnly === '127.0.0.1'
+                    || str_ends_with($hostOnly, '.local')
+                    || str_ends_with($hostOnly, '.test')
+                    || str_ends_with($hostOnly, '.ddev.site')
+                );
+                $domain = ($isLocal ? 'http://' : 'https://') . $rawDomain;
+            } else {
+                $domain = $rawDomain;
+            }
+            $domain = rtrim($domain, '/') . '/';
         }
-        $domain = rtrim($domain, '/') . '/';
 
         $siteConfig = [
             'rootPageId' => $rootPageId,
@@ -414,21 +739,40 @@ class SiteManagementService
             ],
         ];
 
-        // Écriture de config.yaml via SiteWriter (v13/v14) ou SiteConfiguration (v12)
+        // 1. Écriture de config.yaml via SiteWriter (v13/v14) ou SiteConfiguration (v12)
         $this->writeSiteConfigurationData($identifier, $siteConfig);
 
-        // Initialisation synchrone de settings.yaml et des constantes sys_template
+        // 2. Détermination des pages sélectionnées à l'étape 4 (systématiquement créée)
+        $selectedPageKeys = null;
+        if (isset($data['selected_pages']) && is_array($data['selected_pages'])) {
+            $selectedPageKeys = array_values(array_filter(array_map('strval', $data['selected_pages'])));
+        } elseif (isset($data['selected_pages_csv']) && is_string($data['selected_pages_csv']) && $data['selected_pages_csv'] !== '') {
+            $selectedPageKeys = array_values(array_filter(explode(',', $data['selected_pages_csv'])));
+        } elseif (!empty($data['selected_pages_initialized'])) {
+            $selectedPageKeys = [];
+        }
+
+        // 3. Génération systématique des 6 dossiers et des pages sélectionnées avec récupération des UID réels
+        $generatedUids = $this->generateDefaultPageTree($rootPageId, $selectedPageKeys);
+
+        // 4. Initialisation synchrone de settings.yaml et des constantes sys_template avec les UID correspondants
         $initialSettings = [
             'commune.nom' => $name,
-            'commune.slogan' => $data['slogan'] ?? 'République Française - Liberté, Égalité, Fraternité',
-            'commune.theme_css' => $data['theme'] ?? 'EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css',
-            'commune.color_scheme_css' => $data['color_scheme'] ?? 'EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css',
+            'commune.slogan' => !empty($data['slogan']) ? $data['slogan'] : 'République Française - Liberté, Égalité, Fraternité',
+            'commune.theme_css' => !empty($data['theme']) ? $data['theme'] : 'EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css',
+            'commune.color_scheme_css' => !empty($data['color_scheme']) ? $data['color_scheme'] : 'EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css',
+            'commune.rgaa_statut' => !empty($data['rgaa_statut']) ? $data['rgaa_statut'] : 'partiellement conforme',
+            'commune.rgaa_taux' => !empty($data['rgaa_taux']) ? $data['rgaa_taux'] : '84%',
         ];
-        $this->saveSiteSettings($identifier, $initialSettings);
 
-        if (!empty($data['create_pages'])) {
-            $this->generateDefaultPageTree($rootPageId);
+        foreach ($generatedUids as $settingKey => $uid) {
+            if ($uid > 0) {
+                $initialSettings[$settingKey] = $uid;
+            }
         }
+
+        $this->saveSiteSettings($identifier, $initialSettings);
+        $this->flushAllSiteCaches();
 
         return $identifier;
     }
@@ -693,6 +1037,7 @@ class SiteManagementService
         $connection->insert('pages', [
             'pid' => 0,
             'title' => $siteName,
+            'slug' => '/',
             'doktype' => 1,
             'is_siteroot' => 1,
             'backend_layout' => 'pagets__commune_home',
@@ -705,34 +1050,279 @@ class SiteManagementService
     }
 
     /**
-     * Génère une arborescence complète et conforme RGAA sous la page racine.
+     * Génère l'arborescence complète organisée en 6 dossiers sous la page racine
+     * ainsi que les pages sélectionnées par l'utilisateur.
+     *
+     * @param int $rootPageId UID de la page racine du site
+     * @param array<int, string>|null $selectedPageKeys Liste des clés de pages cochées (null = toutes)
+     * @return array<string, int> Tableau associatif [setting_key => page_uid]
      */
-    private function generateDefaultPageTree(int $rootPageId): void
+    private function generateDefaultPageTree(int $rootPageId, ?array $selectedPageKeys = null): array
     {
         $connection = $this->connectionPool->getConnectionForTable('pages');
         $now = time();
+        $catalog = $this->getDefaultPageTreeCatalog();
 
-        $defaultPages = [
-            ['title' => 'Actualités & Agenda', 'doktype' => 1, 'layout' => 'pagets__commune_subpage'],
-            ['title' => 'Démarches & Services', 'doktype' => 1, 'layout' => 'pagets__commune_subpage'],
-            ['title' => 'Ma Mairie & Conseil Municipal', 'doktype' => 1, 'layout' => 'pagets__commune_subpage'],
-            ['title' => 'Déclaration d\'accessibilité', 'doktype' => 1, 'layout' => 'pagets__commune_subpage'],
-            ['title' => 'Contact & Horaires', 'doktype' => 1, 'layout' => 'pagets__commune_subpage'],
-            ['title' => 'Mentions légales', 'doktype' => 1, 'layout' => 'pagets__commune_subpage'],
-            ['title' => 'Plan du site', 'doktype' => 1, 'layout' => 'pagets__commune_subpage'],
+        if ($selectedPageKeys === null) {
+            $selectedPageKeys = $this->getAllCatalogPageKeys();
+        }
+        $selectedSet = array_fill_keys($selectedPageKeys, true);
+
+        // Suivi des slugs déjà attribués dans ce site pour garantir l'unicité (ex: /accueil puis /accueil-1)
+        $usedSlugs = [
+            '/' => true,
         ];
 
-        foreach ($defaultPages as $sorting => $page) {
+        $generatedSettingsUids = [];
+        $folderSorting = 1;
+
+        // 1. Création des 2 dossiers de menus ("Menu principal" et "Menu en pied de page")
+        $folderUids = [];
+        foreach ($catalog['folders'] as $folderKey => $folderDef) {
+            $folderSlug = $this->resolveUniqueSlug((string)$folderDef['slug'], $usedSlugs);
             $connection->insert('pages', [
                 'pid' => $rootPageId,
-                'title' => $page['title'],
-                'doktype' => $page['doktype'],
-                'sorting' => ($sorting + 1) * 128,
-                'backend_layout' => $page['layout'],
+                'title' => (string)$folderDef['title'],
+                'slug' => $folderSlug,
+                'doktype' => 254,
+                'sorting' => $folderSorting * 128,
+                'backend_layout_next_level' => 'pagets__commune_subpage',
                 'crdate' => $now,
                 'tstamp' => $now,
             ]);
+            $folderUid = (int)$connection->lastInsertId();
+            $folderUids[$folderKey] = $folderUid;
+            $folderSorting++;
+
+            if (!empty($folderDef['setting_key'])) {
+                $generatedSettingsUids[(string)$folderDef['setting_key']] = $folderUid;
+            }
         }
+
+        // 2. Création des 4 dossiers vides ("FORMATION", "Actualités", "Agenda", "Carte")
+        foreach ($catalog['empty_folders'] as $emptyFolder) {
+            $folderSlug = $this->resolveUniqueSlug((string)$emptyFolder['slug'], $usedSlugs);
+            $connection->insert('pages', [
+                'pid' => $rootPageId,
+                'title' => (string)$emptyFolder['title'],
+                'slug' => $folderSlug,
+                'doktype' => 254,
+                'sorting' => $folderSorting * 128,
+                'backend_layout_next_level' => 'pagets__commune_subpage',
+                'crdate' => $now,
+                'tstamp' => $now,
+            ]);
+            $folderSorting++;
+        }
+
+        // 3. Création récursive des pages sélectionnées dans chaque dossier de menu
+        foreach ($catalog['folders'] as $folderKey => $folderDef) {
+            $parentFolderUid = $folderUids[$folderKey] ?? 0;
+            if ($parentFolderUid <= 0) {
+                continue;
+            }
+
+            $this->insertSelectedPageNodes(
+                $connection,
+                $folderDef['pages'] ?? [],
+                $parentFolderUid,
+                $rootPageId,
+                '',
+                $selectedSet,
+                $usedSlugs,
+                $generatedSettingsUids,
+                $now
+            );
+        }
+
+        return $generatedSettingsUids;
+    }
+
+    /**
+     * Insère récursivement les pages et sous-pages cochées.
+     *
+     * @param Connection $connection
+     * @param array<int, array<string, mixed>> $nodes
+     * @param int $parentPid
+     * @param int $rootPageId
+     * @param string $parentSlugPrefix
+     * @param array<string, bool> $selectedSet
+     * @param array<string, bool> $usedSlugs
+     * @param array<string, int> $generatedSettingsUids
+     * @param int $now
+     */
+    private function insertSelectedPageNodes(
+        Connection $connection,
+        array $nodes,
+        int $parentPid,
+        int $rootPageId,
+        string $parentSlugPrefix,
+        array $selectedSet,
+        array &$usedSlugs,
+        array &$generatedSettingsUids,
+        int $now
+    ): void {
+        $sortingIndex = 1;
+
+        foreach ($nodes as $node) {
+            if (!$this->isNodeOrDescendantSelected($node, $selectedSet)) {
+                continue;
+            }
+
+            $title = (string)($node['title'] ?? 'Page');
+            $doktype = (int)($node['doktype'] ?? 1);
+            $navHide = (int)($node['nav_hide'] ?? 0);
+            $isShortcutToRoot = !empty($node['shortcut_root']);
+            $omitParentSlug = !empty($node['omit_parent_slug']);
+
+            $segment = $this->sanitizeSlugSegment($title, $parentPid);
+            $effectivePrefix = $omitParentSlug ? '' : $parentSlugPrefix;
+            $candidateSlug = ($effectivePrefix !== '' ? rtrim($effectivePrefix, '/') : '') . '/' . ltrim($segment, '/');
+            $slug = $this->resolveUniqueSlug($candidateSlug, $usedSlugs);
+
+            $row = [
+                'pid' => $parentPid,
+                'title' => $title,
+                'slug' => $slug,
+                'doktype' => $doktype,
+                'nav_hide' => $navHide,
+                'hidden' => 0,
+                'sorting' => $sortingIndex * 128,
+                'backend_layout' => 'pagets__commune_subpage',
+                'backend_layout_next_level' => 'pagets__commune_subpage',
+                'crdate' => $now,
+                'tstamp' => $now,
+            ];
+
+            if ($doktype === 4 && $isShortcutToRoot) {
+                $row['shortcut'] = $rootPageId;
+                $row['shortcut_mode'] = 0;
+            }
+
+            $connection->insert('pages', $row);
+            $newPageUid = (int)$connection->lastInsertId();
+            $sortingIndex++;
+
+            if (!empty($node['setting_key'])) {
+                $generatedSettingsUids[(string)$node['setting_key']] = $newPageUid;
+            }
+
+            if (!empty($node['children']) && is_array($node['children'])) {
+                $this->insertSelectedPageNodes(
+                    $connection,
+                    $node['children'],
+                    $newPageUid,
+                    $rootPageId,
+                    $slug,
+                    $selectedSet,
+                    $usedSlugs,
+                    $generatedSettingsUids,
+                    $now
+                );
+            }
+        }
+    }
+
+    /**
+     * Vérifie si un nœud ou l'un de ses descendants est sélectionné (évite toute sous-page orpheline).
+     *
+     * @param array<string, mixed> $node
+     * @param array<string, bool> $selectedSet
+     */
+    private function isNodeOrDescendantSelected(array $node, array $selectedSet): bool
+    {
+        $key = (string)($node['key'] ?? '');
+        if ($key !== '' && isset($selectedSet[$key])) {
+            return true;
+        }
+
+        if (!empty($node['children']) && is_array($node['children'])) {
+            foreach ($node['children'] as $child) {
+                if ($this->isNodeOrDescendantSelected($child, $selectedSet)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Garantit l'unicité d'un slug dans le site (ex: /accueil -> /accueil-1 si déjà utilisé).
+     *
+     * @param string $candidateSlug
+     * @param array<string, bool> $usedSlugs
+     */
+    private function resolveUniqueSlug(string $candidateSlug, array &$usedSlugs): string
+    {
+        $normalized = '/' . trim($candidateSlug, '/');
+        if ($normalized === '/') {
+            $normalized = '/page';
+        }
+
+        $finalSlug = $normalized;
+        $counter = 1;
+        while (isset($usedSlugs[$finalSlug])) {
+            $finalSlug = $normalized . '-' . $counter;
+            $counter++;
+        }
+
+        $usedSlugs[$finalSlug] = true;
+        return $finalSlug;
+    }
+
+    /**
+     * Convertit un titre de page en segment d'URL propre (sans slash initial ni préfixe parent).
+     */
+    private function sanitizeSlugSegment(string $title, int $pid): string
+    {
+        try {
+            $fieldConfig = [
+                'generatorOptions' => [
+                    'fields' => ['title'],
+                    'fieldSeparator' => '/',
+                    'prefixParentPageSlug' => false,
+                    'replacements' => [
+                        '/' => '-',
+                    ],
+                ],
+                'fallbackCharacter' => '-',
+                'eval' => 'uniqueInSite',
+            ];
+
+            $slugHelper = GeneralUtility::makeInstance(
+                SlugHelper::class,
+                'pages',
+                'slug',
+                $fieldConfig
+            );
+
+            $slug = trim($slugHelper->generate(['title' => $title, 'pid' => $pid], $pid), '/');
+            if ($slug !== '') {
+                return $slug;
+            }
+        } catch (\Throwable) {
+        }
+
+        $transliterated = strtr($title, [
+            'à' => 'a', 'â' => 'a', 'ä' => 'a', 'á' => 'a', 'ã' => 'a', 'å' => 'a',
+            'À' => 'a', 'Â' => 'a', 'Ä' => 'a', 'Á' => 'a', 'Ã' => 'a', 'Å' => 'a',
+            'é' => 'e', 'è' => 'e', 'ê' => 'e', 'ë' => 'e',
+            'É' => 'e', 'È' => 'e', 'Ê' => 'e', 'Ë' => 'e',
+            'î' => 'i', 'ï' => 'i', 'ì' => 'i', 'í' => 'i',
+            'Î' => 'i', 'Ï' => 'i', 'Ì' => 'i', 'Í' => 'i',
+            'ô' => 'o', 'ö' => 'o', 'ò' => 'o', 'ó' => 'o', 'õ' => 'o',
+            'Ô' => 'o', 'Ö' => 'o', 'Ò' => 'o', 'Ó' => 'o', 'Õ' => 'o',
+            'ù' => 'u', 'û' => 'u', 'ü' => 'u', 'ú' => 'u',
+            'Ù' => 'u', 'Û' => 'u', 'Ü' => 'u', 'Ú' => 'u',
+            'ç' => 'c', 'Ç' => 'c', 'ñ' => 'n', 'Ñ' => 'n',
+            'œ' => 'oe', 'Œ' => 'oe', 'æ' => 'ae', 'Æ' => 'ae',
+        ]);
+        $clean = strtolower($transliterated);
+        $clean = (string)preg_replace('/[^a-z0-9]+/', '-', $clean);
+        $clean = trim($clean, '-');
+
+        return $clean !== '' ? $clean : 'page';
     }
 
     /**

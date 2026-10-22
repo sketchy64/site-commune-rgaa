@@ -1,7 +1,21 @@
-# Import des Backend Layouts
+# Suppression intégrale des Backend Layouts hérités (notamment ceux de bootstrap_package)
+mod.web_layout.BackendLayouts >
+
+# Import exclusif des 4 Backend Layouts de l'extension (2 Accueil + 2 Contenu)
 @import 'EXT:site_commune_rgaa/Configuration/TSconfig/BackendLayouts/commune_home.tsconfig'
+@import 'EXT:site_commune_rgaa/Configuration/TSconfig/BackendLayouts/commune_home_2.tsconfig'
 @import 'EXT:site_commune_rgaa/Configuration/TSconfig/BackendLayouts/commune_subpage.tsconfig'
 @import 'EXT:site_commune_rgaa/Configuration/TSconfig/BackendLayouts/commune_default.tsconfig'
+
+# Masquage explicite dans TCEFORM de tout layout issu de bootstrap_package
+TCEFORM.pages {
+  backend_layout {
+    removeItems = -1,default,2_columns,2_columns_25_75,2_columns_50_50,2_columns_offset_right,3_columns,simple,special_feature,special_start,subnavigation_left,subnavigation_right,subnavigation_right_2_columns,subnavigation_left_2_columns,pagets__default,pagets__2_columns,pagets__2_columns_25_75,pagets__2_columns_50_50,pagets__2_columns_offset_right,pagets__3_columns,pagets__simple,pagets__special_feature,pagets__special_start,pagets__subnavigation_left,pagets__subnavigation_right,pagets__subnavigation_right_2_columns,pagets__subnavigation_left_2_columns
+  }
+  backend_layout_next_level {
+    removeItems = -1,default,2_columns,2_columns_25_75,2_columns_50_50,2_columns_offset_right,3_columns,simple,special_feature,special_start,subnavigation_left,subnavigation_right,subnavigation_right_2_columns,subnavigation_left_2_columns,pagets__default,pagets__2_columns,pagets__2_columns_25_75,pagets__2_columns_50_50,pagets__2_columns_offset_right,pagets__3_columns,pagets__simple,pagets__special_feature,pagets__special_start,pagets__subnavigation_left,pagets__subnavigation_right,pagets__subnavigation_right_2_columns,pagets__subnavigation_left_2_columns
+  }
+}
 
 # Configuration TCEFORM pour conformité RGAA (Critère 9.1 - Hiérarchie des titres)
 TCEFORM.tt_content {
@@ -16,11 +30,6 @@ TCEFORM.tt_content {
       100 = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:tceform.header_layout.hidden
     }
   }
-}
-
-# Configuration de la prévisualisation et des permissions de layout
-mod.web_layout.BackendLayouts {
-  # Layout par défaut pour les nouvelles sous-pages
 }
 
 # Layouts de gabarit pour EXT:news

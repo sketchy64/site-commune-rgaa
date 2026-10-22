@@ -7,7 +7,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <div>
                 <h1>🚀 Assistant de Déploiement : Nouveau Site Commune</h1>
-                <p>Création guidée en 5 étapes, attribution du Site Set et génération d'arborescence RGAA.</p>
+                <p>Création guidée en 5 étapes, attribution du Site Set et génération d'arborescence RGAA sur-mesure.</p>
             </div>
             <div>
                 <f:link.action action="index" class="rgaa-btn rgaa-btn-outline" style="background:#fff; color:#0f4c81 !important;">
@@ -35,10 +35,16 @@
         <f:if condition="{step} == 1">
             <!-- ÉTAPE 1 : Identité & Domaine -->
             <h2 class="rgaa-card-title">Étape 1 / 5 : Identité de la Commune & URL</h2>
-            <p class="rgaa-help-text mb-4">Renseignez le nom officiel de la collectivité et son nom de domaine principal.</p>
+            <p class="rgaa-help-text mb-4">Renseignez le nom officiel de la collectivité et son point d'entrée (ou nom de domaine).</p>
 
             <f:form action="wizard" name="wizardData">
                 <f:form.hidden name="step" value="2" />
+                <f:form.hidden name="wizardData[theme]" value="{wizardData.theme}" />
+                <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
+                <f:form.hidden name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" />
+                <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
+                <f:form.hidden name="wizardData[selected_pages_csv]" value="{wizardData.selected_pages_csv}" />
+                <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />
 
                 <div class="rgaa-form-group">
                     <label class="rgaa-label">Nom officiel de la commune * :</label>
@@ -52,8 +58,9 @@
                         <div class="rgaa-help-text">Généré automatiquement depuis le nom si laissé vide.</div>
                     </div>
                     <div class="rgaa-form-group">
-                        <label class="rgaa-label">URL de base (Domaine) * :</label>
-                        <f:form.textfield name="wizardData[domain]" value="{wizardData.domain}" class="rgaa-input" placeholder="https://www.pau.fr/" required="true" />
+                        <label class="rgaa-label">URL de base (Point d'entrée / Domaine) * :</label>
+                        <f:form.textfield name="wizardData[domain]" value="{f:if(condition: wizardData.domain, then: wizardData.domain, else: '/')}" class="rgaa-input" placeholder="/ ou https://www.pau.fr/" required="true" />
+                        <div class="rgaa-help-text">Conservez <code>/</code> pour un déploiement local/universel, ou saisissez le domaine complet.</div>
                     </div>
                 </div>
 
@@ -78,6 +85,10 @@
                 <f:form.hidden name="wizardData[identifier]" value="{wizardData.identifier}" />
                 <f:form.hidden name="wizardData[domain]" value="{wizardData.domain}" />
                 <f:form.hidden name="wizardData[slogan]" value="{wizardData.slogan}" />
+                <f:form.hidden name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" />
+                <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
+                <f:form.hidden name="wizardData[selected_pages_csv]" value="{wizardData.selected_pages_csv}" />
+                <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />
 
                 <div class="rgaa-form-group">
                     <label class="rgaa-label">Thème Graphique :</label>
@@ -116,6 +127,8 @@
                 <f:form.hidden name="wizardData[slogan]" value="{wizardData.slogan}" />
                 <f:form.hidden name="wizardData[theme]" value="{wizardData.theme}" />
                 <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
+                <f:form.hidden name="wizardData[selected_pages_csv]" value="{wizardData.selected_pages_csv}" />
+                <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />
 
                 <div class="rgaa-form-group">
                     <label class="rgaa-label">Statut légal de conformité :</label>
@@ -128,7 +141,7 @@
 
                 <div class="rgaa-form-group">
                     <label class="rgaa-label">Taux d'audit initial (%) :</label>
-                    <f:form.textfield name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" class="rgaa-input" placeholder="85%" />
+                    <f:form.textfield name="wizardData[rgaa_taux]" value="{f:if(condition: wizardData.rgaa_taux, then: wizardData.rgaa_taux, else: '84%')}" class="rgaa-input" placeholder="84%" />
                 </div>
 
                 <div class="d-flex justify-content-between mt-4">
@@ -139,10 +152,13 @@
         </f:if>
 
         <f:if condition="{step} == 4">
-            <!-- ÉTAPE 4 : Arborescence -->
-            <h2 class="rgaa-card-title">Étape 4 / 5 : Structuration de l'Arborescence du Site</h2>
+            <!-- ÉTAPE 4 : Arborescence sur-mesure -->
+            <h2 class="rgaa-card-title">Étape 4 / 5 : Choix des Pages de l'Arborescence du Site</h2>
+            <p class="rgaa-help-text mb-4">
+                Cliquez sur un menu ci-dessous pour afficher et sélectionner les pages et sous-pages à créer lors du déploiement.
+            </p>
 
-            <f:form action="wizard" name="wizardData">
+            <f:form action="wizard" name="wizardData" id="rgaa-wizard-tree-form">
                 <f:form.hidden name="step" value="5" />
                 <f:form.hidden name="wizardData[name]" value="{wizardData.name}" />
                 <f:form.hidden name="wizardData[identifier]" value="{wizardData.identifier}" />
@@ -152,11 +168,127 @@
                 <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
                 <f:form.hidden name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" />
                 <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
+                <f:form.hidden name="wizardData[selected_pages_initialized]" value="1" />
 
-                <label class="rgaa-switch-container mb-4">
-                    <f:form.checkbox name="wizardData[create_pages]" value="1" checked="true" id="createPages" />
-                    <span class="rgaa-switch-label">Générer automatiquement les 8 pages d'arborescence légales & conformes RGAA</span>
-                </label>
+                <!-- Accordéon des dossiers configurables (Menu principal & Menu en pied de page), fermés par défaut -->
+                <f:for each="{pageTreeCatalog.folders}" as="folder" key="folderKey">
+                    <div class="rgaa-tree-folder-card rgaa-tree-scope rgaa-accordion-item mb-3">
+                        <div class="rgaa-tree-folder-header">
+                            <button
+                                type="button"
+                                class="rgaa-accordion-trigger"
+                                aria-expanded="false"
+                                aria-controls="rgaa-accordion-panel-{folderKey}"
+                            >
+                                <span class="rgaa-accordion-chevron" aria-hidden="true">▸</span>
+                                <span>📁 {folder.title}</span>
+                            </button>
+                            <div class="rgaa-tree-actions">
+                                <button type="button" class="rgaa-btn-mini" data-tree-action="check-scope">Tous</button>
+                                <button type="button" class="rgaa-btn-mini" data-tree-action="uncheck-scope">Aucun</button>
+                            </div>
+                        </div>
+
+                        <div id="rgaa-accordion-panel-{folderKey}" class="rgaa-tree-folder-body" hidden="hidden">
+                            <f:if condition="{folderKey} == 'main_menu'">
+                                <f:then>
+                                    <!-- Grille des rubriques du Menu principal (3 niveaux) -->
+                                    <div class="rgaa-tree-rubriques-grid">
+                                        <f:for each="{folder.pages}" as="l1">
+                                            <div class="rgaa-tree-rubrique-card rgaa-tree-scope rgaa-tree-node" data-node-key="{l1.key}">
+                                                <div class="rgaa-tree-l1-header">
+                                                    <label class="rgaa-tree-label rgaa-tree-label-l1">
+                                                        <input
+                                                            type="checkbox"
+                                                            name="wizardData[selected_pages][]"
+                                                            value="{l1.key}"
+                                                            class="rgaa-tree-checkbox"
+                                                            data-level="1"
+                                                            data-key="{l1.key}"
+                                                            {f:if(condition: '{selectedPagesMap.{l1.key}}', then: 'checked="checked"')}
+                                                        />
+                                                        <span class="rgaa-tree-text">{l1.title}</span>
+                                                    </label>
+                                                    <f:if condition="{l1.children}">
+                                                        <div class="rgaa-tree-mini-controls">
+                                                            <button type="button" class="rgaa-btn-mini" data-tree-action="check-scope" title="Cocher toute la rubrique {l1.title}">Tous</button>
+                                                            <button type="button" class="rgaa-btn-mini" data-tree-action="uncheck-scope" title="Décocher toute la rubrique {l1.title}">Aucun</button>
+                                                        </div>
+                                                    </f:if>
+                                                </div>
+
+                                                <f:if condition="{l1.children}">
+                                                    <ul class="rgaa-tree-list rgaa-tree-list-l2">
+                                                        <f:for each="{l1.children}" as="l2">
+                                                            <li class="rgaa-tree-node rgaa-tree-item-l2" data-node-key="{l2.key}">
+                                                                <label class="rgaa-tree-label rgaa-tree-label-l2">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        name="wizardData[selected_pages][]"
+                                                                        value="{l2.key}"
+                                                                        class="rgaa-tree-checkbox"
+                                                                        data-level="2"
+                                                                        data-key="{l2.key}"
+                                                                        data-parent="{l1.key}"
+                                                                        {f:if(condition: '{selectedPagesMap.{l2.key}}', then: 'checked="checked"')}
+                                                                    />
+                                                                    <span class="rgaa-tree-text">{l2.title}</span>
+                                                                </label>
+
+                                                                <f:if condition="{l2.children}">
+                                                                    <ul class="rgaa-tree-list rgaa-tree-list-l3">
+                                                                        <f:for each="{l2.children}" as="l3">
+                                                                            <li class="rgaa-tree-node rgaa-tree-item-l3" data-node-key="{l3.key}">
+                                                                                <label class="rgaa-tree-label rgaa-tree-label-l3">
+                                                                                    <input
+                                                                                        type="checkbox"
+                                                                                        name="wizardData[selected_pages][]"
+                                                                                        value="{l3.key}"
+                                                                                        class="rgaa-tree-checkbox"
+                                                                                        data-level="3"
+                                                                                        data-key="{l3.key}"
+                                                                                        data-parent="{l2.key}"
+                                                                                        {f:if(condition: '{selectedPagesMap.{l3.key}}', then: 'checked="checked"')}
+                                                                                    />
+                                                                                    <span class="rgaa-tree-text">{l3.title}</span>
+                                                                                </label>
+                                                                            </li>
+                                                                        </f:for>
+                                                                    </ul>
+                                                                </f:if>
+                                                            </li>
+                                                        </f:for>
+                                                    </ul>
+                                                </f:if>
+                                            </div>
+                                        </f:for>
+                                    </div>
+                                </f:then>
+                                <f:else>
+                                    <!-- Liste des pages du dossier Menu en pied de page -->
+                                    <div class="rgaa-tree-footer-grid">
+                                        <f:for each="{folder.pages}" as="fp">
+                                            <div class="rgaa-tree-footer-item rgaa-tree-node" data-node-key="{fp.key}">
+                                                <label class="rgaa-tree-label rgaa-tree-label-l1">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="wizardData[selected_pages][]"
+                                                        value="{fp.key}"
+                                                        class="rgaa-tree-checkbox"
+                                                        data-level="1"
+                                                        data-key="{fp.key}"
+                                                        {f:if(condition: '{selectedPagesMap.{fp.key}}', then: 'checked="checked"')}
+                                                    />
+                                                    <span class="rgaa-tree-text">{fp.title}</span>
+                                                </label>
+                                            </div>
+                                        </f:for>
+                                    </div>
+                                </f:else>
+                            </f:if>
+                        </div>
+                    </div>
+                </f:for>
 
                 <div class="d-flex justify-content-between mt-4">
                     <f:link.action action="wizard" arguments="{step: 3, wizardData: wizardData}" class="rgaa-btn rgaa-btn-outline">← Étape précédente</f:link.action>
@@ -173,9 +305,12 @@
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:1.25rem; margin-bottom:1.5rem;">
                 <div class="rgaa-form-group"><strong>Nom de la commune :</strong> {wizardData.name}</div>
                 <div class="rgaa-form-group"><strong>Domaine / Base URL :</strong> <code>{wizardData.domain}</code></div>
-                <div class="rgaa-form-group"><strong>Identifiant du site :</strong> <code>{wizardData.identifier}</code></div>
+                <div class="rgaa-form-group"><strong>Identifiant du site :</strong> <code>{f:if(condition: wizardData.identifier, then: wizardData.identifier, else: '(Généré automatiquement)')}</code></div>
                 <div class="rgaa-form-group"><strong>Thème sélectionné :</strong> {wizardData.theme}</div>
                 <div class="rgaa-form-group"><strong>Statut RGAA :</strong> {wizardData.rgaa_statut} ({wizardData.rgaa_taux})</div>
+                <div class="rgaa-form-group mb-0">
+                    <strong>Arborescence générée :</strong> <strong>{selectedPagesCount} / {totalPagesCount} pages sélectionnées</strong>
+                </div>
             </div>
 
             <f:form action="createSite" name="wizardData">
@@ -187,7 +322,8 @@
                 <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
                 <f:form.hidden name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" />
                 <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
-                <f:form.hidden name="wizardData[create_pages]" value="{wizardData.create_pages}" />
+                <f:form.hidden name="wizardData[selected_pages_csv]" value="{wizardData.selected_pages_csv}" />
+                <f:form.hidden name="wizardData[selected_pages_initialized]" value="1" />
 
                 <div class="d-flex justify-content-between mt-4">
                     <f:link.action action="wizard" arguments="{step: 4, wizardData: wizardData}" class="rgaa-btn rgaa-btn-outline">← Étape précédente</f:link.action>

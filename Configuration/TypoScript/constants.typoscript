@@ -141,7 +141,7 @@ commune {
   home_sitemap_hide_title = 0
 
   # cat=commune_root/commune_home/120; type=int+; label=Page de Recherche (ID / UID) : Identifiant de la page des résultats de recherche
-  search_page_uid = 23
+  search_page_uid = 76
 
   # ============================================================================
   # 5. ACTUALITÉS
@@ -162,7 +162,7 @@ commune {
   rgaa_taux = 84%
 
   # cat=commune_root/commune_a11y/040; type=int+; label=Page de la Déclaration d'accessibilité (ID / UID)
-  rgaa_page_uid = 96
+  rgaa_page_uid = 72
 
   # ============================================================================
   # 7. PIED DE PAGE & NAVIGATION
@@ -180,16 +180,19 @@ commune {
   footer_contact_btn_title = Contacter la mairie
 
   # cat=commune_root/commune_footer/050; type=int+; label=Page de Contact (ID / UID)
-  footer_contact_page_uid = 22
+  footer_contact_page_uid = 75
 
   # cat=commune_root/commune_footer/060; type=string; label=Image du plan d'accès
   footer_map_image = EXT:site_commune_rgaa/Resources/Public/Images/plan-acces.svg
 
   # cat=commune_root/commune_footer/070; type=int+; label=Page du Plan d'accès / Localisation (ID / UID)
-  footer_map_page_uid = 21
+  footer_map_page_uid = 74
+
+  # cat=commune_root/commune_footer/075; type=int+; label=Dossier du Menu principal (ID / UID)
+  main_menu_folder_uid = 2
 
   # cat=commune_root/commune_footer/080; type=int+; label=Dossier des liens de bas de page (ID / UID)
-  footer_folder_uid = 13
+  footer_folder_uid = 3
 
   # ============================================================================
   # 8. APPLICATION MOBILE (PWA) & ALERTES

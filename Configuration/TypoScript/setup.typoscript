@@ -91,6 +91,18 @@ page {
         commune_home = TEXT
         commune_home.value = Home
 
+        pagets__commune_home_1 = TEXT
+        pagets__commune_home_1.value = Home
+
+        commune_home_1 = TEXT
+        commune_home_1.value = Home
+
+        pagets__commune_home_2 = TEXT
+        pagets__commune_home_2.value = Home2
+
+        commune_home_2 = TEXT
+        commune_home_2.value = Home2
+
         pagets__commune_subpage = TEXT
         pagets__commune_subpage.value = Subpage
 
@@ -124,12 +136,16 @@ page {
       20 = {$page.theme.layoutRootPath}
     }
 
-    # Processeurs de données pour les menus et arborescences (TYPO3 v12/v13)
+    # Processeurs de données pour les menus et arborescences (TYPO3 v12/v13/v14)
     dataProcessing {
       110 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
       110 {
         special = directory
-        special.value.data = site:rootPageId
+        special.value = {$commune.main_menu_folder_uid}
+        special.value.override.data = siteSettings:commune.main_menu_folder_uid
+        special.value.override.ifEmpty.data = site:settings:commune.main_menu_folder_uid
+        special.value.override.ifEmpty.ifEmpty.data = site:commune.main_menu_folder_uid
+        special.value.override.ifEmpty.ifEmpty.ifEmpty.data = site:rootPageId
         levels = 4
         expandAll = 1
         includeSpacer = 0
@@ -142,6 +158,12 @@ page {
         languages = auto
         as = languageNavigation
         addQueryString = 1
+      }
+
+      130 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+      130 {
+        references.fieldName = media
+        as = pageMedia
       }
     }
 
@@ -408,95 +430,116 @@ page {
       # Page de recherche
       communeSearchPageUid = TEXT
       communeSearchPageUid {
-        data = site:settings:commune.search_page_uid
-        ifEmpty.data = site:settings.commune.search_page_uid
-        ifEmpty.ifEmpty.value = {$commune.search_page_uid}
+        data = siteSettings:commune.search_page_uid
+        ifEmpty.data = site:settings:commune.search_page_uid
+        ifEmpty.ifEmpty.data = site:settings.commune.search_page_uid
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.search_page_uid}
       }
 
       # Accessibilité RGAA
       communeRgaaTitre = TEXT
       communeRgaaTitre {
-        data = site:settings:commune.rgaa_titre
-        ifEmpty.data = site:settings.commune.rgaa_titre
-        ifEmpty.ifEmpty.value = {$commune.rgaa_titre}
+        data = siteSettings:commune.rgaa_titre
+        ifEmpty.data = site:settings:commune.rgaa_titre
+        ifEmpty.ifEmpty.data = site:settings.commune.rgaa_titre
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.rgaa_titre}
       }
 
       communeRgaaStatut = TEXT
       communeRgaaStatut {
-        data = site:settings:commune.rgaa_statut
-        ifEmpty.data = site:settings.commune.rgaa_statut
-        ifEmpty.ifEmpty.value = {$commune.rgaa_statut}
+        data = siteSettings:commune.rgaa_statut
+        ifEmpty.data = site:settings:commune.rgaa_statut
+        ifEmpty.ifEmpty.data = site:settings.commune.rgaa_statut
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.rgaa_statut}
       }
 
       communeRgaaTaux = TEXT
       communeRgaaTaux {
-        data = site:settings:commune.rgaa_taux
-        ifEmpty.data = site:settings.commune.rgaa_taux
-        ifEmpty.ifEmpty.value = {$commune.rgaa_taux}
+        data = siteSettings:commune.rgaa_taux
+        ifEmpty.data = site:settings:commune.rgaa_taux
+        ifEmpty.ifEmpty.data = site:settings.commune.rgaa_taux
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.rgaa_taux}
       }
 
       communeRgaaPageUid = TEXT
       communeRgaaPageUid {
-        data = site:settings:commune.rgaa_page_uid
-        ifEmpty.data = site:settings.commune.rgaa_page_uid
-        ifEmpty.ifEmpty.value = {$commune.rgaa_page_uid}
+        data = siteSettings:commune.rgaa_page_uid
+        ifEmpty.data = site:settings:commune.rgaa_page_uid
+        ifEmpty.ifEmpty.data = site:settings.commune.rgaa_page_uid
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.rgaa_page_uid}
       }
 
       # Pied de page
       communeFooterCol1Title = TEXT
       communeFooterCol1Title {
-        data = site:settings:commune.footer_col1_title
-        ifEmpty.data = site:settings.commune.footer_col1_title
-        ifEmpty.ifEmpty.value = {$commune.footer_col1_title}
+        data = siteSettings:commune.footer_col1_title
+        ifEmpty.data = site:settings:commune.footer_col1_title
+        ifEmpty.ifEmpty.data = site:settings.commune.footer_col1_title
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.footer_col1_title}
       }
 
       communeFooterContactBtnTitle = TEXT
       communeFooterContactBtnTitle {
-        data = site:settings:commune.footer_contact_btn_title
-        ifEmpty.data = site:settings.commune.footer_contact_btn_title
-        ifEmpty.ifEmpty.value = {$commune.footer_contact_btn_title}
+        data = siteSettings:commune.footer_contact_btn_title
+        ifEmpty.data = site:settings:commune.footer_contact_btn_title
+        ifEmpty.ifEmpty.data = site:settings.commune.footer_contact_btn_title
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.footer_contact_btn_title}
       }
 
       communeFooterContactPageUid = TEXT
       communeFooterContactPageUid {
-        data = site:settings:commune.footer_contact_page_uid
-        ifEmpty.data = site:settings.commune.footer_contact_page_uid
-        ifEmpty.ifEmpty.value = {$commune.footer_contact_page_uid}
+        data = siteSettings:commune.footer_contact_page_uid
+        ifEmpty.data = site:settings:commune.footer_contact_page_uid
+        ifEmpty.ifEmpty.data = site:settings.commune.footer_contact_page_uid
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.footer_contact_page_uid}
       }
 
       communeFooterCol2Title = TEXT
       communeFooterCol2Title {
-        data = site:settings:commune.footer_col2_title
-        ifEmpty.data = site:settings.commune.footer_col2_title
-        ifEmpty.ifEmpty.value = {$commune.footer_col2_title}
+        data = siteSettings:commune.footer_col2_title
+        ifEmpty.data = site:settings:commune.footer_col2_title
+        ifEmpty.ifEmpty.data = site:settings.commune.footer_col2_title
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.footer_col2_title}
       }
 
       communeFooterCol3Title = TEXT
       communeFooterCol3Title {
-        data = site:settings:commune.footer_col3_title
-        ifEmpty.data = site:settings.commune.footer_col3_title
-        ifEmpty.ifEmpty.value = {$commune.footer_col3_title}
+        data = siteSettings:commune.footer_col3_title
+        ifEmpty.data = site:settings:commune.footer_col3_title
+        ifEmpty.ifEmpty.data = site:settings.commune.footer_col3_title
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.footer_col3_title}
       }
 
       communeFooterMapImage = TEXT
       communeFooterMapImage {
-        data = site:settings:commune.footer_map_image
-        ifEmpty.data = site:settings.commune.footer_map_image
-        ifEmpty.ifEmpty.value = {$commune.footer_map_image}
+        data = siteSettings:commune.footer_map_image
+        ifEmpty.data = site:settings:commune.footer_map_image
+        ifEmpty.ifEmpty.data = site:settings.commune.footer_map_image
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.footer_map_image}
       }
 
       communeFooterMapPageUid = TEXT
       communeFooterMapPageUid {
-        data = site:settings:commune.footer_map_page_uid
-        ifEmpty.data = site:settings.commune.footer_map_page_uid
-        ifEmpty.ifEmpty.value = {$commune.footer_map_page_uid}
+        data = siteSettings:commune.footer_map_page_uid
+        ifEmpty.data = site:settings:commune.footer_map_page_uid
+        ifEmpty.ifEmpty.data = site:settings.commune.footer_map_page_uid
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.footer_map_page_uid}
+      }
+
+      communeMainMenuFolderUid = TEXT
+      communeMainMenuFolderUid {
+        data = siteSettings:commune.main_menu_folder_uid
+        ifEmpty.data = site:settings:commune.main_menu_folder_uid
+        ifEmpty.ifEmpty.data = site:settings.commune.main_menu_folder_uid
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.main_menu_folder_uid}
       }
 
       communeFooterFolderUid = TEXT
       communeFooterFolderUid {
-        data = site:settings:commune.footer_folder_uid
-        ifEmpty.data = site:settings.commune.footer_folder_uid
-        ifEmpty.ifEmpty.value = {$commune.footer_folder_uid}
+        data = siteSettings:commune.footer_folder_uid
+        ifEmpty.data = site:settings:commune.footer_folder_uid
+        ifEmpty.ifEmpty.data = site:settings.commune.footer_folder_uid
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.footer_folder_uid}
       }
 
       # Réseaux sociaux et options d'affichage
@@ -611,6 +654,105 @@ page {
         }
       }
 
+      contentRow2Col1 = CONTENT
+      contentRow2Col1 {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=11
+        }
+      }
+
+      contentRow2Col2 = CONTENT
+      contentRow2Col2 {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=12
+        }
+      }
+
+      contentRow3Col1 = CONTENT
+      contentRow3Col1 {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=20
+        }
+      }
+
+      contentRow4Col1 = CONTENT
+      contentRow4Col1 {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=21
+        }
+      }
+
+      contentRow4Col2 = CONTENT
+      contentRow4Col2 {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=22
+        }
+      }
+
+      contentRow5Col1 = CONTENT
+      contentRow5Col1 {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=30
+        }
+      }
+
+      contentRow6Col1 = CONTENT
+      contentRow6Col1 {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=31
+        }
+      }
+
+      contentRow6Col2 = CONTENT
+      contentRow6Col2 {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=32
+        }
+      }
+
+      contentRow7Col1 = CONTENT
+      contentRow7Col1 {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=40
+        }
+      }
+
+      contentRow8Col1 = CONTENT
+      contentRow8Col1 {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=41
+        }
+      }
+
+      contentRow8Col2 = CONTENT
+      contentRow8Col2 {
+        table = tt_content
+        select {
+          orderBy = sorting
+          where = {#colPos}=42
+        }
+      }
+
       newsContent = CONTENT
       newsContent {
         table = tt_content
@@ -638,10 +780,15 @@ page {
         }
       }
 
-      # Menu principal accessible (Megamenu 3 niveaux)
+      # Menu principal accessible (Megamenu 3 niveaux, alimenté par le dossier Menu principal)
       mainNavigation = HMENU
       mainNavigation {
-        entryLevel = 0
+        special = directory
+        special.value = {$commune.main_menu_folder_uid}
+        special.value.override.data = siteSettings:commune.main_menu_folder_uid
+        special.value.override.ifEmpty.data = site:settings:commune.main_menu_folder_uid
+        special.value.override.ifEmpty.ifEmpty.data = site:commune.main_menu_folder_uid
+        special.value.override.ifEmpty.ifEmpty.ifEmpty.data = site:rootPageId
         1 = TMENU
         1 {
           expAll = 1
@@ -713,10 +860,10 @@ page {
         }
       }
 
-      # Menu secondaire / Navigation latérale pour sous-pages (multi-niveaux 1 à 3)
+      # Menu secondaire / Navigation latérale pour sous-pages (multi-niveaux sous la rubrique active)
       subNavigation = HMENU
       subNavigation {
-        entryLevel = 1
+        entryLevel = 2
         1 = TMENU
         1 {
           wrap = <ul class="list-group list-group-flush commune-sidebar-menu level-1">|</ul>
@@ -815,12 +962,14 @@ page {
         }
       }
 
-      # Menu dynamique de bas de page (généré depuis le dossier configuré, ex: [13] Pied de page)
+      # Menu dynamique de bas de page (généré depuis le dossier configuré, ex: [3] Menu en pied de page)
       footerNavigation = HMENU
       footerNavigation {
         special = directory
         special.value = {$commune.footer_folder_uid}
-        special.value.override.data = site:commune.footer_folder_uid
+        special.value.override.data = siteSettings:commune.footer_folder_uid
+        special.value.override.ifEmpty.data = site:settings:commune.footer_folder_uid
+        special.value.override.ifEmpty.ifEmpty.data = site:commune.footer_folder_uid
         1 = TMENU
         1 {
           wrap = <ul class="list-inline mb-0">|</ul>
@@ -840,8 +989,11 @@ page {
       sitemapNavigation = HMENU
       sitemapNavigation {
         special = directory
-        special.value.data = site:rootPageId
-        ifEmpty.special.value = 1
+        special.value = {$commune.main_menu_folder_uid}
+        special.value.override.data = siteSettings:commune.main_menu_folder_uid
+        special.value.override.ifEmpty.data = site:settings:commune.main_menu_folder_uid
+        special.value.override.ifEmpty.ifEmpty.data = site:commune.main_menu_folder_uid
+        special.value.override.ifEmpty.ifEmpty.ifEmpty.data = site:rootPageId
         excludeDoktypes = 199,254
         1 = TMENU
         1 {
@@ -942,4 +1094,3 @@ lib.contentElement {
 # Inclusion de la configuration de l'extension hCaptcha pour EXT:form
 # ------------------------------------------------------------------------------
 @import 'EXT:hcaptcha/Configuration/TypoScript/setup.typoscript'
-

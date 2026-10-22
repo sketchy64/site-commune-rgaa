@@ -4,8 +4,11 @@
 <f:layout name="Default" />
 
 <f:section name="Main">
+    <!-- Bandeau d'en-tête pleine largeur : Hero - Titre - Fil d'Ariane -->
+    <f:render partial="Structure/PageHero" arguments="{_all}" />
+
     <div class="container my-4">
-        <div class="row">
+        <div class="row g-4">
             <!-- Barre latérale / Navigation de rubrique (Landmark role="complementary") -->
             <aside class="col-lg-3 col-md-4 mb-4" role="complementary" aria-label="Navigation de la rubrique">
                 <div class="card border-0 shadow-sm mb-4 commune-sidebar-card">
@@ -22,7 +25,7 @@
                     </div>
                 </div>
 
-                <!-- Contenu additionnel colonne latérale (colPos 200) -->
+                <!-- Contenu additionnel colonne latérale rétrocompatible (colPos 200) -->
                 <f:if condition="{sidebarLeftContent}">
                     <div class="commune-sidebar-extra">
                         <f:format.raw>{sidebarLeftContent}</f:format.raw>
@@ -30,21 +33,9 @@
                 </f:if>
             </aside>
 
-            <!-- Corps de la page (Article principal) -->
-            <article class="col-lg-9 col-md-8">
-                <!-- Titre H1 unique de la page avec même style que les H2 de l'accueil -->
-                <div class="mb-4">
-                    <h1 class="page-title commune-section-title mb-0">{data.title}</h1>
-                </div>
-
-                <f:if condition="{data.subtitle}">
-                    <p class="lead text-muted mb-4">{data.subtitle}</p>
-                </f:if>
-
-                <!-- Contenu principal (colPos 0) -->
-                <div class="commune-page-content">
-                    <f:format.raw>{mainContent}</f:format.raw>
-                </div>
+            <!-- Corps de la page : 8 rangées de contenu modulables (100% et 50%/50% alternés) -->
+            <article class="col-lg-9 col-md-8 commune-page-content">
+                <f:render partial="Structure/ContentRows" arguments="{_all}" />
             </article>
         </div>
     </div>

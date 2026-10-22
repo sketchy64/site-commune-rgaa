@@ -106,6 +106,24 @@ class BackendModuleController extends ActionController
     public function wizardAction(int $step = 1, array $wizardData = []): ResponseInterface
     {
         $definitions = $this->siteManagementService->getSettingsDefinitions();
+        $pageTreeCatalog = $this->siteManagementService->getDefaultPageTreeCatalog();
+        $allPageKeys = $this->siteManagementService->getAllCatalogPageKeys();
+
+        // Normalisation de la sélection de pages entre les étapes 4 et 5
+        if (isset($wizardData['selected_pages']) && is_array($wizardData['selected_pages'])) {
+            $selectedPagesList = array_values(array_filter(array_map('strval', $wizardData['selected_pages'])));
+            $wizardData['selected_pages_csv'] = implode(',', $selectedPagesList);
+            $wizardData['selected_pages_initialized'] = '1';
+            unset($wizardData['selected_pages']);
+        } elseif (!empty($wizardData['selected_pages_initialized'])) {
+            $csv = (string)($wizardData['selected_pages_csv'] ?? '');
+            $selectedPagesList = $csv !== '' ? array_values(array_filter(explode(',', $csv))) : [];
+        } else {
+            $selectedPagesList = $allPageKeys;
+            $wizardData['selected_pages_csv'] = implode(',', $selectedPagesList);
+        }
+
+        $selectedPagesMap = array_fill_keys($selectedPagesList, true);
 
         $this->pageRenderer->addCssFile('EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css');
         $this->pageRenderer->addJsFile('EXT:site_commune_rgaa/Resources/Public/JavaScript/backend-module.js');
@@ -117,6 +135,10 @@ class BackendModuleController extends ActionController
             'step' => $step,
             'wizardData' => $wizardData,
             'settingsDefinitions' => $definitions['settings'] ?? [],
+            'pageTreeCatalog' => $pageTreeCatalog,
+            'selectedPagesMap' => $selectedPagesMap,
+            'selectedPagesCount' => count($selectedPagesList),
+            'totalPagesCount' => count($allPageKeys),
         ]);
 
         return $moduleTemplate->renderResponse('BackendModule/Wizard');
@@ -138,7 +160,7 @@ class BackendModuleController extends ActionController
             $newIdentifier = $this->siteManagementService->createNewSite($wizardData);
 
             $this->addFlashMessage(
-                sprintf('Félicitations ! Le site de la commune "%s" a été déployé avec succès (Identifiant: %s).', $wizardData['name'], $newIdentifier),
+                sprintf('Félicitations ! Le site de la commune "%s" et son arborescence ont été déployés avec succès (Identifiant: %s).', $wizardData['name'], $newIdentifier),
                 'Déploiement réussi',
                 ContextualFeedbackSeverity::OK
             );

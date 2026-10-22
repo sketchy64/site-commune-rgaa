@@ -8,20 +8,22 @@
             <nav aria-label="{f:translate(key: 'nav.breadcrumb', extensionName: 'site_commune_rgaa')}">
                 <ol class="breadcrumb mb-0 small" itemscope itemtype="https://schema.org/BreadcrumbList">
                     <f:for each="{rootLine}" as="pageItem" iteration="iter">
-                        <li class="breadcrumb-item {f:if(condition: iter.isLast, then: 'active')}" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                            <f:if condition="{iter.isLast}">
-                                <f:then>
-                                    <span itemprop="name" aria-current="page">{pageItem.title}</span>
-                                    <meta itemprop="position" content="{iter.cycle}" />
-                                </f:then>
-                                <f:else>
-                                    <f:link.page pageUid="{pageItem.uid}" additionalAttributes="{itemprop: 'item'}">
-                                        <span itemprop="name">{pageItem.title}</span>
-                                    </f:link.page>
-                                    <meta itemprop="position" content="{iter.cycle}" />
-                                </f:else>
-                            </f:if>
-                        </li>
+                        <f:if condition="{pageItem.doktype} != 254">
+                            <li class="breadcrumb-item {f:if(condition: iter.isLast, then: 'active')}" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                                <f:if condition="{iter.isLast}">
+                                    <f:then>
+                                        <span itemprop="name" aria-current="page">{pageItem.title}</span>
+                                        <meta itemprop="position" content="{iter.cycle}" />
+                                    </f:then>
+                                    <f:else>
+                                        <f:link.page pageUid="{pageItem.uid}" additionalAttributes="{itemprop: 'item'}">
+                                            <span itemprop="name">{pageItem.title}</span>
+                                        </f:link.page>
+                                        <meta itemprop="position" content="{iter.cycle}" />
+                                    </f:else>
+                                </f:if>
+                            </li>
+                        </f:if>
                     </f:for>
                 </ol>
             </nav>

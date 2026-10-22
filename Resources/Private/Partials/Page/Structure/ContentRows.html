@@ -1,0 +1,81 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<!-- Grille modulable des 8 rangées de contenu (alternance 1 colonne 100% / 2 colonnes 50%-50%) -->
+
+<!-- Rangée 1 : Contenu principal (100% - colPos 0) -->
+<f:if condition="{mainContent}">
+    <div class="commune-content-row commune-content-row-1 mb-4">
+        <f:format.raw>{mainContent}</f:format.raw>
+    </div>
+</f:if>
+
+<!-- Rangée 2 : Contenu | Contenu (50% / 50% - colPos 11 & 12) -->
+<f:if condition="{contentRow2Col1} || {contentRow2Col2}">
+    <div class="row g-4 commune-content-row commune-content-row-2 mb-4">
+        <div class="col-12 col-md-6">
+            <f:format.raw>{contentRow2Col1}</f:format.raw>
+        </div>
+        <div class="col-12 col-md-6">
+            <f:format.raw>{contentRow2Col2}</f:format.raw>
+        </div>
+    </div>
+</f:if>
+
+<!-- Rangée 3 : Contenu (100% - colPos 20) -->
+<f:if condition="{contentRow3Col1}">
+    <div class="commune-content-row commune-content-row-3 mb-4">
+        <f:format.raw>{contentRow3Col1}</f:format.raw>
+    </div>
+</f:if>
+
+<!-- Rangée 4 : Contenu | Contenu (50% / 50% - colPos 21 & 22) -->
+<f:if condition="{contentRow4Col1} || {contentRow4Col2}">
+    <div class="row g-4 commune-content-row commune-content-row-4 mb-4">
+        <div class="col-12 col-md-6">
+            <f:format.raw>{contentRow4Col1}</f:format.raw>
+        </div>
+        <div class="col-12 col-md-6">
+            <f:format.raw>{contentRow4Col2}</f:format.raw>
+        </div>
+    </div>
+</f:if>
+
+<!-- Rangée 5 : Contenu (100% - colPos 30) -->
+<f:if condition="{contentRow5Col1}">
+    <div class="commune-content-row commune-content-row-5 mb-4">
+        <f:format.raw>{contentRow5Col1}</f:format.raw>
+    </div>
+</f:if>
+
+<!-- Rangée 6 : Contenu | Contenu (50% / 50% - colPos 31 & 32) -->
+<f:if condition="{contentRow6Col1} || {contentRow6Col2}">
+    <div class="row g-4 commune-content-row commune-content-row-6 mb-4">
+        <div class="col-12 col-md-6">
+            <f:format.raw>{contentRow6Col1}</f:format.raw>
+        </div>
+        <div class="col-12 col-md-6">
+            <f:format.raw>{contentRow6Col2}</f:format.raw>
+        </div>
+    </div>
+</f:if>
+
+<!-- Rangée 7 : Contenu (100% - colPos 40) -->
+<f:if condition="{contentRow7Col1}">
+    <div class="commune-content-row commune-content-row-7 mb-4">
+        <f:format.raw>{contentRow7Col1}</f:format.raw>
+    </div>
+</f:if>
+
+<!-- Rangée 8 : Contenu | Contenu (50% / 50% - colPos 41 & 42) -->
+<f:if condition="{contentRow8Col1} || {contentRow8Col2}">
+    <div class="row g-4 commune-content-row commune-content-row-8 mb-4">
+        <div class="col-12 col-md-6">
+            <f:format.raw>{contentRow8Col1}</f:format.raw>
+        </div>
+        <div class="col-12 col-md-6">
+            <f:format.raw>{contentRow8Col2}</f:format.raw>
+        </div>
+    </div>
+</f:if>
+</html>
