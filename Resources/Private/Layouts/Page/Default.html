@@ -65,11 +65,5 @@
             <polyline points="18 15 12 9 6 15"></polyline>
         </svg>
     </button>
-
-    <!-- Panneau flottant de sélection du thème et des couleurs en direct (Activé par la constante TypoScript commune.enable_theme_switcher) -->
-    <f:variable name="activeEnableThemeSwitcher" value="{rgaa:siteSetting(key: 'commune.enable_theme_switcher', default: communeEnableThemeSwitcher)}" />
-    <f:if condition="{activeEnableThemeSwitcher} == 1 || {activeEnableThemeSwitcher} == 'true' || {activeEnableThemeSwitcher} == '1'">
-        <f:render partial="Structure/AdminThemeSwitcher" arguments="{_all}" />
-    </f:if>
 </div>
 </html>

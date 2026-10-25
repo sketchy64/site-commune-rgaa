@@ -177,10 +177,6 @@ page {
       communeColorScheme = TEXT
       communeColorScheme.value = {$commune.color_scheme_css}
 
-      # Activer le sélecteur de thème & couleurs en frontend (Live Preview)
-      communeEnableThemeSwitcher = TEXT
-      communeEnableThemeSwitcher.value = {$commune.enable_theme_switcher}
-
       # Activer le bandeau supérieur PWA & Notifications
       communePwaTopBannerEnable = TEXT
       communePwaTopBannerEnable {

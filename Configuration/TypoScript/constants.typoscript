@@ -44,9 +44,6 @@ commune {
   # cat=commune_root/commune_theme/020; type=options[Couleur 1 : Vert Institutionnel & Or=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css, Couleur 2 : Bleu Océan & Sable=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-2.css, Couleur 3 : Ardoise Montagne & Terracotta=EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-3.css]; label=Jeu de couleurs institutionnel : Sélectionnez la palette de couleurs à appliquer.
   color_scheme_css = EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css
 
-  # cat=commune_root/commune_theme/030; type=boolean; label=Activer le sélecteur de thème & couleurs sur le frontend (Live Preview)
-  enable_theme_switcher = 1
-
   # ============================================================================
   # 2. IDENTITÉ & MARQUE
   # ============================================================================
