@@ -28,16 +28,27 @@ class BackendModuleController extends ActionController
      */
     public function indexAction(string $siteIdentifier = ''): ResponseInterface
     {
+        $siteIdentifier = trim($siteIdentifier);
+
         if ($siteIdentifier === '') {
-            $queryParams = $this->request->getQueryParams();
-            if (!empty($queryParams['siteIdentifier']) && is_string($queryParams['siteIdentifier'])) {
-                $siteIdentifier = $queryParams['siteIdentifier'];
+            if ($this->request->hasArgument('siteIdentifier')) {
+                $siteIdentifier = trim((string)$this->request->getArgument('siteIdentifier'));
+            } else {
+                $queryParams = $this->request->getQueryParams();
+                $parsedBody = is_array($this->request->getParsedBody()) ? $this->request->getParsedBody() : [];
+                $extbaseParams = $queryParams['tx_sitecommunergaa_site_communergaa'] ?? $parsedBody['tx_sitecommunergaa_site_communergaa'] ?? [];
+
+                $siteIdentifier = trim((string)(
+                    $queryParams['siteIdentifier']
+                    ?? $parsedBody['siteIdentifier']
+                    ?? (is_array($extbaseParams) ? ($extbaseParams['siteIdentifier'] ?? '') : '')
+                ));
             }
         }
 
         $sites = $this->siteManagementService->getAllSites();
 
-        if (empty($siteIdentifier) && !empty($sites)) {
+        if ((empty($siteIdentifier) || !isset($sites[$siteIdentifier])) && !empty($sites)) {
             $firstSite = reset($sites);
             $siteIdentifier = $firstSite->getIdentifier();
         }

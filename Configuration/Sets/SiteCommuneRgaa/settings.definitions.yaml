@@ -536,8 +536,15 @@ settings:
 
 
   # ============================================================================
-  # 8. NUMÉROS D'URGENCE RÉPUBLICAINS
+  # 8. NUMÉROS D'URGENCE RÉPUBLICAINS & COMMUNAUX
   # ============================================================================
+  commune.urgence_mairie:
+    label: 'Astreinte / Urgence Mairie (optionnel)'
+    description: 'Numéro d''urgence communal ou d''astreinte municipale affiché en priorité'
+    category: commune_emergency
+    type: string
+    default: ''
+
   commune.samu:
     label: 'SAMU (Urgences médicales)'
     category: commune_emergency

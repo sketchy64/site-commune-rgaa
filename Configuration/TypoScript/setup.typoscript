@@ -538,6 +538,60 @@ page {
         ifEmpty.ifEmpty.ifEmpty.value = {$commune.footer_folder_uid}
       }
 
+      # Numéros d'urgence républicains et communaux
+      communeUrgenceMairie = TEXT
+      communeUrgenceMairie {
+        data = siteSettings:commune.urgence_mairie
+        ifEmpty.data = site:settings:commune.urgence_mairie
+        ifEmpty.ifEmpty.data = site:settings.commune.urgence_mairie
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.urgence_mairie}
+      }
+
+      communeSamu = TEXT
+      communeSamu {
+        data = siteSettings:commune.samu
+        ifEmpty.data = site:settings:commune.samu
+        ifEmpty.ifEmpty.data = site:settings.commune.samu
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.samu}
+        ifEmpty.ifEmpty.ifEmpty.ifEmpty.value = 15
+      }
+
+      communePolice = TEXT
+      communePolice {
+        data = siteSettings:commune.police
+        ifEmpty.data = site:settings:commune.police
+        ifEmpty.ifEmpty.data = site:settings.commune.police
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.police}
+        ifEmpty.ifEmpty.ifEmpty.ifEmpty.value = 17
+      }
+
+      communePompiers = TEXT
+      communePompiers {
+        data = siteSettings:commune.pompiers
+        ifEmpty.data = site:settings:commune.pompiers
+        ifEmpty.ifEmpty.data = site:settings.commune.pompiers
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.pompiers}
+        ifEmpty.ifEmpty.ifEmpty.ifEmpty.value = 18
+      }
+
+      communeUrgenceEuropeenne = TEXT
+      communeUrgenceEuropeenne {
+        data = siteSettings:commune.urgence_europeenne
+        ifEmpty.data = site:settings:commune.urgence_europeenne
+        ifEmpty.ifEmpty.data = site:settings.commune.urgence_europeenne
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.urgence_europeenne}
+        ifEmpty.ifEmpty.ifEmpty.ifEmpty.value = 112
+      }
+
+      communeSourdsMalentendants = TEXT
+      communeSourdsMalentendants {
+        data = siteSettings:commune.sourds_malentendants
+        ifEmpty.data = site:settings:commune.sourds_malentendants
+        ifEmpty.ifEmpty.data = site:settings.commune.sourds_malentendants
+        ifEmpty.ifEmpty.ifEmpty.value = {$commune.sourds_malentendants}
+        ifEmpty.ifEmpty.ifEmpty.ifEmpty.value = 114
+      }
+
       # Réseaux sociaux et options d'affichage
       communeSocialFacebook = TEXT
       communeSocialFacebook {
@@ -1079,11 +1133,43 @@ plugin.tx_news {
 # ------------------------------------------------------------------------------
 lib.contentElement {
   templateRootPaths {
+    0 = EXT:bootstrap_package/Resources/Private/Templates/ContentElements/
+    10 = EXT:bootstrap_package/Resources/Private/Templates/ContentElements/
     100 = EXT:site_commune_rgaa/Resources/Private/OverriddenTemplates/BootstrapPackage/ContentElements/
   }
   partialRootPaths {
+    0 = EXT:bootstrap_package/Resources/Private/Partials/ContentElements/
+    10 = EXT:bootstrap_package/Resources/Private/Partials/ContentElements/
     100 = EXT:site_commune_rgaa/Resources/Private/Partials/ContentElements/
   }
+  layoutRootPaths {
+    0 = EXT:bootstrap_package/Resources/Private/Layouts/ContentElements/
+    10 = EXT:bootstrap_package/Resources/Private/Layouts/ContentElements/
+    100 = EXT:site_commune_rgaa/Resources/Private/Layouts/ContentElements/
+  }
+}
+
+plugin.tx_bootstrappackage {
+  view {
+    templateRootPaths {
+      100 = EXT:site_commune_rgaa/Resources/Private/OverriddenTemplates/BootstrapPackage/ContentElements/
+    }
+    partialRootPaths {
+      100 = EXT:site_commune_rgaa/Resources/Private/Partials/ContentElements/
+    }
+    layoutRootPaths {
+      100 = EXT:site_commune_rgaa/Resources/Private/Layouts/ContentElements/
+    }
+  }
+}
+
+# Rendu accessible et unifie pour Texte et medias (textmedia) et Texte et images (textpic)
+tt_content.textmedia {
+  templateName = Textmedia
+}
+tt_content.textpic =< tt_content.textmedia
+tt_content.textpic {
+  templateName = Textmedia
 }
 
 # ------------------------------------------------------------------------------

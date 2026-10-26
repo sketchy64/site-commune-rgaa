@@ -1,0 +1,17 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:bk2k="http://typo3.org/ns/BK2K/BootstrapPackage/ViewHelpers"
+      xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<!--
+    OVERRIDE: EXT:bootstrap_package/Resources/Private/Templates/ContentElements/TextmediaAbove.html
+    REASON: RGAA 4.1 Compliance (Critère 1.1 / 1.2 Alternatives textuelles, sémantique figure/figcaption)
+    TARGET EXT VERSION: bootstrap_package ^14.0 || ^15.0 || ^16.0
+-->
+
+<f:layout name="Default" />
+
+<f:section name="Main">
+    <f:render partial="Media/Textmedia" arguments="{_all}" />
+</f:section>
+</html>

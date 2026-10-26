@@ -16,6 +16,19 @@
 <f:variable name="communeHeaderHideSlogan" value="{rgaa:siteSetting(key: 'commune.header_hide_slogan', default: communeHeaderHideSlogan)}" />
 <f:variable name="communeSearchPageUid" value="{rgaa:siteSetting(key: 'commune.search_page_uid', default: communeSearchPageUid)}" />
 
+<!-- Numéros d'urgence (Paramètres de site ou Constantes) -->
+<f:variable name="communeUrgenceMairie" value="{rgaa:siteSetting(key: 'commune.urgence_mairie', default: communeUrgenceMairie)}" />
+<f:variable name="communeSamu" value="{rgaa:siteSetting(key: 'commune.samu', default: communeSamu)}" />
+<f:if condition="!{communeSamu}"><f:variable name="communeSamu" value="15" /></f:if>
+<f:variable name="communePolice" value="{rgaa:siteSetting(key: 'commune.police', default: communePolice)}" />
+<f:if condition="!{communePolice}"><f:variable name="communePolice" value="17" /></f:if>
+<f:variable name="communePompiers" value="{rgaa:siteSetting(key: 'commune.pompiers', default: communePompiers)}" />
+<f:if condition="!{communePompiers}"><f:variable name="communePompiers" value="18" /></f:if>
+<f:variable name="communeUrgenceEuropeenne" value="{rgaa:siteSetting(key: 'commune.urgence_europeenne', default: communeUrgenceEuropeenne)}" />
+<f:if condition="!{communeUrgenceEuropeenne}"><f:variable name="communeUrgenceEuropeenne" value="112" /></f:if>
+<f:variable name="communeSourdsMalentendants" value="{rgaa:siteSetting(key: 'commune.sourds_malentendants', default: communeSourdsMalentendants)}" />
+<f:if condition="!{communeSourdsMalentendants}"><f:variable name="communeSourdsMalentendants" value="114" /></f:if>
+
 <!-- Chargement dynamique de la palette de couleurs sélectionnée (Paramètres de site ou Constantes) -->
 <f:variable name="activeColorScheme" value="{rgaa:siteSetting(key: 'commune.color_scheme_css', default: communeColorScheme)}" />
 <f:if condition="!{activeColorScheme}">

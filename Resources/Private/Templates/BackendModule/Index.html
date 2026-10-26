@@ -29,15 +29,16 @@
     <!-- Barre de Sélection de la Commune Active -->
     <f:if condition="{sites}">
         <div class="rgaa-site-bar">
-            <f:form action="index" method="get" class="rgaa-site-select-group">
+            <f:form action="index" method="post" class="rgaa-site-select-group">
                 <label for="siteSelect">Commune active à paramétrer :</label>
-                <select id="siteSelect" name="siteIdentifier" class="rgaa-select" onchange="this.form.submit()">
+                <select id="siteSelect" name="siteIdentifier" class="rgaa-select" data-site-selector="true">
                     <f:for each="{sites}" as="site">
-                        <option value="{site.identifier}" {f:if(condition: '{site.identifier} == {selectedSiteIdentifier}', then: 'selected')}>
+                        <option value="{site.identifier}" data-url="{f:uri.action(action: 'index', arguments: {siteIdentifier: site.identifier})}" {f:if(condition: '{site.identifier} == {selectedSiteIdentifier}', then: 'selected="selected"')}>
                             🏛️ {f:if(condition: site.configuration.websiteTitle, then: site.configuration.websiteTitle, else: '{f:if(condition: site.configuration.title, then: site.configuration.title, else: site.identifier)}')} ({site.identifier})
                         </option>
                     </f:for>
                 </select>
+                <button type="submit" class="rgaa-btn rgaa-btn-sm rgaa-btn-outline" id="siteSelectSubmit" title="Charger la commune sélectionnée">Charger</button>
             </f:form>
 
             <f:if condition="{selectedSite}">
@@ -374,6 +375,14 @@
                 <div class="rgaa-tab-panel" id="panel-emergency">
                     <div class="rgaa-card">
                         <h2 class="rgaa-card-title">9. Numéros d'urgence & Utiles</h2>
+
+                        <div class="rgaa-form-group mb-4">
+                            <label class="rgaa-label">Numéro d'urgence communal / Astreinte Mairie (optionnel) :</label>
+                            <f:form.textfield name="settings[commune.urgence_mairie]" value="{currentSettings.commune.urgence_mairie}" class="rgaa-input" placeholder="Ex : 06 12 34 56 78" />
+                            <small class="text-muted d-block mt-1">Numéro d'urgence communal ou de permanence d'astreinte affiché en priorité en tête des numéros d'urgence du pied de page.</small>
+                        </div>
+
+                        <h3 class="h5 text-primary mb-3 pt-2 border-top">Numéros d'urgence républicains & européens</h3>
 
                         <div class="rgaa-grid-3">
                             <div class="rgaa-form-group">

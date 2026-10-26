@@ -3,46 +3,15 @@
       xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
+<!--
+    OVERRIDE: EXT:bootstrap_package/Resources/Private/Templates/ContentElements/Textmedia.html
+    REASON: RGAA 4.1 Compliance (Critère 1.1 / 1.2 Alternatives textuelles, sémantique figure/figcaption)
+    TARGET EXT VERSION: bootstrap_package ^14.0 || ^15.0 || ^16.0
+-->
+
 <f:layout name="Default" />
 
 <f:section name="Main">
-    <div class="commune-textmedia textmedia textmedia-{data.imageorient} clearfix">
-        <f:if condition="{gallery.rows}">
-            <figure class="figure textmedia-gallery mb-3 {f:if(condition: '{data.imageorient} == 0', then: 'float-none')} {f:if(condition: '{data.imageorient} == 1', then: 'float-md-end ms-md-4')} {f:if(condition: '{data.imageorient} == 2', then: 'float-md-start me-md-4')}">
-                <f:for each="{gallery.rows}" as="row">
-                    <f:for each="{row.columns}" as="column">
-                        <f:if condition="{column.media}">
-                            <f:if condition="{column.media.alternative}">
-                                <f:then>
-                                    <f:image image="{column.media}"
-                                             class="figure-img img-fluid rounded"
-                                             title="{column.media.title}"
-                                             alt="{column.media.alternative}" />
-                                </f:then>
-                                <f:else>
-                                    <f:image image="{column.media}"
-                                             class="figure-img img-fluid rounded"
-                                             title="{column.media.title}"
-                                             alt=""
-                                             additionalAttributes="{role: 'presentation', aria-hidden: 'true'}" />
-                                </f:else>
-                            </f:if>
-                            <f:if condition="{column.media.description}">
-                                <figcaption class="figure-caption text-muted small mt-1">
-                                    {column.media.description}
-                                </figcaption>
-                            </f:if>
-                        </f:if>
-                    </f:for>
-                </f:for>
-            </figure>
-        </f:if>
-
-        <f:if condition="{data.bodytext}">
-            <div class="textmedia-body">
-                <f:format.html>{data.bodytext}</f:format.html>
-            </div>
-        </f:if>
-    </div>
+    <f:render partial="Media/Textmedia" arguments="{_all}" />
 </f:section>
 </html>

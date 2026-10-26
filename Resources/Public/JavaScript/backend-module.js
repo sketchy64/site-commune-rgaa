@@ -100,8 +100,26 @@
         }
     });
 
-    // 4. Cascade Parent <-> Sous-pages lors du clic sur une case à cocher
+    // 4. Gestionnaire d'événement 'change' (Commune active & Wizard)
     document.addEventListener('change', function (event) {
+        // Changement de la commune active (Administration Multi-Sites)
+        const siteSelect = event.target.closest('#siteSelect, [data-site-selector]');
+        if (siteSelect) {
+            const selectedOption = siteSelect.options[siteSelect.selectedIndex];
+            if (selectedOption) {
+                const targetUrl = selectedOption.getAttribute('data-url');
+                if (targetUrl && targetUrl !== '' && targetUrl !== window.location.href) {
+                    window.location.href = targetUrl;
+                    return;
+                }
+                if (siteSelect.form) {
+                    siteSelect.form.submit();
+                    return;
+                }
+            }
+        }
+
+        // Cascade Parent <-> Sous-pages lors du clic sur une case à cocher (Étape 4 du Wizard)
         const checkbox = event.target.closest('.rgaa-tree-checkbox');
         if (!checkbox) {
             return;

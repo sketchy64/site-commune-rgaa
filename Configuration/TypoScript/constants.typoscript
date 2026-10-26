@@ -222,8 +222,11 @@ commune {
   pwa_vapid_email = contact@notre-commune.fr
 
   # ============================================================================
-  # 9. NUMÉROS D'URGENCE RÉPUBLICAINS
+  # 9. NUMÉROS D'URGENCE RÉPUBLICAINS & COMMUNAUX
   # ============================================================================
+  # cat=commune_root/commune_emergency/005; type=string; label=Astreinte / Urgence Mairie (optionnel) : Numéro d'urgence communal affiché en priorité
+  urgence_mairie = 
+
   # cat=commune_root/commune_emergency/010; type=string; label=SAMU (Urgences médicales)
   samu = 15
 

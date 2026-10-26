@@ -1,4 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:rgaa="http://typo3.org/ns/Commune/SiteCommuneRgaa/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
 <!-- Pied de page institutionnel (Landmark role="contentinfo") -->
@@ -70,7 +71,18 @@
                 </div>
             </div>
 
-            <!-- Colonne 2 : Numéros d'urgence républicains -->
+            <!-- Colonne 2 : Numéros d'urgence républicains & communaux -->
+            <f:variable name="actualUrgenceMairie" value="{rgaa:siteSetting(key: 'commune.urgence_mairie', default: communeUrgenceMairie)}" />
+            <f:variable name="actualSamu" value="{rgaa:siteSetting(key: 'commune.samu', default: communeSamu)}" />
+            <f:if condition="!{actualSamu}"><f:variable name="actualSamu" value="15" /></f:if>
+            <f:variable name="actualPolice" value="{rgaa:siteSetting(key: 'commune.police', default: communePolice)}" />
+            <f:if condition="!{actualPolice}"><f:variable name="actualPolice" value="17" /></f:if>
+            <f:variable name="actualPompiers" value="{rgaa:siteSetting(key: 'commune.pompiers', default: communePompiers)}" />
+            <f:if condition="!{actualPompiers}"><f:variable name="actualPompiers" value="18" /></f:if>
+            <f:variable name="actualUrgenceEuropeenne" value="{rgaa:siteSetting(key: 'commune.urgence_europeenne', default: communeUrgenceEuropeenne)}" />
+            <f:if condition="!{actualUrgenceEuropeenne}"><f:variable name="actualUrgenceEuropeenne" value="112" /></f:if>
+            <f:variable name="actualSourdsMalentendants" value="{rgaa:siteSetting(key: 'commune.sourds_malentendants', default: communeSourdsMalentendants)}" />
+            <f:if condition="!{actualSourdsMalentendants}"><f:variable name="actualSourdsMalentendants" value="114" /></f:if>
             <div class="col-lg-4 col-md-6">
                 <h2 class="h5 text-uppercase border-bottom pb-2 mb-3 footer-column-title">
                     <f:if condition="{communeFooterCol2Title}">
@@ -79,11 +91,54 @@
                     </f:if>
                 </h2>
                 <ul class="list-unstyled emergency-list">
-                    <li class="mb-2"><strong>15</strong> : SAMU (Urgences médicales)</li>
-                    <li class="mb-2"><strong>17</strong> : Police secours / Gendarmerie</li>
-                    <li class="mb-2"><strong>18</strong> : Sapeurs-Pompiers</li>
-                    <li class="mb-2"><strong>112</strong> : Numéro d'urgence européen</li>
-                    <li class="mb-2"><strong>114</strong> : Numéro d'urgence pour personnes sourdes et malentendantes (SMS/Visio)</li>
+                    <f:if condition="{actualUrgenceMairie}">
+                        <li class="mb-2">
+                            <a href="tel:{actualUrgenceMairie}" class="commune-footer-link text-decoration-none">
+                                <strong>{actualUrgenceMairie}</strong>
+                                <span class="visually-hidden"> : Téléphoner à l'astreinte d'urgence de la mairie</span>
+                            </a> : Astreinte / Urgence Mairie
+                        </li>
+                    </f:if>
+                    <f:if condition="{actualSamu}">
+                        <li class="mb-2">
+                            <a href="tel:{actualSamu}" class="commune-footer-link text-decoration-none">
+                                <strong>{actualSamu}</strong>
+                                <span class="visually-hidden"> : Téléphoner au SAMU (Urgences médicales)</span>
+                            </a> : SAMU (Urgences médicales)
+                        </li>
+                    </f:if>
+                    <f:if condition="{actualPolice}">
+                        <li class="mb-2">
+                            <a href="tel:{actualPolice}" class="commune-footer-link text-decoration-none">
+                                <strong>{actualPolice}</strong>
+                                <span class="visually-hidden"> : Téléphoner à Police secours ou la Gendarmerie</span>
+                            </a> : Police secours / Gendarmerie
+                        </li>
+                    </f:if>
+                    <f:if condition="{actualPompiers}">
+                        <li class="mb-2">
+                            <a href="tel:{actualPompiers}" class="commune-footer-link text-decoration-none">
+                                <strong>{actualPompiers}</strong>
+                                <span class="visually-hidden"> : Téléphoner aux Sapeurs-Pompiers</span>
+                            </a> : Sapeurs-Pompiers
+                        </li>
+                    </f:if>
+                    <f:if condition="{actualUrgenceEuropeenne}">
+                        <li class="mb-2">
+                            <a href="tel:{actualUrgenceEuropeenne}" class="commune-footer-link text-decoration-none">
+                                <strong>{actualUrgenceEuropeenne}</strong>
+                                <span class="visually-hidden"> : Téléphoner au numéro d'urgence européen</span>
+                            </a> : Numéro d'urgence européen
+                        </li>
+                    </f:if>
+                    <f:if condition="{actualSourdsMalentendants}">
+                        <li class="mb-2">
+                            <a href="sms:{actualSourdsMalentendants}" class="commune-footer-link text-decoration-none">
+                                <strong>{actualSourdsMalentendants}</strong>
+                                <span class="visually-hidden"> : Envoyer un SMS d'urgence pour personnes sourdes et malentendantes</span>
+                            </a> : Urgence personnes sourdes et malentendantes (SMS/Visio)
+                        </li>
+                    </f:if>
                 </ul>
             </div>
 

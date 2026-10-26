@@ -23,7 +23,7 @@ class SiteManagementService
 {
     private const SETTINGS_DEFINITIONS_PATH = 'EXT:site_commune_rgaa/Configuration/Sets/SiteCommuneRgaa/settings.definitions.yaml';
 
-    private const DEFAULT_STATIC_INCLUDES = 'EXT:fluid_styled_content/Configuration/TypoScript,EXT:fluid_styled_content/Configuration/TypoScript/Styling,EXT:form/Configuration/TypoScript,EXT:bootstrap_package/Configuration/TypoScript,EXT:site_commune_rgaa/Configuration/TypoScript';
+    private const DEFAULT_STATIC_INCLUDES = 'EXT:bootstrap_package/Configuration/TypoScript,EXT:form/Configuration/TypoScript,EXT:site_commune_rgaa/Configuration/TypoScript';
 
     public function __construct(
         private readonly SiteFinder $siteFinder,
