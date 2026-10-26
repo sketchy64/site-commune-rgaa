@@ -525,67 +525,145 @@ a:focus {
 }
 
 /* ==============================================================================
-   Titres de Section & Titres H1 de Pages (Style harmonisé Classique)
+   Titres de Section, Titres H1 de Pages & Titres H2 d'éléments de contenu (Accueil)
    ============================================================================== */
-.commune-section-title,
-.page-title,
-h1.page-title,
-.commune-page-title {
+.commune-section-title:not(.visually-hidden),
+.page-title:not(.visually-hidden),
+h1.page-title:not(.visually-hidden),
+.commune-page-title:not(.visually-hidden),
+.commune-home-section.commune-section-content h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *) {
   position: relative;
-  display: inline-block;
+  display: block !important;
+  width: fit-content !important;
+  max-width: 100% !important;
   font-family: var(--commune-font-title) !important;
   font-size: 1.75rem !important;
   font-weight: 700 !important;
+  line-height: 1.3 !important;
   color: var(--commune-text-main) !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
   padding-bottom: 0.75rem !important;
+  margin-top: 0 !important;
   margin-bottom: 1.5rem !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
   text-align: left !important;
+  border-left: none !important;
+  border-right: none !important;
   border-bottom: none !important;
 }
 
-.commune-section-title::after,
-.page-title::after,
-h1.page-title::after,
-.commune-page-title::after {
+.commune-section-title:not(.visually-hidden)::after,
+.page-title:not(.visually-hidden)::after,
+h1.page-title:not(.visually-hidden)::after,
+.commune-page-title:not(.visually-hidden)::after,
+.commune-home-section.commune-section-content h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *)::after {
   content: "";
   position: absolute;
   bottom: 0;
   left: 0;
+  right: auto;
+  transform: none;
   width: 50px;
   height: 4px;
   background-color: var(--commune-primary);
   border-radius: 2px;
 }
 
-.commune-section-title::before,
-.page-title::before,
-h1.page-title::before,
-.commune-page-title::before {
+.commune-section-title:not(.visually-hidden)::before,
+.page-title:not(.visually-hidden)::before,
+h1.page-title:not(.visually-hidden)::before,
+.commune-page-title:not(.visually-hidden)::before,
+.commune-home-section.commune-section-content h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *)::before {
   content: "";
   position: absolute;
   bottom: 0;
   left: 55px;
+  right: auto;
+  transform: none;
   width: 12px;
   height: 4px;
   background-color: var(--commune-secondary);
   border-radius: 2px;
 }
 
-.text-center .commune-section-title,
-.commune-section-title.text-center {
+/* Alignement : Centrer */
+:is(.text-center, .ce-headline-center) :is(.commune-section-title, .page-title, h1.page-title, .commune-page-title):not(.visually-hidden),
+:is(.commune-section-title, .page-title, h1.page-title, .commune-page-title):not(.visually-hidden):is(.text-center, .ce-headline-center),
+.commune-home-section.commune-section-content :is(.text-center, .ce-headline-center) h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *),
+.commune-home-section.commune-section-content h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *):is(.text-center, .ce-headline-center) {
+  margin-left: auto !important;
+  margin-right: auto !important;
   text-align: center !important;
 }
 
-.text-center .commune-section-title::after,
-.commune-section-title.text-center::after {
+:is(.text-center, .ce-headline-center) :is(.commune-section-title, .page-title, h1.page-title, .commune-page-title):not(.visually-hidden)::after,
+:is(.commune-section-title, .page-title, h1.page-title, .commune-page-title):not(.visually-hidden):is(.text-center, .ce-headline-center)::after,
+.commune-home-section.commune-section-content :is(.text-center, .ce-headline-center) h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *)::after,
+.commune-home-section.commune-section-content h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *):is(.text-center, .ce-headline-center)::after {
   left: 50% !important;
-  transform: translateX(-35px) !important;
+  right: auto !important;
+  transform: translateX(-33.5px) !important;
 }
 
-.text-center .commune-section-title::before,
-.commune-section-title.text-center::before {
+:is(.text-center, .ce-headline-center) :is(.commune-section-title, .page-title, h1.page-title, .commune-page-title):not(.visually-hidden)::before,
+:is(.commune-section-title, .page-title, h1.page-title, .commune-page-title):not(.visually-hidden):is(.text-center, .ce-headline-center)::before,
+.commune-home-section.commune-section-content :is(.text-center, .ce-headline-center) h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *)::before,
+.commune-home-section.commune-section-content h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *):is(.text-center, .ce-headline-center)::before {
   left: 50% !important;
-  transform: translateX(20px) !important;
+  right: auto !important;
+  transform: translateX(21.5px) !important;
+}
+
+/* Alignement : Droite */
+:is(.text-end, .text-right, .ce-headline-right) :is(.commune-section-title, .page-title, h1.page-title, .commune-page-title):not(.visually-hidden),
+:is(.commune-section-title, .page-title, h1.page-title, .commune-page-title):not(.visually-hidden):is(.text-end, .text-right, .ce-headline-right),
+.commune-home-section.commune-section-content :is(.text-end, .text-right, .ce-headline-right) h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *),
+.commune-home-section.commune-section-content h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *):is(.text-end, .text-right, .ce-headline-right) {
+  margin-left: auto !important;
+  margin-right: 0 !important;
+  text-align: right !important;
+}
+
+:is(.text-end, .text-right, .ce-headline-right) :is(.commune-section-title, .page-title, h1.page-title, .commune-page-title):not(.visually-hidden)::after,
+:is(.commune-section-title, .page-title, h1.page-title, .commune-page-title):not(.visually-hidden):is(.text-end, .text-right, .ce-headline-right)::after,
+.commune-home-section.commune-section-content :is(.text-end, .text-right, .ce-headline-right) h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *)::after,
+.commune-home-section.commune-section-content h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *):is(.text-end, .text-right, .ce-headline-right)::after {
+  left: auto !important;
+  right: 17px !important;
+  transform: none !important;
+}
+
+:is(.text-end, .text-right, .ce-headline-right) :is(.commune-section-title, .page-title, h1.page-title, .commune-page-title):not(.visually-hidden)::before,
+:is(.commune-section-title, .page-title, h1.page-title, .commune-page-title):not(.visually-hidden):is(.text-end, .text-right, .ce-headline-right)::before,
+.commune-home-section.commune-section-content :is(.text-end, .text-right, .ce-headline-right) h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *)::before,
+.commune-home-section.commune-section-content h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *):is(.text-end, .text-right, .ce-headline-right)::before {
+  left: auto !important;
+  right: 0 !important;
+  transform: none !important;
+}
+
+/* Alignement explicite : Gauche (prioritaire sur un conteneur parent centré/droite) */
+:is(.commune-section-title, .page-title, h1.page-title, .commune-page-title):not(.visually-hidden):is(.text-start, .text-left, .ce-headline-left),
+.commune-home-section.commune-section-content h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *):is(.text-start, .text-left, .ce-headline-left) {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  text-align: left !important;
+}
+
+:is(.commune-section-title, .page-title, h1.page-title, .commune-page-title):not(.visually-hidden):is(.text-start, .text-left, .ce-headline-left)::after,
+.commune-home-section.commune-section-content h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *):is(.text-start, .text-left, .ce-headline-left)::after {
+  left: 0 !important;
+  right: auto !important;
+  transform: none !important;
+}
+
+:is(.commune-section-title, .page-title, h1.page-title, .commune-page-title):not(.visually-hidden):is(.text-start, .text-left, .ce-headline-left)::before,
+.commune-home-section.commune-section-content h2:is(.element-header, .frame-header *, .ce-header *, .frame > header > *, .frame-inner > header > *, .frame-inner > *, .frame > *):not(.visually-hidden):not(.h1):not(.h3):not(.h4):not(.h5):not(.h6):not(.display-1):not(.display-2):not(.display-3):not(.display-4):not(.card-title):not(.card-subtitle):not(.panel-title):not(.news-detail-title):not(.accordion-header):not(.news *):is(.text-start, .text-left, .ce-headline-left)::before {
+  left: 55px !important;
+  right: auto !important;
+  transform: none !important;
 }
 
 /* ==============================================================================
@@ -2415,48 +2493,108 @@ a.icon-group-item:hover {
 /* ==============================================================================
    1. Hiérarchie Typographique (Niveaux de Titres H1 à H6 - Thème 1 Classique)
    ============================================================================== */
-.commune-page-content h1:not(.card-title):not(.card-subtitle),
-.ce-header h1:not(.card-title):not(.card-subtitle),
-article h1:not(.card-title):not(.card-subtitle),
-main h1:not(.commune-title):not(.page-title):not(.card-title):not(.card-subtitle) {
+:is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle) {
   font-family: var(--commune-font-title);
   font-size: 1.75rem;
   font-weight: 700;
   color: var(--commune-text-main);
   position: relative;
-  display: inline-block;
+  display: block;
+  width: fit-content;
+  max-width: 100%;
   padding-bottom: 0.75rem;
   margin-top: 1.75rem;
   margin-bottom: 1.5rem;
+  margin-left: 0;
+  margin-right: auto;
+  text-align: left;
   line-height: 1.3;
 }
 
-.commune-page-content h1::after,
-.ce-header h1::after,
-article h1::after,
-main h1:not(.commune-title):not(.page-title)::after {
+:is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle)::after {
   content: "";
   position: absolute;
   bottom: 0;
   left: 0;
+  right: auto;
+  transform: none;
   width: 50px;
   height: 4px;
   background-color: var(--commune-primary);
   border-radius: 2px;
 }
 
-.commune-page-content h1::before,
-.ce-header h1::before,
-article h1::before,
-main h1:not(.commune-title):not(.page-title)::before {
+:is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle)::before {
   content: "";
   position: absolute;
   bottom: 0;
   left: 55px;
+  right: auto;
+  transform: none;
   width: 12px;
   height: 4px;
   background-color: var(--commune-secondary);
   border-radius: 2px;
+}
+
+:is(.text-center, .ce-headline-center) :is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle),
+:is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle):is(.text-center, .ce-headline-center) {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+}
+
+:is(.text-center, .ce-headline-center) :is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle)::after,
+:is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle):is(.text-center, .ce-headline-center)::after {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-33.5px) !important;
+}
+
+:is(.text-center, .ce-headline-center) :is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle)::before,
+:is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle):is(.text-center, .ce-headline-center)::before {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(21.5px) !important;
+}
+
+:is(.text-end, .text-right, .ce-headline-right) :is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle),
+:is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle):is(.text-end, .text-right, .ce-headline-right) {
+  margin-left: auto !important;
+  margin-right: 0 !important;
+  text-align: right !important;
+}
+
+:is(.text-end, .text-right, .ce-headline-right) :is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle)::after,
+:is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle):is(.text-end, .text-right, .ce-headline-right)::after {
+  left: auto !important;
+  right: 17px !important;
+  transform: none !important;
+}
+
+:is(.text-end, .text-right, .ce-headline-right) :is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle)::before,
+:is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle):is(.text-end, .text-right, .ce-headline-right)::before {
+  left: auto !important;
+  right: 0 !important;
+  transform: none !important;
+}
+
+:is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle):is(.text-start, .text-left, .ce-headline-left) {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  text-align: left !important;
+}
+
+:is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle):is(.text-start, .text-left, .ce-headline-left)::after {
+  left: 0 !important;
+  right: auto !important;
+  transform: none !important;
+}
+
+:is(.commune-page-content h1, .ce-header h1, article h1, main h1):not(.commune-title):not(.page-title):not(.commune-page-title):not(.commune-section-title):not(.visually-hidden):not(.card-title):not(.card-subtitle):is(.text-start, .text-left, .ce-headline-left)::before {
+  left: 55px !important;
+  right: auto !important;
+  transform: none !important;
 }
 
 /* Titres H2 : Vert foncé, 1.45rem, bordure gauche or */

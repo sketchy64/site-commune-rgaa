@@ -47,18 +47,8 @@
     <!-- 2. Accès rapides / Démarches citoyennes (colPos 120) -->
     <f:if condition="{quickAccessContent}">
         <section class="commune-home-section commune-quickaccess-section commune-section-content py-5"
-            aria-label="{f:if(condition: communeHomeQuickaccessTitle, then: communeHomeQuickaccessTitle, else: 'Accès rapides')}">
+            aria-label="Accès rapides">
             <div class="container">
-                <f:if condition="!{communeHomeQuickaccessHideTitle}">
-                    <div class="text-center mb-4">
-                        <h2 class="h3 mb-0 commune-section-title">
-                            <f:if condition="{communeHomeQuickaccessTitle}">
-                                <f:then>{communeHomeQuickaccessTitle}</f:then>
-                                <f:else>Accès rapides</f:else>
-                            </f:if>
-                        </h2>
-                    </div>
-                </f:if>
                 <div class="commune-quickaccess-wrapper">
                     <f:format.raw>{quickAccessContent}</f:format.raw>
                 </div>
@@ -66,7 +56,7 @@
         </section>
     </f:if>
 
-    <!-- 3. Grille de contenu — Gabarit Accueil 1 (4 rangées : 100% / 50%-50% / 100% / 50%-50%) -->
+    <!-- 3. Grille de contenu — Gabarit Accueil 1 (8 rangées : alternance 100% / 50%-50%) -->
     <!-- Rangée 1 : Contenu principal (100% - colPos 0) -->
     <f:if condition="{mainContent}">
         <section class="commune-home-section commune-main-content-section commune-section-content py-4" aria-label="Contenu principal">
@@ -117,91 +107,57 @@
         </div>
     </f:if>
 
-    <!-- Rétrocompatibilité des anciennes colonnes si des contenus y sont présents (115, 125, 130) -->
-    <f:if condition="{editoContent}">
-        <section class="commune-home-section commune-edito-section commune-section-content py-5"
-            aria-label="{f:if(condition: communeHomeEditoTitle, then: communeHomeEditoTitle, else: 'Le mot du Maire')}">
+    <!-- Rangée 5 : Contenu (100% - colPos 30) -->
+    <f:if condition="{contentRow5Col1}">
+        <div class="commune-home-section commune-content-grid-row commune-section-content py-4">
             <div class="container">
-                <f:if condition="!{communeHomeEditoHideTitle}">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h2 class="h3 mb-0 commune-section-title">
-                            <f:if condition="{communeHomeEditoTitle}">
-                                <f:then>{communeHomeEditoTitle}</f:then>
-                                <f:else>Le mot du Maire</f:else>
-                            </f:if>
-                        </h2>
-                    </div>
-                </f:if>
-                <div class="edito-content-wrapper">
-                    <f:format.raw>{editoContent}</f:format.raw>
-                </div>
+                <f:format.raw>{contentRow5Col1}</f:format.raw>
             </div>
-        </section>
+        </div>
     </f:if>
 
-    <f:if condition="{featuredNewsContent} && !{communeHomeFeaturedNewsHideSection}">
-        <section class="commune-home-section commune-featured-news-section commune-section-content py-5"
-            aria-label="{f:if(condition: communeHomeFeaturedNewsTitle, then: communeHomeFeaturedNewsTitle, else: 'Actualités à la une')}">
+    <!-- Rangée 6 : Contenu | Contenu (50% / 50% - colPos 31 & 32) -->
+    <f:if condition="{contentRow6Col1} || {contentRow6Col2}">
+        <div class="commune-home-section commune-content-grid-row commune-section-content py-4">
             <div class="container">
-                <f:if condition="!{communeHomeFeaturedNewsHideTitle}">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h2 class="h3 mb-0 commune-section-title">
-                            <f:if condition="{communeHomeFeaturedNewsTitle}">
-                                <f:then>{communeHomeFeaturedNewsTitle}</f:then>
-                                <f:else>Actualités à la une</f:else>
-                            </f:if>
-                        </h2>
-                    </div>
-                </f:if>
-                <div class="commune-featured-news-wrapper">
-                    <f:format.raw>{featuredNewsContent}</f:format.raw>
-                </div>
-            </div>
-        </section>
-    </f:if>
-
-    <f:if condition="{newsContent}">
-        <section class="commune-home-section commune-news-section commune-section-content py-5"
-            aria-label="{f:if(condition: communeHomeNewsTitle, then: communeHomeNewsTitle, else: 'Actualités & Agenda municipal')}">
-            <div class="container">
-                <f:if condition="!{communeHomeNewsHideTitle}">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h2 class="h3 mb-0 commune-section-title">
-                            <f:if condition="{communeHomeNewsTitle}">
-                                <f:then>{communeHomeNewsTitle}</f:then>
-                                <f:else>Actualités &amp; Agenda municipal</f:else>
-                            </f:if>
-                        </h2>
-                    </div>
-                </f:if>
                 <div class="row g-4">
-                    <f:format.raw>{newsContent}</f:format.raw>
-                </div>
-            </div>
-        </section>
-    </f:if>
-
-    <!-- 4. Zone automatique de bas d'accueil : Carte interactive - Plan du site (- Pied de page) -->
-    <f:if condition="{interactiveMapContent}">
-        <section class="commune-home-section commune-interactive-map-section commune-section-content p-0 m-0"
-            aria-label="{f:if(condition: communeHomeMapTitle, then: communeHomeMapTitle, else: 'Plan interactif & Découverte')}">
-            <f:if condition="!{communeHomeMapHideTitle}">
-                <div class="container mb-4">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h2 class="h3 mb-0 commune-section-title">
-                            <f:if condition="{communeHomeMapTitle}">
-                                <f:then>{communeHomeMapTitle}</f:then>
-                                <f:else>Plan interactif &amp; Découverte</f:else>
-                            </f:if>
-                        </h2>
+                    <div class="col-12 col-lg-6">
+                        <f:format.raw>{contentRow6Col1}</f:format.raw>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <f:format.raw>{contentRow6Col2}</f:format.raw>
                     </div>
                 </div>
-            </f:if>
-            <div class="commune-map-wrapper w-100 p-0 m-0 overflow-hidden">
-                <f:format.raw>{interactiveMapContent}</f:format.raw>
             </div>
-        </section>
+        </div>
     </f:if>
+
+    <!-- Rangée 7 : Contenu (100% - colPos 40) -->
+    <f:if condition="{contentRow7Col1}">
+        <div class="commune-home-section commune-content-grid-row commune-section-content py-4">
+            <div class="container">
+                <f:format.raw>{contentRow7Col1}</f:format.raw>
+            </div>
+        </div>
+    </f:if>
+
+    <!-- Rangée 8 : Contenu | Contenu (50% / 50% - colPos 41 & 42) -->
+    <f:if condition="{contentRow8Col1} || {contentRow8Col2}">
+        <div class="commune-home-section commune-content-grid-row commune-section-content py-4">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-12 col-lg-6">
+                        <f:format.raw>{contentRow8Col1}</f:format.raw>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <f:format.raw>{contentRow8Col2}</f:format.raw>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </f:if>
+
+    <!-- 4. Zone automatique de bas d'accueil : Plan du site (- Pied de page) -->
 
     <f:if condition="{communeHomeSitemapEnable}">
         <section class="commune-home-section commune-sitemap-section commune-section-content py-5"

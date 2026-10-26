@@ -5,7 +5,7 @@ mod.web_layout.BackendLayouts {
     config {
       backend_layout {
         colCount = 2
-        rowCount = 10
+        rowCount = 14
         rows {
           1 {
             columns {
@@ -98,6 +98,52 @@ mod.web_layout.BackendLayouts {
             }
           }
           10 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 30
+                colspan = 2
+              }
+            }
+          }
+          11 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 31
+                colspan = 1
+              }
+              2 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 32
+                colspan = 1
+              }
+            }
+          }
+          12 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 40
+                colspan = 2
+              }
+            }
+          }
+          13 {
+            columns {
+              1 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 41
+                colspan = 1
+              }
+              2 {
+                name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.content
+                colPos = 42
+                colspan = 1
+              }
+            }
+          }
+          14 {
             columns {
               1 {
                 name = LLL:EXT:site_commune_rgaa/Resources/Private/Language/locallang_be.xlf:backend_layout.column.home_footer

@@ -93,6 +93,22 @@ composer require commune/site-commune-rgaa
 
 Pour plus de détails, consultez [Documentation/INSTALLATION.md](Documentation/INSTALLATION.md).
 
+### 3. Gestionnaire de fichiers créé automatiquement au déploiement
+
+À la fin de l'assistant de déploiement (module **Collectivités RGAA**), après la création des pages, l'extension prépare le gestionnaire de fichiers de la commune (service `CommuneFileStorageService`) :
+
+| Élément | Résultat (ex. identifiant `mouguerre`) |
+|---|---|
+| Dossier des ressources du thème | `fileadmin/mouguerre/template/` |
+| Dossier des contenus | `fileadmin/mouguerre/uploads/` |
+| Arborescence | Un dossier par page sélectionnée du **Menu principal**, dans le même ordre et la même hiérarchie (`0_accueil/0_bandeau`, `0_accueil/1_actualites`, `0_accueil/2_agenda`, `1_la-mairie/…`), suivi du dossier `FORMATION`. Les pages techniques de détail (actus, agenda) n'ont pas de sous-dossier superflu. |
+| Stockage FAL (`sys_file_storage`) | Optionnel via l'étape 5 de l'assistant (« Créer un point de stockage dédié », décochée par défaut). Si activé : point de stockage local dédié sur `fileadmin/[id]/uploads/`. Si non activé : mutualisé proprement sous le stockage principal `fileadmin`. |
+| Point de montage (`sys_filemounts`) | Créé systématiquement à la racine du dossier `uploads/` de la commune (sur `[storage_uid]:/` si stockage dédié, ou sur `1:/[id]/uploads/` par défaut), prêt à être affecté aux groupes de rédacteurs de la collectivité. |
+
+Nommage des dossiers : index de 0 à N, puis `_`, puis le titre en minuscules sans accents ; espaces, apostrophes et caractères spéciaux deviennent des tirets (« L'histoire » → `l-histoire`).
+
+**Ce que le service ne fait jamais :** supprimer, renommer ou déplacer un dossier. Un stockage ou un point de montage existant pour le même chemin est réutilisé. Si `uploads/` contient déjà des éléments, l'arborescence n'est pas générée. Un échec n'annule pas le déploiement du site : un message (avertissement ou erreur) s'affiche et le détail est journalisé dans les logs TYPO3.
+
 ---
 
 ## 🌐 Publication sur GitHub

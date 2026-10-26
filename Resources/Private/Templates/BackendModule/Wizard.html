@@ -44,7 +44,7 @@
                 <f:form.hidden name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" />
                 <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
                 <f:form.hidden name="wizardData[selected_pages_csv]" value="{wizardData.selected_pages_csv}" />
-                <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />
+                <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />`r`n                <f:form.hidden name="wizardData[create_custom_storage]" value="{wizardData.create_custom_storage}" />
 
                 <div class="rgaa-form-group">
                     <label class="rgaa-label">Nom officiel de la commune * :</label>
@@ -88,7 +88,7 @@
                 <f:form.hidden name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" />
                 <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
                 <f:form.hidden name="wizardData[selected_pages_csv]" value="{wizardData.selected_pages_csv}" />
-                <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />
+                <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />`r`n                <f:form.hidden name="wizardData[create_custom_storage]" value="{wizardData.create_custom_storage}" />
 
                 <div class="rgaa-form-group">
                     <label class="rgaa-label">Thème Graphique :</label>
@@ -128,7 +128,7 @@
                 <f:form.hidden name="wizardData[theme]" value="{wizardData.theme}" />
                 <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
                 <f:form.hidden name="wizardData[selected_pages_csv]" value="{wizardData.selected_pages_csv}" />
-                <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />
+                <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />`r`n                <f:form.hidden name="wizardData[create_custom_storage]" value="{wizardData.create_custom_storage}" />
 
                 <div class="rgaa-form-group">
                     <label class="rgaa-label">Statut légal de conformité :</label>
@@ -324,6 +324,17 @@
                 <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
                 <f:form.hidden name="wizardData[selected_pages_csv]" value="{wizardData.selected_pages_csv}" />
                 <f:form.hidden name="wizardData[selected_pages_initialized]" value="1" />
+
+                <!-- Option Stockage Dédié -->
+                <div class="rgaa-form-group" style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:1rem; margin-top:1.5rem; margin-bottom:1.5rem;">
+                    <label class="rgaa-tree-label d-flex align-items-center" style="cursor:pointer; font-weight:600; color:#0f4c81; margin-bottom:0.25rem;">
+                        <f:form.checkbox name="wizardData[create_custom_storage]" value="1" checked="{wizardData.create_custom_storage} == 1" class="me-2" style="width:1.2rem; height:1.2rem; margin-right:0.5rem;" />
+                        <span>Créer un point de stockage dédié</span>
+                    </label>
+                    <div class="rgaa-help-text" style="margin-left:1.7rem; font-size:0.875rem; color:#64748b;">
+                        Laissez cette case décochée (recommandé) pour rattacher la collectivité au stockage standard <code>fileadmin</code> via son propre point de montage sécurisé. Cochez-la uniquement si vous souhaitez un volume FAL distinct et isolé.
+                    </div>
+                </div>
 
                 <div class="d-flex justify-content-between mt-4">
                     <f:link.action action="wizard" arguments="{step: 4, wizardData: wizardData}" class="rgaa-btn rgaa-btn-outline">← Étape précédente</f:link.action>

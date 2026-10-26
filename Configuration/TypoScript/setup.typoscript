@@ -316,90 +316,12 @@ page {
         ifEmpty.ifEmpty.ifEmpty.value = {$commune.horaires}
       }
 
-      # Titres et visibilité des sections de la page d'accueil
+      # Paramètres de la page d'accueil (recherche carrousel & plan du site)
       communeHomeHeroSearchEnable = TEXT
       communeHomeHeroSearchEnable {
         data = site:settings:commune.home_hero_search_enable
         ifEmpty.data = site:settings.commune.home_hero_search_enable
         ifEmpty.ifEmpty.value = {$commune.home_hero_search_enable}
-      }
-
-      communeHomeQuickaccessTitle = TEXT
-      communeHomeQuickaccessTitle {
-        data = site:settings:commune.home_quickaccess_title
-        ifEmpty.data = site:settings.commune.home_quickaccess_title
-        ifEmpty.ifEmpty.value = {$commune.home_quickaccess_title}
-      }
-
-      communeHomeQuickaccessHideTitle = TEXT
-      communeHomeQuickaccessHideTitle {
-        data = site:settings:commune.home_quickaccess_hide_title
-        ifEmpty.data = site:settings.commune.home_quickaccess_hide_title
-        ifEmpty.ifEmpty.value = {$commune.home_quickaccess_hide_title}
-      }
-
-      communeHomeEditoTitle = TEXT
-      communeHomeEditoTitle {
-        data = site:settings:commune.home_edito_title
-        ifEmpty.data = site:settings.commune.home_edito_title
-        ifEmpty.ifEmpty.value = {$commune.home_edito_title}
-      }
-
-      communeHomeEditoHideTitle = TEXT
-      communeHomeEditoHideTitle {
-        data = site:settings:commune.home_edito_hide_title
-        ifEmpty.data = site:settings.commune.home_edito_hide_title
-        ifEmpty.ifEmpty.value = {$commune.home_edito_hide_title}
-      }
-
-      # Titre et visibilité de la section Actualités à la une (Accueil)
-      communeHomeFeaturedNewsTitle = TEXT
-      communeHomeFeaturedNewsTitle {
-        data = site:settings:commune.home_featured_news_title
-        ifEmpty.data = site:settings.commune.home_featured_news_title
-        ifEmpty.ifEmpty.value = {$commune.home_featured_news_title}
-      }
-
-      communeHomeFeaturedNewsHideTitle = TEXT
-      communeHomeFeaturedNewsHideTitle {
-        data = site:settings:commune.home_featured_news_hide_title
-        ifEmpty.data = site:settings.commune.home_featured_news_hide_title
-        ifEmpty.ifEmpty.value = {$commune.home_featured_news_hide_title}
-      }
-
-      communeHomeFeaturedNewsHideSection = TEXT
-      communeHomeFeaturedNewsHideSection {
-        data = site:settings:commune.home_featured_news_hide_section
-        ifEmpty.data = site:settings.commune.home_featured_news_hide_section
-        ifEmpty.ifEmpty.value = {$commune.home_featured_news_hide_section}
-      }
-
-      communeHomeNewsTitle = TEXT
-      communeHomeNewsTitle {
-        data = site:settings:commune.home_news_title
-        ifEmpty.data = site:settings.commune.home_news_title
-        ifEmpty.ifEmpty.value = {$commune.home_news_title}
-      }
-
-      communeHomeNewsHideTitle = TEXT
-      communeHomeNewsHideTitle {
-        data = site:settings:commune.home_news_hide_title
-        ifEmpty.data = site:settings.commune.home_news_hide_title
-        ifEmpty.ifEmpty.value = {$commune.home_news_hide_title}
-      }
-
-      communeHomeMapTitle = TEXT
-      communeHomeMapTitle {
-        data = site:settings:commune.home_map_title
-        ifEmpty.data = site:settings.commune.home_map_title
-        ifEmpty.ifEmpty.value = {$commune.home_map_title}
-      }
-
-      communeHomeMapHideTitle = TEXT
-      communeHomeMapHideTitle {
-        data = site:settings:commune.home_map_hide_title
-        ifEmpty.data = site:settings.commune.home_map_hide_title
-        ifEmpty.ifEmpty.value = {$commune.home_map_hide_title}
       }
 
       communeHomeSitemapEnable = TEXT
@@ -677,24 +599,6 @@ page {
         }
       }
 
-      editoContent = CONTENT
-      editoContent {
-        table = tt_content
-        select {
-          orderBy = sorting
-          where = {#colPos}=115
-        }
-      }
-
-      featuredNewsContent = CONTENT
-      featuredNewsContent {
-        table = tt_content
-        select {
-          orderBy = sorting
-          where = {#colPos}=125
-        }
-      }
-
       mainContent = CONTENT
       mainContent {
         table = tt_content
@@ -800,24 +704,6 @@ page {
         select {
           orderBy = sorting
           where = {#colPos}=42
-        }
-      }
-
-      newsContent = CONTENT
-      newsContent {
-        table = tt_content
-        select {
-          orderBy = sorting
-          where = {#colPos}=130
-        }
-      }
-
-      interactiveMapContent = CONTENT
-      interactiveMapContent {
-        table = tt_content
-        select {
-          orderBy = sorting
-          where = {#colPos}=140
         }
       }
 

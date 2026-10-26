@@ -95,39 +95,6 @@ commune {
   # cat=commune_root/commune_home/005; type=boolean; label=Afficher la zone de recherche sur le carrousel (Accueil)
   home_hero_search_enable = 0
 
-  # cat=commune_root/commune_home/010; type=string; label=Titre de la zone Accès rapides
-  home_quickaccess_title = Accès rapides
-
-  # cat=commune_root/commune_home/020; type=boolean; label=Masquer le titre de la zone Accès rapides
-  home_quickaccess_hide_title = 0
-
-  # cat=commune_root/commune_home/030; type=string; label=Titre de la zone Édito / Mot du Maire
-  home_edito_title = Le mot du Maire
-
-  # cat=commune_root/commune_home/040; type=boolean; label=Masquer le titre de la zone Édito
-  home_edito_hide_title = 0
-
-  # cat=commune_root/commune_home/045; type=string; label=Titre de la zone Actualités à la une
-  home_featured_news_title = Actualités à la une
-
-  # cat=commune_root/commune_home/046; type=boolean; label=Masquer le titre de la zone Actualités à la une
-  home_featured_news_hide_title = 0
-
-  # cat=commune_root/commune_home/047; type=boolean; label=Masquer la section Actualités à la une
-  home_featured_news_hide_section = 0
-
-  # cat=commune_root/commune_home/050; type=string; label=Titre de la zone Actualités & Agenda
-  home_news_title = Actualités & Agenda municipal
-
-  # cat=commune_root/commune_home/060; type=boolean; label=Masquer le titre de la zone Actualités & Agenda
-  home_news_hide_title = 0
-
-  # cat=commune_root/commune_home/070; type=string; label=Titre de la zone Carte interactive
-  home_map_title = Plan interactif & Découverte
-
-  # cat=commune_root/commune_home/080; type=boolean; label=Masquer le titre de la zone Carte interactive
-  home_map_hide_title = 0
-
   # cat=commune_root/commune_home/090; type=boolean; label=Activer la section Plan du site sur la page d'accueil
   home_sitemap_enable = 1
 

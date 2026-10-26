@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Commune\SiteCommuneRgaa\Controller;
 
+use Commune\SiteCommuneRgaa\Service\CommuneFileStorageService;
 use Commune\SiteCommuneRgaa\Service\SiteManagementService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
@@ -176,6 +177,8 @@ class BackendModuleController extends ActionController
                 ContextualFeedbackSeverity::OK
             );
 
+            $this->addFileStorageFlashMessage($this->siteManagementService->getLastFileStorageReport());
+
             return $this->redirect('index', null, null, ['siteIdentifier' => $newIdentifier]);
         } catch (\Throwable $e) {
             $this->addFlashMessage(
@@ -186,5 +189,35 @@ class BackendModuleController extends ActionController
 
             return $this->redirect('wizard', null, null, ['step' => 5, 'wizardData' => $wizardData]);
         }
+    }
+
+    /**
+     * Restitue le résultat de la création des dossiers fileadmin et du stockage FAL de la commune.
+     *
+     * @param array{status: string, messages: array<int, string>, storageUid: int, fileMountUid: int, createdFolders: int, basePath: string}|null $report
+     */
+    private function addFileStorageFlashMessage(?array $report): void
+    {
+        if ($report === null) {
+            return;
+        }
+
+        $storageLabel = !empty($report['customStorageCreated'])
+            ? sprintf('stockage dédié uid %d', $report['storageUid'])
+            : 'stockage principal fileadmin';
+
+        $summary = sprintf(
+            'Dossier « %s » (%s), %d sous-dossier(s) créé(s), point de montage uid %d.',
+            $report['basePath'],
+            $storageLabel,
+            $report['createdFolders'],
+            $report['fileMountUid']
+        );[$title, $severity, $body] = match ($report['status']) {
+            CommuneFileStorageService::STATUS_SUCCESS => ['Gestionnaire de fichiers prêt', ContextualFeedbackSeverity::OK, $summary],
+            CommuneFileStorageService::STATUS_WARNING => ['Gestionnaire de fichiers : points d\'attention', ContextualFeedbackSeverity::WARNING, $summary . ' ' . implode(' ', $report['messages'])],
+            default => ['Gestionnaire de fichiers non initialisé', ContextualFeedbackSeverity::ERROR, 'Le site a bien été créé, mais les dossiers et le stockage de fichiers doivent être créés manuellement. ' . implode(' ', $report['messages'])],
+        };
+
+        $this->addFlashMessage($body, $title, $severity);
     }
 }

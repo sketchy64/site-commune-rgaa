@@ -25,11 +25,29 @@ class SiteManagementService
 
     private const DEFAULT_STATIC_INCLUDES = 'EXT:bootstrap_package/Configuration/TypoScript,EXT:form/Configuration/TypoScript,EXT:site_commune_rgaa/Configuration/TypoScript';
 
+    /**
+     * Rapport du dernier provisionnement du gestionnaire de fichiers (dossiers fileadmin + stockage FAL).
+     *
+     * @var array{status: string, messages: array<int, string>, storageUid: int, fileMountUid: int, createdFolders: int, basePath: string}|null
+     */
+    private ?array $lastFileStorageReport = null;
+
     public function __construct(
         private readonly SiteFinder $siteFinder,
         private readonly SiteConfiguration $siteConfiguration,
-        private readonly ConnectionPool $connectionPool
+        private readonly ConnectionPool $connectionPool,
+        private readonly CommuneFileStorageService $communeFileStorageService
     ) {
+    }
+
+    /**
+     * Retourne le rapport de création des dossiers et du stockage de fichiers du dernier site déployé.
+     *
+     * @return array{status: string, messages: array<int, string>, storageUid: int, fileMountUid: int, createdFolders: int, basePath: string}|null
+     */
+    public function getLastFileStorageReport(): ?array
+    {
+        return $this->lastFileStorageReport;
     }
 
     /**
@@ -772,6 +790,28 @@ class SiteManagementService
         }
 
         $this->saveSiteSettings($identifier, $initialSettings);
+
+        // 5. Gestionnaire de fichiers : dossiers fileadmin/<identifiant>/template|uploads, miroir des pages
+        //    du menu principal, stockage FAL et point de montage. Un échec n'annule jamais le déploiement du site.
+        try {
+            $createCustomStorage = !empty($data['create_custom_storage']);
+            $this->lastFileStorageReport = $this->communeFileStorageService->provision(
+                $identifier,
+                $name,
+                (int)($generatedUids['commune.main_menu_folder_uid'] ?? 0),
+                $createCustomStorage
+            );
+        } catch (\Throwable $e) {
+            $this->lastFileStorageReport = [
+                'status' => CommuneFileStorageService::STATUS_ERROR,
+                'messages' => [$e->getMessage()],
+                'storageUid' => 0,
+                'fileMountUid' => 0,
+                'createdFolders' => 0,
+                'basePath' => '',
+            ];
+        }
+
         $this->flushAllSiteCaches();
 
         return $identifier;

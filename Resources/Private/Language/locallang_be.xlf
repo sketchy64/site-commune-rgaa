@@ -53,20 +53,8 @@
             <trans-unit id="backend_layout.column.content" xml:space="preserve">
                 <source>Contenu</source>
             </trans-unit>
-            <trans-unit id="backend_layout.column.edito" xml:space="preserve">
-                <source>Édito / Mot du Maire (Texte &amp; Image)</source>
-            </trans-unit>
-            <trans-unit id="backend_layout.column.featured_news" xml:space="preserve">
-                <source>Actualités à la une (Carrousel / En vedette)</source>
-            </trans-unit>
-            <trans-unit id="backend_layout.column.events_news" xml:space="preserve">
-                <source>Agenda et Actualités municipales</source>
-            </trans-unit>
             <trans-unit id="backend_layout.column.sidebar_left" xml:space="preserve">
                 <source>Barre latérale</source>
-            </trans-unit>
-            <trans-unit id="backend_layout.column.interactive_map" xml:space="preserve">
-                <source>Carte interactive de la commune (Plan / Points d'intérêt)</source>
             </trans-unit>
             <trans-unit id="backend_layout.column.footer_map" xml:space="preserve">
                 <source>Carte de localisation et plan d'accès (Pied de page)</source>

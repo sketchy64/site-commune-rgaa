@@ -78,12 +78,7 @@ categories:
     description: 'Fichier image du logo, hauteur et affichage dans l''en-tête'
     parent: commune_identity
 
-  # Sous-catégories de "Page d'accueil"
-  commune_home_sections:
-    label: 'Titres des zones'
-    description: 'Personnalisation et masquage des titres des sections d''accueil'
-    parent: commune_home
-
+  # Sous-catégorie de "Page d'accueil"
   commune_home_sitemap:
     label: 'Plan du site (Accueil)'
     description: 'Affichage et titre de la zone Plan du site sur la page d''accueil'
@@ -240,90 +235,15 @@ settings:
     default: 'Du Lundi au Vendredi : 8h30 - 12h00 / 13h30 - 17h30'
 
   # ============================================================================
-  # 4. PAGE D'ACCUEIL : TITRES DES ZONES
+  # 4. PAGE D'ACCUEIL
   # ============================================================================
   commune.home_hero_search_enable:
     label: 'Afficher la zone de recherche sur le carrousel (Accueil)'
     description: 'Intègre un pavé de recherche au centre par-dessus le carrousel de la page d''accueil (style Ville de Tarnos).'
-    category: commune_home_sections
+    category: commune_home
     type: bool
     default: false
 
-  commune.home_quickaccess_title:
-    label: 'Titre de la zone Accès rapides'
-    description: 'Titre au-dessus des icônes ou démarches'
-    category: commune_home_sections
-    type: string
-    default: 'Accès rapides'
-
-  commune.home_quickaccess_hide_title:
-    label: 'Masquer le titre de la zone Accès rapides'
-    category: commune_home_sections
-    type: bool
-    default: false
-
-  commune.home_edito_title:
-    label: 'Titre de la zone Édito'
-    description: 'Titre de la section Mot du Maire / Édito'
-    category: commune_home_sections
-    type: string
-    default: 'Le mot du Maire'
-
-  commune.home_edito_hide_title:
-    label: 'Masquer le titre de la zone Édito'
-    category: commune_home_sections
-    type: bool
-    default: false
-
-  commune.home_featured_news_title:
-    label: 'Titre de la zone Actualités à la une'
-    description: 'Titre de la section Actualités à la une sur la page d''accueil'
-    category: commune_home_sections
-    type: string
-    default: 'Actualités à la une'
-
-  commune.home_featured_news_hide_title:
-    label: 'Masquer le titre de la zone Actualités à la une'
-    category: commune_home_sections
-    type: bool
-    default: false
-
-  commune.home_featured_news_hide_section:
-    label: 'Masquer la section Actualités à la une'
-    description: 'Permet de désactiver l''affichage de la section Actualités à la une sur l''accueil'
-    category: commune_home_sections
-    type: bool
-    default: false
-
-  commune.home_news_title:
-    label: 'Titre de la zone Actualités & Agenda'
-    description: 'Titre de la section des actualités et événements municipaux'
-    category: commune_home_sections
-    type: string
-    default: 'Actualités & Agenda municipal'
-
-  commune.home_news_hide_title:
-    label: 'Masquer le titre de la zone Actualités & Agenda'
-    category: commune_home_sections
-    type: bool
-    default: false
-
-  commune.home_map_title:
-    label: 'Titre de la zone Carte interactive'
-    description: 'Titre de la section de découverte et plan interactif'
-    category: commune_home_sections
-    type: string
-    default: 'Plan interactif & Découverte'
-
-  commune.home_map_hide_title:
-    label: 'Masquer le titre de la zone Carte interactive'
-    category: commune_home_sections
-    type: bool
-    default: false
-
-  # ============================================================================
-  # 4. PAGE D'ACCUEIL : PLAN DU SITE
-  # ============================================================================
   commune.home_sitemap_enable:
     label: 'Activer la section Plan du site sur la page d''accueil'
     description: 'Affiche la section du plan du site avant le pied de page'
@@ -347,7 +267,7 @@ settings:
   commune.search_page_uid:
     label: 'Page de Recherche (ID / UID)'
     description: 'Identifiant (UID) de la page contenant le formulaire et les résultats de recherche (Ex : 76)'
-    category: commune_home_sections
+    category: commune_home
     type: int
     default: 76
 
