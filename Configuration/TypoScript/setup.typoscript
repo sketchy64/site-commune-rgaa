@@ -138,14 +138,16 @@ page {
 
     # Processeurs de données pour les menus et arborescences (TYPO3 v12/v13/v14)
     dataProcessing {
+      # Processeur intelligent pour menus, arborescences et sous-menus
+      105 = Commune\SiteCommuneRgaa\DataProcessing\CommuneMenuProcessor
+
       110 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
       110 {
         special = directory
         special.value = {$commune.main_menu_folder_uid}
         special.value.override.data = siteSettings:commune.main_menu_folder_uid
         special.value.override.ifEmpty.data = site:settings:commune.main_menu_folder_uid
-        special.value.override.ifEmpty.ifEmpty.data = site:commune.main_menu_folder_uid
-        special.value.override.ifEmpty.ifEmpty.ifEmpty.data = site:rootPageId
+        special.value.override.ifEmpty.ifEmpty.value = {$commune.main_menu_folder_uid}
         levels = 4
         expandAll = 1
         includeSpacer = 0
@@ -723,8 +725,7 @@ page {
         special.value = {$commune.main_menu_folder_uid}
         special.value.override.data = siteSettings:commune.main_menu_folder_uid
         special.value.override.ifEmpty.data = site:settings:commune.main_menu_folder_uid
-        special.value.override.ifEmpty.ifEmpty.data = site:commune.main_menu_folder_uid
-        special.value.override.ifEmpty.ifEmpty.ifEmpty.data = site:rootPageId
+        special.value.override.ifEmpty.ifEmpty.value = {$commune.main_menu_folder_uid}
         1 = TMENU
         1 {
           expAll = 1
@@ -905,7 +906,7 @@ page {
         special.value = {$commune.footer_folder_uid}
         special.value.override.data = siteSettings:commune.footer_folder_uid
         special.value.override.ifEmpty.data = site:settings:commune.footer_folder_uid
-        special.value.override.ifEmpty.ifEmpty.data = site:commune.footer_folder_uid
+        special.value.override.ifEmpty.ifEmpty.value = {$commune.footer_folder_uid}
         1 = TMENU
         1 {
           wrap = <ul class="list-inline mb-0">|</ul>
@@ -928,8 +929,7 @@ page {
         special.value = {$commune.main_menu_folder_uid}
         special.value.override.data = siteSettings:commune.main_menu_folder_uid
         special.value.override.ifEmpty.data = site:settings:commune.main_menu_folder_uid
-        special.value.override.ifEmpty.ifEmpty.data = site:commune.main_menu_folder_uid
-        special.value.override.ifEmpty.ifEmpty.ifEmpty.data = site:rootPageId
+        special.value.override.ifEmpty.ifEmpty.value = {$commune.main_menu_folder_uid}
         excludeDoktypes = 199,254
         1 = TMENU
         1 {

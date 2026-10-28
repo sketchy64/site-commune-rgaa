@@ -47,7 +47,66 @@
 
         <!-- Contenu du menu principal -->
         <div class="collapse navbar-collapse" id="navbarMainContent">
-            <f:format.raw>{mainNavigation}</f:format.raw>
+            <f:if condition="{mainMenuItems}">
+                <f:then>
+                    <ul class="navbar-nav mb-2 mb-lg-0" role="menubar">
+                        <f:for each="{mainMenuItems}" as="item">
+                            <f:if condition="{item.children}">
+                                <f:then>
+                                    <li class="nav-item dropdown megamenu-item{f:if(condition: item.active, then: ' active')}" role="none">
+                                        <a href="{item.link}" class="nav-link dropdown-toggle{f:if(condition: item.active, then: ' active')}" role="menuitem" aria-expanded="false" data-bs-toggle="dropdown"{f:if(condition: item.current, then: ' aria-current="page"', else: '{f:if(condition: item.active, then: \' aria-current="true"\')}')}>
+                                            {item.title}
+                                        </a>
+                                        <div class="dropdown-menu megamenu-panel shadow-lg" role="menu">
+                                            <div class="container-fluid px-2 px-lg-4">
+                                                <div class="row g-3 g-lg-4">
+                                                    <f:for each="{item.children}" as="cat">
+                                                        <div class="col-12 col-md-6 col-lg-3 megamenu-col{f:if(condition: cat.active, then: ' active')}" role="none">
+                                                            <f:if condition="{cat.children}">
+                                                                <f:then>
+                                                                    <div class="megamenu-category-header">
+                                                                        <a href="{cat.link}" class="megamenu-category-title{f:if(condition: cat.active, then: ' active')}" role="menuitem"{f:if(condition: cat.current, then: ' aria-current="page"', else: '{f:if(condition: cat.active, then: \' aria-current="true"\')}')}>
+                                                                            {cat.title}
+                                                                        </a>
+                                                                    </div>
+                                                                    <ul class="megamenu-list list-unstyled mb-0" role="menu">
+                                                                        <f:for each="{cat.children}" as="sub">
+                                                                            <li class="megamenu-item-l3{f:if(condition: sub.active, then: ' active')}" role="none">
+                                                                                <a href="{sub.link}" class="megamenu-sublink{f:if(condition: sub.active, then: ' active')}" role="menuitem"{f:if(condition: sub.current, then: ' aria-current="page"')}>
+                                                                                    {sub.title}
+                                                                                </a>
+                                                                            </li>
+                                                                        </f:for>
+                                                                    </ul>
+                                                                </f:then>
+                                                                <f:else>
+                                                                    <a href="{cat.link}" class="megamenu-category-link{f:if(condition: cat.active, then: ' active')}" role="menuitem"{f:if(condition: cat.current, then: ' aria-current="page"')}>
+                                                                        {cat.title}
+                                                                    </a>
+                                                                </f:else>
+                                                            </f:if>
+                                                        </div>
+                                                    </f:for>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </f:then>
+                                <f:else>
+                                    <li class="nav-item{f:if(condition: item.active, then: ' active')}" role="none">
+                                        <a href="{item.link}" class="nav-link{f:if(condition: item.active, then: ' active')}" role="menuitem"{f:if(condition: item.current, then: ' aria-current="page"')}>
+                                            {item.title}
+                                        </a>
+                                    </li>
+                                </f:else>
+                            </f:if>
+                        </f:for>
+                    </ul>
+                </f:then>
+                <f:else>
+                    <f:format.raw>{mainNavigation}</f:format.raw>
+                </f:else>
+            </f:if>
         </div>
 
         <!-- Bouton icône de recherche à droite du menu (affiché uniquement en mode intégré) -->

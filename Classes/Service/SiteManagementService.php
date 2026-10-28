@@ -68,7 +68,13 @@ class SiteManagementService
         try {
             return $this->siteFinder->getSiteByIdentifier($identifier);
         } catch (\Throwable) {
-            return null;
+            try {
+                // Rafraîchissement du cache mémoire interne de SiteFinder
+                $this->siteFinder->getAllSites(false);
+                return $this->siteFinder->getSiteByIdentifier($identifier);
+            } catch (\Throwable) {
+                return null;
+            }
         }
     }
 
@@ -501,7 +507,7 @@ class SiteManagementService
      * @param array<string, mixed> $submittedSettings Clés-valeurs du formulaire
      * @return array{success: bool, error: string}
      */
-    public function saveSiteSettings(string $identifier, array $submittedSettings): array
+    public function saveSiteSettings(string $identifier, array $submittedSettings, ?int $explicitRootPageId = null): array
     {
         try {
             $siteConfig = $this->siteConfiguration->load($identifier);
@@ -594,7 +600,7 @@ class SiteManagementService
 
             // 3. Mise à jour synchrone de sys_template (BDD) pour le site
             $site = $this->getSiteByIdentifier($identifier);
-            $rootPageId = $site ? $site->getRootPageId() : 0;
+            $rootPageId = $explicitRootPageId ?? ($site ? $site->getRootPageId() : 0);
             $this->saveSysTemplateConstants($rootPageId, $cleanSettings, $site);
 
             // 4. Vidage complet des caches pour prise en compte immédiate en Frontend
@@ -789,7 +795,7 @@ class SiteManagementService
             }
         }
 
-        $this->saveSiteSettings($identifier, $initialSettings);
+        $this->saveSiteSettings($identifier, $initialSettings, $rootPageId);
 
         // 5. Gestionnaire de fichiers : dossiers fileadmin/<identifiant>/template|uploads, miroir des pages
         //    du menu principal, stockage FAL et point de montage. Un échec n'annule jamais le déploiement du site.
@@ -955,7 +961,7 @@ class SiteManagementService
                     ->fetchAssociative();
             }
 
-            if (!$row) {
+            if (!$row && $rootPageId <= 0) {
                 $qbRoot = $connection->createQueryBuilder();
                 $row = $qbRoot
                     ->select('uid', 'pid', 'root', 'clear', 'constants', 'config', 'include_static_file')

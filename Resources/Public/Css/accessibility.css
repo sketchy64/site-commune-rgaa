@@ -336,6 +336,20 @@ body.a11y-high-contrast .commune-news-pagination .page-link:hover {
    9. Disposition de l'en-tête, centrage du menu & recherche (RGAA)
    ========================================================================== */
 
+/* Fond institutionnel communal garanti RGAA (Contraste 4.5:1 sur texte blanc) */
+.bg-primary-commune {
+  background-color: var(--commune-primary, #00703a) !important;
+  color: var(--commune-text-inverse, #ffffff) !important;
+}
+
+#main-navigation {
+  background-color: var(--commune-primary, #00703a);
+}
+
+#main-navigation .navbar-nav .nav-link {
+  color: var(--commune-text-inverse, #ffffff) !important;
+}
+
 /* Centrage du menu principal par défaut sur Desktop */
 @media (min-width: 992px) {
   #main-navigation.header-layout-standard .navbar-nav,

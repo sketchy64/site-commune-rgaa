@@ -153,10 +153,12 @@ commune {
   footer_map_page_uid = 74
 
   # cat=commune_root/commune_footer/075; type=int+; label=Dossier du Menu principal (ID / UID)
-  main_menu_folder_uid = 2
+  # 0 = Détection automatique du dossier [Menu principal] ou de la page racine
+  main_menu_folder_uid = 0
 
   # cat=commune_root/commune_footer/080; type=int+; label=Dossier des liens de bas de page (ID / UID)
-  footer_folder_uid = 3
+  # 0 = Détection automatique du dossier [Menu en pied de page] ou de la page racine
+  footer_folder_uid = 0
 
   # ============================================================================
   # 8. APPLICATION MOBILE (PWA) & ALERTES

@@ -243,10 +243,24 @@
 
             <!-- Liens de bas de page à droite (Dynamiques depuis le dossier [3] Menu en pied de page) -->
             <div class="col-lg-6 col-12 text-center text-lg-end commune-footer-dynamic-nav">
-                <f:if condition="{footerNavigation}">
+                <f:if condition="{footerMenuItems}">
                     <f:then>
-                        <f:format.raw>{footerNavigation}</f:format.raw>
+                        <ul class="list-inline mb-0">
+                            <f:for each="{footerMenuItems}" as="item" iteration="iter">
+                                <li class="list-inline-item">
+                                    <a href="{item.link}" class="commune-footer-subtle-link text-decoration-none{f:if(condition: item.active, then: ' fw-bold text-white', else: ' text-white-50')}"{f:if(condition: item.current, then: ' aria-current="page"')}>
+                                        {item.title}
+                                    </a>
+                                </li>
+                                <f:if condition="!{iter.isLast}">
+                                    <li class="list-inline-item separator text-white-50" aria-hidden="true">·</li>
+                                </f:if>
+                            </f:for>
+                        </ul>
                     </f:then>
+                    <f:else if="{footerNavigation}">
+                        <f:format.raw>{footerNavigation}</f:format.raw>
+                    </f:else>
                     <f:else>
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item">
