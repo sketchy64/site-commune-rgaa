@@ -173,6 +173,12 @@ class CommuneFileStorageService implements LoggerAwareInterface
             $fileMountUid = $this->findFileMountUid($filemountIdentifier);
             if ($fileMountUid === 0) {
                 $fileMountUid = $this->createFileMountRecord($officialName, $filemountIdentifier, $folderIdentifier, $createCustomStorage);
+            } else {
+                $this->connectionPool->getConnectionForTable('sys_filemounts')->update(
+                    'sys_filemounts',
+                    ['title' => $officialName, 'tstamp' => time()],
+                    ['uid' => $fileMountUid]
+                );
             }
             $report['fileMountUid'] = $fileMountUid;
         } catch (\Throwable $e) {

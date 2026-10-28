@@ -1,4 +1,4 @@
-﻿categories:
+categories:
   # ============================================================================
   # NIVEAU 1 : CATÉGORIE RACINE
   # ============================================================================
@@ -304,14 +304,14 @@ settings:
     description: 'Mention obligatoire selon le décret n° 2019-768'
     category: commune_a11y
     type: string
-    default: 'partiellement conforme'
+    default: 'non conforme'
 
   commune.rgaa_taux:
     label: 'Taux de conformité RGAA'
     description: 'Pourcentage résultant de l''audit (Ex : 84%)'
     category: commune_a11y
     type: string
-    default: '84%'
+    default: '0 %'
 
   commune.rgaa_page_uid:
     label: 'Page de la Déclaration d''accessibilité (ID / UID)'

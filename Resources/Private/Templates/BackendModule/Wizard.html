@@ -20,13 +20,14 @@
     <!-- Flash Messages -->
     <f:flashMessages />
 
-    <!-- Stepper Visuel 5 Étapes -->
+    <!-- Stepper Visuel 6 Étapes -->
     <div class="rgaa-stepper">
         <div class="rgaa-step {f:if(condition: '{step} >= 1', then: 'active')}">1</div>
         <div class="rgaa-step {f:if(condition: '{step} >= 2', then: 'active')}">2</div>
         <div class="rgaa-step {f:if(condition: '{step} >= 3', then: 'active')}">3</div>
         <div class="rgaa-step {f:if(condition: '{step} >= 4', then: 'active')}">4</div>
-        <div class="rgaa-step {f:if(condition: '{step} == 5', then: 'completed')}">5</div>
+        <div class="rgaa-step {f:if(condition: '{step} >= 5', then: 'active')}">5</div>
+        <div class="rgaa-step {f:if(condition: '{step} == 6', then: 'completed')}">6</div>
     </div>
 
     <!-- Container d'étape -->
@@ -34,13 +35,13 @@
 
         <f:if condition="{step} == 1">
             <!-- ÉTAPE 1 : Identité & Domaine -->
-            <h2 class="rgaa-card-title">Étape 1 / 5 : Identité de la Collectivité & Coordonnées</h2>
+            <h2 class="rgaa-card-title">Étape 1 / 6 : Identité de la Collectivité & Coordonnées</h2>
             <p class="rgaa-help-text mb-4">
                 Recherchez la collectivité dans l'annuaire Innogam pour pré-remplir automatiquement toutes ses coordonnées officielles, ou renseignez les champs manuellement.
             </p>
 
             <!-- Boîte de recherche Innogam avec auto-complétion accessible -->
-            <div id="rgaa-wizard-innogam-box" class="rgaa-innogam-box" data-search-url="{innogamSearchUrl}" data-detail-url="{innogamDetailUrl}">
+            <div id="rgaa-wizard-innogam-box" class="rgaa-innogam-box" data-list-url="{innogamListUrl}" data-search-url="{innogamSearchUrl}" data-detail-url="{innogamDetailUrl}">
                 <div class="rgaa-innogam-box-title">
                     <span aria-hidden="true">🏛️</span>
                     <span>Rechercher la collectivité dans l'annuaire (Innogam)</span>
@@ -74,7 +75,7 @@
                 <div id="innogam-wizard-result-notice" class="d-none"></div>
             </div>
 
-            <f:form action="wizard" name="wizardData">
+            <f:form action="wizard" name="wizardData" id="rgaa-wizard-step1-form" data-existing-identifiers="{existingSiteIdentifiersJson}">
                 <f:form.hidden name="step" value="2" />
                 <f:form.hidden name="wizardData[theme]" value="{wizardData.theme}" />
                 <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
@@ -85,18 +86,40 @@
                 <f:form.hidden name="wizardData[create_custom_storage]" value="{wizardData.create_custom_storage}" />
                 <f:form.hidden name="wizardData[innogam_id]" value="{wizardData.innogam_id}" />
                 <f:form.hidden name="wizardData[innogam_type]" value="{wizardData.innogam_type}" />
+                <f:form.hidden name="wizardData[commune_group_title]" value="{wizardData.commune_group_title}" />
+                <f:form.hidden name="wizardData[backend_groups_csv]" value="{wizardData.backend_groups_csv}" />
+                <f:form.hidden name="wizardData[backend_groups_initialized]" value="{wizardData.backend_groups_initialized}" />
+                <f:form.hidden name="wizardData[user_create]" value="{wizardData.user_create}" />
+                <f:form.hidden name="wizardData[user_secretariat_username]" value="{wizardData.user_secretariat_username}" />
+                <f:form.hidden name="wizardData[user_secretariat_realname]" value="{wizardData.user_secretariat_realname}" />
+                <f:form.hidden name="wizardData[user_secretariat_email]" value="{wizardData.user_secretariat_email}" />
+                <f:form.hidden name="wizardData[user_elu_username]" value="{wizardData.user_elu_username}" />
+                <f:form.hidden name="wizardData[user_elu_realname]" value="{wizardData.user_elu_realname}" />
+                <f:form.hidden name="wizardData[user_elu_email]" value="{wizardData.user_elu_email}" />
+
+                <!-- Bannière d'alerte sécurité anti-écrasement si l'identifiant existe déjà -->
+                <div id="rgaa-duplicate-alert" class="rgaa-alert rgaa-alert-danger d-flex align-items-center gap-3 mb-4 {f:if(condition: isDuplicateIdentifier, then: '', else: 'd-none')}" role="alert">
+                    <span style="font-size: 1.75rem;" aria-hidden="true">⛔</span>
+                    <div>
+                        <h3 class="h6 fw-bold mb-1">Collectivité déjà existante !</h3>
+                        <p class="mb-0" id="rgaa-duplicate-alert-msg">
+                            L'identifiant unique <code id="rgaa-duplicate-ident-code">{targetIdentifier}</code> est déjà attribué à un site configuré dans TYPO3.
+                            Pour protéger l'intégrité de vos données (dossiers, pages, groupes, utilisateurs), le déploiement est verrouillé. Veuillez modifier l'identifiant (ex : <code>{targetIdentifier}2</code> ou <code>{targetIdentifier}-2</code>) pour pouvoir continuer.
+                        </p>
+                    </div>
+                </div>
 
                 <div class="rgaa-form-group">
                     <label class="rgaa-label">Nom officiel de la collectivité * :</label>
-                    <f:form.textfield name="wizardData[name]" value="{wizardData.name}" class="rgaa-input" style="font-size:1.1rem; padding:0.75rem;" placeholder="Bayonne (ou Mairie de Bayonne)" required="true" />
+                    <f:form.textfield name="wizardData[name]" value="{wizardData.name}" class="rgaa-input" style="font-size:1.1rem; padding:0.75rem;" placeholder="Bayonne (ou Mairie de Bayonne)" required="true" id="communeNameInput" />
                     <div class="rgaa-help-text">Nom enregistré pour la collectivité. Vous pouvez ajouter un préfixe (« Mairie de », « Ville de ») si vous le souhaitez.</div>
                 </div>
 
                 <div class="rgaa-grid-2">
                     <div class="rgaa-form-group">
                         <label class="rgaa-label">Identifiant unique du site (optionnel) :</label>
-                        <f:form.textfield name="wizardData[identifier]" value="{wizardData.identifier}" class="rgaa-input" placeholder="commune-bayonne" />
-                        <div class="rgaa-help-text">Généré automatiquement depuis le nom si laissé vide.</div>
+                        <f:form.textfield name="wizardData[identifier]" value="{wizardData.identifier}" class="rgaa-input" placeholder="bayonne" id="communeIdentifierInput" />
+                        <div class="rgaa-help-text" id="communeIdentifierHelp">Généré automatiquement depuis le nom si laissé vide (ex : <code>bayonne</code>).</div>
                     </div>
                     <div class="rgaa-form-group">
                         <label class="rgaa-label">URL de base (Point d'entrée / Domaine) * :</label>
@@ -141,14 +164,14 @@
                 </div>
 
                 <div class="mt-4 text-end">
-                    <button type="submit" class="rgaa-btn rgaa-btn-primary rgaa-btn-lg">Suivant : Charte & Thème →</button>
+                    <button type="submit" class="rgaa-btn rgaa-btn-primary rgaa-btn-lg" id="step1SubmitBtn" {f:if(condition: isDuplicateIdentifier, then: 'disabled="disabled"')}>Suivant : Charte & Thème →</button>
                 </div>
             </f:form>
         </f:if>
 
         <f:if condition="{step} == 2">
             <!-- ÉTAPE 2 : Thème & Palette -->
-            <h2 class="rgaa-card-title">Étape 2 / 5 : Choix du Thème Graphique & Palette</h2>
+            <h2 class="rgaa-card-title">Étape 2 / 6 : Choix du Thème Graphique & Palette</h2>
 
             <f:form action="wizard" name="wizardData">
                 <f:form.hidden name="step" value="3" />
@@ -167,6 +190,16 @@
                 <f:form.hidden name="wizardData[selected_pages_csv]" value="{wizardData.selected_pages_csv}" />
                 <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />
                 <f:form.hidden name="wizardData[create_custom_storage]" value="{wizardData.create_custom_storage}" />
+                <f:form.hidden name="wizardData[commune_group_title]" value="{wizardData.commune_group_title}" />
+                <f:form.hidden name="wizardData[backend_groups_csv]" value="{wizardData.backend_groups_csv}" />
+                <f:form.hidden name="wizardData[backend_groups_initialized]" value="{wizardData.backend_groups_initialized}" />
+                <f:form.hidden name="wizardData[user_create]" value="{wizardData.user_create}" />
+                <f:form.hidden name="wizardData[user_secretariat_username]" value="{wizardData.user_secretariat_username}" />
+                <f:form.hidden name="wizardData[user_secretariat_realname]" value="{wizardData.user_secretariat_realname}" />
+                <f:form.hidden name="wizardData[user_secretariat_email]" value="{wizardData.user_secretariat_email}" />
+                <f:form.hidden name="wizardData[user_elu_username]" value="{wizardData.user_elu_username}" />
+                <f:form.hidden name="wizardData[user_elu_realname]" value="{wizardData.user_elu_realname}" />
+                <f:form.hidden name="wizardData[user_elu_email]" value="{wizardData.user_elu_email}" />
 
                 <div class="rgaa-form-group">
                     <label class="rgaa-label">Thème Graphique :</label>
@@ -195,7 +228,7 @@
 
         <f:if condition="{step} == 3">
             <!-- ÉTAPE 3 : RGAA -->
-            <h2 class="rgaa-card-title">Étape 3 / 5 : Accessibilité Numérique & RGAA</h2>
+            <h2 class="rgaa-card-title">Étape 3 / 6 : Accessibilité Numérique & RGAA</h2>
 
             <f:form action="wizard" name="wizardData">
                 <f:form.hidden name="step" value="4" />
@@ -214,19 +247,29 @@
                 <f:form.hidden name="wizardData[selected_pages_csv]" value="{wizardData.selected_pages_csv}" />
                 <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />
                 <f:form.hidden name="wizardData[create_custom_storage]" value="{wizardData.create_custom_storage}" />
+                <f:form.hidden name="wizardData[commune_group_title]" value="{wizardData.commune_group_title}" />
+                <f:form.hidden name="wizardData[backend_groups_csv]" value="{wizardData.backend_groups_csv}" />
+                <f:form.hidden name="wizardData[backend_groups_initialized]" value="{wizardData.backend_groups_initialized}" />
+                <f:form.hidden name="wizardData[user_create]" value="{wizardData.user_create}" />
+                <f:form.hidden name="wizardData[user_secretariat_username]" value="{wizardData.user_secretariat_username}" />
+                <f:form.hidden name="wizardData[user_secretariat_realname]" value="{wizardData.user_secretariat_realname}" />
+                <f:form.hidden name="wizardData[user_secretariat_email]" value="{wizardData.user_secretariat_email}" />
+                <f:form.hidden name="wizardData[user_elu_username]" value="{wizardData.user_elu_username}" />
+                <f:form.hidden name="wizardData[user_elu_realname]" value="{wizardData.user_elu_realname}" />
+                <f:form.hidden name="wizardData[user_elu_email]" value="{wizardData.user_elu_email}" />
 
                 <div class="rgaa-form-group">
                     <label class="rgaa-label">Statut légal de conformité :</label>
-                    <f:form.select name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" class="rgaa-form-select">
-                        <f:form.select.option value="partiellement conforme">partiellement conforme</f:form.select.option>
-                        <f:form.select.option value="totalement conforme">totalement conforme</f:form.select.option>
-                        <f:form.select.option value="non conforme">non conforme</f:form.select.option>
+                    <f:form.select name="wizardData[rgaa_statut]" value="{f:if(condition: wizardData.rgaa_statut, then: wizardData.rgaa_statut, else: 'non conforme')}" class="rgaa-form-select">
+                        <f:form.select.option value="non conforme">Non conforme</f:form.select.option>
+                        <f:form.select.option value="partiellement conforme">Partiellement conforme</f:form.select.option>
+                        <f:form.select.option value="totalement conforme">Totalement conforme</f:form.select.option>
                     </f:form.select>
                 </div>
 
                 <div class="rgaa-form-group">
                     <label class="rgaa-label">Taux d'audit initial (%) :</label>
-                    <f:form.textfield name="wizardData[rgaa_taux]" value="{f:if(condition: wizardData.rgaa_taux, then: wizardData.rgaa_taux, else: '84%')}" class="rgaa-input" placeholder="84%" />
+                    <f:form.textfield name="wizardData[rgaa_taux]" value="{f:if(condition: wizardData.rgaa_taux, then: wizardData.rgaa_taux, else: '0 %')}" class="rgaa-input" placeholder="0 %" />
                 </div>
 
                 <div class="d-flex justify-content-between mt-4">
@@ -238,7 +281,7 @@
 
         <f:if condition="{step} == 4">
             <!-- ÉTAPE 4 : Arborescence sur-mesure -->
-            <h2 class="rgaa-card-title">Étape 4 / 5 : Choix des Pages de l'Arborescence du Site</h2>
+            <h2 class="rgaa-card-title">Étape 4 / 6 : Choix des Pages de l'Arborescence du Site</h2>
             <p class="rgaa-help-text mb-4">
                 Cliquez sur un menu ci-dessous pour afficher et sélectionner les pages et sous-pages à créer lors du déploiement.
             </p>
@@ -261,6 +304,16 @@
                 <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
                 <f:form.hidden name="wizardData[selected_pages_initialized]" value="1" />
                 <f:form.hidden name="wizardData[create_custom_storage]" value="{wizardData.create_custom_storage}" />
+                <f:form.hidden name="wizardData[commune_group_title]" value="{wizardData.commune_group_title}" />
+                <f:form.hidden name="wizardData[backend_groups_csv]" value="{wizardData.backend_groups_csv}" />
+                <f:form.hidden name="wizardData[backend_groups_initialized]" value="{wizardData.backend_groups_initialized}" />
+                <f:form.hidden name="wizardData[user_create]" value="{wizardData.user_create}" />
+                <f:form.hidden name="wizardData[user_secretariat_username]" value="{wizardData.user_secretariat_username}" />
+                <f:form.hidden name="wizardData[user_secretariat_realname]" value="{wizardData.user_secretariat_realname}" />
+                <f:form.hidden name="wizardData[user_secretariat_email]" value="{wizardData.user_secretariat_email}" />
+                <f:form.hidden name="wizardData[user_elu_username]" value="{wizardData.user_elu_username}" />
+                <f:form.hidden name="wizardData[user_elu_realname]" value="{wizardData.user_elu_realname}" />
+                <f:form.hidden name="wizardData[user_elu_email]" value="{wizardData.user_elu_email}" />
 
                 <!-- Accordéon des dossiers configurables (Menu principal & Menu en pied de page), fermés par défaut -->
                 <f:for each="{pageTreeCatalog.folders}" as="folder" key="folderKey">
@@ -384,15 +437,222 @@
 
                 <div class="d-flex justify-content-between mt-4">
                     <f:link.action action="wizard" arguments="{step: 3, wizardData: wizardData}" class="rgaa-btn rgaa-btn-outline">← Étape précédente</f:link.action>
-                    <button type="submit" class="rgaa-btn rgaa-btn-primary rgaa-btn-lg">Suivant : Récapitulatif →</button>
+                    <button type="submit" class="rgaa-btn rgaa-btn-primary rgaa-btn-lg">Suivant : Accès & Droits Utilisateurs →</button>
                 </div>
             </f:form>
         </f:if>
 
         <f:if condition="{step} == 5">
-            <!-- ÉTAPE 5 : Validation & Récapitulatif -->
-            <h2 class="rgaa-card-title" style="color:#16a34a;">Étape 5 / 5 : Confirmation & Déploiement Du Site</h2>
+            <!-- ÉTAPE 5 : Droits d'Accès, Groupes & Utilisateurs Backend -->
+            <h2 class="rgaa-card-title">Étape 5 / 6 : Droits d'Accès, Groupes & Utilisateurs Backend</h2>
+            <p class="rgaa-help-text mb-4">
+                Paramétrez les accès backend créés automatiquement pour la collectivité. Un groupe dédié portant les montages BDD et fichiers sera généré, et deux comptes utilisateurs initiaux seront configurés.
+            </p>
+
+            <f:form action="wizard" name="wizardData">
+                <f:form.hidden name="step" value="6" />
+                <f:form.hidden name="wizardData[name]" value="{wizardData.name}" />
+                <f:form.hidden name="wizardData[identifier]" value="{wizardData.identifier}" />
+                <f:form.hidden name="wizardData[domain]" value="{wizardData.domain}" />
+                <f:form.hidden name="wizardData[slogan]" value="{wizardData.slogan}" />
+                <f:form.hidden name="wizardData[adresse]" value="{wizardData.adresse}" />
+                <f:form.hidden name="wizardData[telephone]" value="{wizardData.telephone}" />
+                <f:form.hidden name="wizardData[email]" value="{wizardData.email}" />
+                <f:form.hidden name="wizardData[horaires]" value="{wizardData.horaires}" />
+                <f:form.hidden name="wizardData[innogam_id]" value="{wizardData.innogam_id}" />
+                <f:form.hidden name="wizardData[innogam_type]" value="{wizardData.innogam_type}" />
+                <f:form.hidden name="wizardData[theme]" value="{wizardData.theme}" />
+                <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
+                <f:form.hidden name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" />
+                <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
+                <f:form.hidden name="wizardData[selected_pages_csv]" value="{wizardData.selected_pages_csv}" />
+                <f:form.hidden name="wizardData[selected_pages_initialized]" value="1" />
+                <f:form.hidden name="wizardData[create_custom_storage]" value="{wizardData.create_custom_storage}" />
+                <f:form.hidden name="wizardData[backend_groups_initialized]" value="1" />
+
+                <!-- 1. Groupe spécifique à la commune -->
+                <div class="p-3 mb-4" style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:6px;">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <h3 class="h6 text-primary fw-bold mb-0 d-flex align-items-center gap-2">
+                            <span aria-hidden="true">👥</span>
+                            <span>1. Groupe Backend dédié à la collectivité</span>
+                        </h3>
+                        <span class="badge bg-primary">Montages exclusifs</span>
+                    </div>
+                    <p class="text-muted small mb-3">
+                        Ce groupe portera exclusivement le point de montage de l'arborescence (BDD) et le point de montage du stockage de fichiers (FAL) pour isoler les données de la commune.
+                    </p>
+                    <div class="rgaa-form-group mb-2">
+                        <label class="rgaa-label">Nom / Titre officiel du groupe :</label>
+                        <f:form.textfield name="wizardData[commune_group_title]" value="{f:if(condition: wizardData.commune_group_title, then: wizardData.commune_group_title, else: upperCommune)}" class="rgaa-input fw-bold" style="letter-spacing:0.05em;" />
+                        <div class="rgaa-help-text">Nom officiel en majuscules (ex : <code>{upperCommune}</code>). Ce groupe sera créé lors du déploiement.</div>
+                    </div>
+                    <div class="row g-2 mt-2 pt-2 border-top">
+                        <div class="col-md-6">
+                            <div class="small text-muted"><strong>Montage BDD :</strong> Page racine du site ({wizardData.name})</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="small text-muted"><strong>Montage Fichiers :</strong> Point de montage FAL <code>{wizardData.commune_group_title}</code></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Sélection des Groupes Globaux TYPO3 -->
+                <div class="p-3 mb-4" style="background:#ffffff; border:1px solid #cbd5e1; border-radius:6px;">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <h3 class="h6 text-primary fw-bold mb-0 d-flex align-items-center gap-2">
+                            <span aria-hidden="true">🔑</span>
+                            <span>2. Rattachement aux Groupes TYPO3 Existants</span>
+                        </h3>
+                        <span class="badge bg-secondary">{selectedGroupsCount} sélectionné(s)</span>
+                    </div>
+                    <p class="text-muted small mb-3">
+                        Cochez le ou les groupes déjà présents dans TYPO3 à attribuer aux nouveaux utilisateurs pour définir leurs droits d'édition. Le groupe <strong>_RÉDACTEUR</strong> est pré-sélectionné par défaut.
+                    </p>
+
+                    <f:if condition="{availableBackendGroups}">
+                        <f:then>
+                            <div class="d-flex flex-column gap-2" style="max-height: 220px; overflow-y: auto; padding: 0.5rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px;">
+                                <f:for each="{availableBackendGroups}" as="group">
+                                    <label class="rgaa-group-item d-flex align-items-start gap-2 p-2 rounded" for="be-group-{group.uid}" style="cursor: pointer; background: #ffffff; border: 1px solid #e2e8f0;">
+                                        <input
+                                            type="checkbox"
+                                            name="wizardData[backend_groups][]"
+                                            id="be-group-{group.uid}"
+                                            value="{group.uid}"
+                                            class="rgaa-group-checkbox mt-1"
+                                            {f:if(condition: '{selectedGroupsMap.{group.uid}}', then: 'checked="checked"')}
+                                        />
+                                        <div class="flex-grow-1">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <strong class="text-dark">{group.title}</strong>
+                                                <f:if condition="{group.uid} == {defaultRedacteurGroupUid}">
+                                                    <span class="badge bg-success" style="font-size:0.75rem;">Recommandé (_RÉDACTEUR)</span>
+                                                </f:if>
+                                            </div>
+                                            <f:if condition="{group.description}">
+                                                <div class="text-muted small">{group.description}</div>
+                                            </f:if>
+                                        </div>
+                                    </label>
+                                </f:for>
+                            </div>
+                        </f:then>
+                        <f:else>
+                            <div class="alert alert-warning py-2 mb-0 small">
+                                ⚠️ Aucun groupe utilisateur backend n'a été trouvé dans TYPO3. Les utilisateurs seront créés uniquement avec le groupe de la collectivité.
+                            </div>
+                        </f:else>
+                    </f:if>
+                </div>
+
+                <!-- 3. Comptes Utilisateurs à créer -->
+                <div class="p-3 mb-4" style="background:#ffffff; border:1px solid #cbd5e1; border-radius:6px;">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h3 class="h6 text-primary fw-bold mb-0 d-flex align-items-center gap-2">
+                            <span aria-hidden="true">👤</span>
+                            <span>3. Comptes Utilisateurs Backend Dédiés</span>
+                        </h3>
+                    </div>
+
+                    <label class="rgaa-switch-container mb-4">
+                        <f:form.checkbox name="wizardData[user_create]" value="1" checked="{wizardData.user_create} == 1" id="userCreateToggle" />
+                        <span class="rgaa-switch-label">Créer automatiquement les 2 utilisateurs pour cette collectivité</span>
+                    </label>
+
+                    <div id="rgaa-users-config-box" class="rgaa-grid-2">
+                        <!-- Utilisateur 1 : Secrétariat -->
+                        <div class="p-3" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px;">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="h6 fw-bold text-dark mb-0">Utilisateur 1 : Secrétariat</h4>
+                                <span class="badge bg-info text-dark" style="font-size:0.75rem;">Mairie / Accueil</span>
+                            </div>
+
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Nom d'utilisateur (Login) * :</label>
+                                <f:form.textfield name="wizardData[user_secretariat_username]" value="{f:if(condition: wizardData.user_secretariat_username, then: wizardData.user_secretariat_username, else: 'secretariat.{communeSlug}')}" class="rgaa-input" placeholder="secretariat.{communeSlug}" required="true" />
+                            </div>
+
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Nom complet affiché * :</label>
+                                <f:form.textfield name="wizardData[user_secretariat_realname]" value="{f:if(condition: wizardData.user_secretariat_realname, then: wizardData.user_secretariat_realname, else: 'Secrétariat {upperCommune}')}" class="rgaa-input" placeholder="Secrétariat {upperCommune}" required="true" />
+                            </div>
+
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Adresse courriel (Email) :</label>
+                                <f:form.textfield name="wizardData[user_secretariat_email]" value="{f:if(condition: wizardData.user_secretariat_email, then: wizardData.user_secretariat_email, else: wizardData.email)}" class="rgaa-input" placeholder="secretariat@..." />
+                                <div class="rgaa-help-text">Email de contact officiel pour les notifications et réinitialisations de mot de passe.</div>
+                            </div>
+
+                            <div class="d-flex flex-wrap gap-2 mt-3 pt-2 border-top">
+                                <span class="badge bg-light text-dark border">Langue : French (fr)</span>
+                                <span class="badge bg-light text-dark border">Montages BDD : Coché</span>
+                                <span class="badge bg-light text-dark border">Montages Fichiers : Coché</span>
+                            </div>
+                            <div class="small text-muted mt-2">
+                                <em>Mot de passe fort généré automatiquement, à réinitialiser par l'utilisateur lors de sa première connexion.</em>
+                            </div>
+                        </div>
+
+                        <!-- Utilisateur 2 : Élu -->
+                        <div class="p-3" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px;">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="h6 fw-bold text-dark mb-0">Utilisateur 2 : Élu</h4>
+                                <span class="badge bg-info text-dark" style="font-size:0.75rem;">Élu / Référent</span>
+                            </div>
+
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Nom d'utilisateur (Login) * :</label>
+                                <f:form.textfield name="wizardData[user_elu_username]" value="{f:if(condition: wizardData.user_elu_username, then: wizardData.user_elu_username, else: 'elu.{communeSlug}')}" class="rgaa-input" placeholder="elu.{communeSlug}" required="true" />
+                            </div>
+
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Nom complet affiché * :</label>
+                                <f:form.textfield name="wizardData[user_elu_realname]" value="{f:if(condition: wizardData.user_elu_realname, then: wizardData.user_elu_realname, else: 'Élu {upperCommune}')}" class="rgaa-input" placeholder="Élu {upperCommune}" required="true" />
+                            </div>
+
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Adresse courriel (Email) :</label>
+                                <f:form.textfield name="wizardData[user_elu_email]" value="{wizardData.user_elu_email}" class="rgaa-input" placeholder="(Laissé vide par défaut)" />
+                                <div class="rgaa-help-text">Laissé vide conformément aux spécifications (ou renseignable si souhaité).</div>
+                            </div>
+
+                            <div class="d-flex flex-wrap gap-2 mt-3 pt-2 border-top">
+                                <span class="badge bg-light text-dark border">Langue : French (fr)</span>
+                                <span class="badge bg-light text-dark border">Montages BDD : Coché</span>
+                                <span class="badge bg-light text-dark border">Montages Fichiers : Coché</span>
+                            </div>
+                            <div class="small text-muted mt-2">
+                                <em>Mot de passe fort généré automatiquement, à réinitialiser par l'utilisateur lors de sa première connexion.</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <f:link.action action="wizard" arguments="{step: 4, wizardData: wizardData}" class="rgaa-btn rgaa-btn-outline">← Étape précédente</f:link.action>
+                    <button type="submit" class="rgaa-btn rgaa-btn-primary rgaa-btn-lg">Suivant : Récapitulatif →</button>
+                </div>
+            </f:form>
+        </f:if>
+
+        <f:if condition="{step} == 6">
+            <!-- ÉTAPE 6 : Validation & Récapitulatif -->
+            <h2 class="rgaa-card-title" style="color:#16a34a;">Étape 6 / 6 : Confirmation & Déploiement Du Site</h2>
             <p class="rgaa-help-text mb-4">Vérifiez les paramètres de la nouvelle commune avant le lancement automatique de la génération.</p>
+
+            <f:if condition="{isDuplicateIdentifier}">
+                <div class="rgaa-alert rgaa-alert-danger d-flex align-items-center gap-3 mb-4" role="alert">
+                    <span style="font-size: 1.75rem;" aria-hidden="true">⛔</span>
+                    <div>
+                        <h3 class="h6 fw-bold mb-1">Déploiement verrouillé : Collectivité déjà existante !</h3>
+                        <p class="mb-0">
+                            Un site avec l'identifiant unique <code>{targetIdentifier}</code> existe déjà dans TYPO3.
+                            Le déploiement est verrouillé afin d'éviter tout écrasement de données. Veuillez retourner à l'étape 1 pour choisir un autre identifiant (ex : <code>{targetIdentifier}2</code> ou <code>{targetIdentifier}-2</code>).
+                        </p>
+                    </div>
+                </div>
+            </f:if>
 
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:1.25rem; margin-bottom:1.5rem;">
                 <div class="rgaa-form-group">
@@ -422,8 +682,30 @@
 
                 <div class="rgaa-form-group"><strong>Thème sélectionné :</strong> {wizardData.theme}</div>
                 <div class="rgaa-form-group"><strong>Statut RGAA :</strong> {wizardData.rgaa_statut} ({wizardData.rgaa_taux})</div>
-                <div class="rgaa-form-group mb-0">
+                <div class="rgaa-form-group">
                     <strong>Arborescence générée :</strong> <strong>{selectedPagesCount} / {totalPagesCount} pages sélectionnées</strong>
+                </div>
+
+                <!-- Récapitulatif Accès & Utilisateurs Backend -->
+                <div class="pt-3 mt-3 border-top">
+                    <h4 class="h6 fw-bold text-primary mb-2">Accès & Utilisateurs Backend :</h4>
+                    <div class="rgaa-form-group mb-1">
+                        <strong>Groupe communal créé :</strong> <code>{wizardData.commune_group_title}</code> (Montages BDD siteroot et FAL uploads)
+                    </div>
+                    <div class="rgaa-form-group mb-2">
+                        <strong>Groupes globaux associés :</strong> <strong>{selectedGroupsCount} groupe(s)</strong> (dont <code>_RÉDACTEUR</code> si sélectionné)
+                    </div>
+                    <f:if condition="{wizardData.user_create} == 1">
+                        <f:then>
+                            <div class="small bg-white p-2 border rounded">
+                                <div><strong>Secrétariat :</strong> <code>{wizardData.user_secretariat_username}</code> ({wizardData.user_secretariat_realname}) <f:if condition="{wizardData.user_secretariat_email}"><span class="text-muted">&lt;{wizardData.user_secretariat_email}&gt;</span></f:if></div>
+                                <div class="mt-1"><strong>Élu :</strong> <code>{wizardData.user_elu_username}</code> ({wizardData.user_elu_realname})</div>
+                            </div>
+                        </f:then>
+                        <f:else>
+                            <div class="text-muted small"><em>Aucun compte utilisateur ne sera généré (création désactivée).</em></div>
+                        </f:else>
+                    </f:if>
                 </div>
             </div>
 
@@ -444,6 +726,16 @@
                 <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
                 <f:form.hidden name="wizardData[selected_pages_csv]" value="{wizardData.selected_pages_csv}" />
                 <f:form.hidden name="wizardData[selected_pages_initialized]" value="1" />
+                <f:form.hidden name="wizardData[commune_group_title]" value="{wizardData.commune_group_title}" />
+                <f:form.hidden name="wizardData[backend_groups_csv]" value="{wizardData.backend_groups_csv}" />
+                <f:form.hidden name="wizardData[backend_groups_initialized]" value="1" />
+                <f:form.hidden name="wizardData[user_create]" value="{wizardData.user_create}" />
+                <f:form.hidden name="wizardData[user_secretariat_username]" value="{wizardData.user_secretariat_username}" />
+                <f:form.hidden name="wizardData[user_secretariat_realname]" value="{wizardData.user_secretariat_realname}" />
+                <f:form.hidden name="wizardData[user_secretariat_email]" value="{wizardData.user_secretariat_email}" />
+                <f:form.hidden name="wizardData[user_elu_username]" value="{wizardData.user_elu_username}" />
+                <f:form.hidden name="wizardData[user_elu_realname]" value="{wizardData.user_elu_realname}" />
+                <f:form.hidden name="wizardData[user_elu_email]" value="{wizardData.user_elu_email}" />
 
                 <!-- Option Stockage Dédié -->
                 <div class="rgaa-form-group" style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:1rem; margin-top:1.5rem; margin-bottom:1.5rem;">
@@ -456,9 +748,14 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-between mt-4">
-                    <f:link.action action="wizard" arguments="{step: 4, wizardData: wizardData}" class="rgaa-btn rgaa-btn-outline">← Étape précédente</f:link.action>
-                    <button type="submit" class="rgaa-btn rgaa-btn-success rgaa-btn-lg">
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <div class="d-flex gap-2">
+                        <f:link.action action="wizard" arguments="{step: 5, wizardData: wizardData}" class="rgaa-btn rgaa-btn-outline">← Étape précédente</f:link.action>
+                        <f:if condition="{isDuplicateIdentifier}">
+                            <f:link.action action="wizard" arguments="{step: 1, wizardData: wizardData}" class="rgaa-btn rgaa-btn-outline text-danger">⚠️ Modifier l'identifiant (Étape 1)</f:link.action>
+                        </f:if>
+                    </div>
+                    <button type="submit" class="rgaa-btn rgaa-btn-success rgaa-btn-lg" {f:if(condition: isDuplicateIdentifier, then: 'disabled="disabled"')}>
                         🚀 Valider & Déployer le nouveau site commune
                     </button>
                 </div>

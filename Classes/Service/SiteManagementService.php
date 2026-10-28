@@ -32,12 +32,33 @@ class SiteManagementService
      */
     private ?array $lastFileStorageReport = null;
 
+    /**
+     * Rapport du dernier provisionnement des accès backend (groupe communal + utilisateurs secrétariat et élu).
+     *
+     * @var array{
+     *     status: string,
+     *     messages: array<int, string>,
+     *     communeGroupUid: int,
+     *     communeGroupTitle: string,
+     *     assignedGroupUids: array<int, int>,
+     *     users: array{
+     *         secretariat: array{uid: int, username: string, realName: string, email: string, plainPassword: string, success: bool},
+     *         elu: array{uid: int, username: string, realName: string, email: string, plainPassword: string, success: bool}
+     *     }
+     * }|null
+     */
+    private ?array $lastUserProvisioningReport = null;
+
+    private readonly CommuneBackendUserService $communeBackendUserService;
+
     public function __construct(
         private readonly SiteFinder $siteFinder,
         private readonly SiteConfiguration $siteConfiguration,
         private readonly ConnectionPool $connectionPool,
-        private readonly CommuneFileStorageService $communeFileStorageService
+        private readonly CommuneFileStorageService $communeFileStorageService,
+        ?CommuneBackendUserService $communeBackendUserService = null
     ) {
+        $this->communeBackendUserService = $communeBackendUserService ?? GeneralUtility::makeInstance(CommuneBackendUserService::class);
     }
 
     /**
@@ -48,6 +69,46 @@ class SiteManagementService
     public function getLastFileStorageReport(): ?array
     {
         return $this->lastFileStorageReport;
+    }
+
+    /**
+     * Retourne le rapport de création des groupes et utilisateurs du dernier site déployé.
+     *
+     * @return array{
+     *     status: string,
+     *     messages: array<int, string>,
+     *     communeGroupUid: int,
+     *     communeGroupTitle: string,
+     *     assignedGroupUids: array<int, int>,
+     *     users: array{
+     *         secretariat: array{uid: int, username: string, realName: string, email: string, plainPassword: string, success: bool},
+     *         elu: array{uid: int, username: string, realName: string, email: string, plainPassword: string, success: bool}
+     *     }
+     * }|null
+     */
+    public function getLastUserProvisioningReport(): ?array
+    {
+        return $this->lastUserProvisioningReport;
+    }
+
+    /**
+     * Récupère la liste des groupes utilisateurs backend existants dans TYPO3.
+     *
+     * @return array<int, array{uid: int, title: string, description: string}>
+     */
+    public function getAvailableBackendUserGroups(): array
+    {
+        return $this->communeBackendUserService->getAvailableBackendUserGroups();
+    }
+
+    /**
+     * Recherche l'UID du groupe de rédacteurs par défaut (_RÉDACTEUR).
+     *
+     * @param array<int, array{uid: int, title: string, description: string}> $groups
+     */
+    public function findDefaultRedacteurGroupUid(array $groups): int
+    {
+        return $this->communeBackendUserService->findDefaultRedacteurGroupUid($groups);
     }
 
     /**
@@ -76,6 +137,34 @@ class SiteManagementService
                 return null;
             }
         }
+    }
+
+    /**
+     * Vérifie de manière stricte si un site avec cet identifiant existe déjà dans TYPO3
+     * (soit dans le cache SiteFinder, soit dans les configurations YAML physiques sur disque).
+     */
+    public function siteExists(string $identifier): bool
+    {
+        $clean = trim($identifier);
+        if ($clean === '') {
+            return false;
+        }
+
+        // 1. Vérification dans SiteFinder (avec et sans cache)
+        if ($this->getSiteByIdentifier($clean) !== null) {
+            return true;
+        }
+
+        // 2. Vérification directe dans les fichiers de configuration de sites (config/sites/<identifier>/config.yaml)
+        try {
+            $allConfigs = $this->siteConfiguration->getAllSiteConfigurationFromFiles();
+            if (isset($allConfigs[$clean])) {
+                return true;
+            }
+        } catch (\Throwable) {
+        }
+
+        return false;
     }
 
     /**
@@ -708,12 +797,25 @@ class SiteManagementService
     public function createNewSite(array $data): string
     {
         $name = trim($data['name'] ?? 'Nouvelle Commune');
-        $identifier = $data['identifier'] ?? '';
-        if (empty($identifier)) {
-            $identifier = 'commune-' . GeneralUtility::underscoredToLowercase(
-                preg_replace('/[^a-zA-Z0-9_-]/', '', str_replace(' ', '-', $name))
-            );
-            $identifier = trim($identifier, '-');
+        $rawIdentifier = trim((string)($data['identifier'] ?? ''));
+
+        // Normalisation stricte de l'identifiant (sans préfixe "commune-")
+        if ($rawIdentifier !== '') {
+            $identifier = FolderNameSanitizer::slugify($rawIdentifier);
+        } else {
+            $identifier = FolderNameSanitizer::slugify($name);
+        }
+
+        if ($identifier === '') {
+            throw new \RuntimeException('L\'identifiant unique de la commune est obligatoire.');
+        }
+
+        // Sécurité absolue anti-écrasement : interdiction formelle d'écraser un site déjà existant
+        if ($this->siteExists($identifier)) {
+            throw new \RuntimeException(sprintf(
+                'Impossible de déployer : une collectivité avec l\'identifiant « %s » existe déjà dans TYPO3. Aucune ressource n\'a été modifiée.',
+                $identifier
+            ));
         }
 
         $rootPageId = $this->createRootPage($name);
@@ -785,8 +887,8 @@ class SiteManagementService
             'commune.slogan' => !empty($data['slogan']) ? $data['slogan'] : 'République Française - Liberté, Égalité, Fraternité',
             'commune.theme_css' => !empty($data['theme']) ? $data['theme'] : 'EXT:site_commune_rgaa/Resources/Public/Css/commune-theme-1.css',
             'commune.color_scheme_css' => !empty($data['color_scheme']) ? $data['color_scheme'] : 'EXT:site_commune_rgaa/Resources/Public/Css/commune-couleurs-1.css',
-            'commune.rgaa_statut' => !empty($data['rgaa_statut']) ? $data['rgaa_statut'] : 'partiellement conforme',
-            'commune.rgaa_taux' => !empty($data['rgaa_taux']) ? $data['rgaa_taux'] : '84%',
+            'commune.rgaa_statut' => !empty($data['rgaa_statut']) ? $data['rgaa_statut'] : 'non conforme',
+            'commune.rgaa_taux' => !empty($data['rgaa_taux']) ? $data['rgaa_taux'] : '0 %',
         ];
 
         if (!empty($data['adresse'])) {
@@ -817,11 +919,12 @@ class SiteManagementService
 
         // 5. Gestionnaire de fichiers : dossiers fileadmin/<identifiant>/template|uploads, miroir des pages
         //    du menu principal, stockage FAL et point de montage. Un échec n'annule jamais le déploiement du site.
+        $officialNameUpper = CommuneBackendUserService::formatCommuneUpperName($name);
         try {
             $createCustomStorage = !empty($data['create_custom_storage']);
             $this->lastFileStorageReport = $this->communeFileStorageService->provision(
                 $identifier,
-                $name,
+                $officialNameUpper,
                 (int)($generatedUids['commune.main_menu_folder_uid'] ?? 0),
                 $createCustomStorage
             );
@@ -833,6 +936,31 @@ class SiteManagementService
                 'fileMountUid' => 0,
                 'createdFolders' => 0,
                 'basePath' => '',
+                'customStorageCreated' => false,
+            ];
+        }
+
+        // 6. Gestion des accès : Groupe communal (Montages BDD + FAL) et utilisateurs (Secrétariat & Élu)
+        try {
+            $fileMountUid = (int)($this->lastFileStorageReport['fileMountUid'] ?? 0);
+            $this->lastUserProvisioningReport = $this->communeBackendUserService->provision(
+                $identifier,
+                $name,
+                $rootPageId,
+                $fileMountUid,
+                $data
+            );
+        } catch (\Throwable $e) {
+            $this->lastUserProvisioningReport = [
+                'status' => CommuneBackendUserService::STATUS_ERROR,
+                'messages' => ['Erreur lors de la création des accès backend : ' . $e->getMessage()],
+                'communeGroupUid' => 0,
+                'communeGroupTitle' => $officialNameUpper,
+                'assignedGroupUids' => [],
+                'users' => [
+                    'secretariat' => ['uid' => 0, 'username' => '', 'realName' => '', 'email' => '', 'plainPassword' => '', 'success' => false],
+                    'elu' => ['uid' => 0, 'username' => '', 'realName' => '', 'email' => '', 'plainPassword' => '', 'success' => false],
+                ],
             ];
         }
 

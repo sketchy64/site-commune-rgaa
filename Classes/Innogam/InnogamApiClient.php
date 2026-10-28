@@ -212,7 +212,7 @@ class InnogamApiClient
 
             // Tri alphabétique sur le nom
             usort($results, static function (CollectiviteSummary $a, CollectiviteSummary $b): int {
-                return strcmp(self::normalizeString($a->getNom()), self::normalizeString($b->getNom()));
+                return strcasecmp($a->getNom(), $b->getNom());
             });
 
             $cache->set($cacheKey, $results, [], $this->getCacheLifetime());

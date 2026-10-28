@@ -687,3 +687,102 @@ body {
     margin-bottom: 1.75rem;
     box-shadow: 0 10px 15px -3px rgba(15, 76, 129, 0.08);
 }
+
+/* Checkboxes & Cellules cliquables du tableau comparatif Diff */
+.rgaa-diff-table input[type="checkbox"],
+input.rgaa-sync-checkbox {
+    -webkit-appearance: checkbox !important;
+    -moz-appearance: checkbox !important;
+    appearance: checkbox !important;
+    display: inline-block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+    margin: 0 !important;
+    cursor: pointer !important;
+    accent-color: #0f4c81 !important;
+    vertical-align: middle !important;
+    background-color: #ffffff !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+.rgaa-diff-check-cell {
+    width: 70px !important;
+    min-width: 70px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    cursor: pointer !important;
+    user-select: none !important;
+}
+
+.rgaa-diff-check-wrapper {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px 12px !important;
+    border-radius: 6px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    margin: 0 !important;
+    cursor: pointer !important;
+    transition: background-color 0.15s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.rgaa-diff-check-wrapper:hover {
+    background-color: #e2e8f0 !important;
+}
+
+.rgaa-diff-check-wrapper:active {
+    transform: scale(0.95);
+}
+
+.rgaa-diff-table tr:hover .rgaa-diff-check-wrapper {
+    background-color: #f1f5f9;
+}
+
+/* Cases à cocher des Groupes Utilisateurs TYPO3 (Étape 5) */
+.rgaa-group-checkbox,
+input[type="checkbox"].rgaa-group-checkbox {
+    -webkit-appearance: checkbox !important;
+    -moz-appearance: checkbox !important;
+    appearance: checkbox !important;
+    display: inline-block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    margin: 2px 8px 0 0 !important;
+    cursor: pointer !important;
+    accent-color: #0f4c81 !important;
+    vertical-align: top !important;
+    background-color: #ffffff !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+.rgaa-group-item {
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.rgaa-group-item:hover {
+    background-color: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+}
+
+/* Alertes & validation doublon d'identifiant */
+.rgaa-input-error {
+    border-color: #dc2626 !important;
+    background-color: #fef2f2 !important;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15) !important;
+}
+
+.rgaa-help-error {
+    color: #dc2626 !important;
+    font-weight: 600 !important;
+}

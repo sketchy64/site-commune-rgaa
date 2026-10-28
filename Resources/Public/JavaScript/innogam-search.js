@@ -1,6 +1,7 @@
 /**
  * Site Commune RGAA - Recherche et Synchronisation Innogam
  * Compatible Content Security Policy (CSP), ARIA 1.2 Combobox, navigation clavier et RGAA 4.1.
+ * Optimisé avec filtrage instantané en mémoire client (0 ms) identique à l'annuaire de référence.
  */
 (function () {
     'use strict';
@@ -23,18 +24,115 @@
         return div.innerHTML;
     }
 
+    function removeAccents(str) {
+        if (!str) return '';
+        return str.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
     function slugify(text) {
         if (!text) return '';
-        return text
-            .toString()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
+        return removeAccents(text)
             .toLowerCase()
             .trim()
             .replace(/[^a-z0-9 -]/g, '')
             .replace(/\s+/g, '-')
             .replace(/-+/g, '-');
     }
+
+    /**
+     * Moteur de recherche et de filtrage instantané côté client (In-Memory).
+     * Supporte la recherche multi-mots, les codes postaux / INSEE / SIREN, les acronymes (nom court)
+     * et l'insensibilité complète à la casse et aux accents.
+     */
+    function filterCollectivites(items, query, limit = 12) {
+        if (!Array.isArray(items) || items.length === 0) return [];
+        const trimmed = (query || '').trim();
+        if (trimmed.length < 2) return [];
+
+        const cleanSearch = removeAccents(trimmed).toLowerCase();
+        const searchTerms = cleanSearch.split(/\s+/).filter(w => w.length > 0);
+
+        return items.filter(item => {
+            const cleanNom = removeAccents(item.nom || '').toLowerCase();
+            const cleanNomCourt = removeAccents(item.nom_court || '').toLowerCase();
+            const id = String(item.id || '');
+
+            return searchTerms.every(term =>
+                cleanNom.includes(term) || cleanNomCourt.includes(term) || id.includes(term)
+            );
+        }).slice(0, limit);
+    }
+
+    /**
+     * Gestionnaire de cache client pour le référentiel complet des collectivités Innogam.
+     * Mémorise en RAM et dans sessionStorage (TTL 24h) pour un affichage instantané (0 ms).
+     */
+    const InnogamDataStore = {
+        data: null,
+        loadingPromise: null,
+        storageKey: 'site_commune_rgaa_innogam_collectivites_v1',
+        ttl: 24 * 60 * 60 * 1000, // 24 heures
+
+        isReady() {
+            return Array.isArray(this.data) && this.data.length > 0;
+        },
+
+        async getCollectivites(listUrl, fallbackSearchUrl) {
+            // 1. Déjà en mémoire vive RAM
+            if (this.isReady()) {
+                return this.data;
+            }
+
+            // 2. Vérification dans sessionStorage
+            try {
+                const cachedRaw = sessionStorage.getItem(this.storageKey);
+                if (cachedRaw) {
+                    const parsed = JSON.parse(cachedRaw);
+                    if (parsed && parsed.timestamp && (Date.now() - parsed.timestamp < this.ttl) && Array.isArray(parsed.items) && parsed.items.length > 0) {
+                        this.data = parsed.items;
+                        return this.data;
+                    }
+                }
+            } catch (e) {
+                // Ignore les erreurs de quota ou de navigation privée
+            }
+
+            // 3. Déjà une requête réseau en cours (partage de la promesse)
+            if (this.loadingPromise) {
+                return this.loadingPromise;
+            }
+
+            // 4. Téléchargement unique via l'URL de liste
+            const targetUrl = listUrl || fallbackSearchUrl;
+            if (!targetUrl) return [];
+
+            this.loadingPromise = (async () => {
+                try {
+                    const res = await fetch(targetUrl, { credentials: 'same-origin' });
+                    if (!res.ok) throw new Error('HTTP ' + res.status);
+                    const json = await res.json();
+                    const items = json.collectivites || json.results || [];
+                    if (Array.isArray(items) && items.length > 0) {
+                        this.data = items;
+                        try {
+                            sessionStorage.setItem(this.storageKey, JSON.stringify({
+                                timestamp: Date.now(),
+                                items: items
+                            }));
+                        } catch (e) {}
+                        return items;
+                    }
+                } catch (err) {
+                    console.warn('[Innogam] Impossible de précharger la liste des collectivités :', err);
+                } finally {
+                    this.loadingPromise = null;
+                }
+                return [];
+            })();
+
+            return this.loadingPromise;
+        }
+    };
 
     /**
      * Initialisation du composant de recherche dans l'Assistant de Déploiement (Wizard)
@@ -46,15 +144,19 @@
         const input = document.getElementById('innogam-wizard-search-input');
         const listbox = document.getElementById('innogam-wizard-suggestions');
         const liveRegion = document.getElementById('innogam-wizard-live-region');
+        const listUrl = container.getAttribute('data-list-url');
         const searchUrl = container.getAttribute('data-search-url');
         const detailUrl = container.getAttribute('data-detail-url');
         const loadingIndicator = document.getElementById('innogam-wizard-loading');
         const resultNotice = document.getElementById('innogam-wizard-result-notice');
 
-        if (!input || !listbox || !searchUrl || !detailUrl) return;
+        if (!input || !listbox || !detailUrl) return;
 
         let activeIndex = -1;
         let currentSuggestions = [];
+
+        // Préchargement immédiat et silencieux du référentiel dès l'arrivée sur l'étape 1
+        InnogamDataStore.getCollectivites(listUrl, searchUrl);
 
         function announce(message) {
             if (liveRegion) {
@@ -134,20 +236,20 @@
             announce(`${items.length} collectivités trouvées. Utilisez les flèches haut et bas pour naviguer.`);
         }
 
-        const doSearch = debounce(async function (query) {
+        // Fallback serveur avec debounce si la liste complète n'a pu être chargée
+        const doFallbackServerSearch = debounce(async function (query) {
             if (query.trim().length < 2) {
                 closeSuggestions();
                 return;
             }
+            if (!searchUrl) return;
 
             if (loadingIndicator) loadingIndicator.classList.remove('d-none');
-
             try {
                 const url = searchUrl + (searchUrl.includes('?') ? '&' : '?') + 'q=' + encodeURIComponent(query);
                 const res = await fetch(url, { credentials: 'same-origin' });
                 if (!res.ok) throw new Error('Erreur réseau');
                 const data = await res.json();
-
                 if (data.success && Array.isArray(data.results)) {
                     renderSuggestions(data.results);
                 } else {
@@ -159,7 +261,43 @@
             } finally {
                 if (loadingIndicator) loadingIndicator.classList.add('d-none');
             }
-        }, 250);
+        }, 200);
+
+        /**
+         * Recherche instantanée (0 ms) en mémoire vive client
+         */
+        async function performSearch(query) {
+            const trimmed = query.trim();
+            if (trimmed.length < 2) {
+                closeSuggestions();
+                return;
+            }
+
+            // 1. Si le référentiel est déjà en mémoire RAM, filtrage instantané < 1 ms
+            if (InnogamDataStore.isReady()) {
+                const matches = filterCollectivites(InnogamDataStore.data, trimmed, 12);
+                renderSuggestions(matches);
+                return;
+            }
+
+            // 2. Si le préchargement est en cours, attendre sa résolution
+            if (loadingIndicator) loadingIndicator.classList.remove('d-none');
+            try {
+                const items = await InnogamDataStore.getCollectivites(listUrl, searchUrl);
+                if (Array.isArray(items) && items.length > 0) {
+                    const matches = filterCollectivites(items, input.value.trim(), 12);
+                    renderSuggestions(matches);
+                    return;
+                }
+            } catch (e) {
+                // Échec préchargement
+            } finally {
+                if (loadingIndicator) loadingIndicator.classList.add('d-none');
+            }
+
+            // 3. Fallback sur la recherche distante côté serveur
+            doFallbackServerSearch(trimmed);
+        }
 
         async function selectSuggestion(item) {
             closeSuggestions();
@@ -196,11 +334,12 @@
                 highlightField(nameInput);
             }
 
-            // 2. Identifiant unique (commune-nom)
+            // 2. Identifiant unique (nom de la commune uniquement, sans préfixe "commune")
             const identInput = document.querySelector('input[name="wizardData[identifier]"]');
-            if (identInput && (!identInput.value || identInput.value.startsWith('commune-'))) {
-                identInput.value = 'commune-' + slugify(detail.nom);
+            if (identInput) {
+                identInput.value = slugify(detail.nom);
                 highlightField(identInput);
+                identInput.dispatchEvent(new Event('input', { bubbles: true }));
             }
 
             // 3. Coordonnées & Horaires
@@ -235,7 +374,41 @@
             const innogamTypeInput = document.querySelector('input[name="wizardData[innogam_type]"]');
             if (innogamTypeInput) innogamTypeInput.value = detail.type;
 
-            // 5. Affichage d'un panneau de confirmation visuel & accessible
+            // 5. Pré-remplissage des accès backend : groupe officiel en majuscules & email secrétariat
+            const cleanUpperName = (detail.nom || '').trim().toUpperCase();
+            const cleanSlug = slugify(cleanUpperName);
+
+            const groupTitleInput = document.querySelector('input[name="wizardData[commune_group_title]"]');
+            if (groupTitleInput) {
+                groupTitleInput.value = cleanUpperName;
+            }
+
+            const secEmailInput = document.querySelector('input[name="wizardData[user_secretariat_email]"]');
+            if (secEmailInput && detail.email) {
+                secEmailInput.value = detail.email;
+            }
+
+            const secUserInput = document.querySelector('input[name="wizardData[user_secretariat_username]"]');
+            if (secUserInput) {
+                secUserInput.value = 'secretariat.' + cleanSlug;
+            }
+
+            const secRealInput = document.querySelector('input[name="wizardData[user_secretariat_realname]"]');
+            if (secRealInput) {
+                secRealInput.value = 'Secrétariat ' + cleanUpperName;
+            }
+
+            const eluUserInput = document.querySelector('input[name="wizardData[user_elu_username]"]');
+            if (eluUserInput) {
+                eluUserInput.value = 'elu.' + cleanSlug;
+            }
+
+            const eluRealInput = document.querySelector('input[name="wizardData[user_elu_realname]"]');
+            if (eluRealInput) {
+                eluRealInput.value = 'Élu ' + cleanUpperName;
+            }
+
+            // 6. Affichage d'un panneau de confirmation visuel & accessible
             if (resultNotice) {
                 let extraInfo = [];
                 if (detail.gentille) extraInfo.push(`Gentilé : <strong>${escapeHtml(detail.gentille)}</strong>`);
@@ -272,9 +445,15 @@
             }, 2500);
         }
 
-        // Événements du champ combobox
+        // Événements du champ combobox (instantané à la frappe)
         input.addEventListener('input', function () {
-            doSearch(input.value);
+            performSearch(input.value);
+        });
+
+        input.addEventListener('focus', function () {
+            if (input.value.trim().length >= 2) {
+                performSearch(input.value);
+            }
         });
 
         input.addEventListener('keydown', function (e) {
@@ -299,6 +478,23 @@
             }
         });
 
+        // Synchronisation à la saisie manuelle (Nom en majuscules pour le groupe & Email secrétariat)
+        const manualName = document.querySelector('input[name="wizardData[name]"]');
+        if (manualName) {
+            manualName.addEventListener('input', function () {
+                const upper = manualName.value.trim().toUpperCase();
+                const groupTitle = document.querySelector('input[name="wizardData[commune_group_title]"]');
+                if (groupTitle) groupTitle.value = upper;
+            });
+        }
+        const manualEmail = document.querySelector('input[name="wizardData[email]"]');
+        if (manualEmail) {
+            manualEmail.addEventListener('input', function () {
+                const secEmail = document.querySelector('input[name="wizardData[user_secretariat_email]"]');
+                if (secEmail) secEmail.value = manualEmail.value.trim();
+            });
+        }
+
         // Fermeture au clic extérieur
         document.addEventListener('click', function (e) {
             if (!container.contains(e.target)) {
@@ -314,6 +510,7 @@
         const syncCard = document.getElementById('rgaa-innogam-sync-card');
         if (!syncCard) return;
 
+        const listUrl = syncCard.getAttribute('data-list-url');
         const searchUrl = syncCard.getAttribute('data-search-url');
         const detailUrl = syncCard.getAttribute('data-detail-url');
         const siteIdentifier = syncCard.getAttribute('data-site-identifier');
@@ -334,6 +531,9 @@
         let lastFetchedData = null;
         let activeIdx = -1;
         let suggestions = [];
+
+        // Préchargement immédiat et silencieux du référentiel
+        InnogamDataStore.getCollectivites(listUrl, searchUrl);
 
         function closeSuggestions() {
             if (!suggestionsBox) return;
@@ -364,22 +564,21 @@
             });
         }
 
-        // 3. Recherche dans le panneau de synchronisation
+        // 3. Recherche dans le panneau de synchronisation (Instantanée)
         if (searchInput && suggestionsBox) {
-            const doSyncSearch = debounce(async function (query) {
+            const doFallbackSyncServer = debounce(async function (query) {
                 if (query.trim().length < 2) {
                     closeSuggestions();
                     return;
                 }
+                if (!searchUrl) return;
 
                 if (loadingSpinner) loadingSpinner.classList.remove('d-none');
-
                 try {
                     const url = searchUrl + (searchUrl.includes('?') ? '&' : '?') + 'q=' + encodeURIComponent(query);
                     const res = await fetch(url, { credentials: 'same-origin' });
                     if (!res.ok) throw new Error('Erreur réseau');
                     const data = await res.json();
-
                     if (data.success && Array.isArray(data.results)) {
                         renderSyncSuggestions(data.results);
                     } else {
@@ -390,10 +589,46 @@
                 } finally {
                     if (loadingSpinner) loadingSpinner.classList.add('d-none');
                 }
-            }, 250);
+            }, 200);
+
+            async function performSyncSearch(query) {
+                const trimmed = query.trim();
+                if (trimmed.length < 2) {
+                    closeSuggestions();
+                    return;
+                }
+
+                if (InnogamDataStore.isReady()) {
+                    const matches = filterCollectivites(InnogamDataStore.data, trimmed, 10);
+                    renderSyncSuggestions(matches);
+                    return;
+                }
+
+                if (loadingSpinner) loadingSpinner.classList.remove('d-none');
+                try {
+                    const items = await InnogamDataStore.getCollectivites(listUrl, searchUrl);
+                    if (Array.isArray(items) && items.length > 0) {
+                        const matches = filterCollectivites(items, searchInput.value.trim(), 10);
+                        renderSyncSuggestions(matches);
+                        return;
+                    }
+                } catch (e) {
+                    // Échec
+                } finally {
+                    if (loadingSpinner) loadingSpinner.classList.add('d-none');
+                }
+
+                doFallbackSyncServer(trimmed);
+            }
 
             searchInput.addEventListener('input', function () {
-                doSyncSearch(searchInput.value);
+                performSyncSearch(searchInput.value);
+            });
+
+            searchInput.addEventListener('focus', function () {
+                if (searchInput.value.trim().length >= 2) {
+                    performSyncSearch(searchInput.value);
+                }
             });
 
             searchInput.addEventListener('keydown', function (e) {
@@ -573,16 +808,18 @@
                                 ${statusBadge}
                             </div>
                         </td>
-                        <td class="text-center">
-                            <input
-                                type="checkbox"
-                                class="form-check-input rgaa-sync-checkbox"
-                                id="sync-chk-${idx}"
-                                data-key="${escapeHtml(row.key)}"
-                                data-proposed="${escapeHtml(row.proposed)}"
-                                ${isChecked ? 'checked="checked"' : ''}
-                                aria-label="Mettre à jour le champ ${escapeHtml(row.label)}"
-                            />
+                        <td class="text-center rgaa-diff-check-cell">
+                            <label class="rgaa-diff-check-wrapper" for="sync-chk-${idx}" title="Cocher pour importer cette valeur">
+                                <input
+                                    type="checkbox"
+                                    class="rgaa-sync-checkbox"
+                                    id="sync-chk-${idx}"
+                                    data-key="${escapeHtml(row.key)}"
+                                    data-proposed="${escapeHtml(row.proposed)}"
+                                    ${isChecked ? 'checked="checked"' : ''}
+                                    aria-label="Mettre à jour le champ ${escapeHtml(row.label)}"
+                                />
+                            </label>
                         </td>
                     </tr>
                 `;
@@ -597,6 +834,19 @@
             diffBody.innerHTML = html;
             diffCard.classList.remove('d-none');
             diffCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Rendre la cellule entière cliquable pour cocher/décocher confortablement
+            diffBody.querySelectorAll('.rgaa-diff-check-cell').forEach(cell => {
+                cell.addEventListener('click', (e) => {
+                    if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'LABEL') {
+                        const cb = cell.querySelector('.rgaa-sync-checkbox');
+                        if (cb) {
+                            cb.checked = !cb.checked;
+                            cb.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    }
+                });
+            });
 
             // Boutons Tout cocher / Tout décocher
             const chkAll = document.getElementById('diff-check-all');

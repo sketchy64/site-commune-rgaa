@@ -7,6 +7,10 @@ declare(strict_types=1);
  * En TYPO3 v12+, les routes AJAX sont définies directement dans Routes.php (AjaxRoutes.php est obsolète/supprimé).
  */
 return [
+    'site_commune_rgaa_innogam_list' => [
+        'path' => '/site-commune-rgaa/innogam/list',
+        'target' => \Commune\SiteCommuneRgaa\Controller\InnogamAjaxController::class . '::listAction',
+    ],
     'site_commune_rgaa_innogam_search' => [
         'path' => '/site-commune-rgaa/innogam/search',
         'target' => \Commune\SiteCommuneRgaa\Controller\InnogamAjaxController::class . '::searchAction',

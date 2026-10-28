@@ -25,7 +25,32 @@ class InnogamAjaxController
     }
 
     /**
+     * Récupère la liste complète et légère de toutes les collectivités (communes, intercos, syndicats)
+     * pour permettre l'autocomplétion instantanée côté client en mémoire (0 ms de latence).
+     */
+    public function listAction(ServerRequestInterface $request): ResponseInterface
+    {
+        try {
+            $summaries = $this->innogamApiClient->getCollectivites();
+            $results = array_map(static fn(CollectiviteSummary $c) => $c->toArray(), $summaries);
+
+            return new JsonResponse([
+                'success' => true,
+                'collectivites' => $results,
+                'count' => count($results),
+            ]);
+        } catch (\Throwable $e) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => $e->getMessage(),
+                'collectivites' => [],
+            ], 500);
+        }
+    }
+
+    /**
      * Recherche instantanée de collectivités (communes, intercos, syndicats) avec auto-complétion.
+     * Conservée comme fallback serveur.
      */
     public function searchAction(ServerRequestInterface $request): ResponseInterface
     {

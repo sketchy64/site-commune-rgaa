@@ -26,6 +26,64 @@
     <!-- Flash Messages -->
     <f:flashMessages />
 
+    <!-- Encart de restitution des accès créés (suite à un déploiement) -->
+    <f:if condition="{lastUserReport}">
+        <div class="rgaa-card mb-4" style="background:#f0fdf4; border:2px solid #16a34a; box-shadow:0 10px 15px -3px rgba(22, 163, 74, 0.1);">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h3 class="h5 text-success fw-bold mb-0 d-flex align-items-center gap-2">
+                    <span aria-hidden="true">🎉</span>
+                    <span>Accès Backend Créés pour la Collectivité</span>
+                </h3>
+                <span class="badge bg-success">Déploiement réussi</span>
+            </div>
+
+            <p class="text-dark mb-3">
+                Le groupe spécifique <strong>{lastUserReport.communeGroupTitle}</strong> a été créé avec les montages BDD (siteroot) et fichiers (point de montage FAL).
+                Voici les identifiants et mots de passe temporaires générés pour les comptes utilisateurs :
+            </p>
+
+            <div class="rgaa-grid-2 mb-3">
+                <f:if condition="{lastUserReport.users.secretariat.success}">
+                    <div class="p-3 bg-white rounded border">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <strong>Compte Secrétariat</strong>
+                            <span class="badge bg-light text-dark border">Rédacteur</span>
+                        </div>
+                        <div class="small mb-1"><strong>Nom complet :</strong> {lastUserReport.users.secretariat.realName}</div>
+                        <div class="small mb-1"><strong>Identifiant :</strong> <code>{lastUserReport.users.secretariat.username}</code></div>
+                        <f:if condition="{lastUserReport.users.secretariat.email}">
+                            <div class="small mb-1"><strong>Courriel :</strong> {lastUserReport.users.secretariat.email}</div>
+                        </f:if>
+                        <div class="small mb-2"><strong>Mot de passe temporaire :</strong> <code>{lastUserReport.users.secretariat.plainPassword}</code></div>
+                        <button type="button" class="btn btn-sm btn-outline-primary w-100" data-copy-clipboard="Identifiant : {lastUserReport.users.secretariat.username}&#10;Mot de passe : {lastUserReport.users.secretariat.plainPassword}">
+                            📋 Copier les accès Secrétariat
+                        </button>
+                    </div>
+                </f:if>
+
+                <f:if condition="{lastUserReport.users.elu.success}">
+                    <div class="p-3 bg-white rounded border">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <strong>Compte Élu</strong>
+                            <span class="badge bg-light text-dark border">Rédacteur</span>
+                        </div>
+                        <div class="small mb-1"><strong>Nom complet :</strong> {lastUserReport.users.elu.realName}</div>
+                        <div class="small mb-1"><strong>Identifiant :</strong> <code>{lastUserReport.users.elu.username}</code></div>
+                        <div class="small mb-2"><strong>Mot de passe temporaire :</strong> <code>{lastUserReport.users.elu.plainPassword}</code></div>
+                        <button type="button" class="btn btn-sm btn-outline-primary w-100" data-copy-clipboard="Identifiant : {lastUserReport.users.elu.username}&#10;Mot de passe : {lastUserReport.users.elu.plainPassword}">
+                            📋 Copier les accès Élu
+                        </button>
+                    </div>
+                </f:if>
+            </div>
+
+            <div class="small text-muted d-flex align-items-center gap-2">
+                <span aria-hidden="true">🔒</span>
+                <span>Ces mots de passe temporaires sont générés pour la transmission sécurisée. Chaque utilisateur devra définir son propre mot de passe lors de sa première connexion dans le menu utilisateur.</span>
+            </div>
+        </div>
+    </f:if>
+
     <!-- Barre de Sélection de la Commune Active -->
     <f:if condition="{sites}">
         <div class="rgaa-site-bar">
@@ -38,7 +96,6 @@
                         </option>
                     </f:for>
                 </select>
-                <button type="submit" class="rgaa-btn rgaa-btn-sm rgaa-btn-outline" id="siteSelectSubmit" title="Charger la commune sélectionnée">Charger</button>
             </f:form>
 
             <f:if condition="{selectedSite}">
@@ -57,6 +114,7 @@
 
                 <!-- Panneau de Synchronisation & Comparaison avec l'Annuaire Innogam -->
                 <div id="rgaa-innogam-sync-card" class="rgaa-innogam-box mb-4"
+                     data-list-url="{innogamListUrl}"
                      data-search-url="{innogamSearchUrl}"
                      data-detail-url="{innogamDetailUrl}"
                      data-site-identifier="{selectedSiteIdentifier}"
@@ -325,14 +383,14 @@
                             <div class="rgaa-form-group">
                                 <label class="rgaa-label">Statut de conformité légale :</label>
                                 <f:form.select name="settings[commune.rgaa_statut]" value="{currentSettings.commune.rgaa_statut}" class="rgaa-form-select">
+                                    <f:form.select.option value="non conforme">non conforme</f:form.select.option>
                                     <f:form.select.option value="partiellement conforme">partiellement conforme</f:form.select.option>
                                     <f:form.select.option value="totalement conforme">totalement conforme</f:form.select.option>
-                                    <f:form.select.option value="non conforme">non conforme</f:form.select.option>
                                 </f:form.select>
                             </div>
                             <div class="rgaa-form-group">
                                 <label class="rgaa-label">Taux de conformité RGAA :</label>
-                                <f:form.textfield name="settings[commune.rgaa_taux]" value="{currentSettings.commune.rgaa_taux}" class="rgaa-input" placeholder="84%" />
+                                <f:form.textfield name="settings[commune.rgaa_taux]" value="{currentSettings.commune.rgaa_taux}" class="rgaa-input" placeholder="0 %" />
                             </div>
                         </div>
 
