@@ -1,4 +1,4 @@
-categories:
+﻿categories:
   # ============================================================================
   # NIVEAU 1 : CATÉGORIE RACINE
   # ============================================================================
@@ -62,6 +62,10 @@ categories:
   commune_language:
     label: 'Langues & Multilinguisme'
     description: 'Configuration du sélecteur de langues avec drapeaux dans l''en-tête'
+    parent: commune_root
+  commune_innogam:
+    label: 'Annuaire & Données Innogam'
+    description: 'Liaison avec l''annuaire départemental des collectivités'
     parent: commune_root
 
   # ============================================================================
@@ -560,3 +564,28 @@ settings:
       - 'brand'
       - 'center'
       - 'menu'
+
+
+  # ============================================================================
+  # 11. ANNUAIRE & DONNÉES INNOGAM
+  # ============================================================================
+  commune.innogam_id:
+    label: 'Identifiant Collectivité Innogam (INSEE ou SIREN)'
+    description: 'Identifiant unique permettant de synchroniser les coordonnées avec l''annuaire des collectivités'
+    category: commune_innogam
+    type: string
+    default: ''
+
+  commune.innogam_type:
+    label: 'Type de collectivité (Innogam)'
+    description: 'Type de structure : commune ou interco'
+    category: commune_innogam
+    type: string
+    default: 'commune'
+
+  commune.innogam_last_sync:
+    label: 'Date de dernière synchronisation'
+    description: 'Horodatage de la dernière synchronisation effectuée avec l''annuaire Innogam'
+    category: commune_innogam
+    type: string
+    default: ''

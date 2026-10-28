@@ -6,3 +6,6 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Dossier d'intégration source INNOGAM (contient des identifiants et BDD locale)
+/INNOGAM/

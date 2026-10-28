@@ -789,6 +789,24 @@ class SiteManagementService
             'commune.rgaa_taux' => !empty($data['rgaa_taux']) ? $data['rgaa_taux'] : '84%',
         ];
 
+        if (!empty($data['adresse'])) {
+            $initialSettings['commune.adresse'] = trim((string)$data['adresse']);
+        }
+        if (!empty($data['telephone'])) {
+            $initialSettings['commune.telephone'] = trim((string)$data['telephone']);
+        }
+        if (!empty($data['email'])) {
+            $initialSettings['commune.email'] = trim((string)$data['email']);
+        }
+        if (!empty($data['horaires'])) {
+            $initialSettings['commune.horaires'] = trim((string)$data['horaires']);
+        }
+        if (!empty($data['innogam_id'])) {
+            $initialSettings['commune.innogam_id'] = trim((string)$data['innogam_id']);
+            $initialSettings['commune.innogam_type'] = !empty($data['innogam_type']) ? trim((string)$data['innogam_type']) : 'commune';
+            $initialSettings['commune.innogam_last_sync'] = date('d/m/Y H:i');
+        }
+
         foreach ($generatedUids as $settingKey => $uid) {
             if ($uid > 0) {
                 $initialSettings[$settingKey] = $uid;

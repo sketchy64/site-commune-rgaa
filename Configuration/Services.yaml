@@ -6,7 +6,10 @@ services:
 
   Commune\SiteCommuneRgaa\:
     resource: '../Classes/*'
-    exclude: '../Classes/Domain/Model/*'
+    exclude:
+      - '../Classes/Domain/Model/*'
+      - '../Classes/Innogam/Dto/*'
+      - '../Classes/Innogam/Exception/*'
 
   Commune\SiteCommuneRgaa\EventListener\NewsPublishedEventListener:
     tags:

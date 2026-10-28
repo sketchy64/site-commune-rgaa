@@ -7,6 +7,7 @@ namespace Commune\SiteCommuneRgaa\Controller;
 use Commune\SiteCommuneRgaa\Service\CommuneFileStorageService;
 use Commune\SiteCommuneRgaa\Service\SiteManagementService;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
@@ -20,7 +21,9 @@ class BackendModuleController extends ActionController
     public function __construct(
         private readonly SiteManagementService $siteManagementService,
         private readonly ModuleTemplateFactory $moduleTemplateFactory,
-        private readonly PageRenderer $pageRenderer
+        private readonly PageRenderer $pageRenderer,
+        private readonly BackendUriBuilder $backendUriBuilder,
+        private readonly InnogamAjaxController $innogamAjaxController
     ) {
     }
 
@@ -61,6 +64,9 @@ class BackendModuleController extends ActionController
         // Ajout propre des fichiers CSS et JS backend via le PageRenderer Core TYPO3 (Compatibilité CSP v12/v13/v14)
         $this->pageRenderer->addCssFile('EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css');
         $this->pageRenderer->addJsFile('EXT:site_commune_rgaa/Resources/Public/JavaScript/backend-module.js');
+        $this->pageRenderer->addJsFile('EXT:site_commune_rgaa/Resources/Public/JavaScript/innogam-search.js');
+
+        $innogamUrls = $this->resolveInnogamUrls();
 
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $moduleTemplate->setTitle('Collectivités RGAA', 'Administration & Multi-Sites');
@@ -72,6 +78,8 @@ class BackendModuleController extends ActionController
             'categories' => $definitions['categories'] ?? [],
             'settingsDefinitions' => $definitions['settings'] ?? [],
             'currentSettings' => $currentSettings,
+            'innogamSearchUrl' => $innogamUrls['searchUrl'],
+            'innogamDetailUrl' => $innogamUrls['detailUrl'],
         ]);
 
         return $moduleTemplate->renderResponse('BackendModule/Index');
@@ -139,6 +147,9 @@ class BackendModuleController extends ActionController
 
         $this->pageRenderer->addCssFile('EXT:site_commune_rgaa/Resources/Public/Css/backend-module.css');
         $this->pageRenderer->addJsFile('EXT:site_commune_rgaa/Resources/Public/JavaScript/backend-module.js');
+        $this->pageRenderer->addJsFile('EXT:site_commune_rgaa/Resources/Public/JavaScript/innogam-search.js');
+
+        $innogamUrls = $this->resolveInnogamUrls();
 
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $moduleTemplate->setTitle('Assistant de Déploiement', 'Nouveau site commune');
@@ -151,6 +162,8 @@ class BackendModuleController extends ActionController
             'selectedPagesMap' => $selectedPagesMap,
             'selectedPagesCount' => count($selectedPagesList),
             'totalPagesCount' => count($allPageKeys),
+            'innogamSearchUrl' => $innogamUrls['searchUrl'],
+            'innogamDetailUrl' => $innogamUrls['detailUrl'],
         ]);
 
         return $moduleTemplate->renderResponse('BackendModule/Wizard');
@@ -192,6 +205,44 @@ class BackendModuleController extends ActionController
     }
 
     /**
+     * Action AJAX : Recherche de collectivités dans l'annuaire Innogam.
+     */
+    public function innogamSearchAction(): ResponseInterface
+    {
+        return $this->innogamAjaxController->searchAction($this->request);
+    }
+
+    /**
+     * Action AJAX : Détail d'une collectivité et comparaison.
+     */
+    public function innogamDetailAction(): ResponseInterface
+    {
+        return $this->innogamAjaxController->detailAction($this->request);
+    }
+
+    /**
+     * Résout les URLs des endpoints AJAX Innogam.
+     * Tente la route Backend dédiée (Routes.php), et bascule de manière transparente sur
+     * les actions du module Extbase en cas d'absence dans le cache de routage TYPO3.
+     *
+     * @return array{searchUrl: string, detailUrl: string}
+     */
+    private function resolveInnogamUrls(): array
+    {
+        try {
+            return [
+                'searchUrl' => (string)$this->backendUriBuilder->buildUriFromRoute('site_commune_rgaa_innogam_search'),
+                'detailUrl' => (string)$this->backendUriBuilder->buildUriFromRoute('site_commune_rgaa_innogam_detail'),
+            ];
+        } catch (\Throwable) {
+            return [
+                'searchUrl' => (string)$this->uriBuilder->reset()->uriFor('innogamSearch'),
+                'detailUrl' => (string)$this->uriBuilder->reset()->uriFor('innogamDetail'),
+            ];
+        }
+    }
+
+    /**
      * Restitue le résultat de la création des dossiers fileadmin et du stockage FAL de la commune.
      *
      * @param array{status: string, messages: array<int, string>, storageUid: int, fileMountUid: int, createdFolders: int, basePath: string}|null $report
@@ -212,7 +263,9 @@ class BackendModuleController extends ActionController
             $storageLabel,
             $report['createdFolders'],
             $report['fileMountUid']
-        );[$title, $severity, $body] = match ($report['status']) {
+        );
+
+        [$title, $severity, $body] = match ($report['status']) {
             CommuneFileStorageService::STATUS_SUCCESS => ['Gestionnaire de fichiers prêt', ContextualFeedbackSeverity::OK, $summary],
             CommuneFileStorageService::STATUS_WARNING => ['Gestionnaire de fichiers : points d\'attention', ContextualFeedbackSeverity::WARNING, $summary . ' ' . implode(' ', $report['messages'])],
             default => ['Gestionnaire de fichiers non initialisé', ContextualFeedbackSeverity::ERROR, 'Le site a bien été créé, mais les dossiers et le stockage de fichiers doivent être créés manuellement. ' . implode(' ', $report['messages'])],

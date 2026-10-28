@@ -1,0 +1,11 @@
+# cat=innogam; type=string; label=URL de base de l'API Innogam
+apiBaseUrl = https://innogam-api.innoapps.innovortex.network/api
+
+# cat=innogam; type=string; label=Identifiant secret API Innogam
+apiUsername = struct_xzwe_64
+
+# cat=innogam; type=password; label=Mot de passe secret API Innogam
+apiPassword = ^T12vehSNsjvqyfaph
+
+# cat=innogam; type=int+; label=Durée du cache de la liste des collectivités (en secondes)
+cacheLifetime = 86400

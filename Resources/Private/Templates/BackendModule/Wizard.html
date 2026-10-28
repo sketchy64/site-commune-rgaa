@@ -34,8 +34,45 @@
 
         <f:if condition="{step} == 1">
             <!-- ÉTAPE 1 : Identité & Domaine -->
-            <h2 class="rgaa-card-title">Étape 1 / 5 : Identité de la Commune & URL</h2>
-            <p class="rgaa-help-text mb-4">Renseignez le nom officiel de la collectivité et son point d'entrée (ou nom de domaine).</p>
+            <h2 class="rgaa-card-title">Étape 1 / 5 : Identité de la Collectivité & Coordonnées</h2>
+            <p class="rgaa-help-text mb-4">
+                Recherchez la collectivité dans l'annuaire Innogam pour pré-remplir automatiquement toutes ses coordonnées officielles, ou renseignez les champs manuellement.
+            </p>
+
+            <!-- Boîte de recherche Innogam avec auto-complétion accessible -->
+            <div id="rgaa-wizard-innogam-box" class="rgaa-innogam-box" data-search-url="{innogamSearchUrl}" data-detail-url="{innogamDetailUrl}">
+                <div class="rgaa-innogam-box-title">
+                    <span aria-hidden="true">🏛️</span>
+                    <span>Rechercher la collectivité dans l'annuaire (Innogam)</span>
+                </div>
+                <p class="rgaa-help-text mb-3">
+                    Saisissez au moins 2 lettres du nom de la commune, de l'intercommunalité ou du syndicat (ex: <em>Bayonne, Mouguerre, Pau...</em>).
+                </p>
+                <div class="rgaa-combobox-wrapper">
+                    <div class="position-relative">
+                        <input
+                            type="text"
+                            id="innogam-wizard-search-input"
+                            class="rgaa-input"
+                            placeholder="Taper le nom d'une commune, EPCI ou syndicat..."
+                            autocomplete="off"
+                            role="combobox"
+                            aria-autocomplete="list"
+                            aria-expanded="false"
+                            aria-controls="innogam-wizard-suggestions"
+                            aria-describedby="innogam-wizard-hint"
+                            style="font-size:1.05rem; padding:0.7rem 2.5rem 0.7rem 1rem;"
+                        />
+                        <span id="innogam-wizard-loading" class="spinner-border spinner-border-sm text-primary position-absolute top-50 end-0 translate-middle-y me-3 d-none" role="status" aria-label="Recherche en cours"></span>
+                    </div>
+                    <div id="innogam-wizard-hint" class="visually-hidden">
+                        Les suggestions s'affichent sous le champ. Utilisez les flèches haut et bas pour naviguer et Entrée pour sélectionner.
+                    </div>
+                    <div id="innogam-wizard-suggestions" class="rgaa-combobox-dropdown" role="listbox" hidden="hidden"></div>
+                    <div id="innogam-wizard-live-region" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+                </div>
+                <div id="innogam-wizard-result-notice" class="d-none"></div>
+            </div>
 
             <f:form action="wizard" name="wizardData">
                 <f:form.hidden name="step" value="2" />
@@ -44,29 +81,63 @@
                 <f:form.hidden name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" />
                 <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
                 <f:form.hidden name="wizardData[selected_pages_csv]" value="{wizardData.selected_pages_csv}" />
-                <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />`r`n                <f:form.hidden name="wizardData[create_custom_storage]" value="{wizardData.create_custom_storage}" />
+                <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />
+                <f:form.hidden name="wizardData[create_custom_storage]" value="{wizardData.create_custom_storage}" />
+                <f:form.hidden name="wizardData[innogam_id]" value="{wizardData.innogam_id}" />
+                <f:form.hidden name="wizardData[innogam_type]" value="{wizardData.innogam_type}" />
 
                 <div class="rgaa-form-group">
-                    <label class="rgaa-label">Nom officiel de la commune * :</label>
-                    <f:form.textfield name="wizardData[name]" value="{wizardData.name}" class="rgaa-input" style="font-size:1.1rem; padding:0.75rem;" placeholder="Mairie de Pau" required="true" />
+                    <label class="rgaa-label">Nom officiel de la collectivité * :</label>
+                    <f:form.textfield name="wizardData[name]" value="{wizardData.name}" class="rgaa-input" style="font-size:1.1rem; padding:0.75rem;" placeholder="Bayonne (ou Mairie de Bayonne)" required="true" />
+                    <div class="rgaa-help-text">Nom enregistré pour la collectivité. Vous pouvez ajouter un préfixe (« Mairie de », « Ville de ») si vous le souhaitez.</div>
                 </div>
 
                 <div class="rgaa-grid-2">
                     <div class="rgaa-form-group">
                         <label class="rgaa-label">Identifiant unique du site (optionnel) :</label>
-                        <f:form.textfield name="wizardData[identifier]" value="{wizardData.identifier}" class="rgaa-input" placeholder="commune-pau" />
+                        <f:form.textfield name="wizardData[identifier]" value="{wizardData.identifier}" class="rgaa-input" placeholder="commune-bayonne" />
                         <div class="rgaa-help-text">Généré automatiquement depuis le nom si laissé vide.</div>
                     </div>
                     <div class="rgaa-form-group">
                         <label class="rgaa-label">URL de base (Point d'entrée / Domaine) * :</label>
-                        <f:form.textfield name="wizardData[domain]" value="{f:if(condition: wizardData.domain, then: wizardData.domain, else: '/')}" class="rgaa-input" placeholder="/ ou https://www.pau.fr/" required="true" />
-                        <div class="rgaa-help-text">Conservez <code>/</code> pour un déploiement local/universel, ou saisissez le domaine complet.</div>
+                        <f:form.textfield name="wizardData[domain]" value="{f:if(condition: wizardData.domain, then: wizardData.domain, else: '/')}" class="rgaa-input" placeholder="/ ou https://www.bayonne.fr/" required="true" />
+                        <div class="rgaa-help-text">Conservez <code>/</code> pour un déploiement universel, ou saisissez le domaine complet.</div>
                     </div>
                 </div>
 
                 <div class="rgaa-form-group">
                     <label class="rgaa-label">Devise ou slogan institutionnel :</label>
                     <f:form.textfield name="wizardData[slogan]" value="{wizardData.slogan}" class="rgaa-input" placeholder="République Française - Liberté, Égalité, Fraternité" />
+                </div>
+
+                <!-- Section Coordonnées & Horaires (auto-complétée par Innogam) -->
+                <div class="p-3 my-4" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px;">
+                    <h3 class="h6 text-primary fw-bold mb-3 d-flex align-items-center gap-2">
+                        <span>📍</span> Coordonnées officielles & Horaires d'accueil
+                    </h3>
+
+                    <div class="rgaa-form-group">
+                        <label class="rgaa-label">Adresse postale complète :</label>
+                        <f:form.textfield name="wizardData[adresse]" value="{wizardData.adresse}" class="rgaa-input" placeholder="1 Place de la Liberté, 64100 Bayonne" />
+                        <div class="rgaa-help-text">Adresse officielle de la mairie ou du siège de la collectivité.</div>
+                    </div>
+
+                    <div class="rgaa-grid-2">
+                        <div class="rgaa-form-group">
+                            <label class="rgaa-label">Numéro de téléphone d'accueil :</label>
+                            <f:form.textfield name="wizardData[telephone]" value="{wizardData.telephone}" class="rgaa-input" placeholder="05 59 46 60 60" />
+                        </div>
+                        <div class="rgaa-form-group">
+                            <label class="rgaa-label">Adresse courriel publique :</label>
+                            <f:form.textfield name="wizardData[email]" value="{wizardData.email}" class="rgaa-input" placeholder="contact@bayonne.fr" />
+                        </div>
+                    </div>
+
+                    <div class="rgaa-form-group mb-0">
+                        <label class="rgaa-label">Horaires d'ouverture au public :</label>
+                        <f:form.textarea name="wizardData[horaires]" value="{wizardData.horaires}" class="rgaa-textarea" rows="3" placeholder="Du Lundi au Vendredi : 8h30 - 12h00 / 13h30 - 17h30" />
+                        <div class="rgaa-help-text">Affichés dans le pied de page et sur la page de contact.</div>
+                    </div>
                 </div>
 
                 <div class="mt-4 text-end">
@@ -85,10 +156,17 @@
                 <f:form.hidden name="wizardData[identifier]" value="{wizardData.identifier}" />
                 <f:form.hidden name="wizardData[domain]" value="{wizardData.domain}" />
                 <f:form.hidden name="wizardData[slogan]" value="{wizardData.slogan}" />
+                <f:form.hidden name="wizardData[adresse]" value="{wizardData.adresse}" />
+                <f:form.hidden name="wizardData[telephone]" value="{wizardData.telephone}" />
+                <f:form.hidden name="wizardData[email]" value="{wizardData.email}" />
+                <f:form.hidden name="wizardData[horaires]" value="{wizardData.horaires}" />
+                <f:form.hidden name="wizardData[innogam_id]" value="{wizardData.innogam_id}" />
+                <f:form.hidden name="wizardData[innogam_type]" value="{wizardData.innogam_type}" />
                 <f:form.hidden name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" />
                 <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
                 <f:form.hidden name="wizardData[selected_pages_csv]" value="{wizardData.selected_pages_csv}" />
-                <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />`r`n                <f:form.hidden name="wizardData[create_custom_storage]" value="{wizardData.create_custom_storage}" />
+                <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />
+                <f:form.hidden name="wizardData[create_custom_storage]" value="{wizardData.create_custom_storage}" />
 
                 <div class="rgaa-form-group">
                     <label class="rgaa-label">Thème Graphique :</label>
@@ -125,10 +203,17 @@
                 <f:form.hidden name="wizardData[identifier]" value="{wizardData.identifier}" />
                 <f:form.hidden name="wizardData[domain]" value="{wizardData.domain}" />
                 <f:form.hidden name="wizardData[slogan]" value="{wizardData.slogan}" />
+                <f:form.hidden name="wizardData[adresse]" value="{wizardData.adresse}" />
+                <f:form.hidden name="wizardData[telephone]" value="{wizardData.telephone}" />
+                <f:form.hidden name="wizardData[email]" value="{wizardData.email}" />
+                <f:form.hidden name="wizardData[horaires]" value="{wizardData.horaires}" />
+                <f:form.hidden name="wizardData[innogam_id]" value="{wizardData.innogam_id}" />
+                <f:form.hidden name="wizardData[innogam_type]" value="{wizardData.innogam_type}" />
                 <f:form.hidden name="wizardData[theme]" value="{wizardData.theme}" />
                 <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
                 <f:form.hidden name="wizardData[selected_pages_csv]" value="{wizardData.selected_pages_csv}" />
-                <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />`r`n                <f:form.hidden name="wizardData[create_custom_storage]" value="{wizardData.create_custom_storage}" />
+                <f:form.hidden name="wizardData[selected_pages_initialized]" value="{wizardData.selected_pages_initialized}" />
+                <f:form.hidden name="wizardData[create_custom_storage]" value="{wizardData.create_custom_storage}" />
 
                 <div class="rgaa-form-group">
                     <label class="rgaa-label">Statut légal de conformité :</label>
@@ -164,11 +249,18 @@
                 <f:form.hidden name="wizardData[identifier]" value="{wizardData.identifier}" />
                 <f:form.hidden name="wizardData[domain]" value="{wizardData.domain}" />
                 <f:form.hidden name="wizardData[slogan]" value="{wizardData.slogan}" />
+                <f:form.hidden name="wizardData[adresse]" value="{wizardData.adresse}" />
+                <f:form.hidden name="wizardData[telephone]" value="{wizardData.telephone}" />
+                <f:form.hidden name="wizardData[email]" value="{wizardData.email}" />
+                <f:form.hidden name="wizardData[horaires]" value="{wizardData.horaires}" />
+                <f:form.hidden name="wizardData[innogam_id]" value="{wizardData.innogam_id}" />
+                <f:form.hidden name="wizardData[innogam_type]" value="{wizardData.innogam_type}" />
                 <f:form.hidden name="wizardData[theme]" value="{wizardData.theme}" />
                 <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
                 <f:form.hidden name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" />
                 <f:form.hidden name="wizardData[rgaa_taux]" value="{wizardData.rgaa_taux}" />
                 <f:form.hidden name="wizardData[selected_pages_initialized]" value="1" />
+                <f:form.hidden name="wizardData[create_custom_storage]" value="{wizardData.create_custom_storage}" />
 
                 <!-- Accordéon des dossiers configurables (Menu principal & Menu en pied de page), fermés par défaut -->
                 <f:for each="{pageTreeCatalog.folders}" as="folder" key="folderKey">
@@ -303,9 +395,31 @@
             <p class="rgaa-help-text mb-4">Vérifiez les paramètres de la nouvelle commune avant le lancement automatique de la génération.</p>
 
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:1.25rem; margin-bottom:1.5rem;">
-                <div class="rgaa-form-group"><strong>Nom de la commune :</strong> {wizardData.name}</div>
+                <div class="rgaa-form-group">
+                    <strong>Nom de la collectivité :</strong> {wizardData.name}
+                    <f:if condition="{wizardData.innogam_id}">
+                        <span class="badge bg-success ms-2">🏛️ Lié à l'annuaire Innogam (#{wizardData.innogam_id})</span>
+                    </f:if>
+                </div>
                 <div class="rgaa-form-group"><strong>Domaine / Base URL :</strong> <code>{wizardData.domain}</code></div>
                 <div class="rgaa-form-group"><strong>Identifiant du site :</strong> <code>{f:if(condition: wizardData.identifier, then: wizardData.identifier, else: '(Généré automatiquement)')}</code></div>
+
+                <f:if condition="{wizardData.adresse}">
+                    <div class="rgaa-form-group"><strong>Adresse postale :</strong> {wizardData.adresse}</div>
+                </f:if>
+                <f:if condition="{wizardData.telephone}">
+                    <div class="rgaa-form-group"><strong>Téléphone officiel :</strong> {wizardData.telephone}</div>
+                </f:if>
+                <f:if condition="{wizardData.email}">
+                    <div class="rgaa-form-group"><strong>Courriel :</strong> {wizardData.email}</div>
+                </f:if>
+                <f:if condition="{wizardData.horaires}">
+                    <div class="rgaa-form-group">
+                        <strong>Horaires d'ouverture :</strong>
+                        <div class="text-muted small mt-1"><f:format.nl2br>{wizardData.horaires}</f:format.nl2br></div>
+                    </div>
+                </f:if>
+
                 <div class="rgaa-form-group"><strong>Thème sélectionné :</strong> {wizardData.theme}</div>
                 <div class="rgaa-form-group"><strong>Statut RGAA :</strong> {wizardData.rgaa_statut} ({wizardData.rgaa_taux})</div>
                 <div class="rgaa-form-group mb-0">
@@ -318,6 +432,12 @@
                 <f:form.hidden name="wizardData[identifier]" value="{wizardData.identifier}" />
                 <f:form.hidden name="wizardData[domain]" value="{wizardData.domain}" />
                 <f:form.hidden name="wizardData[slogan]" value="{wizardData.slogan}" />
+                <f:form.hidden name="wizardData[adresse]" value="{wizardData.adresse}" />
+                <f:form.hidden name="wizardData[telephone]" value="{wizardData.telephone}" />
+                <f:form.hidden name="wizardData[email]" value="{wizardData.email}" />
+                <f:form.hidden name="wizardData[horaires]" value="{wizardData.horaires}" />
+                <f:form.hidden name="wizardData[innogam_id]" value="{wizardData.innogam_id}" />
+                <f:form.hidden name="wizardData[innogam_type]" value="{wizardData.innogam_type}" />
                 <f:form.hidden name="wizardData[theme]" value="{wizardData.theme}" />
                 <f:form.hidden name="wizardData[color_scheme]" value="{wizardData.color_scheme}" />
                 <f:form.hidden name="wizardData[rgaa_statut]" value="{wizardData.rgaa_statut}" />

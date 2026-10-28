@@ -52,8 +52,94 @@
     <f:if condition="{selectedSite}">
         <f:then>
             <!-- Formulaire Principal de Configuration -->
-            <f:form action="save" name="settingsForm">
+            <f:form action="save" name="settingsForm" id="rgaa-settings-form">
                 <f:form.hidden name="siteIdentifier" value="{selectedSiteIdentifier}" />
+
+                <!-- Panneau de Synchronisation & Comparaison avec l'Annuaire Innogam -->
+                <div id="rgaa-innogam-sync-card" class="rgaa-innogam-box mb-4"
+                     data-search-url="{innogamSearchUrl}"
+                     data-detail-url="{innogamDetailUrl}"
+                     data-site-identifier="{selectedSiteIdentifier}"
+                     data-innogam-id="{currentSettings.commune.innogam_id}"
+                     data-innogam-type="{currentSettings.commune.innogam_type}">
+
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                        <div>
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <span class="fs-4" aria-hidden="true">🏛️</span>
+                                <h2 class="h5 mb-0 fw-bold text-primary">Synchronisation avec l'annuaire des collectivités (Innogam)</h2>
+                                <f:if condition="{currentSettings.commune.innogam_id}">
+                                    <f:then>
+                                        <span class="badge bg-success">Lié (#{currentSettings.commune.innogam_id})</span>
+                                    </f:then>
+                                    <f:else>
+                                        <span class="badge bg-secondary">Non lié</span>
+                                    </f:else>
+                                </f:if>
+                            </div>
+                            <p class="text-muted small mb-0">
+                                <f:if condition="{currentSettings.commune.innogam_id}">
+                                    <f:then>
+                                        Ce site est associé à la collectivité officielle (Code : <strong>{currentSettings.commune.innogam_id}</strong> - Type : <strong>{currentSettings.commune.innogam_type}</strong>).
+                                        <f:if condition="{currentSettings.commune.innogam_last_sync}">
+                                            Dernière synchronisation : <em>{currentSettings.commune.innogam_last_sync}</em>.
+                                        </f:if>
+                                    </f:then>
+                                    <f:else>
+                                        Associez ce site à l'annuaire pour comparer et synchroniser les coordonnées officielles (nom, adresse, téléphone, courriel, horaires).
+                                    </f:else>
+                                </f:if>
+                            </p>
+                        </div>
+
+                        <div class="d-flex gap-2 align-items-center">
+                            <span id="innogam-sync-loading" class="spinner-border spinner-border-sm text-primary d-none" role="status" aria-label="Chargement en cours"></span>
+
+                            <f:if condition="{currentSettings.commune.innogam_id}">
+                                <button type="button" id="innogam-sync-reload-btn" class="rgaa-btn rgaa-btn-primary rgaa-btn-sm d-flex align-items-center gap-2">
+                                    <span>🔄</span> Comparer les données avec l'annuaire
+                                </button>
+                                <button type="button" id="innogam-sync-change-btn" class="rgaa-btn rgaa-btn-outline rgaa-btn-sm">
+                                    Changer de collectivité liée
+                                </button>
+                            </f:if>
+                        </div>
+                    </div>
+
+                    <!-- Zone de recherche d'une collectivité (affichée si non lié ou si clic sur Changer) -->
+                    <div id="innogam-sync-search-wrapper" class="mt-3 pt-3 border-top {f:if(condition: '{currentSettings.commune.innogam_id}', then: 'd-none')}">
+                        <label for="innogam-sync-search-input" class="rgaa-label">Rechercher une collectivité dans l'annuaire :</label>
+                        <div class="rgaa-combobox-wrapper">
+                            <input
+                                type="text"
+                                id="innogam-sync-search-input"
+                                class="rgaa-input"
+                                placeholder="Taper au moins 2 lettres (ex: Bayonne, Mouguerre, Pau...)"
+                                autocomplete="off"
+                                role="combobox"
+                                aria-autocomplete="list"
+                                aria-expanded="false"
+                                aria-controls="innogam-sync-suggestions"
+                            />
+                            <div id="innogam-sync-suggestions" class="rgaa-combobox-dropdown" role="listbox" hidden="hidden"></div>
+                        </div>
+                        <div class="rgaa-help-text mt-1">Sélectionnez la commune ou l'intercommunalité pour afficher le tableau comparatif.</div>
+                    </div>
+
+                    <!-- Carte du tableau comparatif Diff (affichée lors de la comparaison) -->
+                    <div id="innogam-sync-diff-card" class="rgaa-diff-card mt-3 d-none">
+                        <div id="innogam-sync-diff-body"></div>
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                            <button type="button" id="innogam-sync-cancel-btn" class="rgaa-btn rgaa-btn-outline rgaa-btn-sm">
+                                Fermer la comparaison
+                            </button>
+                            <button type="button" id="innogam-sync-apply-btn" class="rgaa-btn rgaa-btn-success rgaa-btn-lg d-flex align-items-center gap-2">
+                                <span>✅</span> Appliquer les champs sélectionnés au formulaire
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
 
                 <!-- Navigation par Onglets (11 Catégories exactes) -->
                 <ul class="rgaa-tabs">
@@ -68,6 +154,7 @@
                     <li class="rgaa-tab-item"><button type="button" class="rgaa-tab-btn" data-target="panel-emergency">🚨 Numéros d'urgence</button></li>
                     <li class="rgaa-tab-item"><button type="button" class="rgaa-tab-btn" data-target="panel-social">🌐 Réseaux sociaux</button></li>
                     <li class="rgaa-tab-item"><button type="button" class="rgaa-tab-btn" data-target="panel-language">🏳️ Langues</button></li>
+                    <li class="rgaa-tab-item"><button type="button" class="rgaa-tab-btn" data-target="panel-innogam">🏛️ Annuaire Innogam</button></li>
                 </ul>
 
                 <!-- Contenu des Onglets -->
@@ -439,6 +526,37 @@
                                 <f:form.select.option value="center">Au centre avec les réseaux sociaux</f:form.select.option>
                                 <f:form.select.option value="menu">Dans la barre de menu</f:form.select.option>
                             </f:form.select>
+                        </div>
+                    </div>
+                </div>
+
+                                <!-- 12. Annuaire Innogam -->
+                <div class="rgaa-tab-panel" id="panel-innogam">
+                    <div class="rgaa-card">
+                        <h2 class="rgaa-card-title">12. Annuaire & Synchronisation Innogam</h2>
+                        <p class="rgaa-help-text mb-4">Paramètres techniques de liaison avec la base de données départementale Innogam.</p>
+
+                        <div class="rgaa-grid-2">
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Identifiant Collectivité Innogam (Code INSEE ou SIREN) :</label>
+                                <f:form.textfield name="settings[commune.innogam_id]" value="{currentSettings.commune.innogam_id}" class="rgaa-input" placeholder="64102 ou 200067106" />
+                                <div class="rgaa-help-text">Code INSEE de la commune ou SIREN de l'intercommunalité/syndicat.</div>
+                            </div>
+
+                            <div class="rgaa-form-group">
+                                <label class="rgaa-label">Type de collectivité :</label>
+                                <f:form.select name="settings[commune.innogam_type]" value="{currentSettings.commune.innogam_type}" class="rgaa-form-select">
+                                    <f:form.select.option value="commune">Commune</f:form.select.option>
+                                    <f:form.select.option value="interco">Intercommunalité / EPCI / Syndicat</f:form.select.option>
+                                </f:form.select>
+                                <div class="rgaa-help-text">Type de structure administrative.</div>
+                            </div>
+                        </div>
+
+                        <div class="rgaa-form-group">
+                            <label class="rgaa-label">Date de dernière synchronisation :</label>
+                            <f:form.textfield name="settings[commune.innogam_last_sync]" value="{currentSettings.commune.innogam_last_sync}" class="rgaa-input" placeholder="JJ/MM/AAAA HH:MM" />
+                            <div class="rgaa-help-text">Horodatage de la dernière synchronisation effectuée avec succès.</div>
                         </div>
                     </div>
                 </div>

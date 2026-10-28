@@ -21,6 +21,8 @@ return [
                 'save',
                 'wizard',
                 'createSite',
+                'innogamSearch',
+                'innogamDetail',
             ],
         ],
     ],
